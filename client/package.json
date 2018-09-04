@@ -1,0 +1,10 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "Página web y PWA de la página de TecnoReciclaje de la Universidad Minuto de Dios.",
+  "main": "index.js",
+  "repository": "https://github.com/MontoyaAndres/TecnoReciclaje",
+  "author": "Andrés Mauricio Montoya Sánchez",
+  "license": "MIT",
+  "private": true
+}
