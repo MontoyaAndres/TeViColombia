@@ -2,11 +2,11 @@ import { RegisterValidation } from "../../utils/validation";
 import { ResolverMap } from "../../types/resolvers-utils";
 import { formatYupError } from "../../utils/formatYupError";
 import { User } from "../../entity/User";
+import { createConfimEmailLink } from "../../utils/createConfimEmailLink";
+import { sendEmail } from "../../utils/sendEmail";
+import { redis } from "../../redis";
 
 const resolvers: ResolverMap = {
-	async hello(_, response) {
-		response.send("hola");
-	},
 	async register(request, response) {
 		const body = request.body;
 
@@ -14,12 +14,13 @@ const resolvers: ResolverMap = {
 			await RegisterValidation.validate(body, { abortEarly: false });
 		} catch (err) {
 			response.send({
+				ok: false,
 				errors: formatYupError(err)
 			});
 			return;
 		}
 
-		const { email, password } = body;
+		const { email, password, ...rest } = body;
 
 		const userAlreadyExists = await User.findOne({
 			where: { email },
@@ -28,6 +29,7 @@ const resolvers: ResolverMap = {
 
 		if (userAlreadyExists) {
 			response.send({
+				ok: false,
 				errors: [
 					{
 						path: "email",
@@ -40,10 +42,22 @@ const resolvers: ResolverMap = {
 
 		const user = User.create({
 			email,
-			password
+			password,
+			...rest
 		});
 
 		await user.save();
+
+		if (process.env.NODE_ENV !== "test") {
+			await sendEmail(
+				email,
+				await createConfimEmailLink(
+					process.env.BACKEND_HOST as string,
+					user.id,
+					redis
+				)
+			);
+		}
 
 		response.send({ ok: true });
 	}
