@@ -1,1 +1,8 @@
 https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/tel
+
+https://github.com/nicer00ster/nicer00ster-portfolio/blob/master/next.config.js
+
+
+### Clean cache of yarn
+
+yarn cache clean
