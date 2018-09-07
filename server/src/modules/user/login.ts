@@ -70,6 +70,16 @@ const resolvers: ResolverMap = {
 		}
 
 		response.send({ ok: true });
+	},
+	async logout(request, response) {
+		if (request.session) {
+			request.session.destroy(err => {
+				if (err) {
+					console.log("logout error: ", err);
+				}
+				response.send({ ok: true });
+			});
+		}
 	}
 };
 
