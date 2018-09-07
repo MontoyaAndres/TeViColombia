@@ -1,5 +1,3 @@
-// CODE FROM: https://github.com/mui-org/material-ui/blob/master/examples/nextjs/pages/_app.js
-
 import React from "react";
 import App, { Container } from "next/app";
 import { MuiThemeProvider } from "@material-ui/core/styles";

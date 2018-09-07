@@ -1,5 +1,3 @@
-// CODE FROM: https://github.com/mui-org/material-ui/blob/master/examples/nextjs/src/getPageContext.js
-
 import { SheetsRegistry } from "jss";
 import {
 	createMuiTheme,

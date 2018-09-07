@@ -1,5 +1,3 @@
-// CODE FROM: https://github.com/mui-org/material-ui/blob/master/examples/nextjs/pages/_document.js
-
 import React from "react";
 import Document, { Head, Main, NextScript } from "next/document";
 import flush from "styled-jsx/server";
@@ -21,6 +19,43 @@ class MyDocument extends Document {
 						name="theme-color"
 						content={pageContext.theme.palette.primary.main}
 					/>
+					<meta
+						name="description"
+						content="Página web y PWA de la página de TecnoReciclaje de la Universidad Minuto de Dios."
+					/>
+					<link rel="manifest" href="../static/manifest.json" />
+					<link rel="shortcut icon" href="../static/favicon.ico" />
+					<meta name="apple-mobile-web-app-capable" content="yes" />
+					<meta
+						name="apple-mobile-web-app-status-bar-style"
+						content={pageContext.theme.palette.primary.main}
+					/>
+					<meta name="format-detection" content="telephone=no" />
+					<meta name="apple-mobile-web-app-title" content="TecnoReciclaje" />
+					<link
+						rel="apple-touch-icon"
+						sizes="192x192"
+						href="../static/icons/icon_192x192.png"
+					/>
+					<meta
+						name="msapplication-TileColor"
+						content={pageContext.theme.palette.primary.main}
+					/>
+					<meta
+						name="msapplication-TileImage"
+						content="../static/icons/icon_192x192.png"
+					/>
+					<meta
+						property="og:title"
+						content="Página web y PWA de la página de TecnoReciclaje de la Universidad Minuto de Dios."
+					/>
+					<meta property="og:locale" content="es_CO" />
+					<meta property="og:type" content="website" />
+					<meta
+						property="og:image"
+						content="../static/icons/icon_128x128.png"
+					/>
+					<meta property="og:site_name" content="TecnoReciclaje" />
 					<link
 						rel="stylesheet"
 						href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
