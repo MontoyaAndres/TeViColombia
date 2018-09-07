@@ -21,18 +21,17 @@ export class User extends BaseEntity {
 	@Column("varchar", { length: 255 })
 	lastname: string;
 
-	@Column("varchar", { length: 15 })
+	@Column("varchar", { length: 15, unique: true })
 	phone: string;
 
-	@Column("varchar", { length: 255 })
+	@Column("varchar", { length: 255, unique: true })
 	email: string;
 
 	@Column("text")
 	password: string;
 
-	// There are 3 types, user(Usuario común), moderator(Moderador), admin(Administrador)
-	@Column("varchar", { length: 255, default: "user" })
-	typeUser: string;
+	@Column({ default: false })
+	isAdmin: boolean;
 
 	@Column({ default: false })
 	confirmed: boolean;
