@@ -1,10 +1,43 @@
 {
-  "name": "client",
-  "version": "1.0.0",
-  "description": "Página web y PWA de la página de TecnoReciclaje de la Universidad Minuto de Dios.",
-  "main": "index.js",
-  "repository": "https://github.com/MontoyaAndres/TecnoReciclaje",
-  "author": "Andrés Mauricio Montoya Sánchez",
-  "license": "MIT",
-  "private": true
+	"name": "client",
+	"version": "1.0.0",
+	"description": "Página web y PWA de la página de TecnoReciclaje de la Universidad Minuto de Dios.",
+	"main": "index.js",
+	"repository": "https://github.com/MontoyaAndres/TecnoReciclaje",
+	"author": "Andrés Mauricio Montoya Sánchez",
+	"license": "MIT",
+	"private": true,
+	"scripts": {
+		"dev": "NODE_ENV=development node src/server.js",
+		"build": "next build src",
+		"start": "next start src",
+		"prod": "NODE_ENV=production node src/server.js"
+	},
+	"devDependencies": {
+		"babel-eslint": "latest",
+		"eslint": "latest",
+		"eslint-config-airbnb": "latest",
+		"eslint-config-prettier": "latest",
+		"eslint-plugin-import": "latest",
+		"eslint-plugin-jsx-a11y": "latest",
+		"eslint-plugin-prettier": "latest",
+		"eslint-plugin-react": "latest",
+		"prettier": "latest"
+	},
+	"dependencies": {
+		"@material-ui/core": "^3.0.2",
+		"@material-ui/icons": "^3.0.1",
+		"axios": "^0.18.0",
+		"express": "^4.16.3",
+		"formik": "^1.2.0",
+		"jss": "^9.8.7",
+		"next": "^6.1.1",
+		"nprogress": "^0.2.0",
+		"react": "^16.5.0",
+		"react-dom": "^16.5.0",
+		"react-dropzone": "^5.0.1",
+		"react-jss": "^8.6.1",
+		"styled-jsx": "^3.0.2",
+		"yup": "^0.26.3"
+	}
 }

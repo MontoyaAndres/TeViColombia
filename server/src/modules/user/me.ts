@@ -1,0 +1,17 @@
+import { User } from "../../entity/User";
+import { ResolverMap } from "../../types/resolvers-utils";
+
+const resolvers: ResolverMap = {
+	async me(request, response) {
+		if (request.session) {
+			const me = await User.findOne({
+				select: ["name", "lastname", "phone", "email"],
+				where: { id: request.session.userId }
+			});
+
+			response.send({ me });
+		}
+	}
+};
+
+export default resolvers;
