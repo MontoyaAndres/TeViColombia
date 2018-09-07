@@ -3,7 +3,7 @@ import { ResolverMap } from "../../types/resolvers-utils";
 import { formatYupError } from "../../utils/formatYupError";
 import { User } from "../../entity/User";
 import { createConfimEmailLink } from "../../utils/createConfimEmailLink";
-import { sendEmail } from "../../utils/sendEmail";
+import { sendEmailLink } from "../../utils/sendEmail";
 import { redis } from "../../redis";
 
 const resolvers: ResolverMap = {
@@ -49,7 +49,7 @@ const resolvers: ResolverMap = {
 		await user.save();
 
 		if (process.env.NODE_ENV !== "test") {
-			await sendEmail(
+			await sendEmailLink(
 				email,
 				await createConfimEmailLink(
 					process.env.BACKEND_HOST as string,

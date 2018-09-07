@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
 	}
 });
 
-export const sendEmail = async (recipient: string, url: string) => {
+export const sendEmailLink = async (recipient: string, url: string) => {
 	transporter.sendMail({
 		to: recipient,
 		subject: "Confirmar tu correo electronico en PÁGINA",
@@ -20,4 +20,24 @@ export const sendEmail = async (recipient: string, url: string) => {
 </html>
 `
 	});
+};
+
+export const sendEmailPost = async (
+	recipient: string[],
+	url: string,
+	title: string
+) => {
+	for (const email of recipient) {
+		await transporter.sendMail({
+			to: email,
+			subject: "¡Tenemos algo nuevo para ti!",
+			html: `<html>
+		<body>
+			<p>¿Te interesa leer "${title}"?</p>
+			<a href="${url}">¡Da click aquí!</a>
+		</body>
+	</html>
+	`
+		});
+	}
 };

@@ -29,3 +29,9 @@ export const LoginValidation = Yup.object().shape({
 		.typeError("Campo incorrecto"),
 	password: Yup.string().typeError("Campo incorrecto")
 });
+
+export const savePostValidation = Yup.object().shape({
+	title: Yup.string()
+		.typeError("Campo incorrecto")
+		.required("El campo es obligatorio!")
+});
