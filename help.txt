@@ -2,6 +2,7 @@ https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/tel
 
 https://github.com/nicer00ster/nicer00ster-portfolio/blob/master/next.config.js
 
+https://www.youtube.com/watch?v=Wyi2-d-2rg4&list=PLN3n1USn4xlnfJIQBa6bBjjiECnk6zL6s&index=36
 
 ### Clean cache of yarn
 

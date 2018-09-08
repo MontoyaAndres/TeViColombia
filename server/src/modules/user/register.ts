@@ -20,7 +20,7 @@ const resolvers: ResolverMap = {
 			return;
 		}
 
-		const { email, password, ...rest } = body;
+		const { name, lastname, phone, email, password } = body;
 
 		const userAlreadyExists = await User.findOne({
 			where: { email },
@@ -41,9 +41,11 @@ const resolvers: ResolverMap = {
 		}
 
 		const user = User.create({
+			name,
+			lastname,
+			phone,
 			email,
-			password,
-			...rest
+			password
 		});
 
 		await user.save();

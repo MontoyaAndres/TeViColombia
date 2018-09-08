@@ -15,23 +15,19 @@ const RedisStore = connectRedis(session);
 
 const app = express();
 
-const corsConfig = {
-	credentials: true,
-	origin: process.env.FRONTEND_HOST as string
-};
-
 export const startServer = async () => {
 	app
 		.use(compression())
 		.use(helmet())
 		.use(express.json())
 		.use(express.urlencoded({ extended: false }))
-		.use(cors(corsConfig))
+		.use(cors({ credentials: true, origin: process.env.FRONTEND_HOST }))
 		.use(
 			session({
 				store: new RedisStore({
 					client: redis as any
 				}),
+				name: "qid",
 				secret: process.env.SESSIONS_SECRET as string,
 				resave: false,
 				saveUninitialized: false,

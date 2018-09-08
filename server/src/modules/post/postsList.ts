@@ -10,13 +10,13 @@ const resolvers: ResolverMap = {
 		const { pagination } = request.params;
 		const posts = await Post.find({ take: pagination });
 
-		response.send({ posts });
+		response.send({ ok: true, posts });
 	},
 	async showPost(request, response) {
 		const { id } = request.params;
 		const post = await Post.findOne({ where: { id } });
 
-		response.send({ post });
+		response.send({ ok: true, post });
 	},
 	async savePost(request, response) {
 		const body = request.body;
