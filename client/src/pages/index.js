@@ -1,5 +1,12 @@
 import React from "react";
 
-const index = () => <h1>Hola</h1>;
+import withAuth from "../utils/withAuth";
 
-export default index;
+const index = props => (
+	<h1>
+		{console.log(props)}
+		Hola
+	</h1>
+);
+
+export default withAuth(index);

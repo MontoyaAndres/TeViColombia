@@ -9,7 +9,7 @@ const resolvers: ResolverMap = {
 				where: { id: request.session.userId }
 			});
 
-			response.send({ me });
+			response.send({ ok: true, me });
 		}
 	}
 };

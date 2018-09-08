@@ -25,6 +25,6 @@ app
 			if (err) throw err;
 		});
 	})
-	.catch(err => {
+	.catch(() => {
 		process.exit(1);
 	});
