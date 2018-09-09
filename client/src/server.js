@@ -19,11 +19,8 @@ app
 				const filePath = join(__dirname, ".next", pathname);
 				app.serveStatic(req, res, filePath);
 			})
-			.get("*", (req, res) => handle(req, res));
-
-		server.listen(process.env.PORT || 3000, err => {
-			if (err) throw err;
-		});
+			.get("*", (req, res) => handle(req, res))
+			.listen(process.env.PORT || 3000);
 	})
 	.catch(() => {
 		process.exit(1);

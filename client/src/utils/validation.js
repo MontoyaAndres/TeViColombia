@@ -9,7 +9,7 @@ export const RegisterValidation = Yup.object().shape({
 		.required("El campo es obligatorio!"),
 	phone: Yup.string()
 		.matches(new RegExp(/^[0-9]{9,15}$/g), {
-			excludeEmptyString: false,
+			excludeEmptyString: true,
 			message: "Ingrese un número telefónico correcto"
 		})
 		.typeError("Campo incorrecto")
@@ -30,7 +30,7 @@ export const LoginValidation = Yup.object().shape({
 	password: Yup.string().typeError("Campo incorrecto")
 });
 
-export const savePostValidation = Yup.object().shape({
+export const SavePostValidation = Yup.object().shape({
 	title: Yup.string()
 		.typeError("Campo incorrecto")
 		.required("El campo es obligatorio!")

@@ -12,16 +12,14 @@ export default function withAuth(AuthComponent) {
 
 		async componentDidMount() {
 			const response = await me();
-			if (!response.ok) {
-				Router.replace("/login");
+			if (response.ok) {
+				Router.replace("/");
 			}
-
 			this.setState({ isLoading: false });
 		}
 
 		render() {
 			const { isLoading } = this.state;
-
 			return (
 				<div>{isLoading ? <Loading /> : <AuthComponent {...this.props} />}</div>
 			);

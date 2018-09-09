@@ -1,10 +1,18 @@
 import React, { Fragment } from "react";
+import NProgress from "nprogress";
+import Router from "next/router";
 
 import Menu from "./menu";
 
-const layout = ({ children }) => (
+// Loading route config
+Router.onRouteChangeStart = () => NProgress.start();
+Router.onRouteChangeComplete = () => NProgress.done();
+Router.onRouteChangeError = () => NProgress.done();
+
+const layout = ({ children, data }) => (
 	<Fragment>
-		<Menu />
+		{console.log("layout", data)}
+		<Menu data={data} />
 		{children}
 	</Fragment>
 );

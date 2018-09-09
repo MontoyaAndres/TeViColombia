@@ -9,7 +9,7 @@ export const RegisterValidation = Yup.object().shape({
 		.required("El campo es obligatorio!"),
 	phone: Yup.string()
 		.matches(new RegExp(/^[0-9]{9,15}$/g), {
-			excludeEmptyString: false,
+			excludeEmptyString: true,
 			message: "Ingrese un número telefónico correcto"
 		})
 		.typeError("Campo incorrecto")
