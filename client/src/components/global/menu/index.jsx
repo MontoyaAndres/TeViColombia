@@ -6,14 +6,11 @@ import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import MenuIcon from "@material-ui/icons/Menu";
 import Drawer from "@material-ui/core/Drawer";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
 import Typography from "@material-ui/core/Typography";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import Build from "@material-ui/icons/Build";
-import Check from "@material-ui/icons/Check";
 
 import Home from "./List/Home";
+import IsLoggedIn from "./Auth/isLoggedIn";
+import IsNotLoggedIn from "./Auth/isNotLoggedIn";
 
 const styles = theme => ({
 	root: {
@@ -56,7 +53,7 @@ class index extends PureComponent {
 	};
 
 	render() {
-		const { classes } = this.props;
+		const { classes, data } = this.props;
 		const { open, openUser } = this.state;
 
 		return (
@@ -79,35 +76,16 @@ class index extends PureComponent {
 							TecnoReciclaje
 						</Typography>
 
-						<IconButton
-							aria-owns={openUser ? "menu-appbar" : null}
-							aria-haspopup="true"
-							onClick={this.handleMenuUser}
-							color="inherit"
-						>
-							<AccountCircle />
-						</IconButton>
-						<Menu
-							id="menu-appbar"
-							anchorEl={openUser}
-							anchorOrigin={{
-								vertical: "top",
-								horizontal: "right"
-							}}
-							transformOrigin={{
-								vertical: "top",
-								horizontal: "right"
-							}}
-							open={!!openUser}
-							onClose={this.handleClose}
-						>
-							<MenuItem>
-								<Build style={{ paddingRight: 10 }} /> Configuración
-							</MenuItem>
-							<MenuItem>
-								<Check style={{ paddingRight: 10 }} /> Salir
-							</MenuItem>
-						</Menu>
+						{data && data.ok ? (
+							<IsLoggedIn
+								openUser={openUser}
+								handleMenuUser={this.handleMenuUser}
+								handleClose={this.handleClose}
+								name={data.me.name}
+							/>
+						) : (
+							<IsNotLoggedIn handleClose={this.handleClose} />
+						)}
 					</Toolbar>
 				</AppBar>
 				<Drawer open={open} onClose={this.handleMenuModal}>

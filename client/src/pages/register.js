@@ -1,6 +1,6 @@
 import React from "react";
 import Router from "next/router";
-import { withFormik, Form } from "formik";
+import { withFormik, Form, Field } from "formik";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
@@ -8,9 +8,10 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
 import normalizeErrors from "../utils/normalizeErrors";
-import { LoginValidation } from "../utils/validation";
-import { login } from "../api/auth";
+import { RegisterValidation } from "../utils/validation";
+import { register } from "../api/auth";
 import withAuthAlready from "../utils/withAuthAlready";
+import Success from "../components/global/success";
 import FieldText from "../components/shared/FieldText";
 
 const styles = theme => ({
@@ -35,10 +36,19 @@ const styles = theme => ({
 	}
 });
 
-const Login = ({ classes, handleSubmit, isSubmitting, touched, errors }) => (
+const Login = ({
+	classes,
+	values,
+	handleSubmit,
+	isSubmitting,
+	touched,
+	errors
+}) => (
 	<Grid item xs={12}>
 		<Grid container justify="center">
 			<Paper className={classes.paper}>
+				<Success hide={values.registered} message="Registrado correctamente!" />
+
 				<Grid item xs={12}>
 					{/* <img
                 className={classes.image}
@@ -48,6 +58,45 @@ const Login = ({ classes, handleSubmit, isSubmitting, touched, errors }) => (
 					image
 				</Grid>
 				<Form method="POST" onSubmit={handleSubmit}>
+					<Grid item xs={12}>
+						<FieldText
+							name="name"
+							type="text"
+							label="Nombre"
+							touched={touched}
+							errors={errors}
+						/>
+						<Typography variant="headline" className={classes.error}>
+							{touched.name && errors.name ? errors.name : null}
+						</Typography>
+					</Grid>
+
+					<Grid item xs={12}>
+						<FieldText
+							name="lastname"
+							type="text"
+							label="Apellido"
+							touched={touched}
+							errors={errors}
+						/>
+						<Typography variant="headline" className={classes.error}>
+							{touched.lastname && errors.lastname ? errors.lastname : null}
+						</Typography>
+					</Grid>
+
+					<Grid item xs={12}>
+						<FieldText
+							name="phone"
+							type="tel"
+							label="Teléfono"
+							touched={touched}
+							errors={errors}
+						/>
+						<Typography variant="headline" className={classes.error}>
+							{touched.phone && errors.phone ? errors.phone : null}
+						</Typography>
+					</Grid>
+
 					<Grid item xs={12}>
 						<FieldText
 							name="email"
@@ -89,19 +138,26 @@ const Login = ({ classes, handleSubmit, isSubmitting, touched, errors }) => (
 );
 
 export default withFormik({
-	mapPropsToValues: () => ({ email: "", password: "" }),
-	validationSchema: LoginValidation,
+	mapPropsToValues: () => ({
+		name: "",
+		lastname: "",
+		phone: "",
+		email: "",
+		password: ""
+	}),
+	validationSchema: RegisterValidation,
 	validateOnBlur: false,
 	validateOnChange: false,
-	handleSubmit: async (values, { setSubmitting, setErrors }) => {
-		const response = await login(values);
+	handleSubmit: async (values, { setSubmitting, setErrors, setFieldValue }) => {
+		const response = await register(values);
 
 		const { ok, errors } = response;
 		if (ok) {
 			setSubmitting(false);
-			Router.push("/");
+			setFieldValue("registered", true, false);
 		} else {
 			setSubmitting(false);
+			setFieldValue("registered", false, false);
 			setErrors(normalizeErrors(errors));
 		}
 	}

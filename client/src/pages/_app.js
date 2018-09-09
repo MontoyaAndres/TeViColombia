@@ -3,10 +3,10 @@ import App, { Container } from "next/app";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import JssProvider from "react-jss/lib/JssProvider";
-import getPageContext from "../context/getPageContext";
+import getPageContext from "../utils/getPageContext";
 
-// Menu
 import Layout from "../components/global/layout";
+import { me } from "../api/user";
 
 class MyApp extends App {
 	constructor(props) {
@@ -24,28 +24,38 @@ class MyApp extends App {
 		}
 	}
 
+	static async getInitialProps() {
+		const response = await me();
+		console.log("app", response);
+
+		if (response.ok) {
+			return { response };
+		}
+
+		return {};
+	}
+
 	render() {
-		const { Component, pageProps } = this.props;
+		const { Component, pageProps, response } = this.props;
+		console.log("app2", response);
+
 		return (
 			<Container>
-				{/* Wrap every page in Jss and Theme providers */}
 				<JssProvider
 					registry={this.pageContext.sheetsRegistry}
 					generateClassName={this.pageContext.generateClassName}
 				>
-					{/* MuiThemeProvider makes the theme available down the React
-              tree thanks to React context. */}
 					<MuiThemeProvider
 						theme={this.pageContext.theme}
 						sheetsManager={this.pageContext.sheetsManager}
 					>
-						{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
 						<CssBaseline />
-
-						<Layout>
-							{/* Pass pageContext to the _document though the renderPage enhancer
-                to render collected styles on server side. */}
-							<Component pageContext={this.pageContext} {...pageProps} />
+						<Layout data={response}>
+							<Component
+								pageContext={this.pageContext}
+								data={response}
+								{...pageProps}
+							/>
 						</Layout>
 					</MuiThemeProvider>
 				</JssProvider>

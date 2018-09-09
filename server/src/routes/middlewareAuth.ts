@@ -9,7 +9,7 @@ export const userAuth = async (
 	if (request.session) {
 		const user = await User.findOne({ where: { id: request.session.userId } });
 		if (!user || !user.id) {
-			return response.sendStatus(401);
+			return response.send({ ok: false });
 		}
 
 		return next();
@@ -24,7 +24,7 @@ export const adminAuth = async (
 	if (request.session) {
 		const user = await User.findOne({ where: { id: request.session.userId } });
 		if (!user || !user.id || !user.isAdmin) {
-			return response.sendStatus(401);
+			return response.send({ ok: false });
 		}
 
 		return next();
