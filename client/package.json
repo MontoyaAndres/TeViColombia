@@ -27,6 +27,7 @@
 		"@material-ui/core": "^3.0.2",
 		"@material-ui/icons": "^3.0.1",
 		"axios": "^0.18.0",
+		"cookie-parser": "^1.4.3",
 		"express": "^4.16.3",
 		"formik": "^1.2.0",
 		"jss": "^9.8.7",

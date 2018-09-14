@@ -10,7 +10,6 @@ import Button from "@material-ui/core/Button";
 import normalizeErrors from "../utils/normalizeErrors";
 import { RegisterValidation } from "../utils/validation";
 import { register } from "../api/auth";
-import withAuthAlready from "../utils/withAuthAlready";
 import Success from "../components/global/success";
 import FieldText from "../components/shared/FieldText";
 
@@ -161,4 +160,4 @@ export default withFormik({
 			setErrors(normalizeErrors(errors));
 		}
 	}
-})(withStyles(styles)(withAuthAlready(Login)));
+})(withStyles(styles)(Login));
