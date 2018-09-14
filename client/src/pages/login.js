@@ -10,7 +10,6 @@ import Button from "@material-ui/core/Button";
 import normalizeErrors from "../utils/normalizeErrors";
 import { LoginValidation } from "../utils/validation";
 import { login } from "../api/auth";
-import withAuthAlready from "../utils/withAuthAlready";
 import FieldText from "../components/shared/FieldText";
 
 const styles = theme => ({
@@ -99,10 +98,10 @@ export default withFormik({
 		const { ok, errors } = response;
 		if (ok) {
 			setSubmitting(false);
-			Router.push("/");
+			Router.replace("/");
 		} else {
 			setSubmitting(false);
 			setErrors(normalizeErrors(errors));
 		}
 	}
-})(withStyles(styles)(withAuthAlready(Login)));
+})(withStyles(styles)(Login));

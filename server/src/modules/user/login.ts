@@ -77,6 +77,7 @@ const resolvers: ResolverMap = {
 				if (err) {
 					console.log("logout error: ", err);
 				}
+				response.clearCookie("qid");
 				response.send({ ok: true });
 			});
 		}
