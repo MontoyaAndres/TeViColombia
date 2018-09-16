@@ -2,14 +2,14 @@ import React from "react";
 import { Field } from "formik";
 import TextField from "@material-ui/core/TextField";
 
-const FieldText = ({ name, type, label, touched, errors }) => (
+const FieldText = ({ name, type, label }) => (
 	<Field
 		render={({ field }) => (
 			<TextField
 				{...field}
 				label={label}
 				type={type}
-				error={Boolean(touched.name && errors.name)}
+				required
 				fullWidth
 				margin="normal"
 			/>

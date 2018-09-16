@@ -8,7 +8,7 @@ export const RegisterValidation = Yup.object().shape({
 		.typeError("Campo incorrecto")
 		.required("El campo es obligatorio!"),
 	phone: Yup.string()
-		.matches(new RegExp(/^[0-9]{9,15}$/g), {
+		.matches(/[0-9]{9,15}/, {
 			excludeEmptyString: true,
 			message: "Ingrese un número telefónico correcto"
 		})
@@ -26,8 +26,11 @@ export const RegisterValidation = Yup.object().shape({
 export const LoginValidation = Yup.object().shape({
 	email: Yup.string()
 		.email("Correo incorrecto")
-		.typeError("Campo incorrecto"),
-	password: Yup.string().typeError("Campo incorrecto")
+		.typeError("Campo incorrecto")
+		.required("El campo es obligatorio!"),
+	password: Yup.string()
+		.typeError("Campo incorrecto")
+		.required("El campo es obligatorio!")
 });
 
 export const SavePostValidation = Yup.object().shape({

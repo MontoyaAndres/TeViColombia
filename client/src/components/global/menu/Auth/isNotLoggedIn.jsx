@@ -6,7 +6,7 @@ const isNotLoggedIn = ({ handleClose }) => (
 	<Fragment>
 		<Link href="/login" prefetch passHref>
 			<div>
-				<Button color="inherit" onClick={handleClose}>
+				<Button color="secondary" onClick={handleClose}>
 					Entrar
 				</Button>
 			</div>
@@ -14,7 +14,7 @@ const isNotLoggedIn = ({ handleClose }) => (
 
 		<Link href="/register" prefetch passHref>
 			<div>
-				<Button color="inherit" onClick={handleClose}>
+				<Button color="secondary" onClick={handleClose}>
 					Registrarse
 				</Button>
 			</div>

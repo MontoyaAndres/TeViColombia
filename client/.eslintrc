@@ -20,11 +20,13 @@
 		"no-param-reassign": 0,
 		"no-bitwise": 0,
 		"prefer-template": 0,
-		"dot-notation": 0
+		"dot-notation": 0,
+		"lines-between-class-members": 0
 	},
 	"globals": {
 		"document": true,
-		"window": true
+		"window": true,
+		"$": true
 	},
 	"parser": "babel-eslint",
 	"env": {

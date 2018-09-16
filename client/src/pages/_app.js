@@ -5,10 +5,10 @@ import App, { Container } from "next/app";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import JssProvider from "react-jss/lib/JssProvider";
-import getPageContext from "../utils/getPageContext";
 
+import getPageContext from "../utils/getPageContext";
 import Layout from "../components/global/layout";
-import { me } from "../api/user";
+import { Provider } from "../components/shared/ContextApi";
 
 // Loading route config
 Router.onRouteChangeStart = () => NProgress.start();
@@ -19,9 +19,6 @@ class MyApp extends App {
 	constructor(props) {
 		super(props);
 		this.pageContext = getPageContext();
-		this.state = {
-			response: {}
-		};
 	}
 
 	pageContext = null;
@@ -32,14 +29,10 @@ class MyApp extends App {
 		if (jssStyles && jssStyles.parentNode) {
 			jssStyles.parentNode.removeChild(jssStyles);
 		}
-
-		const response = await me();
-		this.setState({ response });
 	}
 
 	render() {
 		const { Component, pageProps } = this.props;
-		const { response } = this.state;
 
 		return (
 			<Container>
@@ -52,9 +45,11 @@ class MyApp extends App {
 						sheetsManager={this.pageContext.sheetsManager}
 					>
 						<CssBaseline />
-						<Layout data={response}>
-							<Component pageContext={this.pageContext} {...pageProps} />
-						</Layout>
+						<Provider>
+							<Layout>
+								<Component pageContext={this.pageContext} {...pageProps} />
+							</Layout>
+						</Provider>
 					</MuiThemeProvider>
 				</JssProvider>
 			</Container>
