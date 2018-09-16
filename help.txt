@@ -4,7 +4,7 @@ https://github.com/nicer00ster/nicer00ster-portfolio/blob/master/next.config.js
 
 https://www.youtube.com/watch?v=Wyi2-d-2rg4&list=PLN3n1USn4xlnfJIQBa6bBjjiECnk6zL6s&index=36
 
-https://stackoverflow.com/questions/39340108/what-is-the-trade-off-between-history-push-and-replace
+https://github.com/mui-org/material-ui/blob/master/docs/src/pages/page-layout-examples/album/Album.js
 
 ### Clean cache of yarn
 

@@ -11,7 +11,7 @@ const resolvers: ResolverMap = {
 		const body = request.body;
 
 		try {
-			await RegisterValidation.validate(body, { abortEarly: false });
+			await RegisterValidation.validate(body);
 		} catch (err) {
 			response.send({
 				ok: false,
@@ -68,16 +68,14 @@ const resolvers: ResolverMap = {
 
 		await user.save();
 
-		if (process.env.NODE_ENV !== "test") {
-			await sendEmailLink(
-				email,
-				await createConfimEmailLink(
-					process.env.BACKEND_HOST as string,
-					user.id,
-					redis
-				)
-			);
-		}
+		await sendEmailLink(
+			email,
+			await createConfimEmailLink(
+				process.env.BACKEND_HOST as string,
+				user.id,
+				redis
+			)
+		);
 
 		response.send({ ok: true });
 	}

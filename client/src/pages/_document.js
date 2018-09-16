@@ -23,8 +23,8 @@ class MyDocument extends Document {
 						name="description"
 						content="Página web y PWA de la página de TecnoReciclaje de la Universidad Minuto de Dios."
 					/>
-					<link rel="manifest" href="../static/manifest.json" />
-					<link rel="shortcut icon" href="../static/favicon.ico" />
+					<link rel="manifest" href="manifest.json" />
+					<link rel="shortcut icon" href="favicon.ico" />
 					<meta name="apple-mobile-web-app-capable" content="yes" />
 					<meta
 						name="apple-mobile-web-app-status-bar-style"
@@ -35,7 +35,7 @@ class MyDocument extends Document {
 					<link
 						rel="apple-touch-icon"
 						sizes="192x192"
-						href="../static/icons/icon_192x192.png"
+						href="icons/icon_192x192.png"
 					/>
 					<meta
 						name="msapplication-TileColor"
@@ -43,7 +43,7 @@ class MyDocument extends Document {
 					/>
 					<meta
 						name="msapplication-TileImage"
-						content="../static/icons/icon_192x192.png"
+						content="icons/icon_192x192.png"
 					/>
 					<meta
 						property="og:title"
@@ -51,15 +51,13 @@ class MyDocument extends Document {
 					/>
 					<meta property="og:locale" content="es_CO" />
 					<meta property="og:type" content="website" />
-					<meta
-						property="og:image"
-						content="../static/icons/icon_128x128.png"
-					/>
+					<meta property="og:image" content="icons/icon_128x128.png" />
 					<meta property="og:site_name" content="TecnoReciclaje" />
 					<link
 						rel="stylesheet"
 						href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
 					/>
+					<link rel="stylesheet" href="css/nprogress.css" />
 				</Head>
 				<body>
 					<Main />

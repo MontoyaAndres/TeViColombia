@@ -62,7 +62,7 @@ class index extends PureComponent {
 					<Toolbar>
 						<IconButton
 							className={classes.menuButton}
-							color="inherit"
+							color="secondary"
 							aria-label="Menu"
 							onClick={this.handleMenuModal}
 						>
@@ -70,7 +70,7 @@ class index extends PureComponent {
 						</IconButton>
 						<Typography
 							variant="title"
-							color="inherit"
+							color="secondary"
 							className={classes.root}
 						>
 							TecnoReciclaje

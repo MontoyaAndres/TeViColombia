@@ -1,6 +1,5 @@
 import React from "react";
-import Router from "next/router";
-import { withFormik, Form, Field } from "formik";
+import { withFormik, Form, ErrorMessage } from "formik";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
@@ -35,14 +34,7 @@ const styles = theme => ({
 	}
 });
 
-const Login = ({
-	classes,
-	values,
-	handleSubmit,
-	isSubmitting,
-	touched,
-	errors
-}) => (
+const Login = ({ classes, values, handleSubmit, isSubmitting }) => (
 	<Grid item xs={12}>
 		<Grid container justify="center">
 			<Paper className={classes.paper}>
@@ -58,67 +50,37 @@ const Login = ({
 				</Grid>
 				<Form method="POST" onSubmit={handleSubmit}>
 					<Grid item xs={12}>
-						<FieldText
-							name="name"
-							type="text"
-							label="Nombre"
-							touched={touched}
-							errors={errors}
-						/>
+						<FieldText name="name" type="text" label="Nombre" />
 						<Typography variant="headline" className={classes.error}>
-							{touched.name && errors.name ? errors.name : null}
+							<ErrorMessage name="name" />
 						</Typography>
 					</Grid>
 
 					<Grid item xs={12}>
-						<FieldText
-							name="lastname"
-							type="text"
-							label="Apellido"
-							touched={touched}
-							errors={errors}
-						/>
+						<FieldText name="lastname" type="text" label="Apellido" />
 						<Typography variant="headline" className={classes.error}>
-							{touched.lastname && errors.lastname ? errors.lastname : null}
+							<ErrorMessage name="lastname" />
 						</Typography>
 					</Grid>
 
 					<Grid item xs={12}>
-						<FieldText
-							name="phone"
-							type="tel"
-							label="Teléfono"
-							touched={touched}
-							errors={errors}
-						/>
+						<FieldText name="phone" type="tel" label="Teléfono" />
 						<Typography variant="headline" className={classes.error}>
-							{touched.phone && errors.phone ? errors.phone : null}
+							<ErrorMessage name="phone" />
 						</Typography>
 					</Grid>
 
 					<Grid item xs={12}>
-						<FieldText
-							name="email"
-							type="email"
-							label="Correo electrónico"
-							touched={touched}
-							errors={errors}
-						/>
+						<FieldText name="email" type="email" label="Correo electrónico" />
 						<Typography variant="headline" className={classes.error}>
-							{touched.email && errors.email ? errors.email : null}
+							<ErrorMessage name="email" />
 						</Typography>
 					</Grid>
 
 					<Grid item xs={12}>
-						<FieldText
-							name="password"
-							type="password"
-							label="Contraseña"
-							touched={touched}
-							errors={errors}
-						/>
+						<FieldText name="password" type="password" label="Contraseña" />
 						<Typography variant="headline" className={classes.error}>
-							{touched.password && errors.password ? errors.password : null}
+							<ErrorMessage name="password" />
 						</Typography>
 					</Grid>
 					<Button
@@ -128,7 +90,9 @@ const Login = ({
 						color="primary"
 						className={classes.margin}
 					>
-						Entrar
+						<Typography variant="button" color="secondary">
+							Entrar
+						</Typography>
 					</Button>
 				</Form>
 			</Paper>

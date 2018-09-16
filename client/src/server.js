@@ -31,6 +31,7 @@ app
 
 		server
 			.use(cookieParser())
+			.use(express.static(`${__dirname}/static`))
 			.get("/service-worker.js", (req, res) => {
 				const parsedUrl = parse(req.url, true);
 				const { pathname } = parsedUrl;
@@ -43,6 +44,7 @@ app
 			.get("*", (req, res) => handle(req, res))
 			.listen(process.env.PORT || 3000);
 	})
-	.catch(() => {
+	.catch(err => {
+		console.log(err);
 		process.exit(1);
 	});

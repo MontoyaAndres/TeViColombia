@@ -7,7 +7,7 @@ import Menu from "@material-ui/core/Menu";
 import Build from "@material-ui/icons/Build";
 import Check from "@material-ui/icons/Check";
 
-import { logout } from "../../../../api/auth";
+import { Consumer } from "../../../shared/ContextApi";
 
 const randomColor =
 	"#" +
@@ -15,15 +15,13 @@ const randomColor =
 		.toString(16)
 		.substr(-6);
 
-class isLoggedIn extends PureComponent {
+class IsLoggedIn extends PureComponent {
 	logoutUser = async () => {
-		const { handleClose } = this.props;
-		const response = await logout();
+		const { handleClose, state } = this.props;
+		await state.actions.logoutUser();
 
 		handleClose();
-		if (response.ok) {
-			Router.replace("/login");
-		}
+		Router.replace("/login");
 	};
 
 	render() {
@@ -34,7 +32,7 @@ class isLoggedIn extends PureComponent {
 					aria-owns={openUser ? "menu-appbar" : null}
 					aria-haspopup="true"
 					onClick={handleMenuUser}
-					color="inherit"
+					color="secondary"
 				>
 					<Avatar style={{ color: "#fff", backgroundColor: randomColor }}>
 						{name.charAt(0)}
@@ -66,4 +64,10 @@ class isLoggedIn extends PureComponent {
 	}
 }
 
-export default isLoggedIn;
+const wrapperLoggedIn = React.forwardRef((props, ref) => (
+	<Consumer>
+		{state => <IsLoggedIn {...props} state={state} ref={ref} />}
+	</Consumer>
+));
+
+export default wrapperLoggedIn;

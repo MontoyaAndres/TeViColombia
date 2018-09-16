@@ -1,6 +1,6 @@
-import React from "react";
+import React, { PureComponent } from "react";
 import Router from "next/router";
-import { withFormik, Form } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
@@ -9,8 +9,8 @@ import Button from "@material-ui/core/Button";
 
 import normalizeErrors from "../utils/normalizeErrors";
 import { LoginValidation } from "../utils/validation";
-import { login } from "../api/auth";
 import FieldText from "../components/shared/FieldText";
+import { Consumer } from "../components/shared/ContextApi";
 
 const styles = theme => ({
 	paper: {
@@ -34,74 +34,91 @@ const styles = theme => ({
 	}
 });
 
-const Login = ({ classes, handleSubmit, isSubmitting, touched, errors }) => (
-	<Grid item xs={12}>
-		<Grid container justify="center">
-			<Paper className={classes.paper}>
-				<Grid item xs={12}>
-					{/* <img
-                className={classes.image}
-                src={UniminutoLogin}
-                alt="Uniminuto"
-							/> */}
-					image
-				</Grid>
-				<Form method="POST" onSubmit={handleSubmit}>
-					<Grid item xs={12}>
-						<FieldText
-							name="email"
-							type="email"
-							label="Correo electrónico"
-							touched={touched}
-							errors={errors}
-						/>
-						<Typography variant="headline" className={classes.error}>
-							{touched.email && errors.email ? errors.email : null}
-						</Typography>
-					</Grid>
+class Login extends PureComponent {
+	componentWillReceiveProps(nextProps) {
+		const {
+			state: { response },
+			setError
+		} = nextProps;
+		console.log(response);
 
-					<Grid item xs={12}>
-						<FieldText
-							name="password"
-							type="password"
-							label="Contraseña"
-							touched={touched}
-							errors={errors}
-						/>
-						<Typography variant="headline" className={classes.error}>
-							{touched.password && errors.password ? errors.password : null}
-						</Typography>
-					</Grid>
-					<Button
-						type="submit"
-						disabled={isSubmitting}
-						variant="contained"
-						color="primary"
-						className={classes.margin}
-					>
-						Entrar
-					</Button>
-				</Form>
-			</Paper>
-		</Grid>
-	</Grid>
-);
-
-export default withFormik({
-	mapPropsToValues: () => ({ email: "", password: "" }),
-	validationSchema: LoginValidation,
-	validateOnBlur: false,
-	validateOnChange: false,
-	handleSubmit: async (values, { setSubmitting, setErrors }) => {
-		const response = await login(values);
-
-		const { ok, errors } = response;
-		if (ok) {
-			setSubmitting(false);
-			Router.replace("/");
-		} else {
-			setSubmitting(false);
-			setErrors(normalizeErrors(errors));
+		if (response.ok) {
+			Router.push("/");
+		} else if (!response.ok && response.errors) {
+			setError(normalizeErrors(response.errors));
 		}
 	}
-})(withStyles(styles)(Login));
+
+	render() {
+		const { classes, isSubmitting } = this.props;
+
+		return (
+			<Grid item xs={12}>
+				<Grid container justify="center">
+					<Paper className={classes.paper}>
+						<Grid item xs={12}>
+							{/* <img
+									className={classes.image}
+									src={UniminutoLogin}
+									alt="Uniminuto"
+								/> */}
+							image
+						</Grid>
+						<Form method="POST">
+							<Grid item xs={12}>
+								<FieldText
+									name="email"
+									type="email"
+									label="Correo electrónico"
+								/>
+								<Typography variant="headline" className={classes.error}>
+									<ErrorMessage name="email" />
+								</Typography>
+							</Grid>
+
+							<Grid item xs={12}>
+								<FieldText name="password" type="password" label="Contraseña" />
+								<Typography variant="headline" className={classes.error}>
+									<ErrorMessage name="password" />
+								</Typography>
+							</Grid>
+							<Button
+								type="submit"
+								disabled={isSubmitting}
+								variant="contained"
+								color="primary"
+								className={classes.margin}
+							>
+								<Typography variant="button" color="secondary">
+									Entrar
+								</Typography>
+							</Button>
+						</Form>
+					</Paper>
+				</Grid>
+			</Grid>
+		);
+	}
+}
+
+const wrapperLogin = React.forwardRef(({ classes }, ref) => (
+	<Consumer>
+		{state => (
+			<Formik
+				initialValues={{ email: "", password: "" }}
+				validationSchema={LoginValidation}
+				validateOnBlur={false}
+				validateOnChange={false}
+				onSubmit={async (values, { setSubmitting }) => {
+					await state.actions.loginUser(values);
+					setSubmitting(false);
+				}}
+				render={props => (
+					<Login {...props} classes={classes} state={state} ref={ref} />
+				)}
+			/>
+		)}
+	</Consumer>
+));
+
+export default withStyles(styles)(wrapperLogin);
