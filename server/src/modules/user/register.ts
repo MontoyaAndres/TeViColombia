@@ -68,7 +68,7 @@ const resolvers: ResolverMap = {
 
 		await user.save();
 
-		await sendEmailLink(
+		sendEmailLink(
 			email,
 			await createConfimEmailLink(
 				process.env.BACKEND_HOST as string,

@@ -7,6 +7,7 @@ import Menu from "@material-ui/core/Menu";
 import Build from "@material-ui/icons/Build";
 import Check from "@material-ui/icons/Check";
 
+import { logout } from "../../../../api/auth";
 import { Consumer } from "../../../shared/ContextApi";
 
 const randomColor =
@@ -18,10 +19,14 @@ const randomColor =
 class IsLoggedIn extends PureComponent {
 	logoutUser = async () => {
 		const { handleClose, state } = this.props;
-		await state.actions.logoutUser();
+		const response = await logout();
 
 		handleClose();
-		Router.replace("/login");
+		if (response.ok) {
+			// Getting current user
+			await state.actions.getMeUser();
+			Router.replace("/login");
+		}
 	};
 
 	render() {

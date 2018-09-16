@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
 
-import { login, logout } from "../../api/auth";
 import { me } from "../../api/user";
 
 const Context = React.createContext();
@@ -24,34 +23,13 @@ export class Provider extends PureComponent {
 		this.setState({ response });
 	};
 
-	loginUser = async credentials => {
-		const response = await login(credentials);
-
-		if (response.ok) {
-			this.getMeUser();
-		} else {
-			this.setState({ response });
-		}
-	};
-
-	logoutUser = async () => {
-		const response = await logout();
-
-		if (response.ok) {
-			this.getMeUser();
-		} else {
-			this.setState({ response });
-		}
-	};
-
 	render() {
 		return (
 			<Context.Provider
 				value={{
 					response: this.state.response,
 					actions: {
-						loginUser: this.loginUser,
-						logoutUser: this.logoutUser
+						getMeUser: this.getMeUser
 					}
 				}}
 			>

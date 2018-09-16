@@ -4,9 +4,10 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
-import MenuIcon from "@material-ui/icons/Menu";
 import Drawer from "@material-ui/core/Drawer";
 import Typography from "@material-ui/core/Typography";
+import Hidden from "@material-ui/core/Hidden";
+import MenuIcon from "@material-ui/icons/Menu";
 
 import Home from "./List/Home";
 import IsLoggedIn from "./Auth/isLoggedIn";
@@ -68,13 +69,13 @@ class index extends PureComponent {
 						>
 							<MenuIcon />
 						</IconButton>
-						<Typography
-							variant="title"
-							color="secondary"
-							className={classes.root}
-						>
-							TecnoReciclaje
-						</Typography>
+						<div className={classes.root}>
+							<Hidden smDown>
+								<Typography variant="title" color="secondary">
+									TecnoReciclaje
+								</Typography>
+							</Hidden>
+						</div>
 
 						{data && data.ok ? (
 							<IsLoggedIn
