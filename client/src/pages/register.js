@@ -38,7 +38,7 @@ const Login = ({ classes, values, handleSubmit, isSubmitting }) => (
 	<Grid item xs={12}>
 		<Grid container justify="center">
 			<Paper className={classes.paper}>
-				<Success hide={values.registered} message="Registrado correctamente!" />
+				<Success hide={values.registered} message="Ahora confirme su correo!" />
 
 				<Grid item xs={12}>
 					{/* <img
