@@ -1,6 +1,7 @@
 # Project
 **/yarn.lock
 dump.rdb
+**/uploads
 
 # Logs
 logs

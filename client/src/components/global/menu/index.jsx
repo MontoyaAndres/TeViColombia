@@ -59,7 +59,7 @@ class index extends PureComponent {
 
 		return (
 			<div className={classes.root}>
-				<AppBar position="static">
+				<AppBar position="fixed">
 					<Toolbar>
 						<IconButton
 							className={classes.menuButton}
@@ -95,7 +95,9 @@ class index extends PureComponent {
 							<IconButton onClick={this.handleMenuModal}>
 								<MenuIcon />
 							</IconButton>
-							<div style={{ margin: "0 auto", height: "100%" }}>image</div>
+							<Typography variant="title" color="primary">
+								TecnoReciclaje
+							</Typography>
 						</div>
 						<div className={classes.list}>
 							<List>
