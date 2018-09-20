@@ -8,7 +8,7 @@ const layout = ({ children }) => (
 		{state => (
 			<Fragment>
 				<Menu data={state.response} />
-				{children}
+				<div style={{ paddingTop: 56 }}>{children}</div>
 			</Fragment>
 		)}
 	</Consumer>

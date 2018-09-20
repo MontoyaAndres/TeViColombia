@@ -8,7 +8,10 @@ import { sendEmailPost } from "../../utils/sendEmail";
 const resolvers: ResolverMap = {
 	async showPosts(request, response) {
 		const { pagination } = request.params;
-		const posts = await Post.find({ take: pagination });
+		const posts = await Post.find({
+			take: pagination,
+			order: { createdAt: "DESC" }
+		});
 
 		response.send({ ok: true, posts });
 	},
@@ -19,10 +22,11 @@ const resolvers: ResolverMap = {
 		response.send({ ok: true, post });
 	},
 	async savePost(request, response) {
-		const body = request.body;
+		const res = request.body;
+		console.log(request.file);
 
 		try {
-			await savePostValidation.validate(body, { abortEarly: false });
+			await savePostValidation.validate(res, { abortEarly: false });
 		} catch (err) {
 			response.send({
 				ok: false,
@@ -31,7 +35,7 @@ const resolvers: ResolverMap = {
 			return;
 		}
 
-		const { title, ...rest } = request.body;
+		const { title, body } = res;
 
 		const titleAlreadyExists = await Post.findOne({
 			where: { title },
@@ -55,7 +59,8 @@ const resolvers: ResolverMap = {
 			const post = Post.create({
 				title,
 				author: request.session.userId,
-				...rest
+				image: `${process.env.BACKEND_HOST}/uploads/${request.file.filename}`,
+				body
 			});
 
 			await post.save();

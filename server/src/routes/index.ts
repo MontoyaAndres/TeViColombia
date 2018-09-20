@@ -6,6 +6,7 @@ import register from "../modules/user/register";
 import login from "../modules/user/login";
 import me from "../modules/user/me";
 import postsList from "../modules/post/postsList";
+import upload from "../utils/uploadFile";
 
 const Router = express.Router();
 
@@ -18,9 +19,9 @@ Router
 	.get("/confirm/:id", confirmEmail)
 
 	// Post module
-	.get("/posts/:pagination", userAuth, postsList.showPosts)
-	.get("/post/:id", userAuth, postsList.showPost)
-	.post("/post", adminAuth, postsList.savePost)
+	.get("/posts/:pagination", postsList.showPosts)
+	.get("/post/:id", postsList.showPost)
+	.post("/post", adminAuth, upload.single("image"), postsList.savePost)
 	.put("/post/:id", adminAuth, postsList.updatePost)
 	.delete("/post/:id", adminAuth, postsList.deletePost);
 

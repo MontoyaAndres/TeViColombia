@@ -19,8 +19,9 @@ export const startServer = async () => {
 	app
 		.use(compression())
 		.use(helmet())
-		.use(express.json())
-		.use(express.urlencoded({ extended: false }))
+		.use("/uploads", express.static(`${__dirname}/uploads`))
+		.use(express.json({ limit: "50mb" }))
+		.use(express.urlencoded({ extended: false, limit: "50mb" }))
 		.use(cors({ credentials: true, origin: process.env.FRONTEND_HOST }))
 		.use(
 			session({

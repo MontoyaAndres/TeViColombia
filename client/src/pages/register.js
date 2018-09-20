@@ -51,35 +51,35 @@ const Login = ({ classes, values, handleSubmit, isSubmitting }) => (
 				<Form method="POST" onSubmit={handleSubmit}>
 					<Grid item xs={12}>
 						<FieldText name="name" type="text" label="Nombre" />
-						<Typography variant="headline" className={classes.error}>
+						<Typography variant="caption" className={classes.error}>
 							<ErrorMessage name="name" />
 						</Typography>
 					</Grid>
 
 					<Grid item xs={12}>
 						<FieldText name="lastname" type="text" label="Apellido" />
-						<Typography variant="headline" className={classes.error}>
+						<Typography variant="caption" className={classes.error}>
 							<ErrorMessage name="lastname" />
 						</Typography>
 					</Grid>
 
 					<Grid item xs={12}>
 						<FieldText name="phone" type="tel" label="Teléfono" />
-						<Typography variant="headline" className={classes.error}>
+						<Typography variant="caption" className={classes.error}>
 							<ErrorMessage name="phone" />
 						</Typography>
 					</Grid>
 
 					<Grid item xs={12}>
 						<FieldText name="email" type="email" label="Correo electrónico" />
-						<Typography variant="headline" className={classes.error}>
+						<Typography variant="caption" className={classes.error}>
 							<ErrorMessage name="email" />
 						</Typography>
 					</Grid>
 
 					<Grid item xs={12}>
 						<FieldText name="password" type="password" label="Contraseña" />
-						<Typography variant="headline" className={classes.error}>
+						<Typography variant="caption" className={classes.error}>
 							<ErrorMessage name="password" />
 						</Typography>
 					</Grid>

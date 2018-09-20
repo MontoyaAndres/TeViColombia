@@ -1,15 +1,13 @@
-import React from "react";
+import React, { Fragment } from "react";
+
+import Header from "./header";
+import Cards from "./cards";
 
 const index = () => (
-	<div
-		style={{
-			height: "100vh"
-		}}
-	>
-		<div>
-			<img src="img/home.jpg" alt="" />
-		</div>
-	</div>
+	<Fragment>
+		<Header />
+		<Cards />
+	</Fragment>
 );
 
 export default index;
