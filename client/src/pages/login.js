@@ -40,12 +40,7 @@ const Login = ({ classes }) => (
 		<Grid container justify="center">
 			<Paper className={classes.paper}>
 				<Grid item xs={12}>
-					{/* <img
-									className={classes.image}
-									src={UniminutoLogin}
-									alt="Uniminuto"
-								/> */}
-					image
+					<img className={classes.image} src="img/logo.svg" alt="Uniminuto" />
 				</Grid>
 				<Consumer>
 					{state => (

@@ -6,7 +6,7 @@
 		"port": 3306,
 		"username": "root",
 		"password": "fcbarcelona123",
-		"database": "tecnoreciclaje",
+		"database": "gestion",
 		"synchronize": true,
 		"logging": true,
 		"entities": ["src/entity/**/*.ts"],

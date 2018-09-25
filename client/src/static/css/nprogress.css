@@ -8,10 +8,10 @@ https://github.com/zeit/next.js/blob/canary/examples/with-loading/static/nprogre
 }
 
 #nprogress .bar {
-	background: white;
+	background-color: white;
 
 	position: fixed;
-	z-index: 1031;
+	z-index: 1131;
 	top: 0;
 	left: 0;
 

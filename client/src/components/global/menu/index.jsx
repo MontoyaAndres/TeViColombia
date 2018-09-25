@@ -5,8 +5,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import Drawer from "@material-ui/core/Drawer";
-import Typography from "@material-ui/core/Typography";
-import Hidden from "@material-ui/core/Hidden";
 import MenuIcon from "@material-ui/icons/Menu";
 
 import Home from "./List/Home";
@@ -59,22 +57,19 @@ class index extends PureComponent {
 
 		return (
 			<div className={classes.root}>
-				<AppBar position="fixed">
+				<AppBar>
 					<Toolbar>
-						<IconButton
-							className={classes.menuButton}
-							color="secondary"
-							aria-label="Menu"
-							onClick={this.handleMenuModal}
-						>
-							<MenuIcon />
-						</IconButton>
 						<div className={classes.root}>
-							<Hidden smDown>
-								<Typography variant="title" color="secondary">
-									TecnoReciclaje
-								</Typography>
-							</Hidden>
+							{data && data.ok ? (
+								<IconButton
+									className={classes.menuButton}
+									color="secondary"
+									aria-label="Menu"
+									onClick={this.handleMenuModal}
+								>
+									<MenuIcon />
+								</IconButton>
+							) : null}
 						</div>
 
 						{data && data.ok ? (
@@ -89,23 +84,22 @@ class index extends PureComponent {
 						)}
 					</Toolbar>
 				</AppBar>
-				<Drawer open={open} onClose={this.handleMenuModal}>
-					<div tabIndex={0} role="button" onKeyDown={this.handleMenuModal}>
-						<div className={classes.header}>
-							<IconButton onClick={this.handleMenuModal}>
-								<MenuIcon />
-							</IconButton>
-							<Typography variant="title" color="primary">
-								TecnoReciclaje
-							</Typography>
+				{data && data.ok ? (
+					<Drawer open={open} onClose={this.handleMenuModal}>
+						<div tabIndex={0} role="button" onKeyDown={this.handleMenuModal}>
+							<div className={classes.header}>
+								<IconButton onClick={this.handleMenuModal}>
+									<MenuIcon />
+								</IconButton>
+							</div>
+							<div className={classes.list}>
+								<List>
+									<Home onHandleClose={this.handleMenuModal} />
+								</List>
+							</div>
 						</div>
-						<div className={classes.list}>
-							<List>
-								<Home onHandleClose={this.handleMenuModal} />
-							</List>
-						</div>
-					</div>
-				</Drawer>
+					</Drawer>
+				) : null}
 			</div>
 		);
 	}
