@@ -36,7 +36,6 @@
 		"nprogress": "^0.2.0",
 		"react": "^16.5.0",
 		"react-dom": "^16.5.0",
-		"react-dropzone": "^5.0.1",
 		"react-jss": "^8.6.1",
 		"styled-jsx": "^3.0.2",
 		"yup": "^0.26.3"

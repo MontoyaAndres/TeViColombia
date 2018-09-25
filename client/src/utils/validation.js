@@ -7,13 +7,6 @@ export const RegisterValidation = Yup.object().shape({
 	lastname: Yup.string()
 		.typeError("Campo incorrecto")
 		.required("El campo es obligatorio!"),
-	phone: Yup.string()
-		.matches(/[0-9]{9,15}/, {
-			excludeEmptyString: true,
-			message: "Ingrese un número telefónico correcto"
-		})
-		.typeError("Campo incorrecto")
-		.required("El campo es obligatorio!"),
 	email: Yup.string()
 		.email("Correo incorrecto")
 		.typeError("Campo incorrecto")
@@ -29,12 +22,6 @@ export const LoginValidation = Yup.object().shape({
 		.typeError("Campo incorrecto")
 		.required("El campo es obligatorio!"),
 	password: Yup.string()
-		.typeError("Campo incorrecto")
-		.required("El campo es obligatorio!")
-});
-
-export const SavePostValidation = Yup.object().shape({
-	title: Yup.string()
 		.typeError("Campo incorrecto")
 		.required("El campo es obligatorio!")
 });

@@ -5,7 +5,7 @@ const resolvers: ResolverMap = {
 	async me(request, response) {
 		if (request.session) {
 			const me = await User.findOne({
-				select: ["name", "lastname", "phone", "email"],
+				select: ["name", "lastname", "email"],
 				where: { id: request.session.userId }
 			});
 

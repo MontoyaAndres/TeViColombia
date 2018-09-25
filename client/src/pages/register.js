@@ -41,12 +41,7 @@ const Login = ({ classes, values, handleSubmit, isSubmitting }) => (
 				<Success hide={values.registered} message="Ahora confirme su correo!" />
 
 				<Grid item xs={12}>
-					{/* <img
-                className={classes.image}
-                src={UniminutoLogin}
-                alt="Uniminuto"
-							/> */}
-					image
+					<img className={classes.image} src="img/logo.svg" alt="Uniminuto" />
 				</Grid>
 				<Form method="POST" onSubmit={handleSubmit}>
 					<Grid item xs={12}>
@@ -60,13 +55,6 @@ const Login = ({ classes, values, handleSubmit, isSubmitting }) => (
 						<FieldText name="lastname" type="text" label="Apellido" />
 						<Typography variant="caption" className={classes.error}>
 							<ErrorMessage name="lastname" />
-						</Typography>
-					</Grid>
-
-					<Grid item xs={12}>
-						<FieldText name="phone" type="tel" label="Teléfono" />
-						<Typography variant="caption" className={classes.error}>
-							<ErrorMessage name="phone" />
 						</Typography>
 					</Grid>
 
@@ -104,19 +92,22 @@ export default withFormik({
 	mapPropsToValues: () => ({
 		name: "",
 		lastname: "",
-		phone: "",
 		email: "",
 		password: ""
 	}),
 	validationSchema: RegisterValidation,
 	validateOnBlur: false,
 	validateOnChange: false,
-	handleSubmit: async (values, { setSubmitting, setErrors, setFieldValue }) => {
+	handleSubmit: async (
+		values,
+		{ setSubmitting, setErrors, setFieldValue, resetForm }
+	) => {
 		const response = await register(values);
 
 		const { ok, errors } = response;
 		if (ok) {
 			setSubmitting(false);
+			resetForm();
 			setFieldValue("registered", true, false);
 		} else {
 			setSubmitting(false);

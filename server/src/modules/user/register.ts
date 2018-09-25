@@ -20,15 +20,10 @@ const resolvers: ResolverMap = {
 			return;
 		}
 
-		const { name, lastname, phone, email, password } = body;
+		const { name, lastname, email, password } = body;
 
 		const userAlreadyExists = await User.findOne({
 			where: { email },
-			select: ["id"]
-		});
-
-		const phoneAlreadyExists = await User.findOne({
-			where: { phone },
 			select: ["id"]
 		});
 
@@ -45,23 +40,9 @@ const resolvers: ResolverMap = {
 			return;
 		}
 
-		if (phoneAlreadyExists) {
-			response.send({
-				ok: false,
-				errors: [
-					{
-						path: "phone",
-						message: "El número de teléfono ya existe."
-					}
-				]
-			});
-			return;
-		}
-
 		const user = User.create({
 			name,
 			lastname,
-			phone,
 			email,
 			password
 		});
