@@ -5,9 +5,10 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import Drawer from "@material-ui/core/Drawer";
+import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
 
-import Home from "./List/Home";
+import NewProject from "./List/NewProject";
 import IsLoggedIn from "./Auth/isLoggedIn";
 import IsNotLoggedIn from "./Auth/isNotLoggedIn";
 
@@ -28,6 +29,10 @@ const styles = theme => ({
 	},
 	list: {
 		width: 250
+	},
+	image: {
+		height: "auto",
+		maxWidth: 190
 	}
 });
 
@@ -91,10 +96,13 @@ class index extends PureComponent {
 								<IconButton onClick={this.handleMenuModal}>
 									<MenuIcon />
 								</IconButton>
+								<Typography variant="headline" style={{ color: "#27c1d6" }}>
+									SEMontoya
+								</Typography>
 							</div>
 							<div className={classes.list}>
 								<List>
-									<Home onHandleClose={this.handleMenuModal} />
+									<NewProject onHandleClose={this.handleMenuModal} />
 								</List>
 							</div>
 						</div>

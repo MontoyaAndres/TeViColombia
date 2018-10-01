@@ -34,8 +34,13 @@ class MyDocument extends Document {
 					<meta name="apple-mobile-web-app-title" content="TecnoReciclaje" />
 					<link
 						rel="apple-touch-icon"
-						sizes="192x192"
-						href="icons/icon_192x192.png"
+						sizes="180x180"
+						href="img/apple-touch-icon.png"
+					/>
+					<link
+						rel="mask-icon"
+						href="img/safari-pinned-tab.svg"
+						color={pageContext.theme.palette.primary.main}
 					/>
 					<meta
 						name="msapplication-TileColor"
@@ -43,7 +48,7 @@ class MyDocument extends Document {
 					/>
 					<meta
 						name="msapplication-TileImage"
-						content="icons/icon_192x192.png"
+						content="icons/icon-192x192.png"
 					/>
 					<meta
 						property="og:title"
@@ -51,7 +56,7 @@ class MyDocument extends Document {
 					/>
 					<meta property="og:locale" content="es_CO" />
 					<meta property="og:type" content="website" />
-					<meta property="og:image" content="icons/icon_128x128.png" />
+					<meta property="og:image" content="icons/icon-128x128.png" />
 					<meta property="og:site_name" content="TecnoReciclaje" />
 					<link
 						rel="stylesheet"

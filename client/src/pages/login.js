@@ -36,11 +36,15 @@ const styles = theme => ({
 });
 
 const Login = ({ classes }) => (
-	<Grid item xs={12}>
+	<Grid item xs={12} style={{ paddingTop: 20 }}>
 		<Grid container justify="center">
 			<Paper className={classes.paper}>
 				<Grid item xs={12}>
-					<img className={classes.image} src="img/logo.svg" alt="Uniminuto" />
+					<img
+						className={classes.image}
+						src="img/logo.svg"
+						alt="Logo SEMontoya"
+					/>
 				</Grid>
 				<Consumer>
 					{state => (
