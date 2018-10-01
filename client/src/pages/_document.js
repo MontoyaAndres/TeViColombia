@@ -9,7 +9,7 @@ class MyDocument extends Document {
 		return (
 			<html lang="es" dir="ltr">
 				<Head>
-					<title>My page</title>
+					<title>SEMontoya</title>
 					<meta charSet="utf-8" />
 					<meta
 						name="viewport"
@@ -21,7 +21,7 @@ class MyDocument extends Document {
 					/>
 					<meta
 						name="description"
-						content="Página web y PWA de la página de TecnoReciclaje de la Universidad Minuto de Dios."
+						content="Herramienta para la gestión estratégica organizacional para el sector productivo de la ciudad de Girardot."
 					/>
 					<link rel="manifest" href="manifest.json" />
 					<link rel="shortcut icon" href="favicon.ico" />
@@ -31,7 +31,7 @@ class MyDocument extends Document {
 						content={pageContext.theme.palette.primary.main}
 					/>
 					<meta name="format-detection" content="telephone=no" />
-					<meta name="apple-mobile-web-app-title" content="TecnoReciclaje" />
+					<meta name="apple-mobile-web-app-title" content="SEMontoya" />
 					<link
 						rel="apple-touch-icon"
 						sizes="180x180"
@@ -52,12 +52,12 @@ class MyDocument extends Document {
 					/>
 					<meta
 						property="og:title"
-						content="Página web y PWA de la página de TecnoReciclaje de la Universidad Minuto de Dios."
+						content="Herramienta para la gestión estratégica organizacional para el sector productivo de la ciudad de Girardot."
 					/>
 					<meta property="og:locale" content="es_CO" />
 					<meta property="og:type" content="website" />
 					<meta property="og:image" content="icons/icon-128x128.png" />
-					<meta property="og:site_name" content="TecnoReciclaje" />
+					<meta property="og:site_name" content="SEMontoya" />
 					<link
 						rel="stylesheet"
 						href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"

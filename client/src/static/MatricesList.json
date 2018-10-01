@@ -1,0 +1,61 @@
+{
+	"list": [
+		{
+			"name": "Matriz de perfil competitivo (MPC).",
+			"link": "/perfil-competitivo",
+			"about": {
+				"concept": "Es un instrumento analítico que sirve para identificar a los competidores más importantes de la organización analizada, máximo cinco (5); e informar sobre sus fortalezas y debilidades particulares.",
+				"elaboration": [
+					"Conforme un buen equipo de trabajo que conozca la empresa, la competencia y las técnicas de análisis matricial mínimas.",
+					"Identifique los factores claves de éxito (F,D) en la industria o sector donde actúa la empresa. Máximo siete (7).",
+					"Asigne ponderación a cada factor entre 0 (importante) y 1 (muy importante). El valor significa la incidencia del factor para el éxito en el sector donde opera la empresa. La sumatoria de los valores anotados debe dar 1.00.",
+					"Califique a cada competidor de 1 a 4 en cada factor para el éxito: Debilidad grave (1), Debilidad menor (2), Fortaleza menor (3), Fortaleza importante (4).",
+					"Multiplique la ponderación asignada a cada factor clave de éxito por calificación de cada competidor (fuerza o debilidad relativa de cada competidor en cada factor clave de éxito).",
+					"Sume los resultados ponderados para cada competidor.",
+					"Comunique los avances de la formulación."
+				],
+				"criteria": "El resultado total ponderado de la MPC reflejará la fortaleza total de nuestra empresa en comparación con los competidores analizados.\n\nEl total ponderado más alto indicará el competidor que más nos amenaza y el menor indicará el más débil, al que también debemos seguir de cerca.\n\nLos totales ponderados pueden variar del 1.0 (más bajo) a 4.0 (más alto)."
+			}
+		},
+		{
+			"name": "Matriz de evaluación del entorno (MEE).",
+			"link": "/evaluacion-entorno"
+		},
+		{
+			"name": "Matriz de evaluación de oportunidades (MEO).",
+			"link": "/evaluacion-oportunidades"
+		},
+		{
+			"name": "Matriz de evaluación de amenazas (MEA).",
+			"link": "/evaluacion-amenazas"
+		},
+		{
+			"name": "Matriz de evaluación interna (MEI).",
+			"link": "/evaluacion-interna"
+		},
+		{
+			"name": "Matriz de evaluación de fortalezas (MEF).",
+			"link": "/evaluacion-fortalezas"
+		},
+		{
+			"name": "Matriz de evaluación de las debilidades (MED).",
+			"link": "/evaluacion-debilidades"
+		},
+		{
+			"name": "Matriz D.O.F.A/F.O.D.A.",
+			"link": "/matriz-dofa"
+		},
+		{
+			"name": "Matriz del grupo consultor de Boston (GCB).",
+			"link": "/matriz-boston"
+		},
+		{
+			"name": "Matriz de la gran estrategia (MGE).",
+			"link": "/matriz-estrategia"
+		},
+		{
+			"name": "Matriz cuantitativa de planeación estratégica (MCPE/CPE).",
+			"link": "/matriz-planeacion-estrategica"
+		}
+	]
+}
