@@ -1,5 +1,6 @@
 import React from "react";
+import NewProject from "../components/NewProject";
 
-const NewProyect = () => <h1>hey</h1>;
+const index = () => <NewProject />;
 
-export default NewProyect;
+export default index;
