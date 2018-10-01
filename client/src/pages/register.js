@@ -34,14 +34,18 @@ const styles = theme => ({
 	}
 });
 
-const Login = ({ classes, values, handleSubmit, isSubmitting }) => (
-	<Grid item xs={12}>
+const Register = ({ classes, values, handleSubmit, isSubmitting }) => (
+	<Grid item xs={12} style={{ paddingTop: 20 }}>
 		<Grid container justify="center">
 			<Paper className={classes.paper}>
 				<Success hide={values.registered} message="Ahora confirme su correo!" />
 
 				<Grid item xs={12}>
-					<img className={classes.image} src="img/logo.svg" alt="Uniminuto" />
+					<img
+						className={classes.image}
+						src="img/logo.svg"
+						alt="Logo SEMontoya"
+					/>
 				</Grid>
 				<Form method="POST" onSubmit={handleSubmit}>
 					<Grid item xs={12}>
@@ -115,4 +119,4 @@ export default withFormik({
 			setErrors(normalizeErrors(errors));
 		}
 	}
-})(withStyles(styles)(Login));
+})(withStyles(styles)(Register));

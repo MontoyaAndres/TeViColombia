@@ -3,19 +3,19 @@ import Link from "next/link";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Grade from "@material-ui/icons/Grade";
+import Add from "@material-ui/icons/Add";
 
-const Home = ({ onHandleClose }) => (
+const NewProject = ({ onHandleClose }) => (
 	<div>
 		<Link href="/" prefetch passHref>
 			<ListItem button onClick={onHandleClose}>
 				<ListItemIcon>
-					<Grade />
+					<Add />
 				</ListItemIcon>
-				<ListItemText inset primary="Inicio" />
+				<ListItemText inset primary="Nuevo proyecto" />
 			</ListItem>
 		</Link>
 	</div>
 );
 
-export default Home;
+export default NewProject;
