@@ -53,25 +53,23 @@ const About = ({ classes, closeWindow, open, name }) => (
 						matrice.name === name && (
 							<Fragment key={key}>
 								<div style={{ padding: 20 }}>
-									<Typography variant="display1" color="inherit">
-										Concepto
-									</Typography>
+									<Typography variant="display1">Concepto</Typography>
 								</div>
 								<Divider />
 								<div style={{ padding: 20 }}>
-									<Typography variant="title" color="inherit">
+									<Typography variant="title" style={{ fontWeight: 400 }}>
 										{matrice.about.concept}
 									</Typography>
 								</div>
 
 								<div style={{ padding: 20 }}>
-									<Typography variant="display1" color="inherit">
+									<Typography variant="display1">
 										Procedimiento para su elaboración
 									</Typography>
 								</div>
 								<Divider />
 								<div style={{ padding: 20 }}>
-									<Typography variant="title" color="inherit">
+									<Typography variant="title" style={{ fontWeight: 400 }}>
 										{matrice.about.elaboration.map((step, index) => (
 											<ul key={index} style={{ paddingTop: 10 }}>
 												<li>{step}</li>
@@ -81,13 +79,13 @@ const About = ({ classes, closeWindow, open, name }) => (
 								</div>
 
 								<div style={{ padding: 20 }}>
-									<Typography variant="display1" color="inherit">
+									<Typography variant="display1">
 										Criterios de decisión
 									</Typography>
 								</div>
 								<Divider />
 								<div style={{ padding: 20 }}>
-									<Typography variant="title" color="inherit">
+									<Typography variant="title" style={{ fontWeight: 400 }}>
 										{matrice.about.criteria}
 									</Typography>
 								</div>
