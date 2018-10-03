@@ -86,7 +86,12 @@ const About = ({ classes, closeWindow, open, name }) => (
 								<Divider />
 								<div style={{ padding: 20 }}>
 									<Typography variant="title" style={{ fontWeight: 400 }}>
-										{matrice.about.criteria}
+										{matrice.about.criteria.split("\n").map((item, index) => (
+											<Fragment key={index}>
+												{item}
+												<br />
+											</Fragment>
+										))}
 									</Typography>
 								</div>
 							</Fragment>
