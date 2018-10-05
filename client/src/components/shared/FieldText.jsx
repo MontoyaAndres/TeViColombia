@@ -12,6 +12,9 @@ const FieldText = ({ name, type, label }) => (
 				required
 				fullWidth
 				margin="normal"
+				onKeyPress={e => {
+					if (e.key === "Enter") e.preventDefault();
+				}}
 			/>
 		)}
 		id={name}
