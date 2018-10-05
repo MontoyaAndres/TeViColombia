@@ -25,3 +25,11 @@ export const LoginValidation = Yup.object().shape({
 		.typeError("Campo incorrecto")
 		.required("El campo es obligatorio!")
 });
+
+export const CreateMatrixValidation = Yup.object().shape({
+	title: Yup.string()
+		.max(100, "Debe ser menor a 100 caracteres")
+		.min(5, "Debe ser mayor a 5 caracteres")
+		.typeError("Campo incorrecto")
+		.required("El campo es obligatorio!")
+});

@@ -1,5 +1,4 @@
 import React, { Fragment, PureComponent } from "react";
-import Link from "next/link";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
@@ -14,6 +13,7 @@ import Help from "@material-ui/icons/Help";
 
 import MatricesList from "../../static/MatricesList";
 import About from "./about";
+import CreateMatrix from "./createMatrix";
 
 const styles = theme => ({
 	root: {
@@ -26,47 +26,71 @@ const styles = theme => ({
 
 class NewProject extends PureComponent {
 	state = {
-		open: false,
-		name: ""
+		help: false,
+		newMatrix: false,
+		name: "",
+		link: ""
 	};
 
 	aboutMatrix = name => {
-		const { open } = this.state;
-		this.setState({ open: !open, name });
+		const { help } = this.state;
+		this.setState({ help: !help, name });
+	};
+
+	createNewMatrix = (name, link) => {
+		const { newMatrix } = this.state;
+		this.setState({ newMatrix: !newMatrix, name, link });
 	};
 
 	render() {
 		const { classes } = this.props;
-		const { open, name } = this.state;
+		const { help, newMatrix, name, link } = this.state;
 
 		return (
-			<Paper className={classes.root} elevation={1}>
-				<List component="nav">
-					{MatricesList.list.map((matrix, key) => (
-						<Fragment key={key}>
-							<Link href={matrix.link} prefetch passHref>
-								<ListItem button>
-									<ListItemIcon>
-										<Add />
-									</ListItemIcon>
-									<ListItemText inset primary={matrix.name} />
-									<ListItemSecondaryAction
-										onClick={() => this.aboutMatrix(matrix.name)}
+			<Fragment>
+				{/* If newMatrix is true, the user can create its own matrix. */}
+				{newMatrix ? (
+					<CreateMatrix
+						open={newMatrix}
+						closeWindow={this.createNewMatrix}
+						name={name}
+						link={link}
+					/>
+				) : (
+					<Paper className={classes.root} elevation={1}>
+						<List component="nav">
+							{MatricesList.list.map((matrix, key) => (
+								<Fragment key={key}>
+									<ListItem
+										button
+										onClick={() =>
+											this.createNewMatrix(matrix.name, matrix.link)
+										}
 									>
-										<IconButton aria-label="about">
-											<Help />
-										</IconButton>
-									</ListItemSecondaryAction>
-								</ListItem>
-							</Link>
-							<Divider />
-						</Fragment>
-					))}
-					{open && (
-						<About open={open} closeWindow={this.aboutMatrix} name={name} />
-					)}
-				</List>
-			</Paper>
+										<ListItemIcon>
+											<Add />
+										</ListItemIcon>
+										<ListItemText inset primary={matrix.name} />
+										<ListItemSecondaryAction
+											onClick={() => this.aboutMatrix(matrix.name)}
+										>
+											<IconButton aria-label="about">
+												<Help />
+											</IconButton>
+										</ListItemSecondaryAction>
+									</ListItem>
+									<Divider />
+								</Fragment>
+							))}
+
+							{/* When open is true, it'll show the help about any matrix. */}
+							{help && (
+								<About open={help} closeWindow={this.aboutMatrix} name={name} />
+							)}
+						</List>
+					</Paper>
+				)}
+			</Fragment>
 		);
 	}
 }
