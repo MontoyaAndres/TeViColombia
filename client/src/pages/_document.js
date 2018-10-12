@@ -23,8 +23,8 @@ class MyDocument extends Document {
 						name="description"
 						content="Herramienta para la gestión estratégica organizacional para el sector productivo de la ciudad de Girardot."
 					/>
-					<link rel="manifest" href="manifest.json" />
-					<link rel="shortcut icon" href="favicon.ico" />
+					<link rel="manifest" href="static/manifest.json" />
+					<link rel="shortcut icon" href="static/favicon.ico" />
 					<meta name="apple-mobile-web-app-capable" content="yes" />
 					<meta
 						name="apple-mobile-web-app-status-bar-style"
@@ -35,11 +35,11 @@ class MyDocument extends Document {
 					<link
 						rel="apple-touch-icon"
 						sizes="180x180"
-						href="img/apple-touch-icon.png"
+						href="static/img/apple-touch-icon.png"
 					/>
 					<link
 						rel="mask-icon"
-						href="img/safari-pinned-tab.svg"
+						href="static/img/safari-pinned-tab.svg"
 						color={pageContext.theme.palette.primary.main}
 					/>
 					<meta
@@ -48,7 +48,7 @@ class MyDocument extends Document {
 					/>
 					<meta
 						name="msapplication-TileImage"
-						content="icons/icon-192x192.png"
+						content="static/icons/icon-192x192.png"
 					/>
 					<meta
 						property="og:title"
@@ -62,7 +62,7 @@ class MyDocument extends Document {
 						rel="stylesheet"
 						href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
 					/>
-					<link rel="stylesheet" href="css/nprogress.css" />
+					<link rel="stylesheet" href="static/css/nprogress.css" />
 				</Head>
 				<body>
 					<Main />

@@ -10,7 +10,7 @@ import Divider from "@material-ui/core/Divider";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 
-import MatricesList from "../../static/MatricesList";
+import MatricesList from "./MatricesList";
 
 const styles = {
 	appBar: {
@@ -42,7 +42,12 @@ const About = ({ classes, closeWindow, open, name }) => (
 					>
 						<CloseIcon />
 					</IconButton>
-					<Typography variant="title" color="inherit" className={classes.flex}>
+					<Typography
+						component="h6"
+						variant="title"
+						color="inherit"
+						className={classes.flex}
+					>
 						{name}
 					</Typography>
 				</Toolbar>
@@ -53,23 +58,33 @@ const About = ({ classes, closeWindow, open, name }) => (
 						matrice.name === name && (
 							<Fragment key={key}>
 								<div style={{ padding: 20 }}>
-									<Typography variant="display1">Concepto</Typography>
+									<Typography component="h4" variant="display1">
+										Concepto
+									</Typography>
 								</div>
 								<Divider />
 								<div style={{ padding: 20 }}>
-									<Typography variant="title" style={{ fontWeight: 400 }}>
+									<Typography
+										component="h6"
+										variant="title"
+										style={{ fontWeight: 400 }}
+									>
 										{matrice.about.concept}
 									</Typography>
 								</div>
 
 								<div style={{ padding: 20 }}>
-									<Typography variant="display1">
+									<Typography component="h4" variant="display1">
 										Procedimiento para su elaboración
 									</Typography>
 								</div>
 								<Divider />
 								<div style={{ padding: 20 }}>
-									<Typography variant="title" style={{ fontWeight: 400 }}>
+									<Typography
+										component="h6"
+										variant="title"
+										style={{ fontWeight: 400 }}
+									>
 										{matrice.about.elaboration.map((step, index) => (
 											<ul key={index} style={{ paddingTop: 10 }}>
 												<li>{step}</li>
@@ -79,13 +94,17 @@ const About = ({ classes, closeWindow, open, name }) => (
 								</div>
 
 								<div style={{ padding: 20 }}>
-									<Typography variant="display1">
+									<Typography component="h4" variant="display1">
 										Criterios de decisión
 									</Typography>
 								</div>
 								<Divider />
 								<div style={{ padding: 20 }}>
-									<Typography variant="title" style={{ fontWeight: 400 }}>
+									<Typography
+										component="h6"
+										variant="title"
+										style={{ fontWeight: 400 }}
+									>
 										{matrice.about.criteria.split("\n").map((item, index) => (
 											<Fragment key={index}>
 												{item}
