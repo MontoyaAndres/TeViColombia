@@ -11,7 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Add from "@material-ui/icons/Add";
 import Help from "@material-ui/icons/Help";
 
-import MatricesList from "../../static/MatricesList";
+import MatricesList from "./MatricesList";
 import About from "./about";
 import CreateMatrix from "./createMatrix";
 
@@ -51,7 +51,6 @@ class NewProject extends PureComponent {
 				{/* If newMatrix is true, the user can create its own matrix. */}
 				{newMatrix ? (
 					<CreateMatrix
-						open={newMatrix}
 						closeWindow={this.createNewMatrix}
 						name={name}
 						link={link}

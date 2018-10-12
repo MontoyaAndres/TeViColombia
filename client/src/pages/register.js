@@ -43,7 +43,7 @@ const Register = ({ classes, values, handleSubmit, isSubmitting }) => (
 				<Grid item xs={12}>
 					<img
 						className={classes.image}
-						src="img/logo.svg"
+						src="static/img/logo.svg"
 						alt="Logo SEMontoya"
 					/>
 				</Grid>

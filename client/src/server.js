@@ -31,7 +31,6 @@ app
 
 		server
 			.use(cookieParser())
-			.use(express.static(`${__dirname}/static`))
 			.get("/service-worker.js", (req, res) => {
 				const parsedUrl = parse(req.url, true);
 				const { pathname } = parsedUrl;

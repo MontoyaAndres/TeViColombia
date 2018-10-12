@@ -19,6 +19,9 @@ const theme = createMuiTheme({
 			main: grey[200],
 			dark: grey[300]
 		}
+	},
+	typography: {
+		useNextVariants: true
 	}
 });
 
