@@ -41,12 +41,12 @@
 			"type": "image/png"
 		}
 	],
-	"name": "TecnoReciclaje",
-	"short_name": "TecnoReciclaje",
+	"name": "SEMontoya",
+	"short_name": "SEMontoya",
 	"orientation": "portrait",
 	"display": "standalone",
 	"start_url": "/?utm_source=web_app_manifest",
-	"description": "Página web y PWA de la página de TecnoReciclaje de la Universidad Minuto de Dios.",
+	"description": "Herramienta para la gestión estratégica organizacional para el sector productivo de la ciudad de Girardot.",
 	"lang": "es_CO",
 	"background_color": "#FFFFFF",
 	"theme_color": "#4caf50"

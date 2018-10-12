@@ -2,7 +2,6 @@
 	"list": [
 		{
 			"name": "Matriz de perfil competitivo (MPC).",
-			"link": "/perfil-competitivo",
 			"about": {
 				"concept": "Es un instrumento analítico que sirve para identificar a los competidores más importantes de la organización analizada, máximo cinco (5); e informar sobre sus fortalezas y debilidades particulares.",
 				"elaboration": [
@@ -19,7 +18,6 @@
 		},
 		{
 			"name": "Matriz de evaluación del entorno (MEE).",
-			"link": "/evaluacion-entorno",
 			"about": {
 				"concept": "Es un instrumento que resume y evalúa toda la información del entorno para determinar la favorabilidad de la empresa en el mercado.",
 				"elaboration": [
@@ -35,7 +33,6 @@
 		},
 		{
 			"name": "Matriz de evaluación de oportunidades (MEO).",
-			"link": "/evaluacion-oportunidades",
 			"about": {
 				"concept": "Es un instrumento de análisis del entorno que identifica las oportunidades de la empresa, incluyendo aspectos económicos, sociales, políticos, legales, culturales, demográficos, tecnológicos, internacionales, ambientales, etc.",
 				"elaboration": [
@@ -51,7 +48,6 @@
 		},
 		{
 			"name": "Matriz de evaluación de amenazas (MEA).",
-			"link": "/evaluacion-amenazas",
 			"about": {
 				"concept": "Es un instrumento de análisis del entorno que identifica las amenazas de la empresa, incluyendo aspectos económicos, sociales, políticos, legales, culturales, demográficos, tecnológicos, internacionales, ambientales, etc.",
 				"elaboration": [
@@ -67,7 +63,6 @@
 		},
 		{
 			"name": "Matriz de evaluación interna (MEI).",
-			"link": "/evaluacion-interna",
 			"about": {
 				"concept": "Es un instrumento de análisis interno que identifica las fortalezas y debilidades importantes dentro de la empresa, incluyendo aspectos de gerencia, ventas, financieros, administrativos, producción, desarrollo y servicio al cliente.",
 				"elaboration": [
@@ -83,28 +78,22 @@
 			}
 		},
 		{
-			"name": "Matriz de evaluación de fortalezas (MEF).",
-			"link": "/evaluacion-fortalezas"
+			"name": "Matriz de evaluación de fortalezas (MEF)."
 		},
 		{
-			"name": "Matriz de evaluación de las debilidades (MED).",
-			"link": "/evaluacion-debilidades"
+			"name": "Matriz de evaluación de las debilidades (MED)."
 		},
 		{
-			"name": "Matriz D.O.F.A/F.O.D.A.",
-			"link": "/matriz-dofa"
+			"name": "Matriz D.O.F.A/F.O.D.A."
 		},
 		{
-			"name": "Matriz del grupo consultor de Boston (GCB).",
-			"link": "/matriz-boston"
+			"name": "Matriz del grupo consultor de Boston (GCB)."
 		},
 		{
-			"name": "Matriz de la gran estrategia (MGE).",
-			"link": "/matriz-estrategia"
+			"name": "Matriz de la gran estrategia (MGE)."
 		},
 		{
-			"name": "Matriz cuantitativa de planeación estratégica (MCPE/CPE).",
-			"link": "/matriz-planeacion-estrategica"
+			"name": "Matriz cuantitativa de planeación estratégica (MCPE/CPE)."
 		}
 	]
 }

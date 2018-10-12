@@ -28,8 +28,7 @@ class NewProject extends PureComponent {
 	state = {
 		help: false,
 		newMatrix: false,
-		name: "",
-		link: ""
+		name: ""
 	};
 
 	aboutMatrix = name => {
@@ -37,24 +36,20 @@ class NewProject extends PureComponent {
 		this.setState({ help: !help, name });
 	};
 
-	createNewMatrix = (name, link) => {
+	createNewMatrix = name => {
 		const { newMatrix } = this.state;
-		this.setState({ newMatrix: !newMatrix, name, link });
+		this.setState({ newMatrix: !newMatrix, name });
 	};
 
 	render() {
 		const { classes } = this.props;
-		const { help, newMatrix, name, link } = this.state;
+		const { help, newMatrix, name } = this.state;
 
 		return (
 			<Fragment>
 				{/* If newMatrix is true, the user can create its own matrix. */}
 				{newMatrix ? (
-					<CreateMatrix
-						closeWindow={this.createNewMatrix}
-						name={name}
-						link={link}
-					/>
+					<CreateMatrix closeWindow={this.createNewMatrix} name={name} />
 				) : (
 					<Paper className={classes.root} elevation={1}>
 						<List component="nav">
@@ -62,9 +57,7 @@ class NewProject extends PureComponent {
 								<Fragment key={key}>
 									<ListItem
 										button
-										onClick={() =>
-											this.createNewMatrix(matrix.name, matrix.link)
-										}
+										onClick={() => this.createNewMatrix(matrix.name)}
 									>
 										<ListItemIcon>
 											<Add />

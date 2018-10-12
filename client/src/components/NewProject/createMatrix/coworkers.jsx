@@ -2,6 +2,8 @@ import React, { Fragment } from "react";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 
+import Autocompleter from "./utils/autocompleter";
+
 const Coworkers = () => (
 	<Fragment>
 		<div style={{ padding: 20 }}>
@@ -15,7 +17,9 @@ const Coworkers = () => (
 				Añada cuantos compañeros usted quiera, o puede trabajar sólo.
 			</Typography>
 		</div>
-		<div style={{ padding: "0 20px 20px 20px" }}>test</div>
+		<div style={{ padding: "0 20px 20px 20px" }}>
+			<Autocompleter />
+		</div>
 	</Fragment>
 );
 
