@@ -1,9 +1,9 @@
 {
 	"name": "server",
 	"version": "1.0.0",
-	"description": "Página web y PWA de la página de TecnoReciclaje de la Universidad Minuto de Dios.",
+	"description": "Herramienta para la gestión estratégica organizacional para el sector productivo de la ciudad de Girardot.",
 	"main": "index.ts",
-	"repository": "https://github.com/MontoyaAndres/TecnoReciclaje",
+	"repository": "https://github.com/MontoyaAndres/GestionEstrategicaOrganizacional",
 	"author": "Andrés Mauricio Montoya Sánchez",
 	"license": "MIT",
 	"private": true,
