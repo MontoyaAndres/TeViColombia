@@ -32,7 +32,7 @@ export const CreateMatrixValidation = Yup.object().shape({
 		.min(5, "Debe ser mayor a 5 caracteres")
 		.typeError("Campo incorrecto")
 		.required("El campo es obligatorio!"),
-	coworkers: Yup.string()
+	coworkers: Yup.array()
 		.typeError("Campo incorrecto")
 		.required("El campo es obligatorio!")
 });

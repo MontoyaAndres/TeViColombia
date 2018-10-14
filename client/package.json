@@ -27,8 +27,8 @@
 		"@material-ui/core": "^3.0.2",
 		"@material-ui/icons": "^3.0.1",
 		"axios": "^0.18.0",
-		"classnames": "^2.2.6",
 		"cookie-parser": "^1.4.3",
+		"downshift": "^3.1.0",
 		"express": "^4.16.3",
 		"formik": "^1.2.0",
 		"jss": "^9.8.7",
@@ -38,7 +38,6 @@
 		"react": "^16.5.0",
 		"react-dom": "^16.5.0",
 		"react-jss": "^8.6.1",
-		"react-select": "^2.1.0",
 		"styled-jsx": "^3.0.2",
 		"yup": "^0.26.3"
 	}

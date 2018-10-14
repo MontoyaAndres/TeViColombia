@@ -4,9 +4,8 @@ import {
 	BaseEntity,
 	PrimaryGeneratedColumn,
 	Column,
-	BeforeInsert,
+	BeforeInsert
 } from "typeorm";
-
 
 @Entity()
 export class User extends BaseEntity {
