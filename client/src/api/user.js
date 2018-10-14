@@ -6,4 +6,8 @@ export async function me() {
 	return response.data;
 }
 
-export function s() {}
+export async function users(search) {
+	const response = await api().get(`/users/?search=${search}`);
+
+	return response.data;
+}

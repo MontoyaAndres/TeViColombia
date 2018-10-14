@@ -59,8 +59,8 @@ export default withFormik({
 	validateOnBlur: false,
 	validateOnChange: false,
 	validationSchema: CreateMatrixValidation,
-	handleSubmit: async (values, { setSubmitting }) => {
-		console.log(values);
+	handleSubmit: async (values, { setSubmitting, props: { name } }) => {
+		console.log(values, name);
 		setSubmitting(false);
 	}
 })(withStyles(styles)(index));
