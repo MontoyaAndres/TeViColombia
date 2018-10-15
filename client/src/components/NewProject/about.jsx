@@ -44,7 +44,7 @@ const About = ({ classes, closeWindow, open, name }) => (
 					</IconButton>
 					<Typography
 						component="h6"
-						variant="title"
+						variant="h6"
 						color="inherit"
 						className={classes.flex}
 					>
@@ -58,7 +58,7 @@ const About = ({ classes, closeWindow, open, name }) => (
 						matrice.name === name && (
 							<Fragment key={key}>
 								<div style={{ padding: 20 }}>
-									<Typography component="h4" variant="display1">
+									<Typography component="h4" variant="h4">
 										Concepto
 									</Typography>
 								</div>
@@ -66,7 +66,7 @@ const About = ({ classes, closeWindow, open, name }) => (
 								<div style={{ padding: 20 }}>
 									<Typography
 										component="h6"
-										variant="title"
+										variant="h6"
 										style={{ fontWeight: 400 }}
 									>
 										{matrice.about.concept}
@@ -74,7 +74,7 @@ const About = ({ classes, closeWindow, open, name }) => (
 								</div>
 
 								<div style={{ padding: 20 }}>
-									<Typography component="h4" variant="display1">
+									<Typography component="h4" variant="h4">
 										Procedimiento para su elaboración
 									</Typography>
 								</div>
@@ -82,7 +82,7 @@ const About = ({ classes, closeWindow, open, name }) => (
 								<div style={{ padding: 20 }}>
 									<Typography
 										component="h6"
-										variant="title"
+										variant="h6"
 										style={{ fontWeight: 400 }}
 									>
 										{matrice.about.elaboration.map((step, index) => (
@@ -94,7 +94,7 @@ const About = ({ classes, closeWindow, open, name }) => (
 								</div>
 
 								<div style={{ padding: 20 }}>
-									<Typography component="h4" variant="display1">
+									<Typography component="h4" variant="h4">
 										Criterios de decisión
 									</Typography>
 								</div>
@@ -102,7 +102,7 @@ const About = ({ classes, closeWindow, open, name }) => (
 								<div style={{ padding: 20 }}>
 									<Typography
 										component="h6"
-										variant="title"
+										variant="h6"
 										style={{ fontWeight: 400 }}
 									>
 										{matrice.about.criteria.split("\n").map((item, index) => (

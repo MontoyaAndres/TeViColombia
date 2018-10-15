@@ -39,11 +39,16 @@ function renderInput(inputProps) {
 }
 
 class Autocompleter extends PureComponent {
-	state = {
-		data: [],
-		inputValue: "",
-		selectedItem: []
-	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			data: [],
+			inputValue: "",
+			selectedItem: []
+		};
+		// this array will save every id.
+		this.userIds = [];
+	}
 
 	fetchUsers = async event => {
 		if (!event.target.value) {
@@ -55,22 +60,27 @@ class Autocompleter extends PureComponent {
 		this.setState({ data: response.users });
 	};
 
-	handleChange = item => {
-		let { selectedItem } = this.state;
+	handleInputChange = event => {
+		this.setState({ inputValue: event.target.value });
+		this.fetchUsers(event);
+	};
 
-		if (selectedItem.indexOf(item) === -1) {
-			selectedItem = [...selectedItem, item];
+	handleChange = ({ id, fullname }) => {
+		let { selectedItem } = this.state;
+		const { setFieldValue } = this.props;
+
+		if (selectedItem.indexOf(fullname) === -1) {
+			selectedItem = [...selectedItem, fullname];
+			// save ids selected
+			this.userIds.push(id);
+			// pass ids to formik
+			setFieldValue("coworkers", this.userIds, false);
 		}
 
 		this.setState({
 			inputValue: "",
 			selectedItem
 		});
-	};
-
-	handleInputChange = event => {
-		this.setState({ inputValue: event.target.value });
-		this.fetchUsers(event);
 	};
 
 	handleDelete = item => () => {
@@ -90,6 +100,7 @@ class Autocompleter extends PureComponent {
 				inputValue={inputValue}
 				onChange={this.handleChange}
 				selectedItem={selectedItem}
+				itemToString={item => (item ? item.fullname : "")}
 			>
 				{({ getInputProps, getItemProps, isOpen, highlightedIndex }) => (
 					<div>
@@ -115,13 +126,16 @@ class Autocompleter extends PureComponent {
 								{data.slice(0, 10).map((item, index) => (
 									<MenuItem
 										{...getItemProps({
-											item: `${item.name} ${item.lastname}`
+											item: {
+												id: item.id,
+												fullname: item.fullname
+											}
 										})}
 										key={item.id}
 										selected={highlightedIndex === index}
 										component="div"
 									>
-										{`${item.name} ${item.lastname}`}
+										{item.fullname}
 									</MenuItem>
 								))}
 							</Fragment>
