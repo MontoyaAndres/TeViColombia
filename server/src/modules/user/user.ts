@@ -18,7 +18,7 @@ const resolvers: ResolverMap = {
 		if (request.session) {
 			if (request.session) {
 				const users = await User.query(
-					`SELECT id, name, lastname FROM user as User WHERE name LIKE '%${search}%' OR lastname LIKE '%${search}%'`
+					`SELECT id, CONCAT(name, ' ', lastname) AS fullname FROM user HAVING fullname LIKE '%${search}%'`
 				);
 
 				response.send({ ok: true, users });

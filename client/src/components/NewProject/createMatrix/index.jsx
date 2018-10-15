@@ -21,12 +21,18 @@ const styles = theme => ({
 	}
 });
 
-const index = ({ classes, handleSubmit, isSubmitting, closeWindow }) => (
+const index = ({
+	classes,
+	handleSubmit,
+	isSubmitting,
+	setFieldValue,
+	closeWindow
+}) => (
 	<div>
 		<Form method="POST" onSubmit={handleSubmit}>
 			<Paper className={classes.root} elevation={1}>
 				<Title />
-				<Coworkers />
+				<Coworkers setFieldValue={setFieldValue} />
 				<Variables />
 
 				<Button
@@ -54,7 +60,8 @@ const index = ({ classes, handleSubmit, isSubmitting, closeWindow }) => (
 
 export default withFormik({
 	mapPropsToValues: () => ({
-		title: ""
+		title: "",
+		coworkers: []
 	}),
 	validateOnBlur: false,
 	validateOnChange: false,
