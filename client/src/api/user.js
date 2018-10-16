@@ -11,3 +11,9 @@ export async function users(search) {
 
 	return response.data;
 }
+
+export async function updateUser(data) {
+	const response = await api().post("/updateuser", data);
+
+	return response.data;
+}

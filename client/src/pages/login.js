@@ -61,7 +61,7 @@ const Login = ({ classes }) => (
 									setSubmitting(false);
 									// Getting current user
 									await state.actions.getMeUser();
-									Router.replace("/");
+									Router.push("/");
 								} else {
 									setSubmitting(false);
 									setErrors(normalizeErrors(errors));
