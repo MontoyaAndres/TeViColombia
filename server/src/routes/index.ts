@@ -17,6 +17,7 @@ Router
 	.post("/login", login.login)
 	.get("/logout", login.logout)
 	.get("/confirm/:id", confirmEmail)
+	.post("/updateuser", userAuth, user.updateUser)
 
 	// Matrix module
 	.post("/matrix", userAuth, matrix.createMatrix);

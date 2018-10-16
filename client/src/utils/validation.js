@@ -36,3 +36,22 @@ export const CreateMatrixValidation = Yup.object().shape({
 		.typeError("Campo incorrecto")
 		.required("El campo es obligatorio!")
 });
+
+export const UserConfiguration = Yup.object().shape({
+	name: Yup.string()
+		.typeError("Campo incorrecto")
+		.required("El campo es obligatorio!"),
+	lastname: Yup.string()
+		.typeError("Campo incorrecto")
+		.required("El campo es obligatorio!"),
+	email: Yup.string()
+		.email("Correo incorrecto")
+		.typeError("Campo incorrecto")
+		.required("El campo es obligatorio!"),
+	oldPassword: Yup.string()
+		.typeError("Campo incorrecto")
+		.required("El campo es obligatorio!"),
+	newPassword: Yup.string()
+		.typeError("Campo incorrecto")
+		.required("El campo es obligatorio!")
+});

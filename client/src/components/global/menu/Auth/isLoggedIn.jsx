@@ -25,8 +25,14 @@ class IsLoggedIn extends PureComponent {
 		if (response.ok) {
 			// Getting current user
 			await state.actions.getMeUser();
-			Router.replace("/login");
+			Router.push("/login");
 		}
+	};
+
+	redirect = url => {
+		const { handleClose } = this.props;
+		handleClose();
+		Router.push(url);
 	};
 
 	render() {
@@ -57,7 +63,7 @@ class IsLoggedIn extends PureComponent {
 					open={!!openUser}
 					onClose={handleClose}
 				>
-					<MenuItem>
+					<MenuItem onClick={() => this.redirect("/configuration")}>
 						<Build style={{ paddingRight: 10 }} /> Configuración
 					</MenuItem>
 					<MenuItem onClick={() => this.logoutUser()}>
