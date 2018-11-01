@@ -96,7 +96,11 @@ class index extends PureComponent {
 								<IconButton onClick={this.handleMenuModal}>
 									<MenuIcon />
 								</IconButton>
-								<Typography variant="headline" style={{ color: "#27c1d6" }}>
+								<Typography
+									component="h5"
+									variant="h5"
+									style={{ color: "#27c1d6" }}
+								>
 									SEMontoya
 								</Typography>
 							</div>

@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button";
 
 import { CreateMatrixValidation } from "../../../utils/validation";
 import Title from "./title";
-import Variables from "./variables";
 import Coworkers from "./coworkers";
 
 const styles = theme => ({
@@ -33,7 +32,6 @@ const index = ({
 			<Paper className={classes.root} elevation={1}>
 				<Title />
 				<Coworkers setFieldValue={setFieldValue} />
-				<Variables />
 
 				<Button
 					disabled={isSubmitting}
