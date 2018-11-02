@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Link from "next/link";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -18,4 +18,4 @@ const NewProject = ({ onHandleClose }) => (
 	</div>
 );
 
-export default NewProject;
+export default memo(NewProject);

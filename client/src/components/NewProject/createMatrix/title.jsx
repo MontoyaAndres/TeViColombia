@@ -20,7 +20,7 @@ const Title = () => (
 			</Typography>
 		</div>
 		<div style={{ padding: "0 20px 20px 20px" }}>
-			<FieldText name="title" type="text" label="Título" />
+			<FieldText name="title" type="text" label="Título" required />
 			<Typography
 				component="p"
 				variant="caption"

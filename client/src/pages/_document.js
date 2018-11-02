@@ -9,7 +9,6 @@ class MyDocument extends Document {
 		return (
 			<html lang="es" dir="ltr">
 				<Head>
-					<title>SEMontoya</title>
 					<meta charSet="utf-8" />
 					<meta
 						name="viewport"

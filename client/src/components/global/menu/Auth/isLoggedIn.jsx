@@ -1,4 +1,4 @@
-import React, { Fragment, PureComponent } from "react";
+import React, { Fragment, PureComponent, memo } from "react";
 import Router from "next/router";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
@@ -81,4 +81,4 @@ const wrapperLoggedIn = React.forwardRef((props, ref) => (
 	</Consumer>
 ));
 
-export default wrapperLoggedIn;
+export default memo(wrapperLoggedIn);

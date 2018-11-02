@@ -1,6 +1,7 @@
 import React from "react";
 import NProgress from "nprogress";
 import Router from "next/router";
+import Head from "next/head";
 import App, { Container } from "next/app";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -36,6 +37,9 @@ class MyApp extends App {
 
 		return (
 			<Container>
+				<Head>
+					<title>SEMontoya</title>
+				</Head>
 				<JssProvider
 					registry={this.pageContext.sheetsRegistry}
 					generateClassName={this.pageContext.generateClassName}

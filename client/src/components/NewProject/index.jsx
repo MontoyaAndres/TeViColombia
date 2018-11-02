@@ -1,4 +1,4 @@
-import React, { Fragment, PureComponent } from "react";
+import React, { Fragment, PureComponent, lazy, Suspense } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
@@ -11,9 +11,11 @@ import IconButton from "@material-ui/core/IconButton";
 import Add from "@material-ui/icons/Add";
 import Help from "@material-ui/icons/Help";
 
+import Loading from "../global/loading";
 import MatricesList from "./MatricesList";
-import About from "./about";
-import CreateMatrix from "./createMatrix";
+
+const About = lazy(() => import("./about"));
+const CreateMatrix = lazy(() => import("./createMatrix"));
 
 const styles = theme => ({
 	root: {
@@ -46,7 +48,9 @@ class NewProject extends PureComponent {
 			<Fragment>
 				{/* If newMatrix is true, the user can create its own matrix. */}
 				{newMatrix ? (
-					<CreateMatrix closeWindow={this.createNewMatrix} name={name} />
+					<Suspense fallback={<Loading />}>
+						<CreateMatrix closeWindow={this.createNewMatrix} name={name} />
+					</Suspense>
 				) : (
 					<Paper className={classes.root} elevation={1}>
 						<List component="nav">
@@ -74,7 +78,13 @@ class NewProject extends PureComponent {
 
 							{/* When open is true, it'll show the help about any matrix. */}
 							{help && (
-								<About open={help} closeWindow={this.aboutMatrix} name={name} />
+								<Suspense fallback={<Loading />}>
+									<About
+										open={help}
+										closeWindow={this.aboutMatrix}
+										name={name}
+									/>
+								</Suspense>
 							)}
 						</List>
 					</Paper>
