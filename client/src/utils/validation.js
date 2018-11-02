@@ -48,10 +48,6 @@ export const UserConfiguration = Yup.object().shape({
 		.email("Correo incorrecto")
 		.typeError("Campo incorrecto")
 		.required("El campo es obligatorio!"),
-	oldPassword: Yup.string()
-		.typeError("Campo incorrecto")
-		.required("El campo es obligatorio!"),
-	newPassword: Yup.string()
-		.typeError("Campo incorrecto")
-		.required("El campo es obligatorio!")
+	oldPassword: Yup.string().typeError("Campo incorrecto"),
+	newPassword: Yup.string().typeError("Campo incorrecto")
 });

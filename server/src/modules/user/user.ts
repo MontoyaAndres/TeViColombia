@@ -50,26 +50,36 @@ const resolvers: ResolverMap = {
 			});
 
 			if (user) {
-				const checkPassword = await bcrypt.compare(oldPassword, user.password);
+				if (oldPassword || newPassword) {
+					const checkPassword = await bcrypt.compare(
+						oldPassword,
+						user.password
+					);
 
-				if (!checkPassword) {
-					response.send({
-						ok: false,
-						errors: [
-							{
-								path: "oldPassword",
-								message: "Contraseña incorrecta."
-							}
-						]
-					});
-					return;
+					if (!checkPassword) {
+						response.send({
+							ok: false,
+							errors: [
+								{
+									path: "oldPassword",
+									message: "Contraseña incorrecta."
+								}
+							]
+						});
+						return;
+					}
+
+					const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+					await User.update(
+						{ id: request.session.userId },
+						{ password: hashedPassword }
+					);
 				}
-
-				const hashedPassword = await bcrypt.hash(newPassword, 10);
 
 				await User.update(
 					{ id: request.session.userId },
-					{ name, lastname, email, password: hashedPassword }
+					{ name, lastname, email }
 				);
 
 				response.send({ ok: true });

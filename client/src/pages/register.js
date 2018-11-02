@@ -49,28 +49,38 @@ const Register = ({ classes, values, handleSubmit, isSubmitting }) => (
 				</Grid>
 				<Form method="POST" onSubmit={handleSubmit}>
 					<Grid item xs={12}>
-						<FieldText name="name" type="text" label="Nombre" />
+						<FieldText name="name" type="text" label="Nombre" required />
 						<Typography variant="caption" className={classes.error}>
 							<ErrorMessage name="name" />
 						</Typography>
 					</Grid>
 
 					<Grid item xs={12}>
-						<FieldText name="lastname" type="text" label="Apellido" />
+						<FieldText name="lastname" type="text" label="Apellido" required />
 						<Typography variant="caption" className={classes.error}>
 							<ErrorMessage name="lastname" />
 						</Typography>
 					</Grid>
 
 					<Grid item xs={12}>
-						<FieldText name="email" type="email" label="Correo electrónico" />
+						<FieldText
+							name="email"
+							type="email"
+							label="Correo electrónico"
+							required
+						/>
 						<Typography variant="caption" className={classes.error}>
 							<ErrorMessage name="email" />
 						</Typography>
 					</Grid>
 
 					<Grid item xs={12}>
-						<FieldText name="password" type="password" label="Contraseña" />
+						<FieldText
+							name="password"
+							type="password"
+							label="Contraseña"
+							required
+						/>
 						<Typography variant="caption" className={classes.error}>
 							<ErrorMessage name="password" />
 						</Typography>

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, memo } from "react";
 import Link from "next/link";
 import Button from "@material-ui/core/Button";
 
@@ -22,4 +22,4 @@ const isNotLoggedIn = ({ handleClose }) => (
 	</Fragment>
 );
 
-export default isNotLoggedIn;
+export default memo(isNotLoggedIn);

@@ -74,6 +74,7 @@ const Login = ({ classes }) => (
 											name="email"
 											type="email"
 											label="Correo electrónico"
+											required
 										/>
 										<Typography variant="caption" className={classes.error}>
 											<ErrorMessage name="email" />
@@ -85,6 +86,7 @@ const Login = ({ classes }) => (
 											name="password"
 											type="password"
 											label="Contraseña"
+											required
 										/>
 										<Typography variant="caption" className={classes.error}>
 											<ErrorMessage name="password" />

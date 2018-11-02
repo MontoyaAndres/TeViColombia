@@ -86,7 +86,12 @@ class Configuration extends PureComponent {
 											}}
 											render={({ isSubmitting }) => (
 												<Form method="POST">
-													<FieldText name="name" type="text" label="Nombre" />
+													<FieldText
+														name="name"
+														type="text"
+														label="Nombre"
+														required
+													/>
 													<Typography
 														variant="caption"
 														className={classes.error}
@@ -98,6 +103,7 @@ class Configuration extends PureComponent {
 														name="lastname"
 														type="text"
 														label="Apellido"
+														required
 													/>
 													<Typography
 														variant="caption"
@@ -110,6 +116,7 @@ class Configuration extends PureComponent {
 														name="email"
 														type="text"
 														label="Correo electrónico"
+														required
 													/>
 													<Typography
 														variant="caption"
@@ -121,7 +128,7 @@ class Configuration extends PureComponent {
 													<FieldText
 														name="oldPassword"
 														type="password"
-														label="Contraseña vieja"
+														label="Contraseña antigua"
 													/>
 													<Typography
 														variant="caption"

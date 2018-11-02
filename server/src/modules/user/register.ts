@@ -52,7 +52,7 @@ const resolvers: ResolverMap = {
 		sendEmailLink(
 			email,
 			await createConfimEmailLink(
-				process.env.BACKEND_HOST as string,
+				request.protocol + "://" + request.get("host"), // backend host
 				user.id,
 				redis
 			)
