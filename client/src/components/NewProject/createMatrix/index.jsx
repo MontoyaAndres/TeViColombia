@@ -7,6 +7,8 @@ import Button from "@material-ui/core/Button";
 import { CreateMatrixValidation } from "../../../utils/validation";
 import Title from "./title";
 import Coworkers from "./coworkers";
+import { createMatrix } from "../../../api/matrix";
+import normalizeErrors from "../../../utils/normalizeErrors";
 
 const styles = theme => ({
 	root: {
@@ -64,8 +66,18 @@ export default withFormik({
 	validateOnBlur: false,
 	validateOnChange: false,
 	validationSchema: CreateMatrixValidation,
-	handleSubmit: async (values, { setSubmitting, props: { name } }) => {
-		console.log(values, name);
-		setSubmitting(false);
+	handleSubmit: async (
+		values,
+		{ setSubmitting, setErrors, props: { name } }
+	) => {
+		const response = await createMatrix({ data: { values, name } });
+
+		const { ok, errors } = response;
+		if (ok) {
+			setSubmitting(false);
+		} else {
+			setSubmitting(false);
+			setErrors(normalizeErrors(errors));
+		}
 	}
 })(withStyles(styles)(index));

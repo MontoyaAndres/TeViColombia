@@ -5,10 +5,12 @@ import { Matrix } from "../../entity/Matrix";
 
 const resolvers: ResolverMap = {
 	async createMatrix(request, response) {
-		const requestBody = request.body;
+		const {
+			data: { values, name }
+		} = request.body;
 
 		try {
-			await CreateMatrixValidation.validate(requestBody, { abortEarly: false });
+			await CreateMatrixValidation.validate(values, { abortEarly: false });
 		} catch (err) {
 			response.send({
 				ok: false,
@@ -17,11 +19,8 @@ const resolvers: ResolverMap = {
 			return;
 		}
 
-		/* const { title, typeMatrix, coworkers } = requestBody; */
-		const { title } = requestBody;
-
 		const titleAlreadyExists = await Matrix.findOne({
-			where: { title },
+			where: { title: values.title },
 			select: ["title"]
 		});
 
@@ -37,6 +36,14 @@ const resolvers: ResolverMap = {
 			});
 			return;
 		}
+
+		const matrix = new Matrix();
+		console.log(values.coworkers);
+		matrix.coworkers = values.coworkers; // The coworkers
+		matrix.title = values.title; // What name has the matrix.
+		matrix.name = name; // What type of matrix is.
+
+		await matrix.save();
 
 		response.send({ ok: true });
 	}
