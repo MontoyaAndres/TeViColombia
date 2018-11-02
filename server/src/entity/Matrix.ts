@@ -18,12 +18,12 @@ export class Matrix extends BaseEntity {
 	title: string;
 
 	@Column("varchar", { length: 255 })
-	typeMatrix: string;
+	name: string;
 
-	@Column("json")
+	@Column("json", { nullable: true })
 	body: object;
 
 	@ManyToMany(() => User)
 	@JoinTable({ name: "coworkers" })
-	users: User[];
+	coworkers: User[];
 }
