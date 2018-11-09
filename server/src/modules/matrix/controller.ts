@@ -37,6 +37,7 @@ const resolvers: ResolverMap = {
 			return;
 		}
 
+		// ISSUE HERE https://stackoverflow.com/questions/53112794/how-to-insert-data-from-a-many-to-many-relationship-from-typeorm
 		const matrix = new Matrix();
 		console.log(values.coworkers);
 		matrix.coworkers = values.coworkers; // The coworkers
