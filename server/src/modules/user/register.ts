@@ -7,59 +7,106 @@ import { sendEmailLink } from "../../utils/sendEmail";
 import { redis } from "../../redis";
 
 const resolvers: ResolverMap = {
-	async register(request, response) {
-		const body = request.body;
+  async register(request, response) {
+    const body = request.body;
 
-		try {
-			await RegisterValidation.validate(body);
-		} catch (err) {
-			response.send({
-				ok: false,
-				errors: formatYupError(err)
-			});
-			return;
-		}
+    try {
+      await RegisterValidation.validate(body, { abortEarly: false });
+    } catch (err) {
+      response.send({
+        ok: false,
+        errors: formatYupError(err)
+      });
+      return;
+    }
 
-		const { name, lastname, email, password } = body;
+    const {
+      name,
+      lastname,
+      email,
+      telephone,
+      typeIdentificationDocument,
+      identificationDocument,
+      password
+    } = body;
 
-		const userAlreadyExists = await User.findOne({
-			where: { email },
-			select: ["id"]
-		});
+    const emailAlreadyExists = await User.findOne({
+      where: { email },
+      select: ["id"]
+    });
 
-		if (userAlreadyExists) {
-			response.send({
-				ok: false,
-				errors: [
-					{
-						path: "email",
-						message: "El usuario ya existe."
-					}
-				]
-			});
-			return;
-		}
+    const telephoneAlreadyExists = await User.findOne({
+      where: { telephone },
+      select: ["id"]
+    });
 
-		const user = User.create({
-			name,
-			lastname,
-			email,
-			password
-		});
+    const identificationDocumentAlreadyExists = await User.findOne({
+      where: { identificationDocument },
+      select: ["id"]
+    });
 
-		await user.save();
+    if (emailAlreadyExists) {
+      response.send({
+        ok: false,
+        errors: [
+          {
+            path: "email",
+            message: "El correo ya existe."
+          }
+        ]
+      });
+      return;
+    }
 
-		sendEmailLink(
-			email,
-			await createConfimEmailLink(
-				request.protocol + "://" + request.get("host"), // backend host
-				user.id,
-				redis
-			)
-		);
+    if (telephoneAlreadyExists) {
+      response.send({
+        ok: false,
+        errors: [
+          {
+            path: "email",
+            message: "El teléfono ya existe."
+          }
+        ]
+      });
+      return;
+    }
 
-		response.send({ ok: true });
-	}
+    if (identificationDocumentAlreadyExists) {
+      response.send({
+        ok: false,
+        errors: [
+          {
+            path: "email",
+            message: "El documento de identificación ya existe."
+          }
+        ]
+      });
+      return;
+    }
+
+    const user = User.create({
+      name,
+      lastname,
+      email,
+      telephone,
+      typeIdentificationDocument,
+      identificationDocument,
+      password
+    });
+
+    await user.save();
+
+    sendEmailLink(
+      email,
+      await createConfimEmailLink(
+        request.protocol + "://" + request.get("host"), // backend host
+        user.id,
+        redis
+      )
+    );
+
+    response.send({ ok: true });
+  }
 };
 
 export default resolvers;

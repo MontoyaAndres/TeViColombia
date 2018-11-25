@@ -1,0 +1,16 @@
+FROM node:8.12.0-alpine
+WORKDIR /usr/app
+
+COPY ./client/package.json .
+
+RUN yarn install --production=true --silent
+
+RUN yarn run build
+
+COPY ./client/dist ./client/dist
+
+ENV NODE_ENV production
+
+EXPOSE 3000
+
+CMD ["node", "client/dist/index.js"]
