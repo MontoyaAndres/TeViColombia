@@ -1,0 +1,16 @@
+FROM node:8.12.0-alpine
+
+RUN mkdir -p /teviepe-dev
+WORKDIR /teviepe-dev
+
+COPY ./package.json .
+
+RUN yarn install
+
+COPY . .
+
+ENV NODE_ENV development
+
+EXPOSE 4000
+
+CMD ["npm", "run", "dev"]

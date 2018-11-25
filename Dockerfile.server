@@ -1,0 +1,17 @@
+FROM node:8.12.0-alpine
+WORKDIR /usr/app
+
+COPY ./server/package.json .
+
+RUN yarn install --production=true --silent
+
+RUN yarn run build
+
+COPY ./server/dist ./server/dist
+COPY ./server/ormconfig.json .
+
+ENV NODE_ENV production
+
+EXPOSE 4000
+
+CMD ["node", "server/dist/index.js"]
