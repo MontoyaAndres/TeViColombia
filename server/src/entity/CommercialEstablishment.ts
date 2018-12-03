@@ -20,10 +20,10 @@ export class CommercialEstablishment extends BaseEntity {
   @Column("varchar", { length: 255, unique: true })
   name: string;
 
-  @Column("text")
+  @Column("varchar", { default: "default/default-home.png" })
   routePhoto: string;
 
-  @Column("text")
+  @Column("varchar")
   routeCover: string;
 
   @Column("text", { nullable: true })
