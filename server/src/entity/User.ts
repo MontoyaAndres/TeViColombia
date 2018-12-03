@@ -27,10 +27,10 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("text")
+  @Column("varchar", { default: "default/default-photo.png" })
   routePhoto: string;
 
-  @Column("text")
+  @Column("varchar", { nullable: true })
   routeCover: string;
 
   @Column("varchar", { length: 255 })

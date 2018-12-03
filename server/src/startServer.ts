@@ -37,6 +37,7 @@ export const startServer = async () => {
         }
       })
     )
+    .use(express.static(`${__dirname}/../public`))
     .use(Router)
     .listen(process.env.PORT || 4000);
 
