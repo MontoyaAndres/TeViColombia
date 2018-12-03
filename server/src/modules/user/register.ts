@@ -25,7 +25,7 @@ const resolvers: ResolverMap = {
       lastname,
       email,
       telephone,
-      typeIdentificationDocument,
+      identificationDocumentType,
       identificationDocument,
       password
     } = body;
@@ -89,7 +89,7 @@ const resolvers: ResolverMap = {
       lastname,
       email,
       telephone,
-      typeIdentificationDocument,
+      identificationDocumentType,
       identificationDocument,
       password
     });

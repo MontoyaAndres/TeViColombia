@@ -1,3 +1,5 @@
+sudo docker-compose -f docker-compose.dev.yml exec db bash
+
 https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/tel
 
 https://github.com/nicer00ster/nicer00ster-portfolio/blob/master/next.config.js
