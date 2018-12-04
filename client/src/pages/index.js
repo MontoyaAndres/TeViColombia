@@ -1,6 +1,5 @@
-import React from "react";
-import NewProject from "../components/NewProject";
+import React, { Fragment } from "react";
 
-const index = () => <NewProject />;
+const index = () => <Fragment>hola</Fragment>;
 
 export default index;
