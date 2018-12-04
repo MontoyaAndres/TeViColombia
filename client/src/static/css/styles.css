@@ -1,0 +1,62 @@
+.navbar {
+  background-color: transparent;
+  min-height: 4.25rem;
+}
+
+.navbar-menu {
+  background-color: transparent;
+}
+
+.navbar-brand,
+.navbar-tabs {
+  min-height: 4.25rem;
+}
+
+.navbar-item {
+  color: white;
+}
+
+.navbar-link.is-active,
+.navbar-link:hover,
+a.navbar-item.is-active,
+a.navbar-item:hover {
+  transition-duration: 0.5s;
+  color: #4a4a4a;
+  background-color: transparent;
+}
+
+.button.is-primary.is-hovered,
+.button.is-primary:hover,
+.button.is-light.is-hovered,
+.button.is-light:hover {
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in;
+}
+
+#fullpage {
+  background: url(https://picsum.photos/1080/600?image=10) no-repeat center
+    center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+input[type="search"].input::-webkit-input-placeholder {
+  color: #4a4a4a;
+}
+
+input[type="search"].input::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #4a4a4a;
+}
+
+input[type="search"].input:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #4a4a4a;
+}
+
+input[type="search"].input:-moz-placeholder {
+  /* Firefox 18- */
+  color: #4a4a4a;
+}

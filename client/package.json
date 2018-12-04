@@ -1,7 +1,7 @@
 {
 	"name": "client",
 	"version": "1.0.0",
-	"description": "Herramienta para la gestión estratégica organizacional para el sector productivo de la ciudad de Girardot.",
+	"description": "Tejidos virtuales para el Emprendimiento, las Prácticas profesionales y la Empleabilidad.",
 	"main": "index.js",
 	"repository": "https://github.com/MontoyaAndres/GestionEstrategicaOrganizacional",
 	"author": "Andrés Mauricio Montoya Sánchez",
@@ -24,21 +24,15 @@
 		"prettier": "latest"
 	},
 	"dependencies": {
-		"@material-ui/core": "^3.3.2",
-		"@material-ui/icons": "^3.0.1",
 		"axios": "^0.18.0",
 		"cookie-parser": "^1.4.3",
-		"downshift": "^3.1.4",
 		"express": "^4.16.3",
 		"formik": "^1.2.0",
-		"jss": "^9.8.7",
 		"next": "^7.0.2",
 		"next-offline": "^3.0.4",
 		"nprogress": "^0.2.0",
 		"react": "^16.6.0",
 		"react-dom": "^16.6.0",
-		"react-jss": "^8.6.1",
-		"styled-jsx": "^3.0.2",
 		"yup": "^0.26.3"
 	}
 }

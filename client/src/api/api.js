@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API = "http://localhost:8080/";
+import config from '../config.json';
+
+const API = config.SERVER_API;
 
 export default () =>
 	axios.create({
