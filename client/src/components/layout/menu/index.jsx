@@ -1,4 +1,6 @@
-import React, { Fragment, PureComponent } from "react";
+import React, { PureComponent } from "react";
+import Link from "next/link";
+import { withRouter } from "next/router";
 
 import Background from "./background";
 
@@ -14,9 +16,15 @@ class menu extends PureComponent {
 
   render() {
     const { clicked } = this.state;
+    const {
+      router: { pathname }
+    } = this.props;
 
     return (
-      <section id="fullpage" className="hero is-fullheight">
+      <section
+        id={pathname === "/" ? "fullpage" : ""}
+        className={pathname === "/" ? "hero is-fullheight" : ""}
+      >
         <div className="hero-head">
           <nav
             className="navbar"
@@ -24,14 +32,16 @@ class menu extends PureComponent {
             aria-label="main navigation"
           >
             <div className="navbar-brand">
-              <a className="navbar-item" href="/">
-                <img
-                  src="https://bulma.io/images/bulma-logo.png"
-                  width="112"
-                  height="28"
-                  alt="logo"
-                />
-              </a>
+              <Link prefetch href="/">
+                <a className="navbar-item">
+                  <img
+                    src="https://bulma.io/images/bulma-logo.png"
+                    width="112"
+                    height="28"
+                    alt="logo"
+                  />
+                </a>
+              </Link>
 
               <a
                 role="button"
@@ -54,18 +64,28 @@ class menu extends PureComponent {
               }`}
             >
               <div className="navbar-start">
-                <a className="navbar-item">Inicio</a>
-                <a className="navbar-item">Mi perfil</a>
-                <a className="navbar-item">Mi negocio</a>
+                <Link prefetch href="/">
+                  <a className="navbar-item">Inicio</a>
+                </Link>
+                <Link prefetch href="/mi-perfil">
+                  <a className="navbar-item">Mi perfil</a>
+                </Link>
+                <Link prefetch href="/mi-negocio">
+                  <a className="navbar-item">Mi negocio</a>
+                </Link>
               </div>
 
               <div className="navbar-end">
                 <div className="navbar-item">
                   <div className="buttons">
                     <a className="button is-primary">
-                      <strong>Crear nueva cuenta</strong>
+                      <Link prefetch href="/register">
+                        <strong>Crear nueva cuenta</strong>
+                      </Link>
                     </a>
-                    <a className="button is-light">Entrar</a>
+                    <Link prefetch href="/login">
+                      <a className="button is-light">Entrar</a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -73,10 +93,10 @@ class menu extends PureComponent {
           </nav>
         </div>
 
-        <Background />
+        {pathname === "/" && <Background />}
       </section>
     );
   }
 }
 
-export default menu;
+export default withRouter(menu);
