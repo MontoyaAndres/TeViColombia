@@ -42,6 +42,11 @@ a.navbar-item:hover {
   background-size: cover;
 }
 
+#title {
+  color: white;
+  font-weight: bold;
+}
+
 input.input::-webkit-input-placeholder {
   color: #4a4a4a;
 }
@@ -82,4 +87,23 @@ input.input:-moz-placeholder {
 
 .field .control .input {
   font-weight: 300;
+}
+
+/*No arrows in inputs*/
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@media screen and (max-width: 800px) {
+  #title {
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  #title {
+    font-size: 40px;
+  }
 }

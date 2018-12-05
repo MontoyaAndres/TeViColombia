@@ -2,9 +2,11 @@ import * as Yup from "yup";
 
 export const RegisterValidation = Yup.object().shape({
   name: Yup.string()
+    .matches(/^[a-zA-Z_ ]*$/, "Ingrese un nombre correcto.")
     .typeError("Campo incorrecto")
     .required("El campo es obligatorio!"),
   lastname: Yup.string()
+    .matches(/^[a-zA-Z_ ]*$/, "Ingrese un apellido correcto.")
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!"),
   email: Yup.string()
@@ -12,11 +14,15 @@ export const RegisterValidation = Yup.object().shape({
     .typeError("Campo incorrecto")
     .required("El campo es obligatorio!"),
   telephone: Yup.string()
-    .matches(/^[0][1-9]\d{9}$|^[1-9]\d{9}$/, "Ingrese un teléfono correcto.")
+    .matches(
+      /^[0][1-9]\d{9}$|^[1-9]\d{9}$/,
+      "Ingrese un número de teléfono correcto."
+    )
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!"),
   identificationDocument: Yup.number()
-    .integer("Número de documento de identificación incorrecto.")
+    .positive("Número de documento de identificación incorrecto.")
+    .integer()
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!"),
   password: Yup.string()

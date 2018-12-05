@@ -24,14 +24,7 @@ class Background extends PureComponent {
     return (
       <div className="hero-body">
         <div className="container is-widescreen has-text-centered">
-          <p
-            className="animated pulse"
-            style={{
-              color: "white",
-              fontWeight: "bold",
-              fontSize: width < 600 ? 20 : 40
-            }}
-          >
+          <p className="animated pulse" id="title">
             Tejidos virtuales para el Emprendimiento, las Prácticas
             profesionales y la Empleabilidad
           </p>
