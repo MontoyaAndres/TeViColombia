@@ -45,7 +45,7 @@ export class User extends BaseEntity {
   @Column("varchar", { length: 255 })
   identificationDocumentType: string;
 
-  @Column("integer", { unique: true })
+  @Column("bigint", { unique: true })
   identificationDocument: number;
 
   @Column("varchar", { length: 255, nullable: true })

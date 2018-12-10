@@ -37,9 +37,10 @@ app
         const filePath = join(__dirname, ".next", pathname);
         app.serveStatic(req, res, filePath);
       })
-      /* .get("/", isNotLoggedIn, (req, res) => handle(req, res))
-			.get("/login", isLoggedIn, (req, res) => handle(req, res))
-			.get("/register", isLoggedIn, (req, res) => handle(req, res)) */
+      .get("/login", isLoggedIn, (req, res) => handle(req, res))
+      .get("/register", isLoggedIn, (req, res) => handle(req, res))
+      .get("/mi-perfil", isNotLoggedIn, (req, res) => handle(req, res))
+      .get("/mi-negocio", isNotLoggedIn, (req, res) => handle(req, res))
       .get("*", (req, res) => handle(req, res))
       .listen(process.env.PORT || 3000);
   })

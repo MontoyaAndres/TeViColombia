@@ -13,7 +13,7 @@ body {
 }
 
 .navbar {
-  background-color: rgba(74, 74, 74, 0.3);
+  background-color: rgba(74, 74, 74, 0.5);
 }
 
 .navbar-menu {
@@ -21,6 +21,7 @@ body {
 }
 
 .navbar-item {
+  font-weight: 500;
   color: white;
 }
 
@@ -93,11 +94,14 @@ input.input:-moz-placeholder {
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.5), 0 0 0 1px rgba(10, 10, 10, 0.5);
 }
 
-.field .control .input {
-  font-weight: 300px;
+.field .control .input,
+.field .control .select {
+  -webkit-box-shadow: 0 0 0 1px rgba(10, 10, 10, 0.5);
+  box-shadow: 0 0 0 1px rgba(10, 10, 10, 0.5);
+  border-radius: 4px;
 }
 
-/*No arrows in inputs*/
+/*No arrows in number inputs*/
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;

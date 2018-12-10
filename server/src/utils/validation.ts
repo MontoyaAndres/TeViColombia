@@ -22,7 +22,6 @@ export const RegisterValidation = Yup.object().shape({
     .required("El campo es obligatorio!"),
   identificationDocument: Yup.number()
     .positive("Número de documento de identificación incorrecto.")
-    .integer()
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!"),
   password: Yup.string()
