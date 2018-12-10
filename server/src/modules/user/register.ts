@@ -63,7 +63,7 @@ const resolvers: ResolverMap = {
         ok: false,
         errors: [
           {
-            path: "email",
+            path: "telephone",
             message: "El teléfono ya existe."
           }
         ]
@@ -76,7 +76,7 @@ const resolvers: ResolverMap = {
         ok: false,
         errors: [
           {
-            path: "email",
+            path: "identificationDocument",
             message: "El documento de identificación ya existe."
           }
         ]
