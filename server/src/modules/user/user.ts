@@ -9,26 +9,34 @@ const resolvers: ResolverMap = {
   async me(request, response) {
     if (request.session) {
       const me = await User.findOne({
-        select: ["name", "lastname"],
+        select: ["routePhoto", "routeCover", "name", "lastname"],
         where: { id: request.session.userId }
       });
 
       response.send({ ok: true, me });
     }
   },
-  async users(request, response) {
-    const search = request.query.search;
-
+  async user(request, response) {
     if (request.session) {
-      if (request.session) {
-        const users = await User.query(
-          `SELECT id, CONCAT(name, ' ', lastname) AS fullname FROM user WHERE id != '${
-            request.session.userId
-          }' HAVING fullname LIKE '%${search}%'`
-        );
+      const user = await User.findOne({
+        select: [
+          "description",
+          "identificationDocumentType",
+          "identificationDocument",
+          "address",
+          "telephone",
+          "departament",
+          "city",
+          "civilStatus",
+          "website",
+          "gender",
+          "email"
+        ],
+        where: { id: request.session.userId },
+        relations: ["socialnetwork", "language"]
+      });
 
-        response.send({ ok: true, users });
-      }
+      response.send({ ok: true, user });
     }
   },
   async updateUser(request, response) {

@@ -21,13 +21,10 @@ services:
     volumes:
       - ./:/teviepe-dev
       - /teviepe-dev/node_modules
+    env_file:
+      - ./server.env
     environment:
       REDIS: redis
-      SESSIONS_SECRET: 'sdasda'
-      FRONTEND_HOST: 'http://localhost:3000'
-      EMAIL_SERVICE: 'Hotmail'
-      EMAIL_USER: 'hello@outlook.com'
-      EMAIL_PASSWORD: 'YourAwesomePassword'
     ports:
       - "4000:4000"
     depends_on:

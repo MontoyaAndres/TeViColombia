@@ -1,14 +1,6 @@
 sudo docker-compose -f docker-compose.dev.yml exec db bash
 
-https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/tel
-
-https://github.com/nicer00ster/nicer00ster-portfolio/blob/master/next.config.js
-
-https://www.youtube.com/watch?v=Wyi2-d-2rg4&list=PLN3n1USn4xlnfJIQBa6bBjjiECnk6zL6s&index=36
-
-https://github.com/mui-org/material-ui/blob/master/docs/src/pages/page-layout-examples/album/Album.js
-
-https://stackoverflow.com/questions/4580193/json-result-to-html-newline
+Andres!123
 
 ### Clean cache of yarn
 
