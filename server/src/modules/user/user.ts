@@ -6,89 +6,89 @@ import { UserConfiguration } from "../../utils/validation";
 import { formatYupError } from "../../utils/formatYupError";
 
 const resolvers: ResolverMap = {
-	async me(request, response) {
-		if (request.session) {
-			const me = await User.findOne({
-				select: ["name", "lastname", "email"],
-				where: { id: request.session.userId }
-			});
+  async me(request, response) {
+    if (request.session) {
+      const me = await User.findOne({
+        select: ["name", "lastname"],
+        where: { id: request.session.userId }
+      });
 
-			response.send({ ok: true, me });
-		}
-	},
-	async users(request, response) {
-		const search = request.query.search;
+      response.send({ ok: true, me });
+    }
+  },
+  async users(request, response) {
+    const search = request.query.search;
 
-		if (request.session) {
-			if (request.session) {
-				const users = await User.query(
-					`SELECT id, CONCAT(name, ' ', lastname) AS fullname FROM user WHERE id != '${
-						request.session.userId
-					}' HAVING fullname LIKE '%${search}%'`
-				);
+    if (request.session) {
+      if (request.session) {
+        const users = await User.query(
+          `SELECT id, CONCAT(name, ' ', lastname) AS fullname FROM user WHERE id != '${
+            request.session.userId
+          }' HAVING fullname LIKE '%${search}%'`
+        );
 
-				response.send({ ok: true, users });
-			}
-		}
-	},
-	async updateUser(request, response) {
-		const body = request.body;
+        response.send({ ok: true, users });
+      }
+    }
+  },
+  async updateUser(request, response) {
+    const body = request.body;
 
-		try {
-			await UserConfiguration.validate(body, { abortEarly: false });
-		} catch (err) {
-			response.send({
-				ok: false,
-				errors: formatYupError(err)
-			});
-			return;
-		}
+    try {
+      await UserConfiguration.validate(body, { abortEarly: false });
+    } catch (err) {
+      response.send({
+        ok: false,
+        errors: formatYupError(err)
+      });
+      return;
+    }
 
-		const { name, lastname, email, oldPassword, newPassword } = body;
+    const { name, lastname, email, oldPassword, newPassword } = body;
 
-		if (request.session) {
-			const user = await User.findOne({
-				where: { id: request.session.userId }
-			});
+    if (request.session) {
+      const user = await User.findOne({
+        where: { id: request.session.userId }
+      });
 
-			if (user) {
-				if (oldPassword || newPassword) {
-					const checkPassword = await bcrypt.compare(
-						oldPassword,
-						user.password
-					);
+      if (user) {
+        if (oldPassword || newPassword) {
+          const checkPassword = await bcrypt.compare(
+            oldPassword,
+            user.password
+          );
 
-					if (!checkPassword) {
-						response.send({
-							ok: false,
-							errors: [
-								{
-									path: "oldPassword",
-									message: "Contraseña incorrecta."
-								}
-							]
-						});
-						return;
-					}
+          if (!checkPassword) {
+            response.send({
+              ok: false,
+              errors: [
+                {
+                  path: "oldPassword",
+                  message: "Contraseña incorrecta."
+                }
+              ]
+            });
+            return;
+          }
 
-					const hashedPassword = await bcrypt.hash(newPassword, 10);
+          const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-					await User.update(
-						{ id: request.session.userId },
-						{ password: hashedPassword }
-					);
-				}
+          await User.update(
+            { id: request.session.userId },
+            { password: hashedPassword }
+          );
+        }
 
-				await User.update(
-					{ id: request.session.userId },
-					{ name, lastname, email }
-				);
+        await User.update(
+          { id: request.session.userId },
+          { name, lastname, email }
+        );
 
-				response.send({ ok: true });
-				return;
-			}
-		}
-	}
+        response.send({ ok: true });
+        return;
+      }
+    }
+  }
 };
 
 export default resolvers;
