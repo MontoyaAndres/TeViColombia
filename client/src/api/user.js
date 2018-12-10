@@ -1,7 +1,7 @@
 import api from "./api";
 
 export async function me() {
-	const response = await api().get("/");
+  const response = await api().get("/");
 
-	return response.data;
+  return response.data;
 }

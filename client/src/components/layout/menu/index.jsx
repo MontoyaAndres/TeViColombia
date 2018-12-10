@@ -1,8 +1,10 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, Fragment } from "react";
 import Link from "next/link";
 import { withRouter } from "next/router";
 
 import Background from "./background";
+import IsLoggedIn from "./auth/isLoggedIn";
+import IsNotLoggedIn from "./auth/isNotLoggedIn";
 
 class menu extends PureComponent {
   state = {
@@ -17,7 +19,9 @@ class menu extends PureComponent {
   render() {
     const { clicked } = this.state;
     const {
-      router: { pathname }
+      router: { pathname },
+      response,
+      actions
     } = this.props;
 
     return (
@@ -67,26 +71,34 @@ class menu extends PureComponent {
                 <Link prefetch href="/">
                   <a className="navbar-item">Inicio</a>
                 </Link>
-                <Link prefetch href="/mi-perfil">
-                  <a className="navbar-item">Mi perfil</a>
+                {response && response.ok ? (
+                  <Fragment>
+                    <Link prefetch href="/mi-perfil">
+                      <a className="navbar-item">Mi perfil</a>
+                    </Link>
+                    <Link prefetch href="/mi-negocio">
+                      <a className="navbar-item">Mi negocio</a>
+                    </Link>
+                  </Fragment>
+                ) : null}
+                <Link prefetch href="/documentation">
+                  <a className="navbar-item">Documentación</a>
                 </Link>
-                <Link prefetch href="/mi-negocio">
-                  <a className="navbar-item">Mi negocio</a>
+                <Link prefetch href="/about">
+                  <a className="navbar-item">Acerca de nosotros</a>
                 </Link>
               </div>
 
               <div className="navbar-end">
                 <div className="navbar-item">
-                  <div className="buttons">
-                    <a className="button is-primary">
-                      <Link prefetch href="/register">
-                        <strong>Crear nueva cuenta</strong>
-                      </Link>
-                    </a>
-                    <Link prefetch href="/login">
-                      <a className="button is-light">Entrar</a>
-                    </Link>
-                  </div>
+                  {response && response.ok ? (
+                    <IsLoggedIn
+                      me={response.me}
+                      getMeUser={actions.getMeUser}
+                    />
+                  ) : (
+                    <IsNotLoggedIn />
+                  )}
                 </div>
               </div>
             </div>

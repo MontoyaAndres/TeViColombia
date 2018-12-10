@@ -1,15 +1,23 @@
+html,
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+::-moz-selection {
+  background-color: #00d1b2;
+  color: white;
+}
+::selection {
+  background-color: #00d1b2;
+  color: white;
+}
+
 .navbar {
   background-color: rgba(74, 74, 74, 0.3);
-  min-height: 4.25rem;
 }
 
 .navbar-menu {
   background-color: transparent;
-}
-
-.navbar-brand,
-.navbar-tabs {
-  min-height: 4.25rem;
 }
 
 .navbar-item {
@@ -86,7 +94,7 @@ input.input:-moz-placeholder {
 }
 
 .field .control .input {
-  font-weight: 300;
+  font-weight: 300px;
 }
 
 /*No arrows in inputs*/

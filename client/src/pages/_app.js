@@ -5,6 +5,7 @@ import Head from "next/head";
 import App, { Container } from "next/app";
 
 import Layout from "../components/layout";
+import { Provider } from "../components/shared/contextApi";
 
 // Loading route config
 Router.onRouteChangeStart = () => NProgress.start();
@@ -20,9 +21,11 @@ class MyApp extends App {
         <Head>
           <title>Te vi EPE</title>
         </Head>
-        <Layout>
-          <Component />
-        </Layout>
+        <Provider>
+          <Layout>
+            <Component />
+          </Layout>
+        </Provider>
       </Container>
     );
   }
