@@ -29,7 +29,7 @@ class menu extends PureComponent {
         id={pathname === "/" ? "fullpage" : ""}
         className={pathname === "/" ? "hero is-fullheight" : ""}
       >
-        <div className="hero-head">
+        <div className="animated fadeIn hero-head">
           <nav
             className="navbar"
             role="navigation"
@@ -63,9 +63,7 @@ class menu extends PureComponent {
 
             <div
               id="navbarButton"
-              className={`animated fadeIn navbar-menu ${
-                clicked ? "is-active" : ""
-              }`}
+              className={`navbar-menu ${clicked ? "is-active" : ""}`}
             >
               <div className="navbar-start">
                 <Link prefetch href="/">

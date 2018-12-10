@@ -8,10 +8,8 @@ import user from "../modules/user/user";
 
 const Router = express.Router();
 
-Router
-  // User module
-  .get("/", userAuth, user.me)
-  .get("/users", userAuth, user.users)
+Router.get("/", userAuth, user.me)
+  .get("/user", userAuth, user.user)
   .post("/register", register.register)
   .post("/login", login.login)
   .get("/logout", userAuth, login.logout)

@@ -12,12 +12,10 @@ body {
   color: white;
 }
 
-.navbar {
-  background-color: rgba(74, 74, 74, 0.5);
-}
-
+.navbar,
+.navbar-brand,
 .navbar-menu {
-  background-color: transparent;
+  background-color: rgba(74, 74, 74, 0.5);
 }
 
 .navbar-item {
@@ -30,8 +28,8 @@ body {
 a.navbar-item.is-active,
 a.navbar-item:hover {
   transition-duration: 0.5s;
-  color: #4a4a4a;
-  background-color: transparent;
+  color: rgb(218, 218, 218);
+  background-color: rgba(74, 74, 74, 0.5);
 }
 
 .button.is-primary.is-hovered,
