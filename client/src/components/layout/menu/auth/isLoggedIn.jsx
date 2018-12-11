@@ -54,11 +54,7 @@ class isLoggedIn extends PureComponent {
             </span>
           </button>
         </div>
-        <div
-          className="dropdown-menu animated fadeIn"
-          id="dropdown-menu"
-          role="menu"
-        >
+        <div className="dropdown-menu" id="dropdown-menu" role="menu">
           <div className="dropdown-content">
             <Link prefetch href="/configuration">
               <a className="dropdown-item">Configuración de usuario</a>

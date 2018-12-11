@@ -5,3 +5,9 @@ export async function me() {
 
   return response.data;
 }
+
+export async function generalInformation() {
+  const response = await api().get("/user/generalInformation");
+
+  return response.data;
+}

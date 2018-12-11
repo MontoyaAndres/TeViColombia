@@ -16,7 +16,7 @@ const resolvers: ResolverMap = {
       response.send({ ok: true, me });
     }
   },
-  async user(request, response) {
+  async generalInformation(request, response) {
     if (request.session) {
       const user = await User.findOne({
         select: [
