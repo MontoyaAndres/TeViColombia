@@ -83,7 +83,13 @@ input.input:-moz-placeholder {
   padding-bottom: 20px;
 }
 
-.avatar img {
+.avatar-profile {
+  margin-top: -127px;
+  padding-bottom: 20px;
+}
+
+.avatar img,
+.avatar-profile img {
   padding: 5px;
   background: #fff;
   border-radius: 50%;
@@ -104,6 +110,14 @@ input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.columns {
+  margin: 0;
+}
+
+.box {
+  margin-top: 1.5rem;
 }
 
 @media screen and (max-width: 800px) {

@@ -9,7 +9,7 @@ import user from "../modules/user/user";
 const Router = express.Router();
 
 Router.get("/", userAuth, user.me)
-  .get("/user", userAuth, user.user)
+  .get("/user/generalInformation", userAuth, user.generalInformation)
   .post("/register", register.register)
   .post("/login", login.login)
   .get("/logout", userAuth, login.logout)
