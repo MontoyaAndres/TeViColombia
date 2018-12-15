@@ -1,12 +1,13 @@
 import React from "react";
-import Router from "next/router";
 import { Formik, Form } from "formik";
 
+import { Router } from "../routes";
 import { TextField } from "../components/shared/globalField";
 import { LoginValidation } from "../utils/validation";
 import { login } from "../api/auth";
 import { Consumer } from "../components/shared/contextApi";
 import normalizeErrors from "../utils/normalizeErrors";
+import { isLoggedIn } from "../utils/auth";
 
 const Login = () => (
   <div className="hero is-fullheight-with-navbar">
@@ -36,7 +37,7 @@ const Login = () => (
                       setSubmitting(false);
                       // Getting current user
                       await state.actions.getMeUser();
-                      Router.push("/");
+                      Router.pushRoute("/");
                     } else {
                       setSubmitting(false);
                       setErrors(normalizeErrors(errors));
@@ -78,5 +79,7 @@ const Login = () => (
     </div>
   </div>
 );
+
+Login.getInitialProps = async context => isLoggedIn(context);
 
 export default Login;

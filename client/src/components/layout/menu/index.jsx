@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from "react";
-import Link from "next/link";
 import { withRouter } from "next/router";
 
+import { Link } from "../../../routes";
 import Background from "./background";
 import IsLoggedIn from "./auth/isLoggedIn";
 import IsNotLoggedIn from "./auth/isNotLoggedIn";
@@ -36,7 +36,7 @@ class menu extends PureComponent {
             aria-label="main navigation"
           >
             <div className="navbar-brand">
-              <Link prefetch href="/">
+              <Link route="/">
                 <a className="navbar-item">
                   <img
                     src="https://bulma.io/images/bulma-logo.png"
@@ -66,23 +66,23 @@ class menu extends PureComponent {
               className={`navbar-menu ${clicked ? "is-active" : ""}`}
             >
               <div className="navbar-start">
-                <Link prefetch href="/">
+                <Link route="/">
                   <a className="navbar-item">Inicio</a>
                 </Link>
                 {response && response.ok ? (
                   <Fragment>
-                    <Link prefetch href="/mi-perfil">
+                    <Link route="perfil" params={{ id: response.me.id }}>
                       <a className="navbar-item">Mi perfil</a>
                     </Link>
-                    <Link prefetch href="/mi-negocio">
+                    <Link route="mi-negocio">
                       <a className="navbar-item">Mi negocio</a>
                     </Link>
                   </Fragment>
                 ) : null}
-                <Link prefetch href="/documentation">
+                <Link route="documentation">
                   <a className="navbar-item">Documentación</a>
                 </Link>
-                <Link prefetch href="/about">
+                <Link route="about">
                   <a className="navbar-item">Acerca de nosotros</a>
                 </Link>
               </div>

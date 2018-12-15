@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
-import Link from "next/link";
-import Router from "next/router";
 
+import { Link, Router } from "../../../../routes";
 import { logout } from "../../../../api/auth";
 
 class isLoggedIn extends PureComponent {
@@ -22,7 +21,7 @@ class isLoggedIn extends PureComponent {
     this.openMenu();
     if (response.ok) {
       await getMeUser();
-      Router.push("/");
+      Router.pushRoute("/");
     }
   };
 
@@ -56,7 +55,7 @@ class isLoggedIn extends PureComponent {
         </div>
         <div className="dropdown-menu" id="dropdown-menu" role="menu">
           <div className="dropdown-content">
-            <Link prefetch href="/configuration">
+            <Link route="configuration">
               <a className="dropdown-item">Configuración de usuario</a>
             </Link>
             <a href="#" className="dropdown-item" onClick={this.logoutUser}>

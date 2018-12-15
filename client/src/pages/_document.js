@@ -16,8 +16,8 @@ class MyDocument extends Document {
             name="description"
             content="Tejidos virtuales para el Emprendimiento, las Prácticas profesionales y la Empleabilidad."
           />
-          <link rel="manifest" href="static/manifest.json" />
-          <link rel="shortcut icon" href="static/favicon.ico" />
+          <link rel="manifest" href="/static/manifest.json" />
+          <link rel="shortcut icon" href="/static/favicon.ico" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta
             name="apple-mobile-web-app-status-bar-style"
@@ -28,17 +28,17 @@ class MyDocument extends Document {
           <link
             rel="apple-touch-icon"
             sizes="180x180"
-            href="static/img/apple-touch-icon.png"
+            href="/static/img/apple-touch-icon.png"
           />
           <link
             rel="mask-icon"
-            href="static/img/safari-pinned-tab.svg"
+            href="/static/img/safari-pinned-tab.svg"
             color="#ffffff"
           />
           <meta name="msapplication-TileColor" content="#ffffff" />
           <meta
             name="msapplication-TileImage"
-            content="static/icons/icon-192x192.png"
+            content="/static/icons/icon-192x192.png"
           />
           <meta
             property="og:title"
@@ -58,10 +58,10 @@ class MyDocument extends Document {
             integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
             crossOrigin="anonymous"
           />
-          <link rel="stylesheet" href="static/css/nprogress.css" />
-          <link rel="stylesheet" href="static/css/bulma.min.css" />
-          <link rel="stylesheet" href="static/css/animate.min.css" />
-          <link rel="stylesheet" href="static/css/styles.css" />
+          <link rel="stylesheet" href="/static/css/nprogress.css" />
+          <link rel="stylesheet" href="/static/css/bulma.min.css" />
+          <link rel="stylesheet" href="/static/css/animate.min.css" />
+          <link rel="stylesheet" href="/static/css/styles.css" />
         </Head>
         <body>
           <Main />

@@ -4,31 +4,16 @@ const cookieParser = require("cookie-parser");
 const { join } = require("path");
 const { parse } = require("url");
 
+const routes = require("./routes");
+
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev, dir: "src" });
-const handle = app.getRequestHandler();
-
-const isLoggedIn = async (req, res, funcNext) => {
-  const cookie = await req.cookies["qid"];
-  if (cookie) {
-    return res.redirect("/");
-  }
-  return funcNext();
-};
-
-const isNotLoggedIn = async (req, res, funcNext) => {
-  const cookie = await req.cookies["qid"];
-  if (cookie) {
-    return funcNext();
-  }
-  return res.redirect("/login");
-};
+const handler = routes.getRequestHandler(app);
+const server = express();
 
 app
   .prepare()
   .then(() => {
-    const server = express();
-
     server
       .use(cookieParser())
       .get("/service-worker.js", (req, res) => {
@@ -37,11 +22,7 @@ app
         const filePath = join(__dirname, ".next", pathname);
         app.serveStatic(req, res, filePath);
       })
-      .get("/login", isLoggedIn, (req, res) => handle(req, res))
-      .get("/register", isLoggedIn, (req, res) => handle(req, res))
-      .get("/mi-perfil", isNotLoggedIn, (req, res) => handle(req, res))
-      .get("/mi-negocio", isNotLoggedIn, (req, res) => handle(req, res))
-      .get("*", (req, res) => handle(req, res))
+      .use(handler)
       .listen(process.env.PORT || 3000);
   })
   .catch(err => {
