@@ -3,9 +3,10 @@ import dynamic from "next/dynamic";
 
 import { Consumer } from "../components/shared/contextApi";
 import config from "../config.json";
+import { isNotLoggedIn } from "../utils/auth";
 
 const DynamicGeneralInformation = dynamic(
-  () => import("../components/mi-perfil/generalInformation"),
+  () => import("../components/perfil/generalInformation"),
   {
     loading: () => <p>Loading...</p>
   }
@@ -13,7 +14,7 @@ const DynamicGeneralInformation = dynamic(
 
 const API = config.SERVER_API;
 
-class miPerfil extends PureComponent {
+class Perfil extends PureComponent {
   state = {
     value: 1
   };
@@ -98,4 +99,6 @@ class miPerfil extends PureComponent {
   }
 }
 
-export default miPerfil;
+Perfil.getInitialProps = async context => isNotLoggedIn(context);
+
+export default Perfil;

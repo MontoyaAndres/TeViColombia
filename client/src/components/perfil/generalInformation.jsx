@@ -7,7 +7,7 @@ class generalInformation extends PureComponent {
     user: {}
   };
 
-  async componentDidMount() {
+  async componentWillMount() {
     const response = await information();
 
     this.setState({ user: response.user });
@@ -18,17 +18,17 @@ class generalInformation extends PureComponent {
 
     return (
       <div className="container">
-        <div className="columns is-desktop">
+        <div className="columns is-multiline">
           {user.description && (
             <div className="column is-12">
-              <dir className="box">
+              <dir className="box" style={{ marginTop: "0.5rem" }}>
                 <p className="subtitle is-4">{user.description}</p>
               </dir>
             </div>
           )}
 
           <div className="column is-6">
-            <div className="box">
+            <div className="box" style={{ marginTop: "0.5rem" }}>
               <p className="subtitle">
                 <strong>Documento de identificación:</strong>{" "}
                 {user.identificationDocumentType}
@@ -50,7 +50,7 @@ class generalInformation extends PureComponent {
           </div>
 
           <div className="column is-6">
-            <div className="box">
+            <div className="box" style={{ marginTop: "0.5rem" }}>
               <p className="subtitle">
                 <strong>Correo electrónico:</strong> {user.email}
               </p>
@@ -69,13 +69,27 @@ class generalInformation extends PureComponent {
             </div>
           </div>
 
-          <div className="column is-6">
-            <div className="box">
-              <p className="subtitle">
-                <strong>Redes sociales:</strong>
-              </p>
+          {user.socialnetwork && user.socialnetwork.length ? (
+            <div className="column is-6">
+              <div className="box" style={{ marginTop: "0.5rem" }}>
+                <p className="subtitle">
+                  <strong>Redes sociales:</strong>
+                  {JSON.stringify(user.socialnetwork)}
+                </p>
+              </div>
             </div>
-          </div>
+          ) : null}
+
+          {user.language && user.language.length ? (
+            <div className="column is-6">
+              <div className="box" style={{ marginTop: "0.5rem" }}>
+                <p className="subtitle">
+                  <strong>Idiomas:</strong>
+                  {JSON.stringify(user.language)}
+                </p>
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
     );

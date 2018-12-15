@@ -1,9 +1,9 @@
 import React from "react";
 import NProgress from "nprogress";
-import Router from "next/router";
 import Head from "next/head";
 import App, { Container } from "next/app";
 
+import { Router } from "../routes";
 import Layout from "../components/layout";
 import { Provider } from "../components/shared/contextApi";
 

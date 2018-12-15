@@ -9,7 +9,7 @@ const resolvers: ResolverMap = {
   async me(request, response) {
     if (request.session) {
       const me = await User.findOne({
-        select: ["routePhoto", "routeCover", "name", "lastname"],
+        select: ["id", "routePhoto", "routeCover", "name", "lastname"],
         where: { id: request.session.userId }
       });
 

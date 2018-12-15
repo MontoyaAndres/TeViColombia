@@ -5,6 +5,7 @@ import { TextField, SelectField } from "../components/shared/globalField";
 import { RegisterValidation } from "../utils/validation";
 import { register } from "../api/auth";
 import normalizeErrors from "../utils/normalizeErrors";
+import { isLoggedIn } from "../utils/auth";
 
 class Register extends PureComponent {
   state = {
@@ -129,6 +130,8 @@ class Register extends PureComponent {
     );
   }
 }
+
+Register.getInitialProps = async context => isLoggedIn(context);
 
 export default withFormik({
   mapPropsToValues: () => ({

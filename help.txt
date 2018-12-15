@@ -1,3 +1,4 @@
+sudo docker-compose -f docker-compose.dev.yml up --build
 sudo docker-compose -f docker-compose.dev.yml exec db bash
 
 Andres!123

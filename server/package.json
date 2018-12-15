@@ -44,6 +44,7 @@
     "typescript": "^3.1.6"
   },
   "scripts": {
-    "dev": "NODE_ENV=development nodemon --exec ts-node src/index.ts"
+    "dev": "NODE_ENV=development nodemon --exec ts-node src/index.ts",
+    "prod": "node dist/index.js"
   }
 }
