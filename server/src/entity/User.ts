@@ -78,6 +78,9 @@ export class User extends BaseEntity {
   @Column({ default: false })
   confirmed: boolean;
 
+  @Column({ default: false })
+  forgotPasswordLocked: boolean;
+
   @OneToMany(_ => PersonalSocialNetworks, socialnetwork => socialnetwork.user)
   socialnetwork: PersonalSocialNetworks[];
 

@@ -1,21 +1,11 @@
 import * as bcrypt from "bcryptjs";
 
 import { User } from "../../entity/User";
-import { ResolverMap } from "../../types/resolvers-utils";
+import { ResolverMap } from "../../@@types/resolvers-utils";
 import { UserConfiguration } from "../../utils/validation";
 import { formatYupError } from "../../utils/formatYupError";
 
 const resolvers: ResolverMap = {
-  async me(request, response) {
-    if (request.session) {
-      const me = await User.findOne({
-        select: ["id", "routePhoto", "routeCover", "name", "lastname"],
-        where: { id: request.session.userId }
-      });
-
-      response.send({ ok: true, me });
-    }
-  },
   async generalInformation(request, response) {
     if (request.session) {
       const user = await User.findOne({
