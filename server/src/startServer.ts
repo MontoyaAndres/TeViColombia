@@ -1,26 +1,43 @@
 import "reflect-metadata";
-import * as express from "express";
+import { GraphQLServer } from "graphql-yoga";
 import * as session from "express-session";
+import * as connectRedis from "connect-redis";
+import * as RateLimit from "express-rate-limit";
+import * as RateLimitRedisStore from "rate-limit-redis";
 import * as compression from "compression";
 import * as helmet from "helmet";
-import * as cors from "cors";
-import * as connectRedis from "connect-redis";
 
 import { createTypeormConn } from "./utils/createTypeormConn";
 import { redis } from "./redis";
-import Router from "./routes";
+import { genSchema } from "./utils/genSchema";
+import Routes from "./routes";
 
 const RedisStore = connectRedis(session);
 
-const app = express();
+export async function startServer() {
+  const server = new GraphQLServer({
+    schema: genSchema() as any,
+    context: ({ request }) => ({
+      redis,
+      url: request.protocol + "://" + request.get("host"),
+      session: request.session,
+      request
+    })
+  });
 
-export const startServer = async () => {
-  app
+  server.express
     .use(compression())
     .use(helmet())
-    .use(express.json({ limit: "50mb" }))
-    .use(express.urlencoded({ extended: false, limit: "50mb" }))
-    .use(cors({ credentials: true, origin: process.env.FRONTEND_HOST }))
+    .use(
+      new RateLimit({
+        store: new RateLimitRedisStore({
+          client: redis
+        }),
+        windowMs: 15 * 60 * 1000, // 15 minutes
+        max: 100, // Limit each IP to 100 requests per windowsMs
+        delayMs: 0 // Disable delaying - full speed until the max limit is reached
+      })
+    )
     .use(
       session({
         store: new RedisStore({
@@ -37,11 +54,14 @@ export const startServer = async () => {
         }
       })
     )
-    .use(express.static(`${__dirname}/../public`))
-    .use(Router)
-    .listen(process.env.PORT || 4000);
+    .use(Routes);
 
   await createTypeormConn();
 
+  const app = await server.start({
+    cors: { credentials: true, origin: process.env.FRONTEND_HOST },
+    port: 4000
+  });
+
   return app;
-};
+}
