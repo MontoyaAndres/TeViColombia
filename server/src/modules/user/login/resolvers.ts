@@ -62,9 +62,10 @@ export const resolvers: ResolveMap = {
         ];
       }
 
+      // login successful
       session.userId = user.id;
+
       if (request.sessionID) {
-        // login successful
         await redis.lpush(
           `${userSessionIdPrefix}${user.id}`,
           request.sessionID
