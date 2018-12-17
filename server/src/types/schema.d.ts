@@ -22,19 +22,19 @@ column: number;
 
 interface IQuery {
 __typename: "Query";
-generalInformation: IUserGeneralInformation | null;
+information: IUserInformation | null;
 me: IUser | null;
 }
 
-interface IGeneralInformationOnQueryArguments {
+interface IInformationOnQueryArguments {
 id?: string | null;
 }
 
-interface IUserGeneralInformation {
-__typename: "UserGeneralInformation";
+interface IUserInformation {
+__typename: "UserInformation";
 description: string | null;
-indentificationDocumentType: string;
-indentificationDocument: number;
+identificationDocumentType: string;
+identificationDocument: number;
 address: string | null;
 telephone: string;
 departament: string | null;
@@ -42,7 +42,83 @@ city: string | null;
 civilStatus: string | null;
 website: string | null;
 gender: string | null;
-email: string | null;
+email: string;
+socialnetwork: Array<ISocialNetwork | null> | null;
+language: Array<ILanguage | null> | null;
+university: Array<IUniversity | null> | null;
+secondaryschool: Array<ISecondary | null> | null;
+work: Array<IWork | null> | null;
+cv: Array<ICV | null> | null;
+professionalAptitude: Array<string | null> | null;
+feedback: Array<IFeedback | null> | null;
+necessity: Array<INecessity | null> | null;
+commercialEstablishment: Array<ICommercialEstablishment | null> | null;
+}
+
+interface ISocialNetwork {
+__typename: "SocialNetwork";
+name: string | null;
+url: string | null;
+}
+
+interface ILanguage {
+__typename: "Language";
+language: string | null;
+level: string | null;
+}
+
+interface IUniversity {
+__typename: "University";
+place: string | null;
+startedOn: any | null;
+finishIn: any | null;
+finished: boolean | null;
+especializations: Array<string | null> | null;
+attended: string | null;
+description: string | null;
+}
+
+interface ISecondary {
+__typename: "Secondary";
+place: string | null;
+startedOn: any | null;
+finishIn: any | null;
+finished: boolean | null;
+especializations: Array<string | null> | null;
+}
+
+interface IWork {
+__typename: "Work";
+place: string | null;
+job: string | null;
+localization: string | null;
+description: string | null;
+startedOn: any | null;
+finishIn: any | null;
+finished: boolean | null;
+}
+
+interface ICV {
+__typename: "CV";
+routeCV: string | null;
+}
+
+interface IFeedback {
+__typename: "Feedback";
+stars: number | null;
+comment: string | null;
+}
+
+interface INecessity {
+__typename: "Necessity";
+finished: boolean | null;
+comment: string | null;
+}
+
+interface ICommercialEstablishment {
+__typename: "CommercialEstablishment";
+name: string | null;
+routePhone: string | null;
 }
 
 interface IUser {
@@ -56,11 +132,17 @@ lastname: string;
 
 interface IMutation {
 __typename: "Mutation";
+updateInformation: boolean;
 sendForgotPasswordEmail: boolean | null;
 forgotPasswordChange: Array<IError> | null;
 login: Array<IError> | null;
 logout: boolean | null;
 register: Array<IError> | null;
+}
+
+interface IUpdateInformationOnMutationArguments {
+id?: string | null;
+information?: IUserInformation | null;
 }
 
 interface ISendForgotPasswordEmailOnMutationArguments {
