@@ -1,0 +1,80 @@
+type SocialNetwork {
+  name: String
+  url: String
+}
+
+type Language {
+  language: String
+  level: String
+}
+
+type University {
+  place: String
+  startedOn: Date
+  finishIn: Date
+  finished: Boolean
+  especializations: [String]
+  attended: String
+  description: String
+}
+
+type Secondary {
+  place: String
+  startedOn: Date
+  finishIn: Date
+  finished: Boolean
+  especializations: [String]
+}
+
+type Work {
+  place: String
+  job: String
+  localization: String
+  description: String
+  startedOn: Date
+  finishIn: Date
+  finished: Boolean
+}
+
+type CV {
+  routeCV: String
+}
+
+type Feedback {
+  stars: Int
+  comment: String
+}
+
+type Necessity {
+  finished: Boolean
+  comment: String
+}
+
+type CommercialEstablishment {
+  name: String
+  routePhone: String
+}
+
+type UserInformation {
+  description: String
+  identificationDocumentType: String!
+  identificationDocument: Int!
+  address: String
+  telephone: String!
+  departament: String
+  city: String
+  civilStatus: String
+  website: String
+  gender: String
+  email: String!
+  socialnetwork: [SocialNetwork]
+  language: [Language]
+  university: [University]
+  secondaryschool: [Secondary]
+  work: [Work]
+  cv: [CV]
+  professionalAptitude: [String]
+  feedback: [Feedback]
+  necessity: [Necessity]
+  commercialEstablishment: [CommercialEstablishment]
+}

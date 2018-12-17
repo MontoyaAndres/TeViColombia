@@ -113,7 +113,7 @@ export class User extends BaseEntity {
 
   @ManyToMany(_ => CommercialEstablishment)
   @JoinTable({ name: "members" })
-  commercialestablishments: CommercialEstablishment[];
+  commercialEstablishment: CommercialEstablishment[];
 
   @BeforeInsert()
   async hashPassword() {

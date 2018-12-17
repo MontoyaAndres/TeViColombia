@@ -1,0 +1,9 @@
+scalar Date
+
+type Query {
+  information(id: ID): UserInformation
+}
+
+type Mutation {
+  updateInformation(id: ID, information: UserInformationInput): Boolean!
+}
