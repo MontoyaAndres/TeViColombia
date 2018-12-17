@@ -1,7 +1,7 @@
 import * as bcrypt from "bcryptjs";
 
-import { ResolveMap } from "../../../@types/graphql-utils";
-import { GQL } from "../../../@types/schema";
+import { ResolveMap } from "../../../types/graphql-utils";
+import { GQL } from "../../../types/schema";
 import { User } from "../../../entity/User";
 import { LoginValidation } from "../../../utils/validation";
 import { formatYupError } from "../../../utils/formatYupError";
@@ -62,9 +62,9 @@ export const resolvers: ResolveMap = {
         ];
       }
 
-      // login successful
       session.userId = user.id;
       if (request.sessionID) {
+        // login successful
         await redis.lpush(
           `${userSessionIdPrefix}${user.id}`,
           request.sessionID

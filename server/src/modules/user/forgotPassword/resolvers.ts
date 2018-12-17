@@ -1,14 +1,14 @@
 import * as bcrypt from "bcryptjs";
 
-import { ResolveMap } from "../../../@types/graphql-utils";
+import { ResolveMap } from "../../../types/graphql-utils";
 import { User } from "../../../entity/User";
-import { GQL } from "../../../@types/schema";
+import { GQL } from "../../../types/schema";
 import { createForgotPasswordLink } from "./createForgotPasswordLink";
 import { forgotPasswordPrefix } from "../../../constants";
 import { formatYupError } from "../../../utils/formatYupError";
 import { sendForgotPasswordEmailLink } from "../../../utils/sendEmail";
 import { ForgotPasswordValidation } from "../../../utils/validation";
-import { removeAllUsersSessions } from "../../../utils/removeAllUsersSessions";
+import { forgotPasswordLockAccount } from "./forgotPasswordLockAccount";
 
 export const resolvers: ResolveMap = {
   Mutation: {
@@ -28,6 +28,7 @@ export const resolvers: ResolveMap = {
         ];
       }
 
+      await forgotPasswordLockAccount(user.id, redis);
       const url = await createForgotPasswordLink(
         process.env.FRONTEND_HOST as string,
         user.id,
@@ -76,11 +77,7 @@ export const resolvers: ResolveMap = {
 
       const deleteKeyPromise = redis.del(redisKey);
 
-      await Promise.all([
-        updatePromise,
-        deleteKeyPromise,
-        removeAllUsersSessions(userId, redis)
-      ]);
+      await Promise.all([updatePromise, deleteKeyPromise]);
 
       return null;
     }

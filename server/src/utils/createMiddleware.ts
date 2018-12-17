@@ -1,4 +1,4 @@
-import { GraphQLMiddlewareFunc, Resolver } from "../@types/graphql-utils";
+import { GraphQLMiddlewareFunc, Resolver } from "../types/graphql-utils";
 
 export const createMiddleware = (
   middlewareFunc: GraphQLMiddlewareFunc,

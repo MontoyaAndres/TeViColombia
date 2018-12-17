@@ -1,4 +1,4 @@
-import { ResolveMap } from "../../../@types/graphql-utils";
+import { ResolveMap } from "../../../types/graphql-utils";
 import { removeAllUsersSessions } from "../../../utils/removeAllUsersSessions";
 
 export const resolvers: ResolveMap = {

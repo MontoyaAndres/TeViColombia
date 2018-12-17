@@ -22,7 +22,27 @@ column: number;
 
 interface IQuery {
 __typename: "Query";
+generalInformation: IUserGeneralInformation | null;
 me: IUser | null;
+}
+
+interface IGeneralInformationOnQueryArguments {
+id?: string | null;
+}
+
+interface IUserGeneralInformation {
+__typename: "UserGeneralInformation";
+description: string | null;
+indentificationDocumentType: string;
+indentificationDocument: number;
+address: string | null;
+telephone: string;
+departament: string | null;
+city: string | null;
+civilStatus: string | null;
+website: string | null;
+gender: string | null;
+email: string | null;
 }
 
 interface IUser {

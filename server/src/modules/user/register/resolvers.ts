@@ -1,10 +1,10 @@
-import { ResolveMap } from "../../../@types/graphql-utils";
+import { ResolveMap } from "../../../types/graphql-utils";
 import { RegisterValidation } from "../../../utils/validation";
 import { formatYupError } from "../../../utils/formatYupError";
 import { User } from "../../../entity/User";
 import { sendConfirmEmailLink } from "../../../utils/sendEmail";
 import { createConfimEmailLink } from "./createConfimEmailLink";
-import { GQL } from "../../../@types/schema";
+import { GQL } from "../../../types/schema";
 
 export const resolvers: ResolveMap = {
   Mutation: {
