@@ -1,0 +1,17 @@
+type UserGeneralInformation {
+  description: String
+  indentificationDocumentType: String!
+  indentificationDocument: Int!
+  address: String
+  telephone: String!
+  departament: String
+  city: String
+  civilStatus: String
+  website: String
+  gender: String
+  email: String!
+}
+
+type Query {
+  generalInformation(id: String): UserGeneralInformation
+}

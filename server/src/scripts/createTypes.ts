@@ -10,6 +10,6 @@ const typescriptTypes = generateNamespace("GQL", genSchema()).replace(
   "export namespace GQL"
 );
 
-writeFile(join(__dirname, "../@types/schema.d.ts"), typescriptTypes, err => {
+writeFile(join(__dirname, "../types/schema.d.ts"), typescriptTypes, err => {
   console.log(err);
 });

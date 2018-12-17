@@ -11,6 +11,7 @@ import { createTypeormConn } from "./utils/createTypeormConn";
 import { redis } from "./redis";
 import { genSchema } from "./utils/genSchema";
 import Routes from "./routes";
+import { redisSessionPrefix } from "./constants";
 
 const RedisStore = connectRedis(session);
 
@@ -34,22 +35,23 @@ export async function startServer() {
           client: redis
         }),
         windowMs: 15 * 60 * 1000, // 15 minutes
-        max: 100, // Limit each IP to 100 requests per windowsMs
+        max: 100, // Limit each IP to 100 requests per windowMs
         delayMs: 0 // Disable delaying - full speed until the max limit is reached
       })
     )
     .use(
       session({
         store: new RedisStore({
-          client: redis as any
+          client: redis as any,
+          prefix: redisSessionPrefix
         }),
         name: "qid",
-        secret: process.env.SESSIONS_SECRET as string,
+        secret: process.env.SESSION_SECRET as string,
         resave: false,
         saveUninitialized: false,
         cookie: {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production", // only works with https
+          secure: process.env.NODE_ENV === "production", // Only works with https
           maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
         }
       })
