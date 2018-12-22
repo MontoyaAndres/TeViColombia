@@ -1,15 +1,26 @@
 import React from "react";
 import { Formik, Form } from "formik";
+import { Mutation, withApollo } from "react-apollo";
+import { gql } from "apollo-boost";
 
 import { Router } from "../routes";
 import { TextField } from "../components/shared/globalField";
 import { LoginValidation } from "../utils/validation";
-import { login } from "../api/auth";
-import { Consumer } from "../components/shared/contextApi";
 import normalizeErrors from "../utils/normalizeErrors";
-import { isLoggedIn } from "../utils/auth";
+import checkLoggedIn from "../lib/checkLoggedIn";
+import redirect from "../lib/redirect";
+import meQuery from "../graphql/queries/me";
 
-const Login = () => (
+const loginMutation = gql`
+  mutation LoginMutation($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      path
+      message
+    }
+  }
+`;
+
+const login = ({ client }) => (
   <div className="hero is-fullheight-with-navbar">
     <div className="hero-body">
       <div className="container has-text-centered">
@@ -20,8 +31,17 @@ const Login = () => (
               <img src="https://placehold.it/128x128" alt="login" />
             </figure>
 
-            <Consumer>
-              {state => (
+            <Mutation
+              mutation={loginMutation}
+              /* onCompleted={data => {
+                if (!data.login) {
+                  client.cache.reset().then(() => {
+                    Router.pushRoute("/");
+                  });
+                }
+              }} */
+            >
+              {mutate => (
                 <Formik
                   initialValues={{
                     email: "",
@@ -31,16 +51,18 @@ const Login = () => (
                   validateOnBlur={false}
                   validateOnChange={false}
                   onSubmit={async (values, { setSubmitting, setErrors }) => {
-                    const response = await login(values);
-                    const { ok, errors } = response;
-                    if (ok) {
+                    const response = await mutate({
+                      variables: values,
+                      refetchQueries: [{ query: meQuery }]
+                    });
+                    const { data } = response;
+                    // if login has data, it has the errors
+                    if (data.login && data.login.length) {
                       setSubmitting(false);
-                      // Getting current user
-                      await state.actions.getMeUser();
-                      Router.pushRoute("/");
+                      setErrors(normalizeErrors(data.login));
                     } else {
                       setSubmitting(false);
-                      setErrors(normalizeErrors(errors));
+                      Router.pushRoute("/");
                     }
                   }}
                   render={({ isSubmitting }) => (
@@ -72,7 +94,7 @@ const Login = () => (
                   )}
                 />
               )}
-            </Consumer>
+            </Mutation>
           </div>
         </div>
       </div>
@@ -80,6 +102,14 @@ const Login = () => (
   </div>
 );
 
-Login.getInitialProps = async context => isLoggedIn(context);
+login.getInitialProps = async context => {
+  const { loggedInUser } = await checkLoggedIn(context.apolloClient);
 
-export default Login;
+  if (loggedInUser.me) {
+    redirect(context, "/");
+  }
+
+  return {};
+};
+
+export default withApollo(login);

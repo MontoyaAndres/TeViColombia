@@ -6,6 +6,7 @@ import * as RateLimit from "express-rate-limit";
 import * as RateLimitRedisStore from "rate-limit-redis";
 import * as compression from "compression";
 import * as helmet from "helmet";
+import * as express from "express";
 
 import { createTypeormConn } from "./utils/createTypeormConn";
 import { redis } from "./redis";
@@ -27,6 +28,7 @@ export async function startServer() {
   });
 
   server.express
+    .use(express.static(`${__dirname}/../public`))
     .use(compression())
     .use(helmet())
     .use(

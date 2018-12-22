@@ -2,10 +2,11 @@ import React from "react";
 import NProgress from "nprogress";
 import Head from "next/head";
 import App, { Container } from "next/app";
+import { ApolloProvider } from "react-apollo";
 
+import withApollo from "../lib/withApollo";
 import { Router } from "../routes";
 import Layout from "../components/layout";
-import { Provider } from "../components/shared/contextApi";
 
 // Loading route config
 Router.onRouteChangeStart = () => NProgress.start();
@@ -14,21 +15,21 @@ Router.onRouteChangeError = () => NProgress.done();
 
 class MyApp extends App {
   render() {
-    const { Component } = this.props;
+    const { Component, pageProps, apolloClient } = this.props;
 
     return (
       <Container>
         <Head>
           <title>Te vi EPE</title>
         </Head>
-        <Provider>
+        <ApolloProvider client={apolloClient}>
           <Layout>
-            <Component />
+            <Component {...pageProps} />
           </Layout>
-        </Provider>
+        </ApolloProvider>
       </Container>
     );
   }
 }
 
-export default MyApp;
+export default withApollo(MyApp);

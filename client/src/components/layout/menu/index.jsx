@@ -1,10 +1,12 @@
 import React, { PureComponent, Fragment } from "react";
 import { withRouter } from "next/router";
+import { graphql } from "react-apollo";
 
 import { Link } from "../../../routes";
 import Background from "./background";
 import IsLoggedIn from "./auth/isLoggedIn";
 import IsNotLoggedIn from "./auth/isNotLoggedIn";
+import meQuery from "../../../graphql/queries/me";
 
 class menu extends PureComponent {
   state = {
@@ -20,8 +22,7 @@ class menu extends PureComponent {
     const { clicked } = this.state;
     const {
       router: { pathname },
-      response,
-      actions
+      data: { me }
     } = this.props;
 
     return (
@@ -69,16 +70,16 @@ class menu extends PureComponent {
                 <Link route="/">
                   <a className="navbar-item">Inicio</a>
                 </Link>
-                {response && response.ok ? (
+                {me && (
                   <Fragment>
-                    <Link route="perfil" params={{ id: response.me.id }}>
+                    <Link route="perfil" params={{ id: me.id }}>
                       <a className="navbar-item">Mi perfil</a>
                     </Link>
                     <Link route="mi-negocio">
                       <a className="navbar-item">Mi negocio</a>
                     </Link>
                   </Fragment>
-                ) : null}
+                )}
                 <Link route="documentation">
                   <a className="navbar-item">Documentación</a>
                 </Link>
@@ -89,14 +90,7 @@ class menu extends PureComponent {
 
               <div className="navbar-end">
                 <div className="navbar-item">
-                  {response && response.ok ? (
-                    <IsLoggedIn
-                      me={response.me}
-                      getMeUser={actions.getMeUser}
-                    />
-                  ) : (
-                    <IsNotLoggedIn />
-                  )}
+                  {me ? <IsLoggedIn me={me} /> : <IsNotLoggedIn />}
                 </div>
               </div>
             </div>
@@ -109,4 +103,4 @@ class menu extends PureComponent {
   }
 }
 
-export default withRouter(menu);
+export default graphql(meQuery)(withRouter(menu));

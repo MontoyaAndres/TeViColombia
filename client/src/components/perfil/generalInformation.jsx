@@ -1,99 +1,123 @@
-import React, { PureComponent } from "react";
+import React from "react";
+import { gql } from "apollo-boost";
+import { Query } from "react-apollo";
 
-import { generalInformation as information } from "../../api/user";
-
-class generalInformation extends PureComponent {
-  state = {
-    user: {}
-  };
-
-  async componentWillMount() {
-    const response = await information();
-
-    this.setState({ user: response.user });
+const information = gql`
+  query Information {
+    information {
+      description
+      identificationDocumentType
+      identificationDocument
+      address
+      telephone
+      website
+      email
+      gender
+      city
+      departament
+      civilStatus
+      socialnetwork {
+        name
+        url
+      }
+      language {
+        language
+        level
+      }
+    }
   }
+`;
 
-  render() {
-    const { user } = this.state;
+const generalInformation = () => (
+  <Query query={information}>
+    {({ loading, data }) => {
+      if (loading) {
+        return <span>Loading...</span>;
+      }
 
-    return (
-      <div className="container">
-        <div className="columns is-multiline">
-          {user.description && (
-            <div className="column is-12">
-              <dir className="box" style={{ marginTop: "0.5rem" }}>
-                <p className="subtitle is-4">{user.description}</p>
-              </dir>
-            </div>
-          )}
+      return (
+        <div className="container">
+          <div className="columns is-multiline">
+            {data.information.description && (
+              <div className="column is-12">
+                <dir className="box" style={{ marginTop: "0.5rem" }}>
+                  <p className="subtitle is-4">
+                    {data.information.description}
+                  </p>
+                </dir>
+              </div>
+            )}
 
-          <div className="column is-6">
-            <div className="box" style={{ marginTop: "0.5rem" }}>
-              <p className="subtitle">
-                <strong>Documento de identificación:</strong>{" "}
-                {user.identificationDocumentType}
-              </p>
-              <p className="subtitle">
-                <strong>Número de identificación:</strong>{" "}
-                {user.identificationDocument}
-              </p>
-              <p className="subtitle">
-                <strong>Dirección:</strong> {user.address}
-              </p>
-              <p className="subtitle">
-                <strong>Teléfono celular:</strong> {user.telephone}
-              </p>
-              <p className="subtitle">
-                <strong>Sitio web:</strong> {user.website}
-              </p>
-            </div>
-          </div>
-
-          <div className="column is-6">
-            <div className="box" style={{ marginTop: "0.5rem" }}>
-              <p className="subtitle">
-                <strong>Correo electrónico:</strong> {user.email}
-              </p>
-              <p className="subtitle">
-                <strong>Genero:</strong> {user.gender}
-              </p>
-              <p className="subtitle">
-                <strong>Ciudad:</strong> {user.city}
-              </p>
-              <p className="subtitle">
-                <strong>Departamento:</strong> {user.departament}
-              </p>
-              <p className="subtitle">
-                <strong>Estado civil:</strong> {user.civilStatus}
-              </p>
-            </div>
-          </div>
-
-          {user.socialnetwork && user.socialnetwork.length ? (
             <div className="column is-6">
               <div className="box" style={{ marginTop: "0.5rem" }}>
                 <p className="subtitle">
-                  <strong>Redes sociales:</strong>
-                  {JSON.stringify(user.socialnetwork)}
+                  <strong>Documento de identificación:</strong>{" "}
+                  {data.information.identificationDocumentType}
+                </p>
+                <p className="subtitle">
+                  <strong>Número de identificación:</strong>{" "}
+                  {data.information.identificationDocument}
+                </p>
+                <p className="subtitle">
+                  <strong>Dirección:</strong> {data.information.address}
+                </p>
+                <p className="subtitle">
+                  <strong>Teléfono celular:</strong>{" "}
+                  {data.information.telephone}
+                </p>
+                <p className="subtitle">
+                  <strong>Sitio web:</strong> {data.information.website}
                 </p>
               </div>
             </div>
-          ) : null}
 
-          {user.language && user.language.length ? (
             <div className="column is-6">
               <div className="box" style={{ marginTop: "0.5rem" }}>
                 <p className="subtitle">
-                  <strong>Idiomas:</strong>
-                  {JSON.stringify(user.language)}
+                  <strong>Correo electrónico:</strong> {data.information.email}
+                </p>
+                <p className="subtitle">
+                  <strong>Genero:</strong> {data.information.gender}
+                </p>
+                <p className="subtitle">
+                  <strong>Ciudad:</strong> {data.information.city}
+                </p>
+                <p className="subtitle">
+                  <strong>Departamento:</strong> {data.information.departament}
+                </p>
+                <p className="subtitle">
+                  <strong>Estado civil:</strong> {data.information.civilStatus}
                 </p>
               </div>
             </div>
-          ) : null}
+
+            {data.information.socialnetwork &&
+            data.information.socialnetwork.length ? (
+              <div className="column is-6">
+                <div className="box" style={{ marginTop: "0.5rem" }}>
+                  <p className="subtitle">
+                    <strong>Redes sociales:</strong>
+                    {JSON.stringify(data.information.socialnetwork)}
+                  </p>
+                </div>
+              </div>
+            ) : null}
+
+            {data.information.language && data.information.language.length ? (
+              <div className="column is-6">
+                <div className="box" style={{ marginTop: "0.5rem" }}>
+                  <p className="subtitle">
+                    <strong>Idiomas:</strong>
+                    {JSON.stringify(data.information.language)}
+                  </p>
+                </div>
+              </div>
+            ) : null}
+          </div>
         </div>
-      </div>
-    );
-  }
-}
+      );
+    }}
+  </Query>
+);
 
 export default generalInformation;
