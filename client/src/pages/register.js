@@ -1,13 +1,40 @@
 import React, { PureComponent } from "react";
 import { withFormik, Form } from "formik";
+import { graphql, compose } from "react-apollo";
+import { gql } from "apollo-boost";
 
 import { TextField, SelectField } from "../components/shared/globalField";
 import { RegisterValidation } from "../utils/validation";
-import { register } from "../api/auth";
 import normalizeErrors from "../utils/normalizeErrors";
-import { isLoggedIn } from "../utils/auth";
+import checkLoggedIn from "../lib/checkLoggedIn";
+import redirect from "../lib/redirect";
 
-class Register extends PureComponent {
+const registerMutation = gql`
+  mutation RegisterMutation(
+    $name: String!
+    $lastname: String!
+    $telephone: String!
+    $identificationDocumentType: String!
+    $identificationDocument: Int!
+    $email: String!
+    $password: String!
+  ) {
+    register(
+      name: $name
+      lastname: $lastname
+      telephone: $telephone
+      identificationDocumentType: $identificationDocumentType
+      identificationDocument: $identificationDocument
+      email: $email
+      password: $password
+    ) {
+      path
+      message
+    }
+  }
+`;
+
+class register extends PureComponent {
   state = {
     intervalId: 0
   };
@@ -131,35 +158,49 @@ class Register extends PureComponent {
   }
 }
 
-Register.getInitialProps = async context => isLoggedIn(context);
+register.getInitialProps = async context => {
+  const { loggedInUser } = await checkLoggedIn(context.apolloClient);
 
-export default withFormik({
-  mapPropsToValues: () => ({
-    name: "",
-    lastname: "",
-    telephone: "",
-    identificationDocumentType: "Tarjeta de identidad",
-    identificationDocument: "",
-    email: "",
-    password: ""
-  }),
-  validationSchema: RegisterValidation,
-  validateOnBlur: false,
-  validateOnChange: false,
-  handleSubmit: async (
-    values,
-    { setSubmitting, setErrors, resetForm, setFieldValue }
-  ) => {
-    const response = await register(values);
-    const { ok, errors } = response;
-    if (ok) {
-      setSubmitting(false);
-      resetForm();
-      setFieldValue("registered", true, false);
-    } else {
-      setSubmitting(false);
-      setFieldValue("registered", false, false);
-      setErrors(normalizeErrors(errors));
-    }
+  if (loggedInUser.me) {
+    redirect(context, "/");
   }
-})(Register);
+
+  return {};
+};
+
+export default compose(
+  graphql(registerMutation),
+  withFormik({
+    mapPropsToValues: () => ({
+      name: "",
+      lastname: "",
+      telephone: "",
+      identificationDocumentType: "Tarjeta de identidad",
+      identificationDocument: 0,
+      email: "",
+      password: ""
+    }),
+    validationSchema: RegisterValidation,
+    validateOnBlur: false,
+    validateOnChange: false,
+    handleSubmit: async (
+      values,
+      { props: { mutate }, setSubmitting, setErrors, resetForm, setFieldValue }
+    ) => {
+      const response = await mutate({
+        variables: values
+      });
+      const { data } = response;
+      // if login has data, it has the errors
+      if (data.register && data.register.length) {
+        setSubmitting(false);
+        setFieldValue("registered", false, false);
+        setErrors(normalizeErrors(data.register));
+      } else {
+        setSubmitting(false);
+        resetForm();
+        setFieldValue("registered", true, false);
+      }
+    }
+  })
+)(register);

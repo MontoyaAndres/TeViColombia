@@ -24,15 +24,20 @@
 		"prettier": "latest"
 	},
 	"dependencies": {
-		"axios": "^0.18.0",
+		"apollo-boost": "^0.1.22",
+		"apollo-link-context": "^1.0.12",
+		"apollo-link-http": "^1.5.9",
 		"cookie-parser": "^1.4.3",
 		"express": "^4.16.3",
 		"formik": "^1.2.0",
+		"graphql": "^14.0.2",
+		"isomorphic-unfetch": "^3.0.0",
 		"next": "^7.0.2",
 		"next-offline": "^3.0.4",
 		"next-routes": "^1.4.2",
 		"nprogress": "^0.2.0",
 		"react": "^16.6.0",
+		"react-apollo": "^2.3.3",
 		"react-dom": "^16.6.0",
 		"yup": "^0.26.3"
 	}

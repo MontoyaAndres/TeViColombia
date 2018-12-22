@@ -1,9 +1,10 @@
 import React, { PureComponent, Fragment } from "react";
 import dynamic from "next/dynamic";
+import { Query } from "react-apollo";
 
-import { Consumer } from "../components/shared/contextApi";
-import config from "../config.json";
-import { isNotLoggedIn } from "../utils/auth";
+import meQuery from "../graphql/queries/me";
+import checkLoggedIn from "../lib/checkLoggedIn";
+import redirect from "../lib/redirect";
 
 const DynamicGeneralInformation = dynamic(
   () => import("../components/perfil/generalInformation"),
@@ -12,9 +13,7 @@ const DynamicGeneralInformation = dynamic(
   }
 );
 
-const API = config.SERVER_API;
-
-class Perfil extends PureComponent {
+class perfil extends PureComponent {
   state = {
     value: 1
   };
@@ -27,15 +26,25 @@ class Perfil extends PureComponent {
     const { value } = this.state;
 
     return (
-      <Consumer>
-        {state => {
-          if (!state.response.me) {
+      <Query query={meQuery}>
+        {({ loading, data: { me } }) => {
+          if (loading) {
             return <p>Loading...</p>;
           }
 
           return (
             <Fragment>
-              <div style={{ height: 300, backgroundColor: "#00ffd9" }} />
+              {me.routeCover ? (
+                <div style={{ height: 300 }}>
+                  <img
+                    alt="user cover"
+                    src={`http://localhost:4000/${me.routeCover}`}
+                  />
+                </div>
+              ) : (
+                <div style={{ height: 300, backgroundColor: "#00ffd9" }} />
+              )}
+
               <div className="container is-fullhd">
                 <figure
                   className="avatar-profile"
@@ -43,12 +52,12 @@ class Perfil extends PureComponent {
                 >
                   <img
                     style={{ width: 200 }}
-                    src={`${API}/${state.response.me.routePhoto}`}
+                    src={`http://localhost:4000/${me.routePhoto}`}
                     alt="profile"
                   />
                 </figure>
                 <h3 className="title" style={{ textAlign: "center" }}>
-                  {state.response.me.name} {state.response.me.lastname}
+                  {me.name} {me.lastname}
                 </h3>
                 <div className="tabs is-medium is-centered">
                   <ul>
@@ -94,11 +103,19 @@ class Perfil extends PureComponent {
             </Fragment>
           );
         }}
-      </Consumer>
+      </Query>
     );
   }
 }
 
-Perfil.getInitialProps = async context => isNotLoggedIn(context);
+perfil.getInitialProps = async context => {
+  const { loggedInUser } = await checkLoggedIn(context.apolloClient);
 
-export default Perfil;
+  if (!loggedInUser.me) {
+    redirect(context, "/login");
+  }
+
+  return {};
+};
+
+export default perfil;

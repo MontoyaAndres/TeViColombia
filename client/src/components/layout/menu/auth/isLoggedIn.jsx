@@ -1,7 +1,14 @@
 import React, { PureComponent } from "react";
+import { gql } from "apollo-boost";
+import { Mutation, withApollo } from "react-apollo";
 
 import { Link, Router } from "../../../../routes";
-import { logout } from "../../../../api/auth";
+
+const logout = gql`
+  mutation Logout {
+    logout
+  }
+`;
 
 class isLoggedIn extends PureComponent {
   state = {
@@ -14,58 +21,58 @@ class isLoggedIn extends PureComponent {
     this.setState({ clicked: !clicked });
   };
 
-  logoutUser = async () => {
-    const { getMeUser } = this.props;
-    const response = await logout();
-
-    this.openMenu();
-    if (response.ok) {
-      await getMeUser();
-      Router.pushRoute("/");
-    }
-  };
-
   render() {
-    const { me } = this.props;
+    const { me, client } = this.props;
     const { clicked } = this.state;
 
     return (
-      <div
-        className={`dropdown is-right ${clicked ? "is-active" : ""}`}
-        style={{ paddingRight: 5 }}
+      <Mutation
+        mutation={logout}
+        onCompleted={() => {
+          client.cache.reset().then(() => {
+            Router.pushRoute("/");
+          });
+        }}
       >
-        <div className="dropdown-trigger">
-          <button
-            type="button"
-            className="button"
-            aria-haspopup="true"
-            aria-controls="dropdown-menu"
-            onClick={this.openMenu}
+        {mutate => (
+          <div
+            className={`dropdown is-right ${clicked ? "is-active" : ""}`}
+            style={{ paddingRight: 5 }}
           >
-            <span className="icon is-small">
-              <i className="fas fa-user" aria-hidden="true" />
-            </span>
-            <span>
-              {me.name} {me.lastname}
-            </span>
-            <span className="icon is-small">
-              <i className="fas fa-angle-down" aria-hidden="true" />
-            </span>
-          </button>
-        </div>
-        <div className="dropdown-menu" id="dropdown-menu" role="menu">
-          <div className="dropdown-content">
-            <Link route="configuration">
-              <a className="dropdown-item">Configuración de usuario</a>
-            </Link>
-            <a href="#" className="dropdown-item" onClick={this.logoutUser}>
-              Salir
-            </a>
+            <div className="dropdown-trigger">
+              <button
+                type="button"
+                className="button"
+                aria-haspopup="true"
+                aria-controls="dropdown-menu"
+                onClick={this.openMenu}
+              >
+                <span className="icon is-small">
+                  <i className="fas fa-user" aria-hidden="true" />
+                </span>
+                <span>
+                  {me.name} {me.lastname}
+                </span>
+                <span className="icon is-small">
+                  <i className="fas fa-angle-down" aria-hidden="true" />
+                </span>
+              </button>
+            </div>
+            <div className="dropdown-menu" id="dropdown-menu" role="menu">
+              <div className="dropdown-content">
+                <Link route="configuration">
+                  <a className="dropdown-item">Configuración de usuario</a>
+                </Link>
+                <a href="#" className="dropdown-item" onClick={() => mutate()}>
+                  Salir
+                </a>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        )}
+      </Mutation>
     );
   }
 }
 
-export default isLoggedIn;
+export default withApollo(isLoggedIn);
