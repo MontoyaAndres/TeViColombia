@@ -12,6 +12,21 @@ const DynamicGeneralInformation = dynamic(
     loading: () => <p>Loading...</p>
   }
 );
+const DynamicTrainingEmployment = dynamic(
+  () => import("../components/perfil/trainingEmployment"),
+  { loading: () => <p>Loading...</p> }
+);
+const DynamicFeedback = dynamic(() => import("../components/perfil/feedback"), {
+  loading: () => <p>Loading...</p>
+});
+const DynameicCommercialEstablishment = dynamic(
+  () => import("../components/perfil/commercialEstablishment"),
+  { loading: () => <p>Loading...</p> }
+);
+const DynamicNecessity = dynamic(
+  () => import("../components/perfil/necessity"),
+  { loading: () => <p>Loading...</p> }
+);
 
 class perfil extends PureComponent {
   state = {
@@ -96,10 +111,10 @@ class perfil extends PureComponent {
               </div>
 
               {value === 1 && <DynamicGeneralInformation />}
-              {value === 2 && <p>Formación y empleo</p>}
-              {value === 3 && <p>Feedback</p>}
-              {value === 4 && <p>Mi negocio</p>}
-              {value === 5 && <p>Necesidad</p>}
+              {value === 2 && <DynamicTrainingEmployment />}
+              {value === 3 && <DynamicFeedback />}
+              {value === 4 && <DynameicCommercialEstablishment />}
+              {value === 5 && <DynamicNecessity />}
             </Fragment>
           );
         }}

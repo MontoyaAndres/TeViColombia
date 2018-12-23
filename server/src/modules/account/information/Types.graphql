@@ -23,7 +23,7 @@ type Secondary {
   startedOn: Date
   finishIn: Date
   finished: Boolean
-  especializations: [String]
+  description: String
 }
 
 type Work {
@@ -51,22 +51,23 @@ type Necessity {
 }
 
 type CommercialEstablishment {
+  id: ID
   name: String
   routePhone: String
 }
 
 type UserInformation {
   description: String
-  identificationDocumentType: String!
-  identificationDocument: Int!
+  identificationDocumentType: String
+  identificationDocument: Int
   address: String
-  telephone: String!
+  telephone: String
   departament: String
   city: String
   civilStatus: String
   website: String
   gender: String
-  email: String!
+  email: String
   socialnetwork: [SocialNetwork]
   language: [Language]
   university: [University]
