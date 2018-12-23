@@ -23,7 +23,7 @@ input SecondaryInput {
   startedOn: Date
   finishIn: Date
   finished: Boolean
-  especializations: [String]
+  description: String
 }
 
 input WorkInput {
@@ -52,16 +52,16 @@ input NecessityInput {
 
 input UserInformationInput {
   description: String
-  identificationDocumentType: String!
-  identificationDocument: Int!
+  identificationDocumentType: String
+  identificationDocument: Int
   address: String
-  telephone: String!
+  telephone: String
   departament: String
   city: String
   civilStatus: String
   website: String
   gender: String
-  email: String!
+  email: String
   socialnetwork: [SocialNetworkInput]
   language: [LanguageInput]
   university: [UniversityInput]

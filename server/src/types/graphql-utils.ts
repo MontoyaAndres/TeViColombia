@@ -1,4 +1,5 @@
 import { Redis } from "ioredis";
+import { informationLoader } from "../loaders/informationLoader";
 
 interface Session extends Express.Session {
   userId?: string;
@@ -9,6 +10,7 @@ interface Context {
   url: string;
   session: Session;
   request: Express.Request;
+  informationLoader: ReturnType<typeof informationLoader>;
 }
 
 export type Resolver = (
