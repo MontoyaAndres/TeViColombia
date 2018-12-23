@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from "react";
 import dynamic from "next/dynamic";
 import { Query } from "react-apollo";
+import Loading from "../components/shared/loading";
 
 import meQuery from "../graphql/queries/me";
 import checkLoggedIn from "../lib/checkLoggedIn";
@@ -9,23 +10,23 @@ import redirect from "../lib/redirect";
 const DynamicGeneralInformation = dynamic(
   () => import("../components/perfil/generalInformation"),
   {
-    loading: () => <p>Loading...</p>
+    loading: () => <Loading />
   }
 );
 const DynamicTrainingEmployment = dynamic(
   () => import("../components/perfil/trainingEmployment"),
-  { loading: () => <p>Loading...</p> }
+  { loading: () => <Loading /> }
 );
 const DynamicFeedback = dynamic(() => import("../components/perfil/feedback"), {
-  loading: () => <p>Loading...</p>
+  loading: () => <Loading />
 });
 const DynameicCommercialEstablishment = dynamic(
   () => import("../components/perfil/commercialEstablishment"),
-  { loading: () => <p>Loading...</p> }
+  { loading: () => <Loading /> }
 );
 const DynamicNecessity = dynamic(
   () => import("../components/perfil/necessity"),
-  { loading: () => <p>Loading...</p> }
+  { loading: () => <Loading /> }
 );
 
 class perfil extends PureComponent {
@@ -44,7 +45,7 @@ class perfil extends PureComponent {
       <Query query={meQuery}>
         {({ loading, data: { me } }) => {
           if (loading) {
-            return <p>Loading...</p>;
+            return <Loading />;
           }
 
           return (
