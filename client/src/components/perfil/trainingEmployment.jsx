@@ -1,6 +1,7 @@
 import React from "react";
 import { gql } from "apollo-boost";
 import { Query } from "react-apollo";
+import Loading from "../shared/loading";
 
 const information = gql`
   query Information {
@@ -42,7 +43,7 @@ const trainingEmployment = () => (
   <Query query={information}>
     {({ loading, data }) => {
       if (loading) {
-        return <span>Loading...</span>;
+        return <Loading />;
       }
 
       return (
