@@ -1,14 +1,17 @@
 type SocialNetwork {
+  id: ID
   name: String
   url: String
 }
 
 type Language {
+  id: ID
   language: String
   level: String
 }
 
 type University {
+  id: ID
   place: String
   startedOn: Date
   finishIn: Date
@@ -19,6 +22,7 @@ type University {
 }
 
 type Secondary {
+  id: ID
   place: String
   startedOn: Date
   finishIn: Date
@@ -27,6 +31,7 @@ type Secondary {
 }
 
 type Work {
+  id: ID
   place: String
   job: String
   localization: String
@@ -37,15 +42,18 @@ type Work {
 }
 
 type CV {
+  id: ID
   routeCV: String
 }
 
 type Feedback {
+  id: ID
   stars: Int
   comment: String
 }
 
 type Necessity {
+  id: ID
   finished: Boolean
   comment: String
 }
@@ -57,6 +65,7 @@ type CommercialEstablishment {
 }
 
 type UserInformation {
+  id: ID
   description: String
   identificationDocumentType: String
   identificationDocument: Int
