@@ -1,0 +1,3 @@
+type Mutation {
+  generalInformation(id: ID, information: UserInformationInput): Boolean!
+}

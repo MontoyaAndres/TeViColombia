@@ -17,8 +17,8 @@ export class Languages extends BaseEntity {
   @Column("varchar", { length: 255 })
   language: string;
 
-  @Column("integer")
-  level: number;
+  @Column("varchar")
+  level: string;
 
   @ManyToOne(_ => User, user => user.language)
   user: User;

@@ -1,14 +1,17 @@
 input SocialNetworkInput {
+  id: ID
   name: String
   url: String
 }
 
 input LanguageInput {
+  id: ID
   language: String
   level: String
 }
 
 input UniversityInput {
+  id: ID
   place: String
   startedOn: Date
   finishIn: Date
@@ -19,6 +22,7 @@ input UniversityInput {
 }
 
 input SecondaryInput {
+  id: ID
   place: String
   startedOn: Date
   finishIn: Date
@@ -27,6 +31,7 @@ input SecondaryInput {
 }
 
 input WorkInput {
+  id: ID
   place: String
   job: String
   localization: String
@@ -37,15 +42,18 @@ input WorkInput {
 }
 
 input CVInput {
+  id: ID
   routeCV: String
 }
 
 input FeedbackInput {
+  id: ID
   stars: Int
   comment: String
 }
 
 input NecessityInput {
+  id: ID
   finished: Boolean
   comment: String
 }
