@@ -1,4 +1,10 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import {
+  Entity,
+  BaseEntity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne
+} from "typeorm";
 import { User } from "./User";
 
 @Entity()
@@ -12,13 +18,13 @@ export class University extends BaseEntity {
   @Column("date")
   startedOn: Date;
 
-  @Column("date")
+  @Column("date", { nullable: true })
   finishIn: Date;
 
   @Column()
   finished: boolean;
 
-  @Column("simple-array")
+  @Column("simple-array", { nullable: true })
   especializations: string[];
 
   @Column("varchar", { length: 255 })

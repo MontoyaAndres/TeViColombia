@@ -1,32 +1,32 @@
 input UniversityInput {
   id: ID
-  place: String
-  startedOn: Date
-  finishIn: Date
-  finished: Boolean
+  place: String!
+  startedOn: Date!
+  finishIn: Date!
+  finished: Boolean!
   especializations: [String]
-  attended: String
-  description: String
+  attended: String!
+  description: String!
 }
 
 input SecondaryInput {
   id: ID
-  place: String
-  startedOn: Date
+  place: String!
+  startedOn: Date!
   finishIn: Date
-  finished: Boolean
-  description: String
+  finished: Boolean!
+  description: String!
 }
 
 input WorkInput {
   id: ID
-  place: String
-  job: String
-  localization: String
-  description: String
-  startedOn: Date
+  place: String!
+  job: String!
+  localization: String!
+  description: String!
+  startedOn: Date!
   finishIn: Date
-  finished: Boolean
+  finished: Boolean!
 }
 
 input ProfessionalAptitudeInput {
