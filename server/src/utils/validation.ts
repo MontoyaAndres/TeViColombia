@@ -65,7 +65,6 @@ export const UserConfigurationValidation = Yup.object().shape({
       "La contraseña no es segura, debe de tener una letra en mayúscula, dos numeros, tres letras en minúscula como minimo, un signo entre !@#$&* y debe ser igual o mayor a ocho caracteres."
     )
     .typeError("Campo incorrecto")
-    .required("El campo es obligatorio!")
 });
 
 export const GeneralInformationValidation = Yup.object().shape({
