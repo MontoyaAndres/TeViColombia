@@ -1,11 +1,13 @@
 import { ResolveMap } from "../../../types/graphql-utils";
 import { GQL } from "../../../types/schema";
 import { User } from "../../../entity/User";
-import UpdateCreate from "../utils/UpdateCreate";
 import { PersonalSocialNetworks } from "../../../entity/PersonalSocialNetworks";
 import { Languages } from "../../../entity/Languages";
+import UpdateCreate from "../utils/UpdateCreate";
 import { createMiddleware } from "../../../utils/createMiddleware";
 import { middleware } from "../../shared/authMiddleware";
+import { GeneralInformationValidation } from "../../../utils/validation";
+import { formatYupError } from "../../../utils/formatYupError";
 
 export const resolvers: ResolveMap = {
   Mutation: {
@@ -15,6 +17,19 @@ export const resolvers: ResolveMap = {
         _,
         { id, information }: GQL.IGeneralInformationOnMutationArguments
       ) => {
+        try {
+          await GeneralInformationValidation.validate(
+            {
+              identificationDocument: information.identificationDocument,
+              telephone: information.telephone,
+              website: information.website
+            },
+            { abortEarly: false }
+          );
+        } catch (err) {
+          return formatYupError(err);
+        }
+
         // Update user information
         await User.update(
           { id },
@@ -28,8 +43,7 @@ export const resolvers: ResolveMap = {
             city: information.city,
             civilStatus: information.civilStatus,
             website: information.website,
-            gender: information.gender,
-            email: information.email
+            gender: information.gender
           }
         );
 

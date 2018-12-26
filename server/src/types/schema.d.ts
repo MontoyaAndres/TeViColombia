@@ -51,7 +51,7 @@ secondaryschool: Array<ISecondary | null> | null;
 work: Array<IWork | null> | null;
 cv: Array<ICV | null> | null;
 professionalAptitude: IProfessionalAptitude | null;
-feedback: Array<IFeedback | null> | null;
+feedback: IFeedback | null;
 necessity: Array<INecessity | null> | null;
 commercialEstablishment: Array<ICommercialEstablishment | null> | null;
 }
@@ -149,6 +149,7 @@ lastname: string;
 interface IMutation {
 __typename: "Mutation";
 feedback: Array<IError> | null;
+deleteFeedback: boolean;
 generalInformation: boolean;
 trainingEmployment: boolean;
 sendForgotPasswordEmail: boolean | null;
@@ -156,12 +157,13 @@ forgotPasswordChange: Array<IError> | null;
 login: Array<IError> | null;
 logout: boolean | null;
 register: Array<IError> | null;
+userSettings: Array<IError> | null;
 }
 
 interface IFeedbackOnMutationArguments {
 id?: string | null;
-stars?: number | null;
-comment?: string | null;
+stars: number;
+comment: string;
 }
 
 interface IGeneralInformationOnMutationArguments {
@@ -198,6 +200,12 @@ email: string;
 password: string;
 }
 
+interface IUserSettingsOnMutationArguments {
+email: string;
+password: string;
+newPassword: string;
+}
+
 interface IError {
 __typename: "Error";
 path: string;
@@ -205,9 +213,9 @@ message: string;
 }
 
 interface IGeneralInformationInput {
-description?: string | null;
-identificationDocumentType?: string | null;
-identificationDocument?: number | null;
+description: string;
+identificationDocumentType: string;
+identificationDocument: number;
 address?: string | null;
 telephone?: string | null;
 departament?: string | null;
@@ -215,21 +223,20 @@ city?: string | null;
 civilStatus?: string | null;
 website?: string | null;
 gender?: string | null;
-email?: string | null;
 socialnetwork?: Array<ISocialNetworkInput | null> | null;
 language?: Array<ILanguageInput | null> | null;
 }
 
 interface ISocialNetworkInput {
 id?: string | null;
-name?: string | null;
-url?: string | null;
+name: string;
+url: string;
 }
 
 interface ILanguageInput {
 id?: string | null;
-language?: string | null;
-level?: string | null;
+language: string;
+level: string;
 }
 
 interface ITrainingEmploymentInput {
@@ -242,33 +249,33 @@ cv?: Array<ICVInput | null> | null;
 
 interface IUniversityInput {
 id?: string | null;
-place?: string | null;
-startedOn?: any | null;
-finishIn?: any | null;
-finished?: boolean | null;
+place: string;
+startedOn: any;
+finishIn: any;
+finished: boolean;
 especializations?: Array<string | null> | null;
-attended?: string | null;
-description?: string | null;
+attended: string;
+description: string;
 }
 
 interface ISecondaryInput {
 id?: string | null;
-place?: string | null;
-startedOn?: any | null;
+place: string;
+startedOn: any;
 finishIn?: any | null;
-finished?: boolean | null;
-description?: string | null;
+finished: boolean;
+description: string;
 }
 
 interface IWorkInput {
 id?: string | null;
-place?: string | null;
-job?: string | null;
-localization?: string | null;
-description?: string | null;
-startedOn?: any | null;
+place: string;
+job: string;
+localization: string;
+description: string;
+startedOn: any;
 finishIn?: any | null;
-finished?: boolean | null;
+finished: boolean;
 }
 
 interface IProfessionalAptitudeInput {

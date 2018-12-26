@@ -21,7 +21,6 @@ input GeneralInformationInput {
   civilStatus: String
   website: String
   gender: String
-  email: String!
   socialnetwork: [SocialNetworkInput]
   language: [LanguageInput]
 }
