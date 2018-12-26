@@ -1,0 +1,4 @@
+type Mutation {
+  feedback(id: ID, stars: Int, comment: String): [Error!]
+  deleteFeedback: Boolean!
+}

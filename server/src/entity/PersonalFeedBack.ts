@@ -3,7 +3,8 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne
+  OneToOne,
+  JoinColumn
 } from "typeorm";
 
 // Models
@@ -20,6 +21,10 @@ export class PersonalFeedBack extends BaseEntity {
   @Column("text", { nullable: true })
   comment: string;
 
-  @ManyToOne(_ => User, user => user.feedback)
+  @Column({ default: false })
+  commented: boolean;
+
+  @OneToOne(_ => User, user => user.feedback)
+  @JoinColumn()
   user: User;
 }

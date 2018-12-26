@@ -1,0 +1,27 @@
+input SocialNetworkInput {
+  id: ID
+  name: String
+  url: String
+}
+
+input LanguageInput {
+  id: ID
+  language: String
+  level: String
+}
+
+input GeneralInformationInput {
+  description: String
+  identificationDocumentType: String
+  identificationDocument: Int
+  address: String
+  telephone: String
+  departament: String
+  city: String
+  civilStatus: String
+  website: String
+  gender: String
+  email: String
+  socialnetwork: [SocialNetworkInput]
+  language: [LanguageInput]
+}
