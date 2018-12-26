@@ -7,7 +7,8 @@ import {
   BeforeInsert,
   OneToMany,
   ManyToMany,
-  JoinTable
+  JoinTable,
+  OneToOne
 } from "typeorm";
 
 // Models
@@ -17,7 +18,7 @@ import { University } from "./University";
 import { SecondarySchool } from "./SecondarySchool";
 import { Work } from "./Work";
 import { CV } from "./CV";
-import { ProfessionalAptitudes } from "./ProfessionalAptitudes";
+import { ProfessionalAptitude } from "./ProfessionalAptitude";
 import { Languages } from "./Languages";
 import { PersonalFeedBack } from "./PersonalFeedBack";
 import { CommercialEstablishment } from "./CommercialEstablishment";
@@ -99,14 +100,14 @@ export class User extends BaseEntity {
   @OneToMany(_ => CV, cv => cv.user)
   cv: CV[];
 
-  @OneToMany(
-    _ => ProfessionalAptitudes,
+  @OneToOne(
+    _ => ProfessionalAptitude,
     professionalaptitude => professionalaptitude.user
   )
-  professionalAptitude: ProfessionalAptitudes[];
+  professionalAptitude: ProfessionalAptitude;
 
-  @OneToMany(_ => PersonalFeedBack, feedback => feedback.user)
-  feedback: PersonalFeedBack[];
+  @OneToOne(_ => PersonalFeedBack, feedback => feedback.user)
+  feedback: PersonalFeedBack;
 
   @OneToMany(_ => Necessity, necessity => necessity.user)
   necessity: Necessity[];

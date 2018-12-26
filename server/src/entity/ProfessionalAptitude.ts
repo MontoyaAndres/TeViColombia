@@ -3,18 +3,20 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne
+  OneToOne,
+  JoinColumn
 } from "typeorm";
 import { User } from "./User";
 
 @Entity()
-export class ProfessionalAptitudes extends BaseEntity {
+export class ProfessionalAptitude extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column("simple-array")
-  professionalAptitudes: string[];
+  list: string[];
 
-  @ManyToOne(_ => User, user => user.professionalAptitude)
+  @OneToOne(_ => User, user => user.professionalAptitude)
+  @JoinColumn()
   user: User;
 }

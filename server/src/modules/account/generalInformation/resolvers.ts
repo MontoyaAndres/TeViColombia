@@ -1,9 +1,9 @@
 import { ResolveMap } from "../../../types/graphql-utils";
 import { GQL } from "../../../types/schema";
 import { User } from "../../../entity/User";
-import socialnetwork from "./update/socialnetwork";
-import university from "./update/university";
-import language from "./update/language";
+import UpdateCreate from "../utils/UpdateCreate";
+import { PersonalSocialNetworks } from "../../../entity/PersonalSocialNetworks";
+import { Languages } from "../../../entity/Languages";
 
 export const resolvers: ResolveMap = {
   Mutation: {
@@ -30,9 +30,8 @@ export const resolvers: ResolveMap = {
       );
 
       await Promise.all([
-        socialnetwork(id, information),
-        university(id, information),
-        language(id, information)
+        UpdateCreate(PersonalSocialNetworks, id, information.socialnetwork),
+        UpdateCreate(Languages, id, information.language)
       ]);
 
       return true;

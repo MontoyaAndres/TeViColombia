@@ -1,0 +1,48 @@
+input UniversityInput {
+  id: ID
+  place: String
+  startedOn: Date
+  finishIn: Date
+  finished: Boolean
+  especializations: [String]
+  attended: String
+  description: String
+}
+
+input SecondaryInput {
+  id: ID
+  place: String
+  startedOn: Date
+  finishIn: Date
+  finished: Boolean
+  description: String
+}
+
+input WorkInput {
+  id: ID
+  place: String
+  job: String
+  localization: String
+  description: String
+  startedOn: Date
+  finishIn: Date
+  finished: Boolean
+}
+
+input ProfessionalAptitudeInput {
+  id: ID
+  list: [String!]
+}
+
+input CVInput {
+  id: ID
+  routeCV: String
+}
+
+input TrainingEmploymentInput {
+  university: [UniversityInput]
+  secondaryschool: [SecondaryInput]
+  work: [WorkInput]
+  professionalAptitude: ProfessionalAptitudeInput
+  cv: [CVInput]
+}

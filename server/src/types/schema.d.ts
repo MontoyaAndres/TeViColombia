@@ -50,7 +50,7 @@ university: Array<IUniversity | null> | null;
 secondaryschool: Array<ISecondary | null> | null;
 work: Array<IWork | null> | null;
 cv: Array<ICV | null> | null;
-professionalAptitude: Array<string | null> | null;
+professionalAptitude: IProfessionalAptitude | null;
 feedback: Array<IFeedback | null> | null;
 necessity: Array<INecessity | null> | null;
 commercialEstablishment: Array<ICommercialEstablishment | null> | null;
@@ -110,6 +110,12 @@ id: string | null;
 routeCV: string | null;
 }
 
+interface IProfessionalAptitude {
+__typename: "ProfessionalAptitude";
+id: string | null;
+list: Array<string> | null;
+}
+
 interface IFeedback {
 __typename: "Feedback";
 id: string | null;
@@ -142,7 +148,9 @@ lastname: string;
 
 interface IMutation {
 __typename: "Mutation";
+feedback: Array<IError> | null;
 generalInformation: boolean;
+trainingEmployment: boolean;
 sendForgotPasswordEmail: boolean | null;
 forgotPasswordChange: Array<IError> | null;
 login: Array<IError> | null;
@@ -150,9 +158,20 @@ logout: boolean | null;
 register: Array<IError> | null;
 }
 
+interface IFeedbackOnMutationArguments {
+id?: string | null;
+stars?: number | null;
+comment?: string | null;
+}
+
 interface IGeneralInformationOnMutationArguments {
 id?: string | null;
-information?: IUserInformationInput | null;
+information?: IGeneralInformationInput | null;
+}
+
+interface ITrainingEmploymentOnMutationArguments {
+id?: string | null;
+information?: ITrainingEmploymentInput | null;
 }
 
 interface ISendForgotPasswordEmailOnMutationArguments {
@@ -179,7 +198,13 @@ email: string;
 password: string;
 }
 
-interface IUserInformationInput {
+interface IError {
+__typename: "Error";
+path: string;
+message: string;
+}
+
+interface IGeneralInformationInput {
 description?: string | null;
 identificationDocumentType?: string | null;
 identificationDocument?: number | null;
@@ -193,13 +218,6 @@ gender?: string | null;
 email?: string | null;
 socialnetwork?: Array<ISocialNetworkInput | null> | null;
 language?: Array<ILanguageInput | null> | null;
-university?: Array<IUniversityInput | null> | null;
-secondaryschool?: Array<ISecondaryInput | null> | null;
-work?: Array<IWorkInput | null> | null;
-cv?: Array<ICVInput | null> | null;
-professionalAptitude?: Array<string | null> | null;
-feedback?: Array<IFeedbackInput | null> | null;
-necessity?: Array<INecessityInput | null> | null;
 }
 
 interface ISocialNetworkInput {
@@ -212,6 +230,14 @@ interface ILanguageInput {
 id?: string | null;
 language?: string | null;
 level?: string | null;
+}
+
+interface ITrainingEmploymentInput {
+university?: Array<IUniversityInput | null> | null;
+secondaryschool?: Array<ISecondaryInput | null> | null;
+work?: Array<IWorkInput | null> | null;
+professionalAptitude?: IProfessionalAptitudeInput | null;
+cv?: Array<ICVInput | null> | null;
 }
 
 interface IUniversityInput {
@@ -245,27 +271,14 @@ finishIn?: any | null;
 finished?: boolean | null;
 }
 
+interface IProfessionalAptitudeInput {
+id?: string | null;
+list?: Array<string> | null;
+}
+
 interface ICVInput {
 id?: string | null;
 routeCV?: string | null;
-}
-
-interface IFeedbackInput {
-id?: string | null;
-stars?: number | null;
-comment?: string | null;
-}
-
-interface INecessityInput {
-id?: string | null;
-finished?: boolean | null;
-comment?: string | null;
-}
-
-interface IError {
-__typename: "Error";
-path: string;
-message: string;
 }
 }
 

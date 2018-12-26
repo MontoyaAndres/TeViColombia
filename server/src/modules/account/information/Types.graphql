@@ -41,6 +41,11 @@ type Work {
   finished: Boolean
 }
 
+type ProfessionalAptitude {
+  id: ID
+  list: [String!]
+}
+
 type CV {
   id: ID
   routeCV: String
@@ -83,8 +88,8 @@ type UserInformation {
   secondaryschool: [Secondary]
   work: [Work]
   cv: [CV]
-  professionalAptitude: [String]
-  feedback: [Feedback]
+  professionalAptitude: ProfessionalAptitude
+  feedback: Feedback
   necessity: [Necessity]
   commercialEstablishment: [CommercialEstablishment]
 }
