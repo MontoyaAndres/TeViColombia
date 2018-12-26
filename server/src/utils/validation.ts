@@ -58,7 +58,7 @@ export const UserConfigurationValidation = Yup.object().shape({
     .email("Correo incorrecto")
     .typeError("Campo incorrecto")
     .required("El campo es obligatorio!"),
-  oldPassword: Yup.string().typeError("Campo incorrecto"),
+  password: Yup.string().typeError("Campo incorrecto"),
   newPassword: Yup.string()
     .matches(
       /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,}$/,
@@ -66,4 +66,21 @@ export const UserConfigurationValidation = Yup.object().shape({
     )
     .typeError("Campo incorrecto")
     .required("El campo es obligatorio!")
+});
+
+export const GeneralInformationValidation = Yup.object().shape({
+  identificationDocument: Yup.number()
+    .positive("Número de documento de identificación incorrecto.")
+    .typeError("Campo incorrecto.")
+    .required("El campo es obligatorio!"),
+  telephone: Yup.string()
+    .matches(
+      /^[0][1-9]\d{9}$|^[1-9]\d{9}$/,
+      "Ingrese un número de teléfono correcto."
+    )
+    .typeError("Campo incorrecto.")
+    .required("El campo es obligatorio!"),
+  website: Yup.string()
+    .matches(/http(s)?:\/\/(.*\.)?.*/g)
+    .typeError("Campo incorrecto")
 });
