@@ -6,22 +6,27 @@ import { Work } from "../../../entity/Work";
 import { CV } from "../../../entity/CV";
 import UpdateCreate from "../utils/UpdateCreate";
 import professionalAptitudes from "./professionalAptitudes";
+import { createMiddleware } from "../../../utils/createMiddleware";
+import { middleware } from "../../shared/authMiddleware";
 
 export const resolvers: ResolveMap = {
   Mutation: {
-    trainingEmployment: async (
-      _,
-      { id, information }: GQL.ITrainingEmploymentOnMutationArguments
-    ) => {
-      await Promise.all([
-        UpdateCreate(University, id, information.university),
-        UpdateCreate(SecondarySchool, id, information.secondaryschool),
-        UpdateCreate(Work, id, information.work),
-        UpdateCreate(CV, id, information.cv),
-        professionalAptitudes(id, information)
-      ]);
+    trainingEmployment: createMiddleware(
+      middleware.Mutation.auth,
+      async (
+        _,
+        { id, information }: GQL.ITrainingEmploymentOnMutationArguments
+      ) => {
+        await Promise.all([
+          UpdateCreate(University, id, information.university),
+          UpdateCreate(SecondarySchool, id, information.secondaryschool),
+          UpdateCreate(Work, id, information.work),
+          UpdateCreate(CV, id, information.cv),
+          professionalAptitudes(id, information)
+        ]);
 
-      return true;
-    }
+        return true;
+      }
+    )
   }
 };

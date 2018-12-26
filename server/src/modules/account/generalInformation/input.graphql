@@ -1,19 +1,19 @@
 input SocialNetworkInput {
   id: ID
-  name: String
-  url: String
+  name: String!
+  url: String!
 }
 
 input LanguageInput {
   id: ID
-  language: String
-  level: String
+  language: String!
+  level: String!
 }
 
 input GeneralInformationInput {
-  description: String
-  identificationDocumentType: String
-  identificationDocument: Int
+  description: String!
+  identificationDocumentType: String!
+  identificationDocument: Int!
   address: String
   telephone: String
   departament: String
@@ -21,7 +21,7 @@ input GeneralInformationInput {
   civilStatus: String
   website: String
   gender: String
-  email: String
+  email: String!
   socialnetwork: [SocialNetworkInput]
   language: [LanguageInput]
 }

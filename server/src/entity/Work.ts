@@ -27,7 +27,7 @@ export class Work extends BaseEntity {
   @Column("date")
   startedOn: Date;
 
-  @Column("date")
+  @Column("date", { nullable: true })
   finishIn: Date;
 
   @Column()
