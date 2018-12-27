@@ -55,7 +55,7 @@ secondaryschool: Array<ISecondary | null> | null;
 work: Array<IWork | null> | null;
 cv: Array<ICV | null> | null;
 professionalAptitude: IProfessionalAptitude | null;
-feedback: IFeedback | null;
+feedback: Array<IFeedback | null> | null;
 necessity: Array<INecessity | null> | null;
 commercialEstablishment: Array<ICommercialEstablishment | null> | null;
 }
@@ -207,7 +207,7 @@ name: string;
 lastname: string;
 telephone: string;
 identificationDocumentType: string;
-identificationDocument: number;
+identificationDocument: any;
 email: string;
 password: string;
 }
@@ -227,7 +227,7 @@ message: string;
 interface IGeneralInformationInput {
 description: string;
 identificationDocumentType: string;
-identificationDocument: number;
+identificationDocument: any;
 address?: string | null;
 telephone?: string | null;
 departament?: string | null;

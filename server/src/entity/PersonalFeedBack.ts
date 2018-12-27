@@ -3,8 +3,7 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  OneToOne,
-  JoinColumn
+  ManyToOne
 } from "typeorm";
 
 // Models
@@ -24,7 +23,6 @@ export class PersonalFeedBack extends BaseEntity {
   @Column({ default: false })
   commented: boolean;
 
-  @OneToOne(_ => User, user => user.feedback)
-  @JoinColumn()
+  @ManyToOne(_ => User, user => user.feedback)
   user: User;
 }

@@ -3,7 +3,7 @@ import { GQL } from "../../../types/schema";
 import { User } from "../../../entity/User";
 import { PersonalSocialNetworks } from "../../../entity/PersonalSocialNetworks";
 import { Languages } from "../../../entity/Languages";
-import UpdateCreate from "../utils/UpdateCreate";
+import UpdateCreate from "../shared/UpdateCreate";
 import { createMiddleware } from "../../../utils/createMiddleware";
 import { middleware } from "../../shared/authMiddleware";
 import { GeneralInformationValidation } from "../../../utils/validation";
@@ -29,7 +29,6 @@ export const resolvers: ResolveMap = {
         } catch (err) {
           return formatYupError(err);
         }
-
         // Update user information
         await User.update(
           { id },
@@ -52,7 +51,7 @@ export const resolvers: ResolveMap = {
           UpdateCreate(Languages, id, information.language)
         ]);
 
-        return true;
+        return null;
       }
     )
   }

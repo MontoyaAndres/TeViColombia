@@ -3,8 +3,8 @@ type Mutation {
     name: String!
     lastname: String!
     telephone: String!
-    identificationDocumentType: String!
-    identificationDocument: Int!
+    identificationDocumentType: ENUMIdentificationDocumentType!
+    identificationDocument: BigInt!
     email: String!
     password: String!
   ): [Error!]

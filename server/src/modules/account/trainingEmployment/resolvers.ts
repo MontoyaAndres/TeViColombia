@@ -4,7 +4,7 @@ import { University } from "../../../entity/University";
 import { SecondarySchool } from "../../../entity/SecondarySchool";
 import { Work } from "../../../entity/Work";
 import { CV } from "../../../entity/CV";
-import UpdateCreate from "../utils/UpdateCreate";
+import UpdateCreate from "../shared/UpdateCreate";
 import professionalAptitudes from "./professionalAptitudes";
 import { createMiddleware } from "../../../utils/createMiddleware";
 import { middleware } from "../../shared/authMiddleware";

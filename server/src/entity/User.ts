@@ -23,6 +23,23 @@ import { Languages } from "./Languages";
 import { PersonalFeedBack } from "./PersonalFeedBack";
 import { CommercialEstablishment } from "./CommercialEstablishment";
 
+enum ENUMIdentificationDocumentType {
+  CC = "CÉDULA DE CIUDADANÍA",
+  TI = "TARJETA DE IDENTIDAD"
+}
+
+enum ENUMCivilStatus {
+  SOLTERO = "SOLTERO(A)",
+  CASADO = "CASADO(A)",
+  SEPARADO = "SEPARADO(A)/DIVORCIADO(A)",
+  VIUDO = "VIUDO(A)"
+}
+
+enum ENUMGender {
+  HOMBRE = "HOMBRE",
+  MUJER = "MUJER"
+}
+
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
@@ -43,7 +60,7 @@ export class User extends BaseEntity {
   @Column("text", { nullable: true })
   description: string;
 
-  @Column("varchar", { length: 255 })
+  @Column("enum", { enum: ENUMIdentificationDocumentType })
   identificationDocumentType: string;
 
   @Column("bigint", { unique: true })
@@ -61,13 +78,13 @@ export class User extends BaseEntity {
   @Column("varchar", { length: 255, nullable: true })
   city: string;
 
-  @Column("varchar", { length: 255, nullable: true })
+  @Column("enum", { enum: ENUMCivilStatus, nullable: true })
   civilStatus: string;
 
   @Column("varchar", { length: 255, nullable: true })
   website: string;
 
-  @Column("varchar", { length: 255, nullable: true })
+  @Column("enum", { enum: ENUMGender, nullable: true })
   gender: string;
 
   @Column("varchar", { length: 255, unique: true })
@@ -106,8 +123,8 @@ export class User extends BaseEntity {
   )
   professionalAptitude: ProfessionalAptitude;
 
-  @OneToOne(_ => PersonalFeedBack, feedback => feedback.user)
-  feedback: PersonalFeedBack;
+  @OneToMany(_ => PersonalFeedBack, feedback => feedback.user)
+  feedback: PersonalFeedBack[];
 
   @OneToMany(_ => Necessity, necessity => necessity.user)
   necessity: Necessity[];
