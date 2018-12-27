@@ -71,6 +71,10 @@ type CommercialEstablishment {
 
 type UserInformation {
   id: ID
+  routePhoto: String!
+  routeCover: String
+  name: String!
+  lastname: String!
   description: String
   identificationDocumentType: String
   identificationDocument: Int

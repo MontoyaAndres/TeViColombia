@@ -1,7 +1,5 @@
 type User {
   id: ID!
-  routePhoto: String!
-  routeCover: String
   name: String!
   lastname: String!
   email: String!

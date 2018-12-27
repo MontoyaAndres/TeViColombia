@@ -12,7 +12,7 @@ import { removeAllUsersSessions } from "../../../utils/removeAllUsersSessions";
 export const resolvers: ResolveMap = {
   Mutation: {
     userSettings: createMiddleware(
-      middleware.Mutation.auth,
+      middleware.auth,
       async (
         _,
         { email, password, newPassword }: GQL.IUserSettingsOnMutationArguments,

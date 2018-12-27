@@ -7,7 +7,7 @@ import { middleware } from "../../shared/authMiddleware";
 export const resolvers: ResolveMap = {
   Mutation: {
     feedback: createMiddleware(
-      middleware.Mutation.auth,
+      middleware.auth,
       async (_, { id, stars, comment }: GQL.IFeedbackOnMutationArguments) => {
         const alreadyCommented = await PersonalFeedBack.findOne({
           where: { user: id, commented: true }
@@ -42,7 +42,7 @@ export const resolvers: ResolveMap = {
       }
     ),
     deleteFeedback: createMiddleware(
-      middleware.Mutation.auth,
+      middleware.auth,
       async (_, __, { session }) => {
         await PersonalFeedBack.delete({ user: session.userId as any });
         return true;
