@@ -65,7 +65,7 @@ export async function startServer() {
   await createTypeormConn();
 
   const app = await server.start({
-    cors: { credentials: true, origin: process.env.FRONTEND_HOST },
+    cors: { credentials: true, origin: [process.env.FRONTEND_HOST] },
     port: 4000
   });
 

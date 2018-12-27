@@ -13,7 +13,5 @@ const isAuthenticated = async (
 };
 
 export const middleware = {
-  Mutation: {
-    auth: isAuthenticated
-  }
+  auth: isAuthenticated
 };

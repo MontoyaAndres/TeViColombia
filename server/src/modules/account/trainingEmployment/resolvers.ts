@@ -12,7 +12,7 @@ import { middleware } from "../../shared/authMiddleware";
 export const resolvers: ResolveMap = {
   Mutation: {
     trainingEmployment: createMiddleware(
-      middleware.Mutation.auth,
+      middleware.auth,
       async (
         _,
         { id, information }: GQL.ITrainingEmploymentOnMutationArguments

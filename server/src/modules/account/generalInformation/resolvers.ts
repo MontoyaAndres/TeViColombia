@@ -12,7 +12,7 @@ import { formatYupError } from "../../../utils/formatYupError";
 export const resolvers: ResolveMap = {
   Mutation: {
     generalInformation: createMiddleware(
-      middleware.Mutation.auth,
+      middleware.auth,
       async (
         _,
         { id, information }: GQL.IGeneralInformationOnMutationArguments

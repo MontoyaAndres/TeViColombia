@@ -33,6 +33,10 @@ id?: string | null;
 interface IUserInformation {
 __typename: "UserInformation";
 id: string | null;
+routePhoto: string;
+routeCover: string | null;
+name: string;
+lastname: string;
 description: string | null;
 identificationDocumentType: string | null;
 identificationDocument: number | null;
@@ -140,10 +144,9 @@ routePhone: string | null;
 interface IUser {
 __typename: "User";
 id: string;
-routePhoto: string;
-routeCover: string | null;
 name: string;
 lastname: string;
+email: string;
 }
 
 interface IMutation {
@@ -151,6 +154,7 @@ __typename: "Mutation";
 feedback: Array<IError> | null;
 deleteFeedback: boolean;
 generalInformation: boolean;
+information: Array<IError> | null;
 trainingEmployment: boolean;
 sendForgotPasswordEmail: boolean | null;
 forgotPasswordChange: Array<IError> | null;
@@ -169,6 +173,14 @@ comment: string;
 interface IGeneralInformationOnMutationArguments {
 id?: string | null;
 information?: IGeneralInformationInput | null;
+}
+
+interface IInformationOnMutationArguments {
+id?: string | null;
+name: string;
+lastname: string;
+routePhoto: any;
+routeCover?: any | null;
 }
 
 interface ITrainingEmploymentOnMutationArguments {
@@ -202,8 +214,8 @@ password: string;
 
 interface IUserSettingsOnMutationArguments {
 email: string;
-password: string;
-newPassword: string;
+password?: string | null;
+newPassword?: string | null;
 }
 
 interface IError {
