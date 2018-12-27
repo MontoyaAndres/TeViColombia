@@ -8,9 +8,13 @@ export const resolvers: ResolveMap = {
   Mutation: {
     feedback: createMiddleware(
       middleware.auth,
-      async (_, { id, stars, comment }: GQL.IFeedbackOnMutationArguments) => {
+      async (
+        _,
+        { id, stars, comment }: GQL.IFeedbackOnMutationArguments,
+        { session }
+      ) => {
         const alreadyCommented = await PersonalFeedBack.findOne({
-          where: { user: id, commented: true }
+          where: { user: session.userId, commented: true }
         });
 
         if (stars > 5) {

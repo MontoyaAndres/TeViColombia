@@ -1,5 +1,8 @@
 import * as Yup from "yup";
 
+const MAX_INT = Number.MAX_SAFE_INTEGER;
+const MIN_INT = Number.MIN_SAFE_INTEGER;
+
 export const RegisterValidation = Yup.object().shape({
   name: Yup.string()
     .matches(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/, "Ingrese un nombre correcto.")
@@ -22,6 +25,8 @@ export const RegisterValidation = Yup.object().shape({
     .required("El campo es obligatorio!"),
   identificationDocument: Yup.number()
     .positive("Número de documento de identificación incorrecto.")
+    .max(MAX_INT, "Número erróneo.")
+    .min(MIN_INT, "Número erróneo.")
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!"),
   password: Yup.string()
@@ -70,6 +75,8 @@ export const UserConfigurationValidation = Yup.object().shape({
 export const GeneralInformationValidation = Yup.object().shape({
   identificationDocument: Yup.number()
     .positive("Número de documento de identificación incorrecto.")
+    .max(MAX_INT, "Número erróneo.")
+    .min(MIN_INT, "Número erróneo.")
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!"),
   telephone: Yup.string()
@@ -80,6 +87,6 @@ export const GeneralInformationValidation = Yup.object().shape({
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!"),
   website: Yup.string()
-    .matches(/http(s)?:\/\/(.*\.)?.*/g)
+    .matches(/http(s)?:\/\/(.*\.)?.*/g, "Sitio web incorrecto.")
     .typeError("Campo incorrecto")
 });

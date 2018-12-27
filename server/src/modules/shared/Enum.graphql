@@ -1,0 +1,27 @@
+enum ENUMIdentificationDocumentType {
+  CC
+  TI
+}
+
+enum ENUMCivilStatus {
+  SOLTERO
+  CASADO
+  SEPARADO
+  VIUDO
+}
+
+enum ENUMGender {
+  HOMBRE
+  MUJER
+}
+
+enum ENUMSocialNetwork {
+  TWITTER
+  GITHUB
+  FACEBOOK
+  LINKEDIN
+  INSTAGRAM
+  YOUTUBE
+  SPOTIFY
+  WHATSAPP
+}
