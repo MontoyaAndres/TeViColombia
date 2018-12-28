@@ -1,6 +1,6 @@
 input SocialNetworkInput {
   id: ID
-  name: ENUMSocialNetwork!
+  name: String!
   url: String!
 }
 
@@ -12,15 +12,15 @@ input LanguageInput {
 
 input GeneralInformationInput {
   description: String!
-  identificationDocumentType: ENUMIdentificationDocumentType!
+  identificationDocumentType: String!
   identificationDocument: BigInt!
   address: String
   telephone: String
   departament: String
   city: String
-  civilStatus: ENUMCivilStatus
+  civilStatus: String
   website: String
-  gender: ENUMGender
+  gender: String
   socialnetwork: [SocialNetworkInput]
   language: [LanguageInput]
 }
