@@ -1,6 +1,6 @@
 type SocialNetwork {
   id: ID
-  name: ENUMSocialNetwork
+  name: String
   url: String
 }
 
@@ -76,15 +76,15 @@ type UserInformation {
   name: String!
   lastname: String!
   description: String
-  identificationDocumentType: ENUMIdentificationDocumentType!
+  identificationDocumentType: String!
   identificationDocument: Int!
   address: String
   telephone: String
   departament: String
   city: String
-  civilStatus: ENUMCivilStatus
+  civilStatus: String
   website: String
-  gender: ENUMGender
+  gender: String
   email: String!
   socialnetwork: [SocialNetwork]
   language: [Language]

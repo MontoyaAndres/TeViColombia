@@ -87,6 +87,6 @@ export const GeneralInformationValidation = Yup.object().shape({
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!"),
   website: Yup.string()
-    .matches(/http(s)?:\/\/(.*\.)?.*/g, "Sitio web incorrecto.")
+    .matches(/http(s)?:\/\/(.*\.)?.*/, "Sitio web incorrecto.")
     .typeError("Campo incorrecto")
 });
