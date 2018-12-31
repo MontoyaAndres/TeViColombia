@@ -63,6 +63,7 @@ class MyDocument extends Document {
           <link rel="stylesheet" href="/static/css/animate.min.css" />
           <link rel="stylesheet" href="/static/css/styles.css" />
           <link rel="stylesheet" href="/static/css/loading.css" />
+          <link rel="stylesheet" href="/static/css/floatButton.css" />
         </Head>
         <body>
           <Main />

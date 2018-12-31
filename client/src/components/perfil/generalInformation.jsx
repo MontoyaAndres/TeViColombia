@@ -4,8 +4,8 @@ import { Query } from "react-apollo";
 import Loading from "../shared/loading";
 
 const information = gql`
-  query Information {
-    information {
+  query Information($id: ID!) {
+    information(id: $id) {
       description
       identificationDocumentType
       identificationDocument
@@ -29,8 +29,8 @@ const information = gql`
   }
 `;
 
-const generalInformation = () => (
-  <Query query={information}>
+const generalInformation = ({ id }) => (
+  <Query query={information} variables={{ id }}>
     {({ loading, data }) => {
       if (loading) {
         return <Loading />;

@@ -1,11 +1,15 @@
 import React, { PureComponent, Fragment } from "react";
+import { withRouter } from "next/router";
+import Error from "next/error";
 import dynamic from "next/dynamic";
 import { Query } from "react-apollo";
-import Loading from "../components/shared/loading";
+import { gql } from "apollo-boost";
 
-import meQuery from "../graphql/queries/me";
+import Loading from "../components/shared/loading";
 import checkLoggedIn from "../lib/checkLoggedIn";
 import redirect from "../lib/redirect";
+import FloatButton from "../components/shared/floatButton";
+import { Router } from "../routes";
 
 const DynamicGeneralInformation = dynamic(
   () => import("../components/perfil/generalInformation"),
@@ -29,6 +33,17 @@ const DynamicNecessity = dynamic(
   { loading: () => <Loading /> }
 );
 
+const information = gql`
+  query Information($id: ID!) {
+    information(id: $id) {
+      routePhoto
+      routeCover
+      name
+      lastname
+    }
+  }
+`;
+
 class perfil extends PureComponent {
   state = {
     value: 1
@@ -40,21 +55,30 @@ class perfil extends PureComponent {
 
   render() {
     const { value } = this.state;
+    const {
+      router: {
+        query: { id }
+      }
+    } = this.props;
 
     return (
-      <Query query={meQuery}>
-        {({ loading, data: { me } }) => {
+      <Query query={information} variables={{ id }}>
+        {({ loading, data }) => {
           if (loading) {
             return <Loading />;
           }
 
+          if (!data.information) {
+            return <Error statusCode="404" />;
+          }
+
           return (
             <Fragment>
-              {me.routeCover ? (
+              {data.information.routeCover ? (
                 <div style={{ height: 300 }}>
                   <img
                     alt="user cover"
-                    src={`http://localhost:4000/${me.routeCover}`}
+                    src={`http://localhost:4000/${data.information.routeCover}`}
                   />
                 </div>
               ) : (
@@ -68,12 +92,12 @@ class perfil extends PureComponent {
                 >
                   <img
                     style={{ width: 200 }}
-                    src={`http://localhost:4000/${me.routePhoto}`}
+                    src={`http://localhost:4000/${data.information.routePhoto}`}
                     alt="profile"
                   />
                 </figure>
                 <h3 className="title" style={{ textAlign: "center" }}>
-                  {me.name} {me.lastname}
+                  {data.information.name} {data.information.lastname}
                 </h3>
                 <div className="tabs is-medium is-centered">
                   <ul>
@@ -111,11 +135,13 @@ class perfil extends PureComponent {
                 </div>
               </div>
 
-              {value === 1 && <DynamicGeneralInformation />}
-              {value === 2 && <DynamicTrainingEmployment />}
-              {value === 3 && <DynamicFeedback />}
-              {value === 4 && <DynameicCommercialEstablishment />}
-              {value === 5 && <DynamicNecessity />}
+              {value === 1 && <DynamicGeneralInformation id={id} />}
+              {value === 2 && <DynamicTrainingEmployment id={id} />}
+              {value === 3 && <DynamicFeedback id={id} />}
+              {value === 4 && <DynameicCommercialEstablishment id={id} />}
+              {value === 5 && <DynamicNecessity id={id} />}
+
+              <FloatButton type="edit" profileId={id} />
             </Fragment>
           );
         }}
@@ -134,4 +160,4 @@ perfil.getInitialProps = async context => {
   return {};
 };
 
-export default perfil;
+export default withRouter(perfil);
