@@ -78,7 +78,7 @@ type UserInformation {
   lastname: String!
   description: String
   identificationDocumentType: String!
-  identificationDocument: Int!
+  identificationDocument: BigInt!
   address: String
   telephone: String
   departament: String

@@ -14,8 +14,8 @@ export const resolvers: ResolveMap = {
       async (
         _,
         { id }: GQL.IInformationOnQueryArguments,
-        { session, informationLoader }
-      ) => informationLoader.load(id ? id : session.userId!)
+        { informationLoader }
+      ) => informationLoader.load(id)
     )
   },
   Mutation: {

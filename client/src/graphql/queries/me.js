@@ -4,10 +4,9 @@ const meQuery = gql`
   query MeQuery {
     me {
       id
-      routePhoto
-      routeCover
       name
       lastname
+      email
     }
   }
 `;

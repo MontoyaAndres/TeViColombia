@@ -4,8 +4,8 @@ import { Query } from "react-apollo";
 import Loading from "../shared/loading";
 
 const information = gql`
-  query Information {
-    information {
+  query Information($id: ID!) {
+    information(id: $id) {
       university {
         place
         startedOn
@@ -31,7 +31,10 @@ const information = gql`
         finishIn
         finished
       }
-      professionalAptitude
+      professionalAptitude {
+        id
+        list
+      }
       cv {
         routeCV
       }
@@ -39,8 +42,8 @@ const information = gql`
   }
 `;
 
-const trainingEmployment = () => (
-  <Query query={information}>
+const trainingEmployment = ({ id }) => (
+  <Query query={information} variables={{ id }}>
     {({ loading, data }) => {
       if (loading) {
         return <Loading />;
@@ -85,17 +88,14 @@ const trainingEmployment = () => (
                 </div>
               ) : null}
 
-              {data.information.professionalAptitude &&
-              data.information.professionalAptitude.length ? (
-                <div className="column is-6">
-                  <div className="box" style={{ marginTop: "0.5rem" }}>
-                    <p className="subtitle">
-                      <strong>Aptitudes profesionales:</strong>
-                      {JSON.stringify(data.information.professionalAptitude)}
-                    </p>
-                  </div>
+              <div className="column is-6">
+                <div className="box" style={{ marginTop: "0.5rem" }}>
+                  <p className="subtitle">
+                    <strong>Aptitudes profesionales:</strong>
+                    {JSON.stringify(data.information.professionalAptitude)}
+                  </p>
                 </div>
-              ) : null}
+              </div>
 
               {data.information.cv && data.information.cv.length ? (
                 <div className="column is-6">
