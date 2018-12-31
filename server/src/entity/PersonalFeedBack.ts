@@ -15,13 +15,13 @@ export class PersonalFeedBack extends BaseEntity {
   id: string;
 
   @Column("integer")
-  stars: string;
+  stars: number;
 
   @Column("text", { nullable: true })
   comment: string;
 
-  @Column({ default: false })
-  commented: boolean;
+  @Column("uuid")
+  receiver: string;
 
   @ManyToOne(_ => User, user => user.feedback)
   user: User;
