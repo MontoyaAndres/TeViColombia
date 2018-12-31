@@ -38,8 +38,8 @@ routeCover: string | null;
 name: string;
 lastname: string;
 description: string | null;
-identificationDocumentType: string | null;
-identificationDocument: number | null;
+identificationDocumentType: string;
+identificationDocument: number;
 address: string | null;
 telephone: string | null;
 departament: string | null;
@@ -47,7 +47,7 @@ city: string | null;
 civilStatus: string | null;
 website: string | null;
 gender: string | null;
-email: string | null;
+email: string;
 socialnetwork: Array<ISocialNetwork | null> | null;
 language: Array<ILanguage | null> | null;
 university: Array<IUniversity | null> | null;
@@ -153,7 +153,7 @@ interface IMutation {
 __typename: "Mutation";
 feedback: Array<IError> | null;
 deleteFeedback: boolean;
-generalInformation: boolean;
+generalInformation: Array<IError> | null;
 information: Array<IError> | null;
 trainingEmployment: boolean;
 sendForgotPasswordEmail: boolean | null;
@@ -165,9 +165,13 @@ userSettings: Array<IError> | null;
 }
 
 interface IFeedbackOnMutationArguments {
-id?: string | null;
+id: string;
 stars: number;
 comment: string;
+}
+
+interface IDeleteFeedbackOnMutationArguments {
+id: string;
 }
 
 interface IGeneralInformationOnMutationArguments {

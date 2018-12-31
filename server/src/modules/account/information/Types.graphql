@@ -55,6 +55,7 @@ type Feedback {
   id: ID
   stars: Int
   comment: String
+  user: User
 }
 
 type Necessity {
