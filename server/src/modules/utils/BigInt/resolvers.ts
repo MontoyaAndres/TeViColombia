@@ -37,7 +37,6 @@ function coerceBigInt(value: any) {
     );
   }
   const num = Number(value);
-  console.log(num);
   if (num !== num || num > MAX_INT || num < MIN_INT) {
     throw new TypeError(
       "BigInt cannot represent non 53-bit signed integer value: " +

@@ -8,12 +8,16 @@ import IsLoggedIn from "./auth/isLoggedIn";
 import IsNotLoggedIn from "./auth/isNotLoggedIn";
 import meQuery from "../../../graphql/queries/me";
 
-// TODO: When the user change the page, close menu.
-
 class menu extends PureComponent {
   state = {
     clicked: false
   };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.router.pathname !== this.props.router.pathname) {
+      this.openMenu();
+    }
+  }
 
   openMenu = () => {
     const { clicked } = this.state;

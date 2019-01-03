@@ -8,8 +8,6 @@ import { gql } from "apollo-boost";
 import Loading from "../components/shared/loading";
 import checkLoggedIn from "../lib/checkLoggedIn";
 import redirect from "../lib/redirect";
-import FloatButton from "../components/shared/floatButton";
-import { Router } from "../routes";
 
 const DynamicGeneralInformation = dynamic(
   () => import("../components/perfil/generalInformation"),
@@ -140,8 +138,6 @@ class perfil extends PureComponent {
               {value === 3 && <DynamicFeedback id={id} />}
               {value === 4 && <DynameicCommercialEstablishment id={id} />}
               {value === 5 && <DynamicNecessity id={id} />}
-
-              <FloatButton type="edit" profileId={id} />
             </Fragment>
           );
         }}

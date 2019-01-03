@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { gql } from "apollo-boost";
 import { Mutation, withApollo } from "react-apollo";
 
-import { Link, Router } from "../../../../routes";
+import { Router } from "../../../../routes";
 
 const logout = gql`
   mutation Logout {
@@ -13,6 +13,12 @@ const logout = gql`
 class isLoggedIn extends PureComponent {
   state = {
     clicked: false
+  };
+
+  redirect = () => {
+    const { me } = this.props;
+    this.openMenu();
+    Router.pushRoute(`/perfil/${me.id}/edit`);
   };
 
   openMenu = () => {
@@ -60,10 +66,10 @@ class isLoggedIn extends PureComponent {
             </div>
             <div className="dropdown-menu" id="dropdown-menu" role="menu">
               <div className="dropdown-content">
-                <Link route="configuration">
-                  <a className="dropdown-item">Configuración de usuario</a>
-                </Link>
-                <a href="#" className="dropdown-item" onClick={() => mutate()}>
+                <a className="dropdown-item" onClick={() => this.redirect()}>
+                  Configuración de usuario
+                </a>
+                <a className="dropdown-item" onClick={() => mutate()}>
                   Salir
                 </a>
               </div>
