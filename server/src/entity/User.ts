@@ -69,8 +69,8 @@ export class User extends BaseEntity {
   @Column("varchar", { length: 255, nullable: true })
   address: string;
 
-  @Column("varchar", { length: 10, unique: true })
-  telephone: string;
+  @Column("bigint", { unique: true })
+  telephone: number;
 
   @Column("varchar", { length: 255, nullable: true })
   departament: string;

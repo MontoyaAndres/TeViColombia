@@ -2,7 +2,7 @@ type Mutation {
   register(
     name: String!
     lastname: String!
-    telephone: String!
+    telephone: BigInt!
     identificationDocumentType: String!
     identificationDocument: BigInt!
     email: String!

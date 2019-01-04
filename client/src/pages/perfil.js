@@ -67,7 +67,7 @@ class perfil extends PureComponent {
           }
 
           if (!data.information) {
-            return <Error statusCode="404" />;
+            return <Error statusCode={404} />;
           }
 
           return (

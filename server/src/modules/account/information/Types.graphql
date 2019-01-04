@@ -80,7 +80,7 @@ type UserInformation {
   identificationDocumentType: String!
   identificationDocument: BigInt!
   address: String
-  telephone: String
+  telephone: BigInt!
   departament: String
   city: String
   civilStatus: String

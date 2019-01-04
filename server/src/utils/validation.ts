@@ -16,10 +16,9 @@ export const RegisterValidation = Yup.object().shape({
     .email("Correo incorrecto")
     .typeError("Campo incorrecto")
     .required("El campo es obligatorio!"),
-  telephone: Yup.string()
-    .matches(
-      /^[0][1-9]\d{9}$|^[1-9]\d{9}$/,
-      "Ingrese un número de teléfono correcto."
+  telephone: Yup.number()
+    .test("is-telephone", "Ingrese un número de teléfono correcto.", value =>
+      /^[0][1-9]\d{9}$|^[1-9]\d{9}$/.test(value)
     )
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!"),
@@ -79,10 +78,9 @@ export const GeneralInformationValidation = Yup.object().shape({
     .min(MIN_INT, "Número erróneo.")
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!"),
-  telephone: Yup.string()
-    .matches(
-      /^[0][1-9]\d{9}$|^[1-9]\d{9}$/,
-      "Ingrese un número de teléfono correcto."
+  telephone: Yup.number()
+    .test("is-telephone", "Ingrese un número de teléfono correcto.", value =>
+      /^[0][1-9]\d{9}$|^[1-9]\d{9}$/.test(value)
     )
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!"),
