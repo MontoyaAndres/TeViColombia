@@ -39,9 +39,9 @@ name: string;
 lastname: string;
 description: string | null;
 identificationDocumentType: string;
-identificationDocument: number;
+identificationDocument: any;
 address: string | null;
-telephone: string | null;
+telephone: any;
 departament: string | null;
 city: string | null;
 civilStatus: string | null;
@@ -125,6 +125,15 @@ __typename: "Feedback";
 id: string | null;
 stars: number | null;
 comment: string | null;
+user: IUser | null;
+}
+
+interface IUser {
+__typename: "User";
+id: string;
+name: string;
+lastname: string;
+email: string;
 }
 
 interface INecessity {
@@ -139,14 +148,6 @@ __typename: "CommercialEstablishment";
 id: string | null;
 name: string | null;
 routePhone: string | null;
-}
-
-interface IUser {
-__typename: "User";
-id: string;
-name: string;
-lastname: string;
-email: string;
 }
 
 interface IMutation {
@@ -209,7 +210,7 @@ password: string;
 interface IRegisterOnMutationArguments {
 name: string;
 lastname: string;
-telephone: string;
+telephone: any;
 identificationDocumentType: string;
 identificationDocument: any;
 email: string;
@@ -233,7 +234,7 @@ description: string;
 identificationDocumentType: string;
 identificationDocument: any;
 address?: string | null;
-telephone?: string | null;
+telephone: any;
 departament?: string | null;
 city?: string | null;
 civilStatus?: string | null;

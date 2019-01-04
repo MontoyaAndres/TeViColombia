@@ -13,9 +13,9 @@ const registerMutation = gql`
   mutation RegisterMutation(
     $name: String!
     $lastname: String!
-    $telephone: String!
+    $telephone: BigInt!
     $identificationDocumentType: String!
-    $identificationDocument: Int!
+    $identificationDocument: BigInt!
     $email: String!
     $password: String!
   ) {
@@ -176,7 +176,7 @@ export default compose(
       lastname: "",
       telephone: "",
       identificationDocumentType: "Tarjeta de identidad",
-      identificationDocument: 0,
+      identificationDocument: "",
       email: "",
       password: ""
     }),
