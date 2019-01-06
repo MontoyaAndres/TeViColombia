@@ -1,8 +1,7 @@
 import React, { PureComponent } from "react";
 import { gql } from "apollo-boost";
 import { Mutation, withApollo } from "react-apollo";
-
-import { Router } from "../../../../routes";
+import Router from "next/router";
 
 const logout = gql`
   mutation Logout {
@@ -18,7 +17,7 @@ class isLoggedIn extends PureComponent {
   redirect = () => {
     const { me } = this.props;
     this.openMenu();
-    Router.pushRoute(`/perfil/${me.id}/edit`);
+    Router.push(`/profile/edit/${me.id}`);
   };
 
   openMenu = () => {
@@ -36,7 +35,7 @@ class isLoggedIn extends PureComponent {
         mutation={logout}
         onCompleted={() => {
           client.cache.reset().then(() => {
-            Router.pushRoute("/");
+            Router.push("/");
           });
         }}
       >

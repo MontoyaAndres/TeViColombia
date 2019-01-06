@@ -29,11 +29,6 @@ input WorkInput {
   finished: Boolean!
 }
 
-input ProfessionalAptitudeInput {
-  id: ID
-  list: [String!]
-}
-
 input CVInput {
   id: ID
   routeCV: String
@@ -43,6 +38,5 @@ input TrainingEmploymentInput {
   university: [UniversityInput]
   secondaryschool: [SecondaryInput]
   work: [WorkInput]
-  professionalAptitude: ProfessionalAptitudeInput
   cv: [CVInput]
 }

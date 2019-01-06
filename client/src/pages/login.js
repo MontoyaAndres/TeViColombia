@@ -2,8 +2,8 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { Mutation, withApollo } from "react-apollo";
 import { gql } from "apollo-boost";
+import Router from "next/router";
 
-import { Router } from "../routes";
 import { TextField } from "../components/shared/globalField";
 import { LoginValidation } from "../utils/validation";
 import normalizeErrors from "../utils/normalizeErrors";
@@ -20,7 +20,7 @@ const loginMutation = gql`
   }
 `;
 
-const login = ({ client }) => (
+const login = () => (
   <div className="hero is-fullheight-with-navbar">
     <div className="hero-body">
       <div className="container has-text-centered">
@@ -31,16 +31,7 @@ const login = ({ client }) => (
               <img src="https://placehold.it/128x128" alt="login" />
             </figure>
 
-            <Mutation
-              mutation={loginMutation}
-              /* onCompleted={data => {
-                if (!data.login) {
-                  client.cache.reset().then(() => {
-                    Router.pushRoute("/");
-                  });
-                }
-              }} */
-            >
+            <Mutation mutation={loginMutation}>
               {mutate => (
                 <Formik
                   initialValues={{
@@ -62,7 +53,7 @@ const login = ({ client }) => (
                       setErrors(normalizeErrors(data.login));
                     } else {
                       setSubmitting(false);
-                      Router.pushRoute("/");
+                      Router.push("/");
                     }
                   }}
                   render={({ isSubmitting }) => (

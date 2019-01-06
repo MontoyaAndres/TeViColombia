@@ -1,3 +1,5 @@
+scalar Upload
+
 input SocialNetworkInput {
   id: ID
   name: String!
@@ -11,6 +13,8 @@ input LanguageInput {
 }
 
 input GeneralInformationInput {
+  name: String!
+  lastname: String!
   description: String!
   identificationDocumentType: String!
   identificationDocument: BigInt!
