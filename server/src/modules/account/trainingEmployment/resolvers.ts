@@ -5,7 +5,6 @@ import { SecondarySchool } from "../../../entity/SecondarySchool";
 import { Work } from "../../../entity/Work";
 import { CV } from "../../../entity/CV";
 import UpdateCreate from "../shared/UpdateCreate";
-import professionalAptitudes from "./professionalAptitudes";
 import { createMiddleware } from "../../../utils/createMiddleware";
 import { middleware } from "../../shared/authMiddleware";
 
@@ -21,8 +20,7 @@ export const resolvers: ResolveMap = {
           UpdateCreate(University, id, information.university),
           UpdateCreate(SecondarySchool, id, information.secondaryschool),
           UpdateCreate(Work, id, information.work),
-          UpdateCreate(CV, id, information.cv),
-          professionalAptitudes(id, information)
+          UpdateCreate(CV, id, information.cv)
         ]);
 
         return true;

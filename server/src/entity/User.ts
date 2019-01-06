@@ -7,8 +7,7 @@ import {
   BeforeInsert,
   OneToMany,
   ManyToMany,
-  JoinTable,
-  OneToOne
+  JoinTable
 } from "typeorm";
 
 // Models
@@ -18,14 +17,16 @@ import { University } from "./University";
 import { SecondarySchool } from "./SecondarySchool";
 import { Work } from "./Work";
 import { CV } from "./CV";
-import { ProfessionalAptitude } from "./ProfessionalAptitude";
 import { Languages } from "./Languages";
 import { PersonalFeedBack } from "./PersonalFeedBack";
 import { CommercialEstablishment } from "./CommercialEstablishment";
 
 enum ENUMIdentificationDocumentType {
   CC = "CÉDULA DE CIUDADANÍA",
-  TI = "TARJETA DE IDENTIDAD"
+  CE = "CÉDULA DE EXTRANJERÍA",
+  TI = "TARJETA DE IDENTIDAD",
+  PS = "PASAPORTE",
+  NI = "NÚMERO DE IDENTIFICACIÓN"
 }
 
 enum ENUMCivilStatus {
@@ -116,12 +117,6 @@ export class User extends BaseEntity {
 
   @OneToMany(_ => CV, cv => cv.user)
   cv: CV[];
-
-  @OneToOne(
-    _ => ProfessionalAptitude,
-    professionalaptitude => professionalaptitude.user
-  )
-  professionalAptitude: ProfessionalAptitude;
 
   @OneToMany(_ => PersonalFeedBack, feedback => feedback.user)
   feedback: PersonalFeedBack[];

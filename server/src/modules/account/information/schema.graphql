@@ -1,15 +1,3 @@
-scalar Upload
-
 type Query {
   information(id: ID): UserInformation
-}
-
-type Mutation {
-  information(
-    id: ID
-    name: String!
-    lastname: String!
-    routePhoto: Upload!
-    routeCover: Upload
-  ): [Error!]
 }

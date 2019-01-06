@@ -17,6 +17,9 @@ export const resolvers: ResolveMap = {
         _,
         { id, information }: GQL.IGeneralInformationOnMutationArguments
       ) => {
+        // Examples and for profile and cover photos
+        // https://github.com/prisma/graphql-yoga/tree/master/examples/file-upload
+        // https://github.com/jaydenseric/graphql-upload/issues/49
         try {
           await GeneralInformationValidation.validate(
             {
@@ -33,6 +36,8 @@ export const resolvers: ResolveMap = {
         await User.update(
           { id },
           {
+            name: information.name,
+            lastname: information.lastname,
             description: information.description,
             identificationDocumentType: information.identificationDocumentType,
             identificationDocument: information.identificationDocument,

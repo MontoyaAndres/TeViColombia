@@ -3,9 +3,9 @@ import NProgress from "nprogress";
 import Head from "next/head";
 import App, { Container } from "next/app";
 import { ApolloProvider } from "react-apollo";
+import Router from "next/router";
 
 import withApollo from "../lib/withApollo";
-import { Router } from "../routes";
 import Layout from "../components/layout";
 
 // Loading route config

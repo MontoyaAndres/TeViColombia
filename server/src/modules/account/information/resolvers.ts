@@ -17,26 +17,5 @@ export const resolvers: ResolveMap = {
         { informationLoader }
       ) => informationLoader.load(id)
     )
-  },
-  Mutation: {
-    information: createMiddleware(
-      middleware.auth,
-      async (
-        _,
-        {
-          id,
-          name,
-          lastname,
-          routePhoto,
-          routeCover
-        }: GQL.IInformationOnMutationArguments
-      ) => {
-        // Examples
-        // https://github.com/prisma/graphql-yoga/tree/master/examples/file-upload
-        // https://github.com/jaydenseric/graphql-upload/issues/49
-        console.log(id, name, lastname, routePhoto, routeCover);
-        return null;
-      }
-    )
   }
 };

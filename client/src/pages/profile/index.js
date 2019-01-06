@@ -3,46 +3,38 @@ import { withRouter } from "next/router";
 import Error from "next/error";
 import dynamic from "next/dynamic";
 import { Query } from "react-apollo";
-import { gql } from "apollo-boost";
 
-import Loading from "../components/shared/loading";
-import checkLoggedIn from "../lib/checkLoggedIn";
-import redirect from "../lib/redirect";
+import Loading from "../../components/shared/loading";
+import checkLoggedIn from "../../lib/checkLoggedIn";
+import redirect from "../../lib/redirect";
+import { information } from "../../graphql/queries/information";
 
 const DynamicGeneralInformation = dynamic(
-  () => import("../components/perfil/generalInformation"),
+  () => import("../../components/profile/generalInformation"),
   {
     loading: () => <Loading />
   }
 );
 const DynamicTrainingEmployment = dynamic(
-  () => import("../components/perfil/trainingEmployment"),
+  () => import("../../components/profile/trainingEmployment"),
   { loading: () => <Loading /> }
 );
-const DynamicFeedback = dynamic(() => import("../components/perfil/feedback"), {
-  loading: () => <Loading />
-});
+const DynamicFeedback = dynamic(
+  () => import("../../components/profile/feedback"),
+  {
+    loading: () => <Loading />
+  }
+);
 const DynameicCommercialEstablishment = dynamic(
-  () => import("../components/perfil/commercialEstablishment"),
+  () => import("../../components/profile/commercialEstablishment"),
   { loading: () => <Loading /> }
 );
 const DynamicNecessity = dynamic(
-  () => import("../components/perfil/necessity"),
+  () => import("../../components/profile/necessity"),
   { loading: () => <Loading /> }
 );
 
-const information = gql`
-  query Information($id: ID!) {
-    information(id: $id) {
-      routePhoto
-      routeCover
-      name
-      lastname
-    }
-  }
-`;
-
-class perfil extends PureComponent {
+class profile extends PureComponent {
   state = {
     value: 1
   };
@@ -146,7 +138,7 @@ class perfil extends PureComponent {
   }
 }
 
-perfil.getInitialProps = async context => {
+profile.getInitialProps = async context => {
   const { loggedInUser } = await checkLoggedIn(context.apolloClient);
 
   if (!loggedInUser.me) {
@@ -156,4 +148,4 @@ perfil.getInitialProps = async context => {
   return {};
 };
 
-export default withRouter(perfil);
+export default withRouter(profile);

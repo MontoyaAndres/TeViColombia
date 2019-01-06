@@ -31,10 +31,6 @@ const information = gql`
         finishIn
         finished
       }
-      professionalAptitude {
-        id
-        list
-      }
       cv {
         routeCV
       }
@@ -87,15 +83,6 @@ const trainingEmployment = ({ id }) => (
                   </div>
                 </div>
               ) : null}
-
-              <div className="column is-6">
-                <div className="box" style={{ marginTop: "0.5rem" }}>
-                  <p className="subtitle">
-                    <strong>Aptitudes profesionales:</strong>
-                    {JSON.stringify(data.information.professionalAptitude)}
-                  </p>
-                </div>
-              </div>
 
               {data.information.cv && data.information.cv.length ? (
                 <div className="column is-6">

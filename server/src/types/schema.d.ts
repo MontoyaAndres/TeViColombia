@@ -54,7 +54,6 @@ university: Array<IUniversity | null> | null;
 secondaryschool: Array<ISecondary | null> | null;
 work: Array<IWork | null> | null;
 cv: Array<ICV | null> | null;
-professionalAptitude: IProfessionalAptitude | null;
 feedback: Array<IFeedback | null> | null;
 necessity: Array<INecessity | null> | null;
 commercialEstablishment: Array<ICommercialEstablishment | null> | null;
@@ -112,12 +111,6 @@ interface ICV {
 __typename: "CV";
 id: string | null;
 routeCV: string | null;
-}
-
-interface IProfessionalAptitude {
-__typename: "ProfessionalAptitude";
-id: string | null;
-list: Array<string> | null;
 }
 
 interface IFeedback {
@@ -230,6 +223,8 @@ message: string;
 }
 
 interface IGeneralInformationInput {
+name: string;
+lastname: string;
 description: string;
 identificationDocumentType: string;
 identificationDocument: any;
@@ -260,7 +255,6 @@ interface ITrainingEmploymentInput {
 university?: Array<IUniversityInput | null> | null;
 secondaryschool?: Array<ISecondaryInput | null> | null;
 work?: Array<IWorkInput | null> | null;
-professionalAptitude?: IProfessionalAptitudeInput | null;
 cv?: Array<ICVInput | null> | null;
 }
 
@@ -293,11 +287,6 @@ description: string;
 startedOn: any;
 finishIn?: any | null;
 finished: boolean;
-}
-
-interface IProfessionalAptitudeInput {
-id?: string | null;
-list?: Array<string> | null;
 }
 
 interface ICVInput {

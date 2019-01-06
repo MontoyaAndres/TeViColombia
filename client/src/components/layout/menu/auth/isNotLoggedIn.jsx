@@ -1,15 +1,14 @@
 import React from "react";
-
-import { Link } from "../../../../routes";
+import Link from "next/link";
 
 const isNotLoggedIn = () => (
   <div className="buttons">
     <a className="button is-primary">
-      <Link route="register">
+      <Link href="/register" prefetch>
         <strong>Crear nueva cuenta</strong>
       </Link>
     </a>
-    <Link route="login">
+    <Link href="/login" prefetch>
       <a className="button is-light">Entrar</a>
     </Link>
   </div>

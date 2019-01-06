@@ -1,8 +1,8 @@
 import React, { PureComponent, Fragment } from "react";
 import { withRouter } from "next/router";
 import { graphql } from "react-apollo";
+import Link from "next/link";
 
-import { Link } from "../../../routes";
 import Background from "./background";
 import IsLoggedIn from "./auth/isLoggedIn";
 import IsNotLoggedIn from "./auth/isNotLoggedIn";
@@ -43,7 +43,7 @@ class menu extends PureComponent {
             aria-label="main navigation"
           >
             <div className="navbar-brand">
-              <Link route="/">
+              <Link href="/" prefetch>
                 <a className="navbar-item">
                   <img
                     src="https://bulma.io/images/bulma-logo.png"
@@ -73,23 +73,26 @@ class menu extends PureComponent {
               className={`navbar-menu ${clicked ? "is-active" : ""}`}
             >
               <div className="navbar-start">
-                <Link route="/">
+                <Link href="/" prefetch>
                   <a className="navbar-item">Inicio</a>
                 </Link>
                 {me && (
                   <Fragment>
-                    <Link route="perfil" params={{ id: me.id }}>
+                    <Link
+                      href={{ pathname: "/profile", query: { id: me.id } }}
+                      prefetch
+                    >
                       <a className="navbar-item">Mi perfil</a>
                     </Link>
-                    <Link route="mi-negocio">
+                    <Link href="/negocio" prefetch>
                       <a className="navbar-item">Mi negocio</a>
                     </Link>
                   </Fragment>
                 )}
-                <Link route="documentation">
+                <Link href="/documentation" prefetch>
                   <a className="navbar-item">Documentación</a>
                 </Link>
-                <Link route="about">
+                <Link href="/about" prefetch>
                   <a className="navbar-item">Acerca de nosotros</a>
                 </Link>
               </div>

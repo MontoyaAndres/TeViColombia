@@ -4,11 +4,9 @@ const cookieParser = require("cookie-parser");
 const { join } = require("path");
 const { parse } = require("url");
 
-const routes = require("./routes");
-
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev, dir: "src" });
-const handler = routes.getRequestHandler(app);
+const handler = app.getRequestHandler();
 const server = express();
 
 app
@@ -22,8 +20,14 @@ app
         const filePath = join(__dirname, ".next", pathname);
         app.serveStatic(req, res, filePath);
       })
-      .use(handler)
-      .listen(process.env.PORT || 3000);
+      .get("/profile/:id", (req, res) =>
+        app.render(req, res, "/profile", { id: req.params.id })
+      )
+      .get("/profile/edit/:id", (req, res) =>
+        app.render(req, res, "/profile/edit", { id: req.params.id })
+      )
+      .get("*", (req, res) => handler(req, res))
+      .listen(3000);
   })
   .catch(err => {
     console.log(err);
