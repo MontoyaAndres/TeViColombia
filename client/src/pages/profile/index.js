@@ -65,14 +65,14 @@ class profile extends PureComponent {
           return (
             <Fragment>
               {data.information.routeCover ? (
-                <div style={{ height: 300 }}>
+                <div className="background-cover">
                   <img
                     alt="user cover"
                     src={`http://localhost:4000/${data.information.routeCover}`}
                   />
                 </div>
               ) : (
-                <div style={{ height: 300, backgroundColor: "#00ffd9" }} />
+                <div className="background-cover" />
               )}
 
               <div className="container is-fullhd">

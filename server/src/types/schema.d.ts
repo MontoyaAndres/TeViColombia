@@ -148,7 +148,6 @@ __typename: "Mutation";
 feedback: Array<IError> | null;
 deleteFeedback: boolean;
 generalInformation: Array<IError> | null;
-information: Array<IError> | null;
 trainingEmployment: boolean;
 sendForgotPasswordEmail: boolean | null;
 forgotPasswordChange: Array<IError> | null;
@@ -171,14 +170,6 @@ id: string;
 interface IGeneralInformationOnMutationArguments {
 id?: string | null;
 information?: IGeneralInformationInput | null;
-}
-
-interface IInformationOnMutationArguments {
-id?: string | null;
-name: string;
-lastname: string;
-routePhoto: any;
-routeCover?: any | null;
 }
 
 interface ITrainingEmploymentOnMutationArguments {
@@ -223,6 +214,8 @@ message: string;
 }
 
 interface IGeneralInformationInput {
+routePhoto?: any | null;
+routeCover?: any | null;
 name: string;
 lastname: string;
 description: string;

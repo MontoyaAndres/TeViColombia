@@ -41,37 +41,27 @@ class isLoggedIn extends PureComponent {
       >
         {mutate => (
           <div
-            className={`dropdown is-right ${clicked ? "is-active" : ""}`}
-            style={{ paddingRight: 5 }}
+            className={`navbar-item has-dropdown ${clicked ? "is-active" : ""}`}
+            onClick={this.openMenu}
           >
-            <div className="dropdown-trigger">
-              <button
-                type="button"
-                className="button"
-                aria-haspopup="true"
-                aria-controls="dropdown-menu"
-                onClick={this.openMenu}
-              >
-                <span className="icon is-small">
+            <a className="navbar-link">
+              {me.name} {me.lastname}
+            </a>
+
+            <div className="navbar-dropdown is-right">
+              <a className="navbar-item" onClick={() => this.redirect()}>
+                <span className="icon">
                   <i className="fas fa-user" aria-hidden="true" />
                 </span>
-                <span>
-                  {me.name} {me.lastname}
+                <span>Configuración de usuario</span>
+              </a>
+
+              <a className="navbar-item" onClick={() => mutate()}>
+                <span className="icon">
+                  <i className="fas fa-sign-out-alt" aria-hidden="true" />
                 </span>
-                <span className="icon is-small">
-                  <i className="fas fa-angle-down" aria-hidden="true" />
-                </span>
-              </button>
-            </div>
-            <div className="dropdown-menu" id="dropdown-menu" role="menu">
-              <div className="dropdown-content">
-                <a className="dropdown-item" onClick={() => this.redirect()}>
-                  Configuración de usuario
-                </a>
-                <a className="dropdown-item" onClick={() => mutate()}>
-                  Salir
-                </a>
-              </div>
+                <span>Salir</span>
+              </a>
             </div>
           </div>
         )}
