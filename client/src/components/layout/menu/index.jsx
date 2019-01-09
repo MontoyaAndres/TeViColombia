@@ -13,12 +13,6 @@ class menu extends PureComponent {
     clicked: false
   };
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.router.pathname !== this.props.router.pathname) {
-      this.openMenu();
-    }
-  }
-
   openMenu = () => {
     const { clicked } = this.state;
     this.setState({ clicked: !clicked });
@@ -44,7 +38,7 @@ class menu extends PureComponent {
           >
             <div className="navbar-brand">
               <Link href="/" prefetch>
-                <a className="navbar-item">
+                <a className="navbar-item" onClick={this.openMenu}>
                   <img
                     src="https://bulma.io/images/bulma-logo.png"
                     width="112"
@@ -56,7 +50,7 @@ class menu extends PureComponent {
 
               <a
                 role="button"
-                className="navbar-burger burger"
+                className={`navbar-burger ${clicked ? "is-active" : ""}`}
                 aria-label="menu"
                 aria-expanded="false"
                 data-target="navbarButton"
@@ -74,7 +68,9 @@ class menu extends PureComponent {
             >
               <div className="navbar-start">
                 <Link href="/" prefetch>
-                  <a className="navbar-item">Inicio</a>
+                  <a className="navbar-item" onClick={this.openMenu}>
+                    Inicio
+                  </a>
                 </Link>
                 {me && (
                   <Fragment>
@@ -82,25 +78,31 @@ class menu extends PureComponent {
                       href={{ pathname: "/profile", query: { id: me.id } }}
                       prefetch
                     >
-                      <a className="navbar-item">Mi perfil</a>
+                      <a className="navbar-item" onClick={this.openMenu}>
+                        Mi perfil
+                      </a>
                     </Link>
                     <Link href="/negocio" prefetch>
-                      <a className="navbar-item">Mi negocio</a>
+                      <a className="navbar-item" onClick={this.openMenu}>
+                        Mi negocio
+                      </a>
                     </Link>
                   </Fragment>
                 )}
                 <Link href="/documentation" prefetch>
-                  <a className="navbar-item">Documentación</a>
+                  <a className="navbar-item" onClick={this.openMenu}>
+                    Documentación
+                  </a>
                 </Link>
                 <Link href="/about" prefetch>
-                  <a className="navbar-item">Acerca de nosotros</a>
+                  <a className="navbar-item" onClick={this.openMenu}>
+                    Acerca de nosotros
+                  </a>
                 </Link>
               </div>
 
               <div className="navbar-end">
-                <div className="navbar-item">
-                  {me ? <IsLoggedIn me={me} /> : <IsNotLoggedIn />}
-                </div>
+                {me ? <IsLoggedIn me={me} /> : <IsNotLoggedIn />}
               </div>
             </div>
           </nav>

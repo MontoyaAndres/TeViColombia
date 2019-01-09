@@ -18,18 +18,29 @@ body {
   background-color: rgba(74, 74, 74, 0.5);
 }
 
-.navbar-item {
+.navbar-item,
+.navbar-link {
   font-weight: 500;
   color: white;
 }
 
 .navbar-link.is-active,
 .navbar-link:hover,
+.navbar-item.has-dropdown:hover .navbar-link,
+.navbar-item.has-dropdown.is-active .navbar-link,
 a.navbar-item.is-active,
-a.navbar-item:hover {
+a.navbar-item:hover,
+.navbar-dropdown a.navbar-item.is-active,
+.navbar-dropdown a.navbar-item:hover {
   transition-duration: 0.5s;
-  color: rgb(218, 218, 218);
+  color: white;
   background-color: rgba(74, 74, 74, 0.5);
+}
+
+.navbar-dropdown {
+  background-color: rgba(74, 74, 74, 0.5);
+  color: white;
+  border-top: none;
 }
 
 .button.is-primary.is-hovered,
@@ -114,6 +125,28 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .columns {
   margin: 0;
+}
+
+.overlay-icon {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.overlay-icon:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.background-cover {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  background-color: #00ffd9;
 }
 
 @media screen and (max-width: 800px) {

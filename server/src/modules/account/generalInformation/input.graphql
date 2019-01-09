@@ -13,9 +13,11 @@ input LanguageInput {
 }
 
 input GeneralInformationInput {
+  routePhoto: Upload
+  routeCover: Upload
   name: String!
   lastname: String!
-  description: String!
+  description: String
   identificationDocumentType: String!
   identificationDocument: BigInt!
   address: String
