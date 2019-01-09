@@ -27,7 +27,7 @@
     "nodemailer": "4.7.0",
     "rate-limit-redis": "1.6.0",
     "reflect-metadata": "0.1.12",
-    "typeorm": "0.2.9",
+    "typeorm": "0.2.11",
     "uuid": "3.3.2",
     "yup": "0.26.6"
   },
