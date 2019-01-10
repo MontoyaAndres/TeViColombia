@@ -1,3 +1,5 @@
+# This file is only for development.
+
 version: "3.7"
 
 services:
@@ -17,7 +19,6 @@ services:
   server:
     build:
       context: .
-      dockerfile: Dockerfile.dev
     volumes:
       - ./:/teviepe-dev
       - /teviepe-dev/node_modules

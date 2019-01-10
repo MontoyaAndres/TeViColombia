@@ -6,7 +6,7 @@ WORKDIR /usr/app
 
 COPY ./server/package.json .
 
-RUN yarn install --prod
+RUN yarn install --production=true --silent
 
 RUN yarn run build
 

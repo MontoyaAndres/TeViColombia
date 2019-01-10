@@ -8,10 +8,11 @@ import { gql } from "apollo-boost";
 import Loading from "../../components/shared/loading";
 import checkLoggedIn from "../../lib/checkLoggedIn";
 import redirect from "../../lib/redirect";
-import { information } from "../../graphql/queries/information";
+import information from "../../graphql/queries/information";
 import { TextField } from "../../components/shared/globalField";
 import UploadRoutePhoto from "../../components/profile/edit/uploadRoutePhoto";
 import UploadRouteCover from "../../components/profile/edit/uploadRouteCover";
+import EditGeneralInformation from "../../components/profile/edit/editGeneralInformation";
 
 const updategeneralInformation = gql`
   mutation generalInformation($id: ID!, $information: GeneralInformationInput) {
@@ -45,7 +46,17 @@ const edit = ({
                 routePhoto: "",
                 routeCover: "",
                 name: data.information.name,
-                lastname: data.information.lastname
+                lastname: data.information.lastname,
+                description: data.information.description || "",
+                identificationDocumentType:
+                  data.information.identificationDocumentType,
+                identificationDocument: data.information.identificationDocument,
+                address: data.information.address || "",
+                telephone: data.information.telephone,
+                website: data.information.website || "",
+                gender: data.information.gender || "HOMBRE",
+                city: data.information.city || "",
+                civilStatus: data.information.civilStatus || "SOLTERO(A)"
               }}
               onSubmit={async values => {
                 const response = await mutate({
@@ -65,6 +76,7 @@ const edit = ({
                   <div className="container">
                     <div className="columns">
                       <div className="column" style={{ padding: "0 .75rem" }}>
+                        <label className="label">Nombre de usuario</label>
                         <TextField
                           type="text"
                           name="name"
@@ -73,6 +85,7 @@ const edit = ({
                         />
                       </div>
                       <div className="column" style={{ padding: "0 .75rem" }}>
+                        <label className="label">Apellido de usuario</label>
                         <TextField
                           type="text"
                           name="lastname"
@@ -82,7 +95,12 @@ const edit = ({
                       </div>
                     </div>
 
-                    <div className="buttons has-addons is-centered">
+                    <EditGeneralInformation />
+
+                    <div
+                      className="buttons has-addons is-centered"
+                      style={{ padding: "30px 0" }}
+                    >
                       <button
                         type="submit"
                         disabled={isSubmitting}

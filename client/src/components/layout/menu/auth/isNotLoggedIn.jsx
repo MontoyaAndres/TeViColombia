@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 const isNotLoggedIn = () => (
-  <div className="buttons" style={{ paddingRight: 5 }}>
+  <div className="buttons" style={{ padding: "0 5px" }}>
     <a className="button is-primary">
       <Link href="/register" prefetch>
         <strong>Crear nueva cuenta</strong>

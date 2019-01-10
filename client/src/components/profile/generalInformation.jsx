@@ -1,33 +1,8 @@
 import React from "react";
-import { gql } from "apollo-boost";
 import { Query } from "react-apollo";
-import Loading from "../shared/loading";
 
-const information = gql`
-  query Information($id: ID!) {
-    information(id: $id) {
-      description
-      identificationDocumentType
-      identificationDocument
-      address
-      telephone
-      website
-      email
-      gender
-      city
-      departament
-      civilStatus
-      socialnetwork {
-        name
-        url
-      }
-      language {
-        language
-        level
-      }
-    }
-  }
-`;
+import Loading from "../shared/loading";
+import information from "../../graphql/queries/information";
 
 const generalInformation = ({ id }) => (
   <Query query={information} variables={{ id }}>
