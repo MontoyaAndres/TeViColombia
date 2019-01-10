@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Field, ErrorMessage } from "formik";
 
 const TextField = ({
@@ -8,7 +8,7 @@ const TextField = ({
   isRequired = true,
   ...props
 }) => (
-  <Fragment>
+  <>
     <div className="field">
       <div className="control">
         <Field
@@ -22,14 +22,14 @@ const TextField = ({
       </div>
     </div>
 
-    <div style={{ color: "red", fontWeight: 400, paddingBottom: "0.5em" }}>
+    <div className="error">
       <ErrorMessage name={name} />
     </div>
-  </Fragment>
+  </>
 );
 
 const SelectField = ({ name, arrayPlaceholder, isRequired, ...props }) => (
-  <Fragment>
+  <>
     <div className="field">
       <div className="control">
         <div className="select is-fullwidth">
@@ -50,10 +50,35 @@ const SelectField = ({ name, arrayPlaceholder, isRequired, ...props }) => (
       </div>
     </div>
 
-    <div style={{ color: "red", fontWeight: 400, paddingBottom: "0.5em" }}>
+    <div className="error">
       <ErrorMessage name={name} />
     </div>
-  </Fragment>
+  </>
 );
 
-export { TextField, SelectField };
+const TextAreaField = ({ name, placeholder, isRequired = true, ...props }) => (
+  <>
+    <div className="field">
+      <div className="control">
+        <Field
+          {...props}
+          name={name}
+          required={isRequired}
+          render={({ field }) => (
+            <textarea
+              {...field}
+              placeholder={placeholder}
+              className="textarea"
+            />
+          )}
+        />
+      </div>
+    </div>
+
+    <div className="error">
+      <ErrorMessage name={name} />
+    </div>
+  </>
+);
+
+export { TextField, SelectField, TextAreaField };

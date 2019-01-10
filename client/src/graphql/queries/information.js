@@ -7,10 +7,68 @@ const information = gql`
       routeCover
       name
       lastname
+      description
+      identificationDocumentType
+      identificationDocument
+      address
+      telephone
+      website
+      email
+      gender
+      city
+      departament
+      civilStatus
+      socialnetwork {
+        name
+        url
+      }
+      language {
+        language
+        level
+      }
+      university {
+        place
+        startedOn
+        finishIn
+        finished
+        especializations
+        attended
+        description
+      }
+      secondaryschool {
+        place
+        startedOn
+        finishIn
+        finished
+        description
+      }
+      work {
+        place
+        job
+        localization
+        description
+        startedOn
+        finishIn
+        finished
+      }
+      cv {
+        routeCV
+      }
+      feedback {
+        stars
+        comment
+      }
+      necessity {
+        finished
+        comment
+      }
+      commercialEstablishment {
+        id
+        name
+        routePhone
+      }
     }
   }
 `;
 
-const x = {};
-
-export { information, x };
+export default information;

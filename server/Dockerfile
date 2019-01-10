@@ -1,3 +1,5 @@
+# This file is only for development.
+
 FROM node:8.12.0-alpine
 
 ENV NODE_ENV development

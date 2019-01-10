@@ -65,27 +65,41 @@ a.navbar-item:hover,
   font-weight: bold;
 }
 
-input.input::-webkit-input-placeholder {
+.error {
+  color: "red";
+  font-weight: 400;
+  padding-bottom: "0.5em";
+}
+
+input.input::-webkit-input-placeholder,
+textarea.textarea::-webkit-input-placeholder {
   color: #4a4a4a;
 }
 
-input.input::-moz-placeholder {
+input.input::-moz-placeholder,
+textarea.textarea::-moz-placeholder {
   /* Firefox 19+ */
   color: #4a4a4a;
 }
 
-input.input:-ms-input-placeholder {
+input.input:-ms-input-placeholder,
+textarea.textarea:-ms-input-placeholder {
   /* IE 10+ */
   color: #4a4a4a;
 }
 
-input.input:-moz-placeholder {
+input.input:-moz-placeholder,
+textarea.textarea:-moz-placeholder {
   /* Firefox 18- */
   color: #4a4a4a;
 }
 
 .box {
   margin-top: 5rem;
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.5), 0 0 0 1px rgba(10, 10, 10, 0.5);
+}
+
+.card > * {
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.5), 0 0 0 1px rgba(10, 10, 10, 0.5);
 }
 
@@ -110,7 +124,8 @@ input.input:-moz-placeholder {
 }
 
 .field .control .input,
-.field .control .select {
+.field .control .select,
+.field .control .textarea {
   -webkit-box-shadow: 0 0 0 1px rgba(10, 10, 10, 0.5);
   box-shadow: 0 0 0 1px rgba(10, 10, 10, 0.5);
   border-radius: 4px;

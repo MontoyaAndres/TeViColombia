@@ -7,7 +7,7 @@ import { Query } from "react-apollo";
 import Loading from "../../components/shared/loading";
 import checkLoggedIn from "../../lib/checkLoggedIn";
 import redirect from "../../lib/redirect";
-import { information } from "../../graphql/queries/information";
+import information from "../../graphql/queries/information";
 
 const DynamicGeneralInformation = dynamic(
   () => import("../../components/profile/generalInformation"),
