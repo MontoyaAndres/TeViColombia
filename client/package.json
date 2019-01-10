@@ -39,6 +39,6 @@
 		"react-apollo": "2.3.3",
 		"react-dom": "16.7.0",
 		"react-dropzone": "8.0.3",
-		"yup": "0.26.6"
+		"yup": "0.26.7"
 	}
 }
