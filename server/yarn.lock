@@ -2367,10 +2367,10 @@ node-pre-gyp@^0.10.0:
     semver "^5.3.0"
     tar "^4"
 
-nodemailer@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-5.1.0.tgz#e1d3056222fa8b10c6cceafa10a967a13113023d"
-  integrity sha512-g72Tr4NZXK0PC5szgXZfph2tpVsF14pxF+QthwK2RdVbMU8RleioODANvpze0WvgNqB/M7kKy69PpgbuUHTAxw==
+nodemailer@5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-5.1.1.tgz#0c48d1ecab02e86d9ff6c620ee75ed944b763505"
+  integrity sha512-hKGCoeNdFL2W7S76J/Oucbw0/qRlfG815tENdhzcqTpSjKgAN91mFOqU2lQUflRRxFM7iZvCyaFcAR9noc/CqQ==
 
 nodemon@1.18.9:
   version "1.18.9"
