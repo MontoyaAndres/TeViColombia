@@ -54,19 +54,6 @@ const information = gql`
       cv {
         routeCV
       }
-      feedback {
-        stars
-        comment
-      }
-      necessity {
-        finished
-        comment
-      }
-      commercialEstablishment {
-        id
-        name
-        routePhone
-      }
     }
   }
 `;

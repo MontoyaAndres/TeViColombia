@@ -9,15 +9,14 @@ const batchInformations: BatchInformation = async ids => {
   const user = await User.find({
     where: { id: In(ids) },
     relations: [
-      "socialnetwork",
       "language",
-      "university",
-      "secondaryschool",
+      "study",
       "work",
       "cv",
       "feedback",
       "necessity",
-      "commercialEstablishment"
+      "member",
+      "portafolio"
     ]
   });
 

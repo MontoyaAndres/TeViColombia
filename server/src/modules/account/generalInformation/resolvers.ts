@@ -1,13 +1,12 @@
 import { ResolveMap } from "../../../types/graphql-utils";
 import { GQL } from "../../../types/schema";
-/* import { User } from "../../../entity/User";
-import { PersonalSocialNetworks } from "../../../entity/PersonalSocialNetworks";
+import { User } from "../../../entity/User";
 import { Languages } from "../../../entity/Languages";
-import UpdateCreate from "../shared/UpdateCreate"; */
+import UpdateCreate from "../shared/UpdateCreate";
 import { createMiddleware } from "../../../utils/createMiddleware";
 import { middleware } from "../../shared/authMiddleware";
-/* import { GeneralInformationValidation } from "../../../utils/validation";
-import { formatYupError } from "../../../utils/formatYupError"; */
+import { GeneralInformationValidation } from "../../../utils/validation";
+import { formatYupError } from "../../../utils/formatYupError";
 
 export const resolvers: ResolveMap = {
   Mutation: {
@@ -20,7 +19,7 @@ export const resolvers: ResolveMap = {
         // Examples and for profile and cover photos
         // https://github.com/prisma/graphql-yoga/tree/master/examples/file-upload
         // https://github.com/jaydenseric/graphql-upload/issues/49
-        /* try {
+        try {
           await GeneralInformationValidation.validate(
             {
               identificationDocument: information.identificationDocument,
@@ -31,12 +30,12 @@ export const resolvers: ResolveMap = {
           );
         } catch (err) {
           return formatYupError(err);
-        } */
+        }
         // Update images
         console.log(id, information.routePhoto, information.routeCover);
 
         // Update user information
-        /* await User.update(
+        await User.update(
           { id },
           {
             name: information.name,
@@ -48,16 +47,17 @@ export const resolvers: ResolveMap = {
             telephone: information.telephone,
             departament: information.departament,
             city: information.city,
+            nationality: information.nationality,
             civilStatus: information.civilStatus,
+            linkedin: information.linkedin,
+            skype: information.skype,
             website: information.website,
-            gender: information.gender
+            gender: information.gender,
+            skills: information.skills
           }
         );
 
-        await Promise.all([
-          UpdateCreate(PersonalSocialNetworks, id, information.socialnetwork),
-          UpdateCreate(Languages, id, information.language)
-        ]); */
+        await Promise.all([UpdateCreate(Languages, id, information.language)]);
 
         return null;
       }

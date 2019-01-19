@@ -24,7 +24,7 @@ class MyDocument extends Document {
             content="black-translucent"
           />
           <meta name="format-detection" content="telephone=no" />
-          <meta name="apple-mobile-web-app-title" content="SEMontoya" />
+          <meta name="apple-mobile-web-app-title" content="Te vi EPE" />
           <link
             rel="apple-touch-icon"
             sizes="180x180"
@@ -63,7 +63,6 @@ class MyDocument extends Document {
           <link rel="stylesheet" href="/static/css/animate.min.css" />
           <link rel="stylesheet" href="/static/css/styles.css" />
           <link rel="stylesheet" href="/static/css/loading.css" />
-          <link rel="stylesheet" href="/static/css/floatButton.css" />
         </Head>
         <body>
           <Main />

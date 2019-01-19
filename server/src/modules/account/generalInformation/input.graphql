@@ -1,11 +1,5 @@
 scalar Upload
 
-input SocialNetworkInput {
-  id: ID
-  name: String!
-  url: String!
-}
-
 input LanguageInput {
   id: ID
   language: String!
@@ -22,11 +16,14 @@ input GeneralInformationInput {
   identificationDocument: BigInt!
   address: String
   telephone: BigInt!
-  departament: String
-  city: String
-  civilStatus: String
+  departament: String!
+  city: String!
+  nationality: String!
+  civilStatus: String!
+  linkedin: String
+  skype: String
   website: String
-  gender: String
-  socialnetwork: [SocialNetworkInput]
+  gender: String!
+  skills: [String]
   language: [LanguageInput]
 }

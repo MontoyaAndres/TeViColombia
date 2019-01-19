@@ -1,7 +1,7 @@
 import { ResolveMap } from "../../../types/graphql-utils";
 import { GQL } from "../../../types/schema";
 import { User } from "../../../entity/User";
-import { PersonalFeedBack } from "../../../entity/PersonalFeedBack";
+import { FeedBack } from "../../../entity/FeedBack";
 import { createMiddleware } from "../../../utils/createMiddleware";
 import { middleware } from "../../shared/authMiddleware";
 
@@ -15,7 +15,7 @@ export const resolvers: ResolveMap = {
         { session }
       ) => {
         const user = await User.findOne({ where: { id } });
-        const alreadyCommented = await PersonalFeedBack.findOne({
+        const alreadyCommented = await FeedBack.findOne({
           where: { user, receiver: session.userId }
         });
 
@@ -37,7 +37,7 @@ export const resolvers: ResolveMap = {
           ];
         }
 
-        await PersonalFeedBack.create({
+        await FeedBack.create({
           user,
           receiver: session.userId,
           stars,
@@ -50,7 +50,7 @@ export const resolvers: ResolveMap = {
     deleteFeedback: createMiddleware(
       middleware.auth,
       async (_, { id }: GQL.IDeleteFeedbackOnMutationArguments) => {
-        await PersonalFeedBack.delete({ id });
+        await FeedBack.delete({ id });
         return true;
       }
     )

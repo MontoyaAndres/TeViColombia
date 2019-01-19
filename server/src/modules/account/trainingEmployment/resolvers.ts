@@ -1,7 +1,6 @@
 import { ResolveMap } from "../../../types/graphql-utils";
 import { GQL } from "../../../types/schema";
-import { University } from "../../../entity/University";
-import { SecondarySchool } from "../../../entity/SecondarySchool";
+import { Study } from "../../../entity/Study";
 import { Work } from "../../../entity/Work";
 import { CV } from "../../../entity/CV";
 import UpdateCreate from "../shared/UpdateCreate";
@@ -17,8 +16,7 @@ export const resolvers: ResolveMap = {
         { id, information }: GQL.ITrainingEmploymentOnMutationArguments
       ) => {
         await Promise.all([
-          UpdateCreate(University, id, information.university),
-          UpdateCreate(SecondarySchool, id, information.secondaryschool),
+          UpdateCreate(Study, id, information.study),
           UpdateCreate(Work, id, information.work),
           UpdateCreate(CV, id, information.cv)
         ]);
