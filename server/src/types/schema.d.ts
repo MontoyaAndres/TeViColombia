@@ -27,7 +27,7 @@ me: IUser | null;
 }
 
 interface IInformationOnQueryArguments {
-id?: string | null;
+id: string;
 }
 
 interface IUserInformation {
@@ -44,26 +44,21 @@ address: string | null;
 telephone: any;
 departament: string | null;
 city: string | null;
+nationality: string | null;
 civilStatus: string | null;
+linkedin: string | null;
+skype: string | null;
 website: string | null;
 gender: string | null;
 email: string;
-socialnetwork: Array<ISocialNetwork | null> | null;
+skills: Array<string | null> | null;
 language: Array<ILanguage | null> | null;
-university: Array<IUniversity | null> | null;
-secondaryschool: Array<ISecondary | null> | null;
+study: Array<IStudy | null> | null;
 work: Array<IWork | null> | null;
 cv: Array<ICV | null> | null;
 feedback: Array<IFeedback | null> | null;
 necessity: Array<INecessity | null> | null;
-commercialEstablishment: Array<ICommercialEstablishment | null> | null;
-}
-
-interface ISocialNetwork {
-__typename: "SocialNetwork";
-id: string | null;
-name: string | null;
-url: string | null;
+business: Array<IBusiness | null> | null;
 }
 
 interface ILanguage {
@@ -73,35 +68,26 @@ language: string | null;
 level: string | null;
 }
 
-interface IUniversity {
-__typename: "University";
+interface IStudy {
+__typename: "Study";
 id: string | null;
 place: string | null;
+level: string | null;
+area: string | null;
 startedOn: any | null;
 finishIn: any | null;
 finished: boolean | null;
-especializations: Array<string | null> | null;
-attended: string | null;
-description: string | null;
-}
-
-interface ISecondary {
-__typename: "Secondary";
-id: string | null;
-place: string | null;
-startedOn: any | null;
-finishIn: any | null;
-finished: boolean | null;
-description: string | null;
 }
 
 interface IWork {
 __typename: "Work";
 id: string | null;
-place: string | null;
+company: string | null;
 job: string | null;
-localization: string | null;
-description: string | null;
+departament: string | null;
+sector: string | null;
+area: string | null;
+goals: string | null;
 startedOn: any | null;
 finishIn: any | null;
 finished: boolean | null;
@@ -136,8 +122,8 @@ finished: boolean | null;
 comment: string | null;
 }
 
-interface ICommercialEstablishment {
-__typename: "CommercialEstablishment";
+interface IBusiness {
+__typename: "Business";
 id: string | null;
 name: string | null;
 routePhone: string | null;
@@ -218,24 +204,21 @@ routePhoto?: any | null;
 routeCover?: any | null;
 name: string;
 lastname: string;
-description: string;
+description?: string | null;
 identificationDocumentType: string;
 identificationDocument: any;
 address?: string | null;
 telephone: any;
-departament?: string | null;
-city?: string | null;
-civilStatus?: string | null;
+departament: string;
+city: string;
+nationality: string;
+civilStatus: string;
+linkedin?: string | null;
+skype?: string | null;
 website?: string | null;
-gender?: string | null;
-socialnetwork?: Array<ISocialNetworkInput | null> | null;
+gender: string;
+skills?: Array<string | null> | null;
 language?: Array<ILanguageInput | null> | null;
-}
-
-interface ISocialNetworkInput {
-id?: string | null;
-name: string;
-url: string;
 }
 
 interface ILanguageInput {
@@ -245,38 +228,29 @@ level: string;
 }
 
 interface ITrainingEmploymentInput {
-university?: Array<IUniversityInput | null> | null;
-secondaryschool?: Array<ISecondaryInput | null> | null;
+study?: Array<IStudyInput | null> | null;
 work?: Array<IWorkInput | null> | null;
 cv?: Array<ICVInput | null> | null;
 }
 
-interface IUniversityInput {
+interface IStudyInput {
 id?: string | null;
 place: string;
-startedOn: any;
-finishIn: any;
-finished: boolean;
-especializations?: Array<string | null> | null;
-attended: string;
-description: string;
-}
-
-interface ISecondaryInput {
-id?: string | null;
-place: string;
+level: string;
+area?: string | null;
 startedOn: any;
 finishIn?: any | null;
 finished: boolean;
-description: string;
 }
 
 interface IWorkInput {
 id?: string | null;
-place: string;
+company: string;
 job: string;
-localization: string;
-description: string;
+departament: string;
+sector: string;
+area: string;
+goals: string;
 startedOn: any;
 finishIn?: any | null;
 finished: boolean;
@@ -284,7 +258,7 @@ finished: boolean;
 
 interface ICVInput {
 id?: string | null;
-routeCV?: string | null;
+routeCV: string;
 }
 }
 

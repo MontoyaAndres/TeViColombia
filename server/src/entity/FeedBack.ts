@@ -10,10 +10,11 @@ import {
 import { User } from "./User";
 
 @Entity()
-export class PersonalFeedBack extends BaseEntity {
+export class FeedBack extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  // Cannot be more than 5
   @Column("integer")
   stars: number;
 

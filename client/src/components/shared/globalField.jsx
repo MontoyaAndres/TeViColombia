@@ -81,4 +81,20 @@ const TextAreaField = ({ name, placeholder, isRequired = true, ...props }) => (
   </>
 );
 
-export { TextField, SelectField, TextAreaField };
+const CheckboxField = ({ name, isRequired = true, message, ...props }) => (
+  <label className="checkbox">
+    <Field
+      {...props}
+      name={name}
+      required={isRequired}
+      render={({ field }) => (
+        <>
+          <input {...field} type="checkbox" checked={field.value} />
+          {message}
+        </>
+      )}
+    />
+  </label>
+);
+
+export { TextField, SelectField, TextAreaField, CheckboxField };

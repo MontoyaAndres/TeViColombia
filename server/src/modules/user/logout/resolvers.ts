@@ -1,12 +1,10 @@
 import { ResolveMap } from "../../../types/graphql-utils";
-import { removeAllUsersSessions } from "../../../utils/removeAllUsersSessions";
 
 export const resolvers: ResolveMap = {
   Mutation: {
-    logout: async (_, __, { session, redis }) => {
+    logout: async (_, __, { session }) => {
       const { userId } = session;
       if (userId) {
-        removeAllUsersSessions(userId, redis);
         session.destroy(err => {
           if (err) {
             console.log(err);

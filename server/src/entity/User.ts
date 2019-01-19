@@ -11,34 +11,34 @@ import {
 } from "typeorm";
 
 // Models
-import { PersonalSocialNetworks } from "./PersonalSocialNetworks";
 import { Necessity } from "./Necessity";
-import { University } from "./University";
-import { SecondarySchool } from "./SecondarySchool";
+import { Study } from "./Study";
 import { Work } from "./Work";
 import { CV } from "./CV";
 import { Languages } from "./Languages";
-import { PersonalFeedBack } from "./PersonalFeedBack";
-import { CommercialEstablishment } from "./CommercialEstablishment";
+import { Business } from "./Business";
+import { FeedBack } from "./FeedBack";
+import { Portafolio } from "./Portafolio";
+import { ENUMCountry, ENUMDepartament } from "../utils/entityGlobalEnum";
 
 enum ENUMIdentificationDocumentType {
-  CC = "CÉDULA DE CIUDADANÍA",
-  CE = "CÉDULA DE EXTRANJERÍA",
-  TI = "TARJETA DE IDENTIDAD",
-  PS = "PASAPORTE",
-  NI = "NÚMERO DE IDENTIFICACIÓN"
+  A1 = "CÉDULA DE CIUDADANÍA",
+  A2 = "CÉDULA DE EXTRANJERÍA",
+  A3 = "TARJETA DE IDENTIDAD",
+  A4 = "PASAPORTE",
+  A5 = "NÚMERO DE IDENTIFICACIÓN"
 }
 
 enum ENUMCivilStatus {
-  SOLTERO = "SOLTERO(A)",
-  CASADO = "CASADO(A)",
-  SEPARADO = "SEPARADO(A)/DIVORCIADO(A)",
-  VIUDO = "VIUDO(A)"
+  A1 = "SOLTERO(A)",
+  A2 = "CASADO(A)",
+  A3 = "SEPARADO(A)/DIVORCIADO(A)",
+  A4 = "VIUDO(A)"
 }
 
 enum ENUMGender {
-  HOMBRE = "HOMBRE",
-  MUJER = "MUJER"
+  A1 = "HOMBRE",
+  A2 = "MUJER"
 }
 
 @Entity()
@@ -46,10 +46,10 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("varchar", { default: "default/default-photo.png" })
+  @Column("varchar", { length: 255, default: "default/default-photo.png" })
   routePhoto: string;
 
-  @Column("varchar", { nullable: true })
+  @Column("varchar", { length: 255, nullable: true })
   routeCover: string;
 
   @Column("varchar", { length: 255 })
@@ -73,14 +73,23 @@ export class User extends BaseEntity {
   @Column("bigint", { unique: true })
   telephone: number;
 
-  @Column("varchar", { length: 255, nullable: true })
+  @Column("enum", { enum: ENUMDepartament, nullable: true })
   departament: string;
 
   @Column("varchar", { length: 255, nullable: true })
   city: string;
 
+  @Column("enum", { enum: ENUMCountry, nullable: true })
+  nationality: string;
+
   @Column("enum", { enum: ENUMCivilStatus, nullable: true })
   civilStatus: string;
+
+  @Column("varchar", { length: 255, nullable: true })
+  linkedin: string;
+
+  @Column("varchar", { length: 255, nullable: true })
+  skype: string;
 
   @Column("varchar", { length: 255, nullable: true })
   website: string;
@@ -94,23 +103,20 @@ export class User extends BaseEntity {
   @Column("text")
   password: string;
 
+  @Column("simple-array", { nullable: true })
+  skills: string[];
+
   @Column({ default: false })
   confirmed: boolean;
 
   @Column({ default: false })
   forgotPasswordLocked: boolean;
 
-  @OneToMany(_ => PersonalSocialNetworks, socialnetwork => socialnetwork.user)
-  socialnetwork: PersonalSocialNetworks[];
-
   @OneToMany(_ => Languages, language => language.user)
   language: Languages[];
 
-  @OneToMany(_ => University, univeristy => univeristy.user)
-  university: University[];
-
-  @OneToMany(_ => SecondarySchool, secondaryschool => secondaryschool.user)
-  secondaryschool: SecondarySchool[];
+  @OneToMany(_ => Study, study => study.user)
+  study: Study[];
 
   @OneToMany(_ => Work, work => work.user)
   work: Work[];
@@ -118,15 +124,18 @@ export class User extends BaseEntity {
   @OneToMany(_ => CV, cv => cv.user)
   cv: CV[];
 
-  @OneToMany(_ => PersonalFeedBack, feedback => feedback.user)
-  feedback: PersonalFeedBack[];
-
   @OneToMany(_ => Necessity, necessity => necessity.user)
   necessity: Necessity[];
 
-  @ManyToMany(_ => CommercialEstablishment)
-  @JoinTable({ name: "members" })
-  commercialEstablishment: CommercialEstablishment[];
+  @OneToMany(_ => FeedBack, feedback => feedback.user)
+  feedback: FeedBack[];
+
+  @OneToMany(_ => Portafolio, portafolio => portafolio.user)
+  portafolio: Portafolio[];
+
+  @ManyToMany(_ => Business)
+  @JoinTable({ name: "member" })
+  member: Business[];
 
   @BeforeInsert()
   async hashPassword() {

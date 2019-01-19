@@ -1,41 +1,27 @@
-type SocialNetwork {
-  id: ID
-  name: String
-  url: String
-}
-
 type Language {
   id: ID
   language: String
   level: String
 }
 
-type University {
+type Study {
   id: ID
   place: String
+  level: String
+  area: String
   startedOn: Date
   finishIn: Date
   finished: Boolean
-  especializations: [String]
-  attended: String
-  description: String
-}
-
-type Secondary {
-  id: ID
-  place: String
-  startedOn: Date
-  finishIn: Date
-  finished: Boolean
-  description: String
 }
 
 type Work {
   id: ID
-  place: String
+  company: String
   job: String
-  localization: String
-  description: String
+  departament: String
+  sector: String
+  area: String
+  goals: String
   startedOn: Date
   finishIn: Date
   finished: Boolean
@@ -59,7 +45,7 @@ type Necessity {
   comment: String
 }
 
-type CommercialEstablishment {
+type Business {
   id: ID
   name: String
   routePhone: String
@@ -78,17 +64,19 @@ type UserInformation {
   telephone: BigInt!
   departament: String
   city: String
+  nationality: String
   civilStatus: String
+  linkedin: String
+  skype: String
   website: String
   gender: String
   email: String!
-  socialnetwork: [SocialNetwork]
+  skills: [String]
   language: [Language]
-  university: [University]
-  secondaryschool: [Secondary]
+  study: [Study]
   work: [Work]
   cv: [CV]
   feedback: [Feedback]
   necessity: [Necessity]
-  commercialEstablishment: [CommercialEstablishment]
+  business: [Business]
 }

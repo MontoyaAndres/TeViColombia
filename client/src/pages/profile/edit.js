@@ -13,6 +13,9 @@ import { TextField } from "../../components/shared/globalField";
 import UploadRoutePhoto from "../../components/profile/edit/uploadRoutePhoto";
 import UploadRouteCover from "../../components/profile/edit/uploadRouteCover";
 import EditGeneralInformation from "../../components/profile/edit/editGeneralInformation";
+import EditSocialNetwork from "../../components/profile/edit/editSocialNetwork";
+import EditLanguage from "../../components/profile/edit/editLanguage";
+import EditUniversity from "../../components/profile/edit/editUniversity";
 
 const updategeneralInformation = gql`
   mutation generalInformation($id: ID!, $information: GeneralInformationInput) {
@@ -56,18 +59,46 @@ const edit = ({
                 website: data.information.website || "",
                 gender: data.information.gender || "HOMBRE",
                 city: data.information.city || "",
-                civilStatus: data.information.civilStatus || "SOLTERO(A)"
+                civilStatus: data.information.civilStatus || "SOLTERO(A)",
+                socialnetwork: data.information.socialnetwork || [],
+                language: data.information.language || [],
+                university: [
+                  {
+                    id: 1,
+                    place: "Universidad minuto de Dios",
+                    startedOn: "2015-07-22",
+                    finishIn: "2019-01-15",
+                    finished: false,
+                    especializations: [
+                      "Tecnología en Informática",
+                      "Ingenieria de sistemas"
+                    ],
+                    attended: "UNIVERSIDAD",
+                    description: "Muy bueno"
+                  },
+                  {
+                    id: 2,
+                    place: "SENA",
+                    startedOn: "2013-07-22",
+                    finishIn: "2015-01-15",
+                    finished: true,
+                    especializations: ["Gastronomia", "Desarrollo web"],
+                    attended: "CENTRO DE ESTUDIOS DE POSGRADO",
+                    description: "Muy bueno"
+                  }
+                ]
               }}
               onSubmit={async values => {
-                const response = await mutate({
+                console.log(values);
+                /* const response = await mutate({
                   variables: {
                     id,
                     information: values
                   }
                 });
-                console.log(response);
+                console.log(response); */
               }}
-              render={({ isSubmitting, setFieldValue }) => (
+              render={({ values, isSubmitting, setFieldValue }) => (
                 <Form method="POST">
                   <UploadRouteCover data={data} setFieldValue={setFieldValue} />
 
@@ -95,7 +126,16 @@ const edit = ({
                       </div>
                     </div>
 
-                    <EditGeneralInformation />
+                    <EditGeneralInformation values={values} />
+
+                    <EditSocialNetwork values={values} />
+
+                    <EditLanguage values={values} />
+
+                    <EditUniversity
+                      values={values}
+                      setFieldValue={setFieldValue}
+                    />
 
                     <div
                       className="buttons has-addons is-centered"

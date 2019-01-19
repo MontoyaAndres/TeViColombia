@@ -1,29 +1,21 @@
-input UniversityInput {
+input StudyInput {
   id: ID
   place: String!
-  startedOn: Date!
-  finishIn: Date!
-  finished: Boolean!
-  especializations: [String]
-  attended: String!
-  description: String!
-}
-
-input SecondaryInput {
-  id: ID
-  place: String!
+  level: String!
+  area: String
   startedOn: Date!
   finishIn: Date
   finished: Boolean!
-  description: String!
 }
 
 input WorkInput {
   id: ID
-  place: String!
+  company: String!
   job: String!
-  localization: String!
-  description: String!
+  departament: String!
+  sector: String!
+  area: String!
+  goals: String!
   startedOn: Date!
   finishIn: Date
   finished: Boolean!
@@ -31,12 +23,11 @@ input WorkInput {
 
 input CVInput {
   id: ID
-  routeCV: String
+  routeCV: String!
 }
 
 input TrainingEmploymentInput {
-  university: [UniversityInput]
-  secondaryschool: [SecondaryInput]
+  study: [StudyInput]
   work: [WorkInput]
   cv: [CVInput]
 }

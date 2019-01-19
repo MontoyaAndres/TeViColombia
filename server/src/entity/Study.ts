@@ -5,15 +5,24 @@ import {
   Column,
   ManyToOne
 } from "typeorm";
+
 import { User } from "./User";
+import { ENUMStudyLevel } from "../utils/entityGlobalEnum";
 
 @Entity()
-export class University extends BaseEntity {
+export class Study extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column("varchar", { length: 255 })
   place: string;
+
+  @Column("enum", { enum: ENUMStudyLevel })
+  level: string;
+
+  // This is only for university careers
+  @Column("varchar", { length: 255, nullable: true })
+  area: string;
 
   @Column("date")
   startedOn: Date;
@@ -21,18 +30,9 @@ export class University extends BaseEntity {
   @Column("date", { nullable: true })
   finishIn: Date;
 
-  @Column()
+  @Column({ default: false })
   finished: boolean;
 
-  @Column("simple-array", { nullable: true })
-  especializations: string[];
-
-  @Column("varchar", { length: 255 })
-  attended: string;
-
-  @Column("text")
-  description: string;
-
-  @ManyToOne(_ => User, user => user.university)
+  @ManyToOne(_ => User, user => user.study)
   user: User;
 }

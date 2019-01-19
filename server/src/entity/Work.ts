@@ -5,7 +5,13 @@ import {
   Column,
   ManyToOne
 } from "typeorm";
+
 import { User } from "./User";
+import {
+  ENUMDepartament,
+  ENUMSector,
+  ENUMArea
+} from "../utils/entityGlobalEnum";
 
 @Entity()
 export class Work extends BaseEntity {
@@ -13,16 +19,22 @@ export class Work extends BaseEntity {
   id: string;
 
   @Column("varchar", { length: 255 })
-  place: string;
+  company: string;
 
   @Column("varchar", { length: 255 })
   job: string;
 
-  @Column("text")
-  localization: string;
+  @Column("enum", { enum: ENUMDepartament })
+  departament: string;
+
+  @Column("enum", { enum: ENUMSector })
+  sector: string;
+
+  @Column("enum", { enum: ENUMArea })
+  area: string;
 
   @Column("text")
-  description: string;
+  goals: string;
 
   @Column("date")
   startedOn: Date;
@@ -30,7 +42,7 @@ export class Work extends BaseEntity {
   @Column("date", { nullable: true })
   finishIn: Date;
 
-  @Column()
+  @Column({ default: false })
   finished: boolean;
 
   @ManyToOne(_ => User, user => user.work)
