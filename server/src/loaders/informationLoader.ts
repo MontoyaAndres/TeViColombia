@@ -15,8 +15,8 @@ const batchInformations: BatchInformation = async ids => {
       "cv",
       "feedback",
       "necessity",
-      "member",
-      "portafolio"
+      "portafolio",
+      "member"
     ]
   });
 

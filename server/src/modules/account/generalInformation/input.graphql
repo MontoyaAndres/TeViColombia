@@ -1,5 +1,3 @@
-scalar Upload
-
 input LanguageInput {
   id: ID
   language: String!

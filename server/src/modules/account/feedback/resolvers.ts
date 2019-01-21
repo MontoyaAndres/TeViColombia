@@ -19,6 +19,15 @@ export const resolvers: ResolveMap = {
           where: { user, receiver: session.userId }
         });
 
+        if (id === session.userId) {
+          return [
+            {
+              path: "stars",
+              message: "No permitido."
+            }
+          ];
+        }
+
         if (stars > 5) {
           return [
             {

@@ -1,0 +1,9 @@
+type Mutation {
+  portafolio(multimedia: Upload!, description: String!): Boolean!
+  editPortafolio(
+    idPortafolio: ID!
+    multimedia: Upload!
+    description: String!
+  ): Boolean!
+  deletePortafolio(idPortafolio: ID!): Boolean!
+}
