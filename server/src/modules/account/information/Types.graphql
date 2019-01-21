@@ -45,6 +45,11 @@ type Necessity {
   comment: String
 }
 
+type Portafolio {
+  multimedia: [String]
+  description: String!
+}
+
 type Business {
   id: ID
   name: String
@@ -78,5 +83,6 @@ type UserInformation {
   cv: [CV]
   feedback: [Feedback]
   necessity: [Necessity]
+  portafolio: [Portafolio]
   business: [Business]
 }

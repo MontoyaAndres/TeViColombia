@@ -58,6 +58,7 @@ work: Array<IWork | null> | null;
 cv: Array<ICV | null> | null;
 feedback: Array<IFeedback | null> | null;
 necessity: Array<INecessity | null> | null;
+portafolio: Array<IPortafolio | null> | null;
 business: Array<IBusiness | null> | null;
 }
 
@@ -122,6 +123,12 @@ finished: boolean | null;
 comment: string | null;
 }
 
+interface IPortafolio {
+__typename: "Portafolio";
+multimedia: Array<string | null> | null;
+description: string;
+}
+
 interface IBusiness {
 __typename: "Business";
 id: string | null;
@@ -134,6 +141,12 @@ __typename: "Mutation";
 feedback: Array<IError> | null;
 deleteFeedback: boolean;
 generalInformation: Array<IError> | null;
+necessity: boolean;
+editNecessity: boolean;
+deleteNecessity: boolean;
+portafolio: boolean;
+editPortafolio: boolean;
+deletePortafolio: boolean;
 trainingEmployment: boolean;
 sendForgotPasswordEmail: boolean | null;
 forgotPasswordChange: Array<IError> | null;
@@ -156,6 +169,36 @@ id: string;
 interface IGeneralInformationOnMutationArguments {
 id?: string | null;
 information?: IGeneralInformationInput | null;
+}
+
+interface INecessityOnMutationArguments {
+finished: boolean;
+comment: string;
+}
+
+interface IEditNecessityOnMutationArguments {
+idNecessity: string;
+finished: boolean;
+comment: string;
+}
+
+interface IDeleteNecessityOnMutationArguments {
+idNecessity: string;
+}
+
+interface IPortafolioOnMutationArguments {
+multimedia: any;
+description: string;
+}
+
+interface IEditPortafolioOnMutationArguments {
+idPortafolio: string;
+multimedia: any;
+description: string;
+}
+
+interface IDeletePortafolioOnMutationArguments {
+idPortafolio: string;
 }
 
 interface ITrainingEmploymentOnMutationArguments {

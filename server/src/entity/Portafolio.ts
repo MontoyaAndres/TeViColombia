@@ -14,11 +14,8 @@ export class Portafolio extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("simple-array")
-  routeImages: string[];
-
-  @Column("simple-array")
-  routeVideos: string[];
+  @Column("simple-array", { nullable: true })
+  multimedia: string[];
 
   @Column("text")
   description: string;

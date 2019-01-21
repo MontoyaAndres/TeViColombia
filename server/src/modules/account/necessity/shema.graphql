@@ -1,0 +1,9 @@
+type Mutation {
+  necessity(finished: Boolean!, comment: String!): Boolean!
+  editNecessity(
+    idNecessity: ID!
+    finished: Boolean!
+    comment: String!
+  ): Boolean!
+  deleteNecessity(idNecessity: ID!): Boolean!
+}
