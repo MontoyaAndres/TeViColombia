@@ -3,7 +3,8 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne
+  ManyToOne,
+  CreateDateColumn
 } from "typeorm";
 
 // Models
@@ -23,6 +24,9 @@ export class FeedBack extends BaseEntity {
 
   @Column("uuid")
   receiver: string;
+
+  @CreateDateColumn({ type: "timestamp" })
+  createdAt: Date;
 
   @ManyToOne(_ => User, user => user.feedback)
   user: User;

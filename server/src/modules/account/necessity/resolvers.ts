@@ -6,6 +6,23 @@ import { Necessity } from "../../../entity/Necessity";
 import { User } from "../../../entity/User";
 
 export const resolvers: ResolveMap = {
+  Query: {
+    necessity: createMiddleware(
+      middleware.auth,
+      async (_, { userId }: GQL.INecessityOnQueryArguments) => {
+        const necessity = await Necessity.find({
+          where: {
+            user: {
+              id: userId
+            }
+          },
+          order: { updatedAt: "DESC" }
+        });
+
+        return necessity;
+      }
+    )
+  },
   Mutation: {
     necessity: createMiddleware(
       middleware.auth,
@@ -23,20 +40,16 @@ export const resolvers: ResolveMap = {
       middleware.auth,
       async (
         _,
-        {
-          idNecessity,
-          finished,
-          comment
-        }: GQL.IEditNecessityOnMutationArguments
+        { id, finished, comment }: GQL.IEditNecessityOnMutationArguments
       ) => {
-        await Necessity.update({ id: idNecessity }, { finished, comment });
+        await Necessity.update({ id }, { finished, comment });
         return true;
       }
     ),
     deleteNecessity: createMiddleware(
       middleware.auth,
-      async (_, { idNecessity }: GQL.IDeleteNecessityOnMutationArguments) => {
-        await Necessity.delete({ id: idNecessity });
+      async (_, { id }: GQL.IDeleteNecessityOnMutationArguments) => {
+        await Necessity.delete({ id });
         return true;
       }
     )

@@ -1,9 +1,15 @@
+type Necessity {
+  id: ID
+  finished: Boolean
+  comment: String
+}
+
+type Query {
+  necessity(userId: ID!): [Necessity]!
+}
+
 type Mutation {
   necessity(finished: Boolean!, comment: String!): Boolean!
-  editNecessity(
-    idNecessity: ID!
-    finished: Boolean!
-    comment: String!
-  ): Boolean!
-  deleteNecessity(idNecessity: ID!): Boolean!
+  editNecessity(id: ID!, finished: Boolean!, comment: String!): Boolean!
+  deleteNecessity(id: ID!): Boolean!
 }

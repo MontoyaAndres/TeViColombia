@@ -7,7 +7,7 @@ import { Query } from "react-apollo";
 import Loading from "../../components/shared/loading";
 import checkLoggedIn from "../../lib/checkLoggedIn";
 import redirect from "../../lib/redirect";
-import information from "../../graphql/queries/information";
+import { informationQuery } from "../../graphql/queries/account";
 
 const DynamicGeneralInformation = dynamic(
   () => import("../../components/profile/generalInformation"),
@@ -39,6 +39,13 @@ class profile extends PureComponent {
     value: 1
   };
 
+  componentDidUpdate(prevProps) {
+    // If the user changes to other profile, reset value.
+    if (prevProps.router.query !== this.props.router.query) {
+      this.handleValue(1);
+    }
+  }
+
   handleValue = value => {
     this.setState({ value });
   };
@@ -52,7 +59,7 @@ class profile extends PureComponent {
     } = this.props;
 
     return (
-      <Query query={information} variables={{ id }}>
+      <Query query={informationQuery} variables={{ id }}>
         {({ loading, data }) => {
           if (loading) {
             return <Loading />;
@@ -89,6 +96,9 @@ class profile extends PureComponent {
                 <h3 className="title" style={{ textAlign: "center" }}>
                   {data.information.name} {data.information.lastname}
                 </h3>
+                <h3 className="subtitle" style={{ textAlign: "center" }}>
+                  {data.information.description}
+                </h3>
                 <div className="tabs is-medium is-centered">
                   <ul>
                     <li
@@ -97,12 +107,15 @@ class profile extends PureComponent {
                     >
                       <a>Información general</a>
                     </li>
-                    <li
-                      className={`${value === 2 ? "is-active" : ""}`}
-                      onClick={() => this.handleValue(2)}
-                    >
-                      <a>Formación y empleo</a>
-                    </li>
+                    {data.information.study.length &&
+                    data.information.work.length ? (
+                      <li
+                        className={`${value === 2 ? "is-active" : ""}`}
+                        onClick={() => this.handleValue(2)}
+                      >
+                        <a>Formación y empleo</a>
+                      </li>
+                    ) : null}
                     <li
                       className={`${value === 3 ? "is-active" : ""}`}
                       onClick={() => this.handleValue(3)}
@@ -119,16 +132,24 @@ class profile extends PureComponent {
                       className={`${value === 5 ? "is-active" : ""}`}
                       onClick={() => this.handleValue(5)}
                     >
-                      <a>Necesidad</a>
+                      <a>Necesidades</a>
                     </li>
                   </ul>
                 </div>
               </div>
 
-              {value === 1 && <DynamicGeneralInformation id={id} />}
-              {value === 2 && <DynamicTrainingEmployment id={id} />}
+              {value === 1 && (
+                <DynamicGeneralInformation information={data.information} />
+              )}
+              {value === 2 && (
+                <DynamicTrainingEmployment information={data.information} />
+              )}
               {value === 3 && <DynamicFeedback id={id} />}
-              {value === 4 && <DynameicCommercialEstablishment id={id} />}
+              {value === 4 && (
+                <DynameicCommercialEstablishment
+                  information={data.information}
+                />
+              )}
               {value === 5 && <DynamicNecessity id={id} />}
             </Fragment>
           );

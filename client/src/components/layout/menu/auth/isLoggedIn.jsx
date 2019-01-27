@@ -10,25 +10,14 @@ const logout = gql`
 `;
 
 class isLoggedIn extends PureComponent {
-  state = {
-    clicked: false
-  };
-
   redirect = () => {
-    const { me } = this.props;
-    this.openMenu();
+    const { me, openMenu } = this.props;
+    openMenu();
     Router.push(`/profile/edit/${me.id}`);
   };
 
-  openMenu = () => {
-    const { clicked } = this.state;
-
-    this.setState({ clicked: !clicked });
-  };
-
   render() {
-    const { me, client } = this.props;
-    const { clicked } = this.state;
+    const { me, client, clicked, openMenu } = this.props;
 
     return (
       <Mutation
@@ -42,7 +31,7 @@ class isLoggedIn extends PureComponent {
         {mutate => (
           <div
             className={`navbar-item has-dropdown ${clicked ? "is-active" : ""}`}
-            onClick={this.openMenu}
+            onClick={openMenu}
           >
             <a className="navbar-link">
               {me.name} {me.lastname}

@@ -5,7 +5,6 @@ input StudyInput {
   area: String
   startedOn: Date!
   finishIn: Date
-  finished: Boolean!
 }
 
 input WorkInput {
@@ -18,7 +17,6 @@ input WorkInput {
   goals: String!
   startedOn: Date!
   finishIn: Date
-  finished: Boolean!
 }
 
 input CVInput {

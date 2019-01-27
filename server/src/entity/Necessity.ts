@@ -3,7 +3,9 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn
 } from "typeorm";
 
 // Models
@@ -19,6 +21,12 @@ export class Necessity extends BaseEntity {
 
   @Column("text")
   comment: string;
+
+  @CreateDateColumn({ type: "timestamp" })
+  createdAt: Date;
+
+  @UpdateDateColumn({ type: "timestamp" })
+  updatedAt: Date;
 
   @ManyToOne(_ => User, user => user.necessity)
   user: User;

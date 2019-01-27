@@ -63,11 +63,11 @@ const TextAreaField = ({ name, placeholder, isRequired = true, ...props }) => (
         <Field
           {...props}
           name={name}
-          required={isRequired}
           render={({ field }) => (
             <textarea
               {...field}
               placeholder={placeholder}
+              required={isRequired}
               className="textarea"
             />
           )}

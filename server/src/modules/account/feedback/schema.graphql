@@ -1,3 +1,14 @@
+type Feedback {
+  id: ID
+  stars: Int
+  comment: String
+  user: User
+}
+
+type Query {
+  feedback(userId: ID!): [Feedback]!
+}
+
 type Mutation {
   feedback(id: ID!, stars: Int!, comment: String!): [Error!]
   deleteFeedback(id: ID!): Boolean!

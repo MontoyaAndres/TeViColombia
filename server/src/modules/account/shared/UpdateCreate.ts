@@ -8,14 +8,14 @@ async function UpdateCreate(Model: any, id: any, information: any) {
       return information.map((data: any) =>
         data.id
           ? Model.update({ id: data.id }, { ...data })
-          : Model.create({ ...data, user: id }).save()
+          : Model.create({ ...data, user: { id } }).save()
       );
     }
   } else {
     // If is the first time, all the data will be create.
     if (information) {
       return information.map((data: any) =>
-        Model.create({ ...data, user: id }).save()
+        Model.create({ ...data, user: { id } }).save()
       );
     }
   }

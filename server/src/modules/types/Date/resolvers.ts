@@ -10,10 +10,10 @@ export const resolvers: ResolveMap = {
     name: "Date",
     description: "Date custom scalar type",
     parseValue(value) {
-      return new Date(value); // value from the client
+      return value; // value from the client
     },
     serialize(value) {
-      return new Date(value); // value sent to the client
+      return value; // value sent to the client
     },
     parseLiteral(ast) {
       if (ast.kind === Kind.STRING) {

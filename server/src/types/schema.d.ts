@@ -22,12 +22,39 @@ column: number;
 
 interface IQuery {
 __typename: "Query";
+feedback: Array<IFeedback | null>;
 information: IUserInformation | null;
+necessity: Array<INecessity | null>;
 me: IUser | null;
+}
+
+interface IFeedbackOnQueryArguments {
+userId: string;
 }
 
 interface IInformationOnQueryArguments {
 id: string;
+}
+
+interface INecessityOnQueryArguments {
+userId: string;
+}
+
+interface IFeedback {
+__typename: "Feedback";
+id: string | null;
+stars: number | null;
+comment: string | null;
+user: IUser | null;
+}
+
+interface IUser {
+__typename: "User";
+id: string;
+name: string;
+lastname: string;
+email: string;
+routePhoto: string;
 }
 
 interface IUserInformation {
@@ -56,10 +83,6 @@ language: Array<ILanguage | null> | null;
 study: Array<IStudy | null> | null;
 work: Array<IWork | null> | null;
 cv: Array<ICV | null> | null;
-feedback: Array<IFeedback | null> | null;
-necessity: Array<INecessity | null> | null;
-portafolio: Array<IPortafolio | null> | null;
-business: Array<IBusiness | null> | null;
 }
 
 interface ILanguage {
@@ -77,7 +100,6 @@ level: string | null;
 area: string | null;
 startedOn: any | null;
 finishIn: any | null;
-finished: boolean | null;
 }
 
 interface IWork {
@@ -91,7 +113,6 @@ area: string | null;
 goals: string | null;
 startedOn: any | null;
 finishIn: any | null;
-finished: boolean | null;
 }
 
 interface ICV {
@@ -100,40 +121,11 @@ id: string | null;
 routeCV: string | null;
 }
 
-interface IFeedback {
-__typename: "Feedback";
-id: string | null;
-stars: number | null;
-comment: string | null;
-user: IUser | null;
-}
-
-interface IUser {
-__typename: "User";
-id: string;
-name: string;
-lastname: string;
-email: string;
-}
-
 interface INecessity {
 __typename: "Necessity";
 id: string | null;
 finished: boolean | null;
 comment: string | null;
-}
-
-interface IPortafolio {
-__typename: "Portafolio";
-multimedia: Array<string | null> | null;
-description: string;
-}
-
-interface IBusiness {
-__typename: "Business";
-id: string | null;
-name: string | null;
-routePhone: string | null;
 }
 
 interface IMutation {
@@ -177,13 +169,13 @@ comment: string;
 }
 
 interface IEditNecessityOnMutationArguments {
-idNecessity: string;
+id: string;
 finished: boolean;
 comment: string;
 }
 
 interface IDeleteNecessityOnMutationArguments {
-idNecessity: string;
+id: string;
 }
 
 interface IPortafolioOnMutationArguments {
@@ -283,7 +275,6 @@ level: string;
 area?: string | null;
 startedOn: any;
 finishIn?: any | null;
-finished: boolean;
 }
 
 interface IWorkInput {
@@ -296,7 +287,6 @@ area: string;
 goals: string;
 startedOn: any;
 finishIn?: any | null;
-finished: boolean;
 }
 
 interface ICVInput {

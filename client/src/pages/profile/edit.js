@@ -8,7 +8,7 @@ import { gql } from "apollo-boost";
 import Loading from "../../components/shared/loading";
 import checkLoggedIn from "../../lib/checkLoggedIn";
 import redirect from "../../lib/redirect";
-import information from "../../graphql/queries/information";
+import { informationQuery } from "../../graphql/queries/account";
 import { TextField } from "../../components/shared/globalField";
 import UploadRoutePhoto from "../../components/profile/edit/uploadRoutePhoto";
 import UploadRouteCover from "../../components/profile/edit/uploadRouteCover";
@@ -31,7 +31,7 @@ const edit = ({
     query: { id }
   }
 }) => (
-  <Query query={information} variables={{ id }}>
+  <Query query={informationQuery} variables={{ id }}>
     {({ loading, data }) => {
       if (loading) {
         return <Loading />;
@@ -56,35 +56,34 @@ const edit = ({
                 identificationDocument: data.information.identificationDocument,
                 address: data.information.address || "",
                 telephone: data.information.telephone,
+                departament: data.information.departament || "Bogotá, D.C.",
+                city: data.information.city || "",
+                nationality: data.information.nationality || "Colombia",
+                civilStatus: data.information.civilStatus || "SOLTERO(A)",
+                linkedin: data.information.linkedin || "",
+                skype: data.information.skype || "",
                 website: data.information.website || "",
                 gender: data.information.gender || "HOMBRE",
-                city: data.information.city || "",
-                civilStatus: data.information.civilStatus || "SOLTERO(A)",
-                socialnetwork: data.information.socialnetwork || [],
+                skills: data.information.skills || [],
                 language: data.information.language || [],
-                university: [
+                study: [
                   {
                     id: 1,
                     place: "Universidad minuto de Dios",
+                    level: "UNIVERSIDAD / CARRERA TECNOLÓGICA",
+                    area: "Tecnología en Informática",
                     startedOn: "2015-07-22",
                     finishIn: "2019-01-15",
-                    finished: false,
-                    especializations: [
-                      "Tecnología en Informática",
-                      "Ingenieria de sistemas"
-                    ],
-                    attended: "UNIVERSIDAD",
-                    description: "Muy bueno"
+                    finished: false
                   },
                   {
                     id: 2,
                     place: "SENA",
+                    level: "UNIVERSIDAD / CARRERA TÉCNICA",
+                    area: "Gastronomia",
                     startedOn: "2013-07-22",
                     finishIn: "2015-01-15",
-                    finished: true,
-                    especializations: ["Gastronomia", "Desarrollo web"],
-                    attended: "CENTRO DE ESTUDIOS DE POSGRADO",
-                    description: "Muy bueno"
+                    finished: true
                   }
                 ]
               }}

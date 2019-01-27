@@ -6,6 +6,21 @@ import { createMiddleware } from "../../../utils/createMiddleware";
 import { middleware } from "../../shared/authMiddleware";
 
 export const resolvers: ResolveMap = {
+  Feedback: {
+    user: ({ receiver }) => User.findOne({ where: { id: receiver } })
+  },
+  Query: {
+    feedback: createMiddleware(
+      middleware.auth,
+      async (_, { userId }: GQL.IFeedbackOnQueryArguments) => {
+        const feedback = await FeedBack.find({
+          where: { user: { id: userId } },
+          order: { createdAt: "DESC" }
+        });
+        return feedback;
+      }
+    )
+  },
   Mutation: {
     feedback: createMiddleware(
       middleware.auth,
@@ -24,6 +39,15 @@ export const resolvers: ResolveMap = {
             {
               path: "stars",
               message: "No permitido."
+            }
+          ];
+        }
+
+        if (stars < 0) {
+          return [
+            {
+              path: "stars",
+              message: "Es necesario como minimo  1 estrasella."
             }
           ];
         }
