@@ -1,78 +1,134 @@
-import React from "react";
-import { Query } from "react-apollo";
+import React, { Fragment } from "react";
 
-import Loading from "../shared/loading";
-import information from "../../graphql/queries/information";
+const trainingEmployment = ({ information }) => (
+  <div className="container">
+    <div style={{ padding: ".75rem" }}>
+      {information.study && information.study.length ? (
+        <div className="box" style={{ marginTop: "1.2rem" }}>
+          <p className="title">Estudio</p>
+          <div className="content">
+            {information.study.map((study, i) => (
+              <Fragment key={i}>
+                <p className="subtitle">
+                  <strong>Lugar:</strong> {study.place}
+                </p>
 
-const trainingEmployment = ({ id }) => (
-  <Query query={information} variables={{ id }}>
-    {({ loading, data }) => {
-      if (loading) {
-        return <Loading />;
-      }
+                <p className="subtitle">
+                  <strong>Nivel:</strong> {study.level}
+                </p>
 
-      return (
-        <div className="container">
-          {!Object.keys(data.information).length ? (
-            <div className="columns is-multiline">
-              {data.information.university &&
-              data.information.university.length ? (
-                <div className="column is-6">
-                  <div className="box" style={{ marginTop: "0.5rem" }}>
-                    <p className="subtitle">
-                      <strong>Universidad:</strong>
-                      {JSON.stringify(data.information.university)}
-                    </p>
-                  </div>
-                </div>
-              ) : null}
+                {study.area && (
+                  <p className="subtitle">
+                    <strong>Area:</strong> {study.area}
+                  </p>
+                )}
 
-              {data.information.secondaryschool &&
-              data.information.secondaryschool.length ? (
-                <div className="column is-6">
-                  <div className="box" style={{ marginTop: "0.5rem" }}>
-                    <p className="subtitle">
-                      <strong>Escuela secundaria:</strong>
-                      {JSON.stringify(data.information.secondaryschool)}
-                    </p>
-                  </div>
-                </div>
-              ) : null}
+                <p className="subtitle">
+                  <strong>Comenzo en:</strong> {study.startedOn}
+                </p>
 
-              {data.information.work && data.information.work.length ? (
-                <div className="column is-6">
-                  <div className="box" style={{ marginTop: "0.5rem" }}>
-                    <p className="subtitle">
-                      <strong>Trabajo:</strong>
-                      {JSON.stringify(data.information.work)}
-                    </p>
-                  </div>
-                </div>
-              ) : null}
+                <p className="subtitle">
+                  <strong>Finalizo en:</strong>{" "}
+                  {study.finishIn ? study.finishIn : "Actualmente cursando"}
+                </p>
 
-              {data.information.cv && data.information.cv.length ? (
-                <div className="column is-6">
-                  <div className="box" style={{ marginTop: "0.5rem" }}>
-                    <p className="subtitle">
-                      <strong>Hoja de vida:</strong>
-                      {JSON.stringify(data.information.cv)}
-                    </p>
-                  </div>
-                </div>
-              ) : null}
-            </div>
-          ) : (
-            <h2
-              className="subtitle is-3"
-              style={{ textAlign: "center", padding: 20 }}
-            >
-              No se ha encontrado información al respecto.
-            </h2>
-          )}
+                {information.study.length - 1 !== i && (
+                  <div className="is-divider" style={{ width: "100%" }} />
+                )}
+              </Fragment>
+            ))}
+          </div>
         </div>
-      );
-    }}
-  </Query>
+      ) : null}
+
+      {information.work && information.work.length ? (
+        <div className="box" style={{ marginTop: "0.5rem" }}>
+          <p className="title">Trabajo</p>
+          <div className="content">
+            {information.work.map((work, i) => (
+              <Fragment key={i}>
+                <p className="subtitle">
+                  <strong>Compañia:</strong> {work.company}
+                </p>
+
+                <p className="subtitle">
+                  <strong>Departamento:</strong> {work.departament}
+                </p>
+
+                <p className="subtitle">
+                  <strong>Sector de la empresa:</strong> {work.sector}
+                </p>
+
+                <p className="subtitle">
+                  <strong>Cargo:</strong> {work.job}
+                </p>
+
+                <p className="subtitle">
+                  <strong>Area:</strong> {work.area}
+                </p>
+
+                <p className="subtitle">
+                  <strong>Comenzo en:</strong> {work.startedOn}
+                </p>
+
+                <p className="subtitle">
+                  <strong>Finalizo en:</strong>{" "}
+                  {work.finishIn ? work.finishIn : "Actualmente trabajando"}
+                </p>
+
+                <>
+                  <p className="subtitle">
+                    <strong>Funciones y logros del cargo:</strong>
+                  </p>
+                  <ul>
+                    <li className="subtitle">{work.goals}</li>
+                  </ul>
+                </>
+
+                {information.work.length - 1 !== i && (
+                  <div className="is-divider" style={{ width: "100%" }} />
+                )}
+              </Fragment>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {information.cv && information.cv.length ? (
+        <div className="box" style={{ marginTop: "0.5rem" }}>
+          <p className="title">Hoja de vida</p>
+          <div className="content">
+            <div className="columns is-multiline">
+              {information.cv.map((cv, i) => (
+                <div className="column is-6" key={i}>
+                  <div className="card">
+                    <div className="card-content">
+                      <div className="media">
+                        <div className="media-left">
+                          <a
+                            href={`http://localhost:4000/cv/${cv.routeCV}`}
+                            download
+                          >
+                            <i
+                              className="fas fa-2x fa-file-download"
+                              aria-hidden="true"
+                            />
+                          </a>
+                        </div>
+                        <div className="media-content">
+                          <span className="subtitle">{cv.routeCV}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </div>
+  </div>
 );
 
 export default trainingEmployment;

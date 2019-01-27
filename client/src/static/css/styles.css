@@ -7,6 +7,7 @@ body {
   background-color: #00d1b2;
   color: white;
 }
+
 ::selection {
   background-color: #00d1b2;
   color: white;
@@ -43,6 +44,15 @@ a.navbar-item:hover,
   border-top: none;
 }
 
+.navbar-link:not(.is-arrowless)::after {
+  border-color: white;
+}
+
+.navbar-burger,
+.navbar-burger:hover {
+  color: white;
+}
+
 .button.is-primary.is-hovered,
 .button.is-primary:hover,
 .button.is-light.is-hovered,
@@ -52,8 +62,7 @@ a.navbar-item:hover,
 }
 
 #fullpage {
-  background: url(https://picsum.photos/1080/600?image=10) no-repeat center
-    center fixed;
+  background: url(/static/img/background.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -66,9 +75,9 @@ a.navbar-item:hover,
 }
 
 .error {
-  color: "red";
+  color: red;
   font-weight: 400;
-  padding-bottom: "0.5em";
+  padding-bottom: 0.5em;
 }
 
 input.input::-webkit-input-placeholder,
@@ -99,7 +108,8 @@ textarea.textarea:-moz-placeholder {
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.5), 0 0 0 1px rgba(10, 10, 10, 0.5);
 }
 
-.card > * {
+.card-header,
+.card-content {
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.5), 0 0 0 1px rgba(10, 10, 10, 0.5);
 }
 

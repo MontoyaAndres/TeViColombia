@@ -1,0 +1,33 @@
+.stars_static_item::before {
+  font-size: 25px;
+  content: "★";
+  color: lightgray;
+}
+
+.stars_static_input {
+  position: absolute;
+  visibility: hidden;
+}
+
+.stars_item::before {
+  font-size: 35px;
+  content: "★";
+  color: lightgray;
+}
+
+.stars_input {
+  position: absolute;
+  visibility: hidden;
+}
+
+.stars_item:hover {
+  cursor: pointer;
+}
+
+.stars_item:hover ~ .stars_item::before {
+  color: lightgray;
+}
+
+.stars_item_selected::before {
+  color: yellow;
+}

@@ -60,7 +60,9 @@ class MyDocument extends Document {
           />
           <link rel="stylesheet" href="/static/css/nprogress.css" />
           <link rel="stylesheet" href="/static/css/bulma.min.css" />
+          <link rel="stylesheet" href="/static/css/bulma-divider.min.css" />
           <link rel="stylesheet" href="/static/css/animate.min.css" />
+          <link rel="stylesheet" href="/static/css/stars.css" />
           <link rel="stylesheet" href="/static/css/styles.css" />
           <link rel="stylesheet" href="/static/css/loading.css" />
         </Head>

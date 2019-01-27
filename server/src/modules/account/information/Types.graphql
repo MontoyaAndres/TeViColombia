@@ -11,7 +11,6 @@ type Study {
   area: String
   startedOn: Date
   finishIn: Date
-  finished: Boolean
 }
 
 type Work {
@@ -24,36 +23,11 @@ type Work {
   goals: String
   startedOn: Date
   finishIn: Date
-  finished: Boolean
 }
 
 type CV {
   id: ID
   routeCV: String
-}
-
-type Feedback {
-  id: ID
-  stars: Int
-  comment: String
-  user: User
-}
-
-type Necessity {
-  id: ID
-  finished: Boolean
-  comment: String
-}
-
-type Portafolio {
-  multimedia: [String]
-  description: String!
-}
-
-type Business {
-  id: ID
-  name: String
-  routePhone: String
 }
 
 type UserInformation {
@@ -81,8 +55,4 @@ type UserInformation {
   study: [Study]
   work: [Work]
   cv: [CV]
-  feedback: [Feedback]
-  necessity: [Necessity]
-  portafolio: [Portafolio]
-  business: [Business]
 }

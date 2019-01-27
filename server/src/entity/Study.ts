@@ -30,9 +30,6 @@ export class Study extends BaseEntity {
   @Column("date", { nullable: true })
   finishIn: Date;
 
-  @Column({ default: false })
-  finished: boolean;
-
   @ManyToOne(_ => User, user => user.study)
   user: User;
 }

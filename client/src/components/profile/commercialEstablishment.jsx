@@ -7,7 +7,7 @@ import Loading from "../shared/loading";
 const information = gql`
   query Information($id: ID!) {
     information(id: $id) {
-      commercialEstablishment {
+      business {
         id
         name
         routePhone

@@ -1,99 +1,101 @@
 import React from "react";
-import { Query } from "react-apollo";
 
-import Loading from "../shared/loading";
-import information from "../../graphql/queries/information";
+const generalInformation = ({ information }) => (
+  <div className="container">
+    <div className="columns is-multiline">
+      <div className="column is-6">
+        <div className="box" style={{ marginTop: "0.5rem" }}>
+          <div className="content">
+            <p className="subtitle">
+              <strong>Documento de identificación:</strong>{" "}
+              {information.identificationDocumentType}
+            </p>
+            <p className="subtitle">
+              <strong>Número de identificación:</strong>{" "}
+              {information.identificationDocument}
+            </p>
+            <p className="subtitle">
+              <strong>Dirección:</strong> {information.address}
+            </p>
+            <p className="subtitle">
+              <strong>Teléfono celular:</strong>{" "}
+              <a href={`tel:${information.telephone}`}>
+                {information.telephone}
+              </a>
+            </p>
+            <p className="subtitle">
+              <strong>Nacionalidad:</strong> {information.nationality}
+            </p>
+            <p className="subtitle">
+              <strong>Departamento:</strong> {information.departament}
+            </p>
+            <p className="subtitle">
+              <strong>Ciudad:</strong> {information.city}
+            </p>
+          </div>
+        </div>
+      </div>
 
-const generalInformation = ({ id }) => (
-  <Query query={information} variables={{ id }}>
-    {({ loading, data }) => {
-      if (loading) {
-        return <Loading />;
-      }
-
-      return (
-        <div className="container">
-          <div className="columns is-multiline">
-            {data.information.description && (
-              <div className="column is-12">
-                <dir className="box" style={{ marginTop: "0.5rem" }}>
-                  <p className="subtitle is-4">
-                    {data.information.description}
-                  </p>
-                </dir>
-              </div>
-            )}
-
-            <div className="column is-6">
-              <div className="box" style={{ marginTop: "0.5rem" }}>
+      <div className="column is-6">
+        <div className="box" style={{ marginTop: "0.5rem" }}>
+          <div className="content">
+            <p className="subtitle">
+              <strong>Estado civil:</strong> {information.civilStatus}
+            </p>
+            <p className="subtitle">
+              <strong>Genero:</strong> {information.gender}
+            </p>
+            <p className="subtitle">
+              <strong>Correo electrónico:</strong>{" "}
+              <a href={`mailto:${information.email}`}>{information.email}</a>
+            </p>
+            <p className="subtitle">
+              <strong>Sitio web:</strong>{" "}
+              <a
+                rel="noopener noreferrer"
+                target="_blank"
+                href={information.website}
+              >
+                {information.website}
+              </a>
+            </p>
+            <p className="subtitle">
+              <strong>Linkedin:</strong>{" "}
+              <a
+                rel="noopener noreferrer"
+                target="_blank"
+                href={information.linkedin}
+              >
+                {information.linkedin}
+              </a>
+            </p>
+            <p className="subtitle">
+              <strong>Skype:</strong>{" "}
+              <a href={`skype:${information.skype}?chat`}>
+                {information.skype}
+              </a>
+            </p>
+            {information.language && information.language.length ? (
+              <>
                 <p className="subtitle">
-                  <strong>Documento de identificación:</strong>{" "}
-                  {data.information.identificationDocumentType}
+                  <strong>Idiomas:</strong>
                 </p>
-                <p className="subtitle">
-                  <strong>Número de identificación:</strong>{" "}
-                  {data.information.identificationDocument}
-                </p>
-                <p className="subtitle">
-                  <strong>Dirección:</strong> {data.information.address}
-                </p>
-                <p className="subtitle">
-                  <strong>Teléfono celular:</strong>{" "}
-                  {data.information.telephone}
-                </p>
-                <p className="subtitle">
-                  <strong>Sitio web:</strong> {data.information.website}
-                </p>
-              </div>
-            </div>
-
-            <div className="column is-6">
-              <div className="box" style={{ marginTop: "0.5rem" }}>
-                <p className="subtitle">
-                  <strong>Correo electrónico:</strong> {data.information.email}
-                </p>
-                <p className="subtitle">
-                  <strong>Genero:</strong> {data.information.gender}
-                </p>
-                <p className="subtitle">
-                  <strong>Ciudad:</strong> {data.information.city}
-                </p>
-                <p className="subtitle">
-                  <strong>Departamento:</strong> {data.information.departament}
-                </p>
-                <p className="subtitle">
-                  <strong>Estado civil:</strong> {data.information.civilStatus}
-                </p>
-              </div>
-            </div>
-
-            {data.information.socialnetwork &&
-            data.information.socialnetwork.length ? (
-              <div className="column is-6">
-                <div className="box" style={{ marginTop: "0.5rem" }}>
-                  <p className="subtitle">
-                    <strong>Redes sociales:</strong>
-                    {JSON.stringify(data.information.socialnetwork)}
-                  </p>
-                </div>
-              </div>
-            ) : null}
-
-            {data.information.language && data.information.language.length ? (
-              <div className="column is-6">
-                <div className="box" style={{ marginTop: "0.5rem" }}>
-                  <p className="subtitle">
-                    <strong>Idiomas:</strong>
-                    {JSON.stringify(data.information.language)}
-                  </p>
-                </div>
-              </div>
+                <ul>
+                  {information.language.map(language => (
+                    <li key={language.id}>
+                      <span className="subtitle">
+                        {language.language} - {language.level}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </>
             ) : null}
           </div>
         </div>
-      );
-    }}
-  </Query>
+      </div>
+    </div>
+  </div>
 );
 
 export default generalInformation;

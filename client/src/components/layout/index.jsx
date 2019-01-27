@@ -1,12 +1,14 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 import Menu from "./menu";
+import Footer from "./footer";
 
 const index = ({ children }) => (
-  <Fragment>
+  <>
     <Menu />
     {children}
-  </Fragment>
+    <Footer />
+  </>
 );
 
 export default index;
