@@ -94,6 +94,25 @@ const generalInformation = ({ information }) => (
           </div>
         </div>
       </div>
+
+      {information.skills && information.skills.length ? (
+        <div className="column is-12">
+          <div className="box" style={{ marginTop: "0.5rem" }}>
+            <p className="title">Habilidades</p>
+            <div className="content">
+              {information.skills.map((skill, i) => (
+                <span
+                  key={i}
+                  className="tag is-info is-large"
+                  style={{ margin: 5 }}
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   </div>
 );

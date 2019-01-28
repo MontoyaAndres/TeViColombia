@@ -10,6 +10,6 @@ type Query {
 
 type Mutation {
   necessity(finished: Boolean!, comment: String!): Boolean!
-  editNecessity(id: ID!, finished: Boolean!, comment: String!): Boolean!
+  updateNecessity(id: ID!, finished: Boolean!, comment: String!): Boolean!
   deleteNecessity(id: ID!): Boolean!
 }

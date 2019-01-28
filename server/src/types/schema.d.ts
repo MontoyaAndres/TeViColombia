@@ -134,7 +134,7 @@ feedback: Array<IError> | null;
 deleteFeedback: boolean;
 generalInformation: Array<IError> | null;
 necessity: boolean;
-editNecessity: boolean;
+updateNecessity: boolean;
 deleteNecessity: boolean;
 portafolio: boolean;
 editPortafolio: boolean;
@@ -168,7 +168,7 @@ finished: boolean;
 comment: string;
 }
 
-interface IEditNecessityOnMutationArguments {
+interface IUpdateNecessityOnMutationArguments {
 id: string;
 finished: boolean;
 comment: string;

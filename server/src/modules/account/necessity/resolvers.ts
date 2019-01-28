@@ -36,11 +36,11 @@ export const resolvers: ResolveMap = {
         return true;
       }
     ),
-    editNecessity: createMiddleware(
+    updateNecessity: createMiddleware(
       middleware.auth,
       async (
         _,
-        { id, finished, comment }: GQL.IEditNecessityOnMutationArguments
+        { id, finished, comment }: GQL.IUpdateNecessityOnMutationArguments
       ) => {
         await Necessity.update({ id }, { finished, comment });
         return true;
