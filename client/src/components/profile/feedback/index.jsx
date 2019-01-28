@@ -4,14 +4,14 @@ import { gql } from "apollo-boost";
 import Link from "next/link";
 import { withFormik, Form, ErrorMessage } from "formik";
 
-import { feedbackQuery } from "../../graphql/queries/account";
-import meQuery from "../../graphql/queries/me";
-import Loading from "../shared/loading";
-import StaticStars from "../shared/staticStars";
-import normalizeErrors from "../../utils/normalizeErrors";
-import { TextAreaField } from "../shared/globalField";
-import ChangeStars from "../shared/changeStars";
-import AskModal from "../shared/askModal";
+import { feedbackQuery } from "../../../graphql/queries/account";
+import meQuery from "../../../graphql/queries/me";
+import Loading from "../../shared/loading";
+import StaticStars from "../../shared/staticStars";
+import normalizeErrors from "../../../utils/normalizeErrors";
+import { TextAreaField } from "../../shared/globalField";
+import ChangeStars from "../../shared/changeStars";
+import DeleteFeedbackModal from "./deleteFeedbackModal";
 
 const feedbackMutation = gql`
   mutation FeedbackMutation($id: ID!, $stars: Int!, $comment: String!) {
@@ -22,13 +22,7 @@ const feedbackMutation = gql`
   }
 `;
 
-const feedbackDeleteMutation = gql`
-  mutation FeedbackDeleteMutation($id: ID!) {
-    deleteFeedback(id: $id)
-  }
-`;
-
-const GiveFeedbackBox = ({
+const InputFeedback = ({
   stars,
   handleSubmit,
   isSubmitting,
@@ -60,7 +54,7 @@ const GiveFeedbackBox = ({
   </Form>
 );
 
-class feedback extends React.PureComponent {
+class index extends React.PureComponent {
   state = {
     deleteFeedback: false,
     idFeedback: null
@@ -69,20 +63,6 @@ class feedback extends React.PureComponent {
   handleAskDeleteFeedback = (idFeedback = null) => {
     const { deleteFeedback } = this.state;
     this.setState({ deleteFeedback: !deleteFeedback, idFeedback });
-  };
-
-  handleMutationDeleteFeedback = async () => {
-    const { FEEDBACK_DELETE_MUTATION, id } = this.props;
-    const { idFeedback } = this.state;
-
-    if (idFeedback) {
-      await FEEDBACK_DELETE_MUTATION({
-        variables: { id: idFeedback },
-        refetchQueries: [{ query: feedbackQuery, variables: { userId: id } }]
-      });
-    }
-
-    this.handleAskDeleteFeedback();
   };
 
   render() {
@@ -97,7 +77,7 @@ class feedback extends React.PureComponent {
       isSubmitting,
       setFieldValue
     } = this.props;
-    const { deleteFeedback } = this.state;
+    const { deleteFeedback, idFeedback } = this.state;
 
     if (loadingFeedback && loadingMe) {
       return <Loading />;
@@ -107,7 +87,7 @@ class feedback extends React.PureComponent {
       <div className="container">
         <div style={{ padding: ".75rem" }}>
           {dataMe.id !== id && (
-            <GiveFeedbackBox
+            <InputFeedback
               stars={values.stars}
               handleSubmit={handleSubmit}
               isSubmitting={isSubmitting}
@@ -115,16 +95,14 @@ class feedback extends React.PureComponent {
             />
           )}
 
-          <AskModal
-            title="Eliminar feedback"
-            active={deleteFeedback}
-            mutation={this.handleMutationDeleteFeedback}
-            handleAskFunction={this.handleAskDeleteFeedback}
-          >
-            <section className="modal-card-body">
-              Si da clic en Guardar cambios, este campo será eliminado.
-            </section>
-          </AskModal>
+          {deleteFeedback && (
+            <DeleteFeedbackModal
+              id={id}
+              idFeedback={idFeedback}
+              deleteFeedback={deleteFeedback}
+              handleAskDeleteFeedback={this.handleAskDeleteFeedback}
+            />
+          )}
 
           {dataFeedback && dataFeedback.length ? (
             dataFeedback.map(feed => (
@@ -204,19 +182,17 @@ export default compose(
     })
   }),
   graphql(feedbackMutation, { name: "FEEDBACK_MUTATION" }),
-  graphql(feedbackDeleteMutation, { name: "FEEDBACK_DELETE_MUTATION" }),
   withFormik({
     mapPropsToValues: () => ({ stars: 1, comment: "" }),
     handleSubmit: async (
       values,
       { props: { id, FEEDBACK_MUTATION }, setSubmitting, setErrors, resetForm }
     ) => {
-      const response = await FEEDBACK_MUTATION({
+      const { data } = await FEEDBACK_MUTATION({
         variables: { id, ...values },
         refetchQueries: [{ query: feedbackQuery, variables: { userId: id } }]
       });
 
-      const { data } = response;
       // if feedback has data, it has the errors
       if (data.feedback && data.feedback.length) {
         setSubmitting(false);
@@ -227,4 +203,4 @@ export default compose(
       }
     }
   })
-)(feedback);
+)(index);

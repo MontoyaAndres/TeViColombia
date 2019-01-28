@@ -1,6 +1,13 @@
 import React from "react";
 
-const askModal = ({ children, title, active, mutation, handleAskFunction }) => (
+const askModal = ({
+  children,
+  title,
+  active,
+  mutation,
+  handleAskFunction,
+  isSubmitting
+}) => (
   <div className={`modal ${active ? "is-active" : ""}`}>
     <div className="modal-background" />
     <div className="modal-card">
@@ -14,12 +21,13 @@ const askModal = ({ children, title, active, mutation, handleAskFunction }) => (
         />
       </header>
 
-      {children}
+      <section className="modal-card-body">{children}</section>
 
       <footer className="modal-card-foot">
         <button
           type="button"
-          className="button is-success"
+          disabled={isSubmitting}
+          className={`button is-success ${isSubmitting ? "is-loading" : ""}`}
           onClick={() => mutation()}
         >
           Guardar cambios

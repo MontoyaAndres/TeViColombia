@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from "react";
+import React, { PureComponent } from "react";
 import { withRouter } from "next/router";
 import Error from "next/error";
 import dynamic from "next/dynamic";
@@ -70,7 +70,7 @@ class profile extends PureComponent {
           }
 
           return (
-            <Fragment>
+            <>
               {data.information.routeCover ? (
                 <div className="background-cover">
                   <img
@@ -151,7 +151,7 @@ class profile extends PureComponent {
                 />
               )}
               {value === 5 && <DynamicNecessity id={id} />}
-            </Fragment>
+            </>
           );
         }}
       </Query>

@@ -3,21 +3,16 @@ import { gql } from "apollo-boost";
 import { compose, graphql } from "react-apollo";
 import { withFormik, Form } from "formik";
 
-import { necessityQuery } from "../../graphql/queries/account";
-import Loading from "../shared/loading";
-import meQuery from "../../graphql/queries/me";
-import { TextAreaField } from "../shared/globalField";
-import AskModal from "../shared/askModal";
+import { necessityQuery } from "../../../graphql/queries/account";
+import Loading from "../../shared/loading";
+import meQuery from "../../../graphql/queries/me";
+import { TextAreaField } from "../../shared/globalField";
+import UpdateNecessityModal from "./updateNecessityModal";
+import DeleteNecessityModal from "./deleteNecessityModal";
 
 const necessityMutation = gql`
   mutation NecessityMutation($finished: Boolean!, $comment: String!) {
     necessity(finished: $finished, comment: $comment)
-  }
-`;
-
-const deleteNecessityMutation = gql`
-  mutation DeleteNecessityMutation($id: ID!) {
-    deleteNecessity(id: $id)
   }
 `;
 
@@ -42,12 +37,13 @@ const InputNecessity = ({ isSubmitting, handleSubmit }) => (
   </Form>
 );
 
-class necessity extends React.PureComponent {
+class index extends React.PureComponent {
   constructor(props) {
     super(props);
     this.dropdown = [];
     this.state = {
       deleteNecessity: false,
+      updateNecessity: false,
       idNecessity: null
     };
   }
@@ -61,18 +57,9 @@ class necessity extends React.PureComponent {
     this.setState({ deleteNecessity: !deleteNecessity, idNecessity });
   };
 
-  handleDeleteNecessityMutation = async () => {
-    const { DELETE_NECESSITY_MUTATION, id } = this.props;
-    const { idNecessity } = this.state;
-
-    if (idNecessity) {
-      await DELETE_NECESSITY_MUTATION({
-        variables: { id: idNecessity },
-        refetchQueries: [{ query: necessityQuery, variables: { userId: id } }]
-      });
-    }
-
-    this.handleAskDeleteNecessity();
+  handleAskUpdateNecessity = (idNecessity = null) => {
+    const { updateNecessity } = this.state;
+    this.setState({ updateNecessity: !updateNecessity, idNecessity });
   };
 
   render() {
@@ -85,7 +72,7 @@ class necessity extends React.PureComponent {
       isSubmitting,
       handleSubmit
     } = this.props;
-    const { deleteNecessity } = this.state;
+    const { deleteNecessity, idNecessity, updateNecessity } = this.state;
 
     if (loadingNecessity && loadingMe) {
       return <Loading />;
@@ -100,16 +87,26 @@ class necessity extends React.PureComponent {
           />
         )}
 
-        <AskModal
-          title="Eliminar necesidad"
-          active={deleteNecessity}
-          mutation={this.handleDeleteNecessityMutation}
-          handleAskFunction={this.handleAskDeleteNecessity}
-        >
-          <section className="modal-card-body">
-            Si da clic en Guardar cambios, este campo será eliminado.
-          </section>
-        </AskModal>
+        {/* Delete necessity modal */}
+        {deleteNecessity && (
+          <DeleteNecessityModal
+            id={id}
+            idNecessity={idNecessity}
+            deleteNecessity={deleteNecessity}
+            handleAskDeleteNecessity={this.handleAskDeleteNecessity}
+          />
+        )}
+
+        {/* Update necessity modal */}
+        {updateNecessity && (
+          <UpdateNecessityModal
+            id={id}
+            dataNecessity={dataNecessity}
+            idNecessity={idNecessity}
+            updateNecessity={updateNecessity}
+            handleAskUpdateNecessity={this.handleAskUpdateNecessity}
+          />
+        )}
 
         {dataNecessity && dataNecessity.length ? (
           <div className="columns is-multiline">
@@ -164,7 +161,14 @@ class necessity extends React.PureComponent {
 
                             <div className="dropdown-menu" role="menu">
                               <div className="dropdown-content">
-                                <a className="dropdown-item">Editar</a>
+                                <a
+                                  className="dropdown-item"
+                                  onClick={() =>
+                                    this.handleAskUpdateNecessity(neces.id)
+                                  }
+                                >
+                                  Editar
+                                </a>
                                 <a
                                   className="dropdown-item"
                                   onClick={() =>
@@ -212,7 +216,6 @@ export default compose(
     })
   }),
   graphql(necessityMutation, { name: "NECESSITY_MUTATION" }),
-  graphql(deleteNecessityMutation, { name: "DELETE_NECESSITY_MUTATION" }),
   withFormik({
     mapPropsToValues: () => ({ finished: false, comment: "" }),
     handleSubmit: async (
@@ -228,4 +231,4 @@ export default compose(
       resetForm();
     }
   })
-)(necessity);
+)(index);
