@@ -5,7 +5,7 @@ import { getDataFromTree } from "react-apollo";
 import initApollo from "./initApollo";
 
 function getCookie(req) {
-  return req && req.headers.cookie ? req.headers.cookie : document.cookie;
+  return req ? (req.headers.cookie ? req.headers.cookie : "") : document.cookie;
 }
 
 export default App =>
