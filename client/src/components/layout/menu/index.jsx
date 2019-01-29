@@ -9,16 +9,35 @@ import IsNotLoggedIn from "./auth/isNotLoggedIn";
 import meQuery from "../../../graphql/queries/me";
 
 class menu extends PureComponent {
-  state = {
-    clicked: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      clicked: false
+    };
+    this.menu = React.createRef();
+  }
+
+  openMenu = e => {
+    e.preventDefault();
+
+    if (
+      this.menu.current.classList.contains("is-active") &&
+      this.state.clicked
+    ) {
+      // Close menu when click 2 times
+      this.setState({ clicked: false });
+    } else {
+      this.setState({ clicked: true }, () => {
+        document.addEventListener("click", this.closeMenu);
+      });
+    }
   };
 
-  openMenu = value => {
-    const { clicked } = this.state;
-    if (!value) {
-      this.setState({ clicked: value });
-    } else {
-      this.setState({ clicked: !clicked });
+  closeMenu = e => {
+    if (!this.menu.current.contains(e.target)) {
+      this.setState({ clicked: false }, () => {
+        document.removeEventListener("click", this.closeMenu);
+      });
     }
   };
 
@@ -42,7 +61,7 @@ class menu extends PureComponent {
           >
             <div className="navbar-brand">
               <Link href="/" prefetch>
-                <a className="navbar-item" onClick={() => this.openMenu(false)}>
+                <a className="navbar-item" onClick={this.closeMenu}>
                   <img
                     src="https://bulma.io/images/bulma-logo.png"
                     width="112"
@@ -59,6 +78,7 @@ class menu extends PureComponent {
                 aria-expanded="false"
                 data-target="navbarButton"
                 onClick={this.openMenu}
+                ref={this.menu}
               >
                 <span aria-hidden="true" />
                 <span aria-hidden="true" />
@@ -72,10 +92,7 @@ class menu extends PureComponent {
             >
               <div className="navbar-start">
                 <Link href="/" prefetch>
-                  <a
-                    className="navbar-item"
-                    onClick={() => this.openMenu(false)}
-                  >
+                  <a className="navbar-item" onClick={this.closeMenu}>
                     Inicio
                   </a>
                 </Link>
@@ -85,36 +102,24 @@ class menu extends PureComponent {
                       href={{ pathname: "/profile", query: { id: me.id } }}
                       prefetch
                     >
-                      <a
-                        className="navbar-item"
-                        onClick={() => this.openMenu(false)}
-                      >
+                      <a className="navbar-item" onClick={this.closeMenu}>
                         Mi perfil
                       </a>
                     </Link>
                     <Link href="/negocio" prefetch>
-                      <a
-                        className="navbar-item"
-                        onClick={() => this.openMenu(false)}
-                      >
+                      <a className="navbar-item" onClick={this.closeMenu}>
                         Mi negocio
                       </a>
                     </Link>
                   </>
                 )}
                 <Link href="/documentation" prefetch>
-                  <a
-                    className="navbar-item"
-                    onClick={() => this.openMenu(false)}
-                  >
+                  <a className="navbar-item" onClick={this.closeMenu}>
                     Documentación
                   </a>
                 </Link>
                 <Link href="/about" prefetch>
-                  <a
-                    className="navbar-item"
-                    onClick={() => this.openMenu(false)}
-                  >
+                  <a className="navbar-item" onClick={this.closeMenu}>
                     Acerca de nosotros
                   </a>
                 </Link>
@@ -124,11 +129,13 @@ class menu extends PureComponent {
                 {me ? (
                   <IsLoggedIn
                     me={me}
-                    openMenu={this.openMenu}
+                    menu={this.menu}
                     clicked={clicked}
+                    openMenu={this.openMenu}
+                    closeMenu={this.closeMenu}
                   />
                 ) : (
-                  <IsNotLoggedIn openMenu={this.openMenu} />
+                  <IsNotLoggedIn closeMenu={this.closeMenu} />
                 )}
               </div>
             </div>

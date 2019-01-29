@@ -48,8 +48,46 @@ class index extends React.PureComponent {
     };
   }
 
-  handleOpenDropdown = async idNeces => {
-    this.dropdown[idNeces].classList.toggle("is-active");
+  componentDidMount() {
+    document.addEventListener("mousedown", this.handleClickOutsideToClose);
+  }
+
+  componentWillUnmount() {
+    document.addEventListener("mousedown", this.handleClickOutsideToClose);
+  }
+
+  handleClickOutsideToClose = e => {
+    let toClose = true;
+
+    this.dropdown.forEach(dropdown => {
+      if (dropdown !== null && dropdown.contains(e.target)) {
+        toClose = false;
+      }
+    });
+
+    if (toClose) {
+      this.handleCloseAll();
+    }
+  };
+
+  handleCloseAll = () => {
+    this.dropdown.forEach(dropdown => {
+      if (dropdown !== null) {
+        dropdown.classList.remove("is-active");
+      }
+    });
+  };
+
+  handleOpenDropdown = indexDropdown => {
+    this.dropdown.forEach(dropdown => {
+      if (dropdown !== null) {
+        if (dropdown === this.dropdown[indexDropdown]) {
+          dropdown.classList.toggle("is-active");
+        } else {
+          dropdown.classList.remove("is-active");
+        }
+      }
+    });
   };
 
   handleAskDeleteNecessity = (idNecessity = null) => {
@@ -110,8 +148,8 @@ class index extends React.PureComponent {
 
         {dataNecessity && dataNecessity.length ? (
           <div className="columns is-multiline">
-            {dataNecessity.map(neces => (
-              <div className="column is-6" key={neces.id}>
+            {dataNecessity.map((neces, i) => (
+              <div className="column is-6" key={i}>
                 <div style={{ marginTop: "0.5rem" }}>
                   <div className="card" style={{ borderRadius: 6 }}>
                     <header className="card-header" style={{ borderRadius: 6 }}>
@@ -145,9 +183,9 @@ class index extends React.PureComponent {
                           <div
                             className="dropdown is-right"
                             ref={dropdown => {
-                              this.dropdown[neces.id] = dropdown;
+                              this.dropdown[i] = dropdown;
                             }}
-                            onClick={() => this.handleOpenDropdown(neces.id)}
+                            onClick={() => this.handleOpenDropdown(i)}
                           >
                             <div className="dropdown-trigger">
                               <span className="icon is-medium">
