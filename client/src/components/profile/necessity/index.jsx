@@ -80,12 +80,10 @@ class index extends React.PureComponent {
 
   handleOpenDropdown = indexDropdown => {
     this.dropdown.forEach(dropdown => {
-      if (dropdown !== null) {
-        if (dropdown === this.dropdown[indexDropdown]) {
-          dropdown.classList.toggle("is-active");
-        } else {
-          dropdown.classList.remove("is-active");
-        }
+      if (dropdown !== null && dropdown === this.dropdown[indexDropdown]) {
+        dropdown.classList.toggle("is-active");
+      } else {
+        dropdown.classList.remove("is-active");
       }
     });
   };
