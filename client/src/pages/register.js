@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { withFormik, Form } from "formik";
 import { graphql, compose } from "react-apollo";
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 
 import { TextField, SelectField } from "../components/shared/globalField";
 import { RegisterValidation } from "../utils/validation";

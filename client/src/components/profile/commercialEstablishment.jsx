@@ -1,6 +1,6 @@
 import React from "react";
 import { Query } from "react-apollo";
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 
 import Loading from "../shared/loading";
 
