@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 const trainingEmployment = ({ information }) => (
   <div className="container">
@@ -6,91 +6,87 @@ const trainingEmployment = ({ information }) => (
       {information.study && information.study.length ? (
         <div className="box" style={{ marginTop: "1.2rem" }}>
           <p className="title">Estudio</p>
-          <div className="content">
-            {information.study.map((study, i) => (
-              <Fragment key={i}>
+          {information.study.map((study, i) => (
+            <div className="content" key={i}>
+              <p className="subtitle">
+                <strong>Lugar:</strong> {study.place}
+              </p>
+
+              <p className="subtitle">
+                <strong>Nivel:</strong> {study.level}
+              </p>
+
+              {study.area && (
                 <p className="subtitle">
-                  <strong>Lugar:</strong> {study.place}
+                  <strong>Area:</strong> {study.area}
                 </p>
+              )}
 
-                <p className="subtitle">
-                  <strong>Nivel:</strong> {study.level}
-                </p>
+              <p className="subtitle">
+                <strong>Comenzo en:</strong> {study.startedOn}
+              </p>
 
-                {study.area && (
-                  <p className="subtitle">
-                    <strong>Area:</strong> {study.area}
-                  </p>
-                )}
+              <p className="subtitle">
+                <strong>Finalizo en:</strong>{" "}
+                {study.finishIn ? study.finishIn : "Actualmente cursando"}
+              </p>
 
-                <p className="subtitle">
-                  <strong>Comenzo en:</strong> {study.startedOn}
-                </p>
-
-                <p className="subtitle">
-                  <strong>Finalizo en:</strong>{" "}
-                  {study.finishIn ? study.finishIn : "Actualmente cursando"}
-                </p>
-
-                {information.study.length - 1 !== i && (
-                  <div className="is-divider" style={{ width: "100%" }} />
-                )}
-              </Fragment>
-            ))}
-          </div>
+              {information.study.length - 1 !== i && (
+                <div className="is-divider" style={{ width: "100%" }} />
+              )}
+            </div>
+          ))}
         </div>
       ) : null}
 
       {information.work && information.work.length ? (
         <div className="box" style={{ marginTop: "0.5rem" }}>
           <p className="title">Trabajo</p>
-          <div className="content">
-            {information.work.map((work, i) => (
-              <Fragment key={i}>
+          {information.work.map((work, i) => (
+            <div className="content" key={i}>
+              <p className="subtitle">
+                <strong>Compañia:</strong> {work.company}
+              </p>
+
+              <p className="subtitle">
+                <strong>Departamento:</strong> {work.departament}
+              </p>
+
+              <p className="subtitle">
+                <strong>Sector de la empresa:</strong> {work.sector}
+              </p>
+
+              <p className="subtitle">
+                <strong>Cargo:</strong> {work.job}
+              </p>
+
+              <p className="subtitle">
+                <strong>Area:</strong> {work.area}
+              </p>
+
+              <p className="subtitle">
+                <strong>Comenzo en:</strong> {work.startedOn}
+              </p>
+
+              <p className="subtitle">
+                <strong>Finalizo en:</strong>{" "}
+                {work.finishIn ? work.finishIn : "Actualmente trabajando"}
+              </p>
+
+              <>
                 <p className="subtitle">
-                  <strong>Compañia:</strong> {work.company}
+                  <strong>Funciones y logros del cargo:</strong>
                 </p>
+                <ul>
+                  <li className="subtitle">{work.goals}</li>
+                </ul>
+              </>
 
-                <p className="subtitle">
-                  <strong>Departamento:</strong> {work.departament}
-                </p>
-
-                <p className="subtitle">
-                  <strong>Sector de la empresa:</strong> {work.sector}
-                </p>
-
-                <p className="subtitle">
-                  <strong>Cargo:</strong> {work.job}
-                </p>
-
-                <p className="subtitle">
-                  <strong>Area:</strong> {work.area}
-                </p>
-
-                <p className="subtitle">
-                  <strong>Comenzo en:</strong> {work.startedOn}
-                </p>
-
-                <p className="subtitle">
-                  <strong>Finalizo en:</strong>{" "}
-                  {work.finishIn ? work.finishIn : "Actualmente trabajando"}
-                </p>
-
-                <>
-                  <p className="subtitle">
-                    <strong>Funciones y logros del cargo:</strong>
-                  </p>
-                  <ul>
-                    <li className="subtitle">{work.goals}</li>
-                  </ul>
-                </>
-
-                {information.work.length - 1 !== i && (
-                  <div className="is-divider" style={{ width: "100%" }} />
-                )}
-              </Fragment>
-            ))}
-          </div>
+              {information.work.length - 1 !== i && (
+                <div className="is-divider" style={{ width: "100%" }} />
+              )}
+            </div>
+          ))}
         </div>
       ) : null}
 

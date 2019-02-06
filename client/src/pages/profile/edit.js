@@ -1,24 +1,30 @@
 import React from "react";
-import { Formik, Form } from "formik";
+import { Form, withFormik, Field } from "formik";
 import { withRouter } from "next/router";
 import Error from "next/error";
-import { Query, Mutation } from "react-apollo";
+import { compose, graphql } from "react-apollo";
 import { gql } from "apollo-boost";
 
 import Loading from "../../components/shared/loading";
 import checkLoggedIn from "../../lib/checkLoggedIn";
 import redirect from "../../lib/redirect";
 import { informationQuery } from "../../graphql/queries/account";
-import { TextField } from "../../components/shared/globalField";
 import UploadRoutePhoto from "../../components/profile/edit/uploadRoutePhoto";
 import UploadRouteCover from "../../components/profile/edit/uploadRouteCover";
 import EditGeneralInformation from "../../components/profile/edit/editGeneralInformation";
-import EditSocialNetwork from "../../components/profile/edit/editSocialNetwork";
 import EditLanguage from "../../components/profile/edit/editLanguage";
-import EditUniversity from "../../components/profile/edit/editUniversity";
+import EditStudy from "../../components/profile/edit/editStudy";
+import EditWork from "../../components/profile/edit/editWork";
+import EditCV from "../../components/profile/edit/editCV";
+import TownsByDepartament from "../../utils/townsByDepartament";
+import { GeneralInformationValidation } from "../../utils/validation";
+import normalizeErrors from "../../utils/normalizeErrors";
 
-const updategeneralInformation = gql`
-  mutation generalInformation($id: ID!, $information: GeneralInformationInput) {
+const generalInformationMutation = gql`
+  mutation GeneralInformationMutation(
+    $id: ID!
+    $information: GeneralInformationInput
+  ) {
     generalInformation(id: $id, information: $information) {
       path
       message
@@ -26,141 +32,70 @@ const updategeneralInformation = gql`
   }
 `;
 
-const edit = ({
-  router: {
-    query: { id }
+class edit extends React.PureComponent {
+  UNSAFE_componentWillReceiveProps({ values }) {
+    // If the select `departament` changes to "Extranjero" and `town` is empty.
+    if (!values.town && values.departament !== "Extranjero") {
+      values.town = Object.values(TownsByDepartament[values.departament])[0];
+    }
+
+    // If the user is foreigner, he shouldn't has a town.
+    if (
+      values.nationality !== "Colombia" ||
+      values.departament === "Extranjero"
+    ) {
+      values.town = "";
+    }
   }
-}) => (
-  <Query query={informationQuery} variables={{ id }}>
-    {({ loading, data }) => {
-      if (loading) {
-        return <Loading />;
-      }
 
-      if (!data.information) {
-        return <Error statusCode={404} />;
-      }
+  render() {
+    const { loading, data, setFieldValue, values, isSubmitting } = this.props;
 
-      return (
-        <Mutation mutation={updategeneralInformation}>
-          {mutate => (
-            <Formik
-              initialValues={{
-                routePhoto: "",
-                routeCover: "",
-                name: data.information.name,
-                lastname: data.information.lastname,
-                description: data.information.description || "",
-                identificationDocumentType:
-                  data.information.identificationDocumentType,
-                identificationDocument: data.information.identificationDocument,
-                address: data.information.address || "",
-                telephone: data.information.telephone,
-                departament: data.information.departament || "Bogotá, D.C.",
-                city: data.information.city || "",
-                nationality: data.information.nationality || "Colombia",
-                civilStatus: data.information.civilStatus || "SOLTERO(A)",
-                linkedin: data.information.linkedin || "",
-                skype: data.information.skype || "",
-                website: data.information.website || "",
-                gender: data.information.gender || "HOMBRE",
-                skills: data.information.skills || [],
-                language: data.information.language || [],
-                study: [
-                  {
-                    id: 1,
-                    place: "Universidad minuto de Dios",
-                    level: "UNIVERSIDAD / CARRERA TECNOLÓGICA",
-                    area: "Tecnología en Informática",
-                    startedOn: "2015-07-22",
-                    finishIn: "2019-01-15",
-                    finished: false
-                  },
-                  {
-                    id: 2,
-                    place: "SENA",
-                    level: "UNIVERSIDAD / CARRERA TÉCNICA",
-                    area: "Gastronomia",
-                    startedOn: "2013-07-22",
-                    finishIn: "2015-01-15",
-                    finished: true
-                  }
-                ]
-              }}
-              onSubmit={async values => {
-                console.log(values);
-                /* const response = await mutate({
-                  variables: {
-                    id,
-                    information: values
-                  }
-                });
-                console.log(response); */
-              }}
-              render={({ values, isSubmitting, setFieldValue }) => (
-                <Form method="POST">
-                  <UploadRouteCover data={data} setFieldValue={setFieldValue} />
+    if (loading) {
+      return <Loading />;
+    }
 
-                  <UploadRoutePhoto data={data} setFieldValue={setFieldValue} />
+    if (!data.information) {
+      return <Error statusCode={404} />;
+    }
 
-                  <div className="container">
-                    <div className="columns">
-                      <div className="column" style={{ padding: "0 .75rem" }}>
-                        <label className="label">Nombre de usuario</label>
-                        <TextField
-                          type="text"
-                          name="name"
-                          placeholder="Nombre de usuario"
-                          isRequired
-                        />
-                      </div>
-                      <div className="column" style={{ padding: "0 .75rem" }}>
-                        <label className="label">Apellido de usuario</label>
-                        <TextField
-                          type="text"
-                          name="lastname"
-                          placeholder="Apellido de usuario"
-                          isRequired
-                        />
-                      </div>
-                    </div>
+    return (
+      <Form method="POST">
+        <Field name="routeCover" component={UploadRouteCover} />
+        <Field name="routePhoto" component={UploadRoutePhoto} />
 
-                    <EditGeneralInformation values={values} />
+        <div className="container">
+          <EditGeneralInformation
+            departament={values.departament}
+            nationality={values.nationality}
+            skills={values.skills}
+            setFieldValue={setFieldValue}
+          />
+          <EditLanguage language={values.language} />
+          <EditStudy study={values.study} />
+          <EditWork work={values.work} />
+          <EditCV cv={values.cv} setFieldValue={setFieldValue} />
 
-                    <EditSocialNetwork values={values} />
-
-                    <EditLanguage values={values} />
-
-                    <EditUniversity
-                      values={values}
-                      setFieldValue={setFieldValue}
-                    />
-
-                    <div
-                      className="buttons has-addons is-centered"
-                      style={{ padding: "30px 0" }}
-                    >
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className={`button is-primary is-large ${
-                          isSubmitting ? "is-loading" : ""
-                        }`}
-                        style={{ width: 200 }}
-                      >
-                        Enviar
-                      </button>
-                    </div>
-                  </div>
-                </Form>
-              )}
-            />
-          )}
-        </Mutation>
-      );
-    }}
-  </Query>
-);
+          <div
+            className="buttons has-addons is-centered"
+            style={{ padding: "30px 0" }}
+          >
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`button is-primary is-large ${
+                isSubmitting ? "is-loading" : ""
+              }`}
+              style={{ width: 200 }}
+            >
+              Enviar
+            </button>
+          </div>
+        </div>
+      </Form>
+    );
+  }
+}
 
 edit.getInitialProps = async context => {
   const { loggedInUser } = await checkLoggedIn(context.apolloClient);
@@ -172,4 +107,81 @@ edit.getInitialProps = async context => {
   return {};
 };
 
-export default withRouter(edit);
+export default compose(
+  withRouter,
+  graphql(informationQuery, {
+    options: ({
+      router: {
+        query: { id }
+      }
+    }) => ({ variables: { id } })
+  }),
+  graphql(generalInformationMutation),
+  withFormik({
+    mapPropsToValues: ({ data }) => ({
+      routePhoto: data.information.routePhoto,
+      routeCover: data.information.routeCover,
+      name: data.information.name,
+      lastname: data.information.lastname,
+      description: data.information.description || "",
+      identificationDocumentType: data.information.identificationDocumentType,
+      identificationDocument: data.information.identificationDocument,
+      address: data.information.address || "",
+      telephone: data.information.telephone,
+      nationality: data.information.nationality || "Colombia",
+      departament: data.information.departament || "Bogotá, D.C.",
+      town: data.information.town || "",
+      civilStatus: data.information.civilStatus || "SOLTERO(A)",
+      linkedin: data.information.linkedin || "",
+      skype: data.information.skype || "",
+      website: data.information.website || "",
+      gender: data.information.gender || "HOMBRE",
+      skills: data.information.skills || [],
+      language: data.information.language || [],
+      study: data.information.study || [],
+      work: data.information.work || [],
+      cv: data.information.cv || []
+    }),
+    validationSchema: GeneralInformationValidation,
+    validateOnBlur: false,
+    validateOnChange: false,
+    handleSubmit: async (
+      values,
+      {
+        props: {
+          mutate,
+          router: {
+            query: { id }
+          }
+        },
+        setSubmitting,
+        setErrors
+      }
+    ) => {
+      await values.study.forEach(study => {
+        if (
+          study.level === "EDUCACIÓN BÁSICA PRIMARIA" ||
+          study.level === "EDUCACIÓN BÁSICA SECUNDARIA" ||
+          study.level === "BACHILLERATO / EDUCACIÓN MEDIA"
+        ) {
+          study.area = null;
+        }
+      });
+
+      console.log(values);
+
+      const response = await mutate({
+        variables: { id, information: values },
+        refetchQueries: [{ query: informationQuery, variables: { id } }]
+      });
+      const { data } = response;
+      // if generalInformation has data, it has the errors
+      if (data.generalInformation && data.generalInformation.length) {
+        setSubmitting(false);
+        setErrors(normalizeErrors(data.generalInformation));
+      } else {
+        setSubmitting(false);
+      }
+    }
+  })
+)(edit);

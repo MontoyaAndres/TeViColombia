@@ -19,6 +19,17 @@ export const resolvers: ResolveMap = {
         });
         return feedback;
       }
+    ),
+    countFeedbackStars: createMiddleware(
+      middleware.auth,
+      async (_, { userId }: GQL.ICountFeedbackStarsOnQueryArguments) => {
+        const response = await FeedBack.query(
+          "SELECT SUM(stars) AS sum FROM feed_back WHERE userId = ?",
+          [userId]
+        );
+
+        return response[0].sum;
+      }
     )
   },
   Mutation: {
@@ -47,7 +58,7 @@ export const resolvers: ResolveMap = {
           return [
             {
               path: "stars",
-              message: "Es necesario como minimo  1 estrasella."
+              message: "Es necesario como minimo 1 estrasella."
             }
           ];
         }

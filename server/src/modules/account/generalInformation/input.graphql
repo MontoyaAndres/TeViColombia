@@ -4,6 +4,32 @@ input LanguageInput {
   level: String!
 }
 
+input StudyInput {
+  id: ID
+  place: String!
+  level: String!
+  area: String
+  startedOn: Date!
+  finishIn: Date
+}
+
+input WorkInput {
+  id: ID
+  company: String!
+  job: String!
+  departament: String!
+  sector: String!
+  area: String!
+  goals: String
+  startedOn: Date!
+  finishIn: Date
+}
+
+input CVInput {
+  id: ID
+  routeCV: String!
+}
+
 input GeneralInformationInput {
   routePhoto: Upload
   routeCover: Upload
@@ -15,7 +41,7 @@ input GeneralInformationInput {
   address: String
   telephone: BigInt!
   departament: String!
-  city: String!
+  town: String!
   nationality: String!
   civilStatus: String!
   linkedin: String
@@ -24,4 +50,7 @@ input GeneralInformationInput {
   gender: String!
   skills: [String]
   language: [LanguageInput]
+  study: [StudyInput]
+  work: [WorkInput]
+  cv: [CVInput]
 }

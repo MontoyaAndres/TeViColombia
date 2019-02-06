@@ -21,6 +21,18 @@ export const resolvers: ResolveMap = {
 
         return necessity;
       }
+    ),
+    countNecessity: createMiddleware(
+      middleware.auth,
+      async (_, { userId }: GQL.ICountNecessityOnQueryArguments) =>
+        Necessity.count({
+          where: {
+            user: {
+              id: userId
+            },
+            finished: false
+          }
+        })
     )
   },
   Mutation: {

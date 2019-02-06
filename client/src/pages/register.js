@@ -39,7 +39,7 @@ class register extends PureComponent {
     intervalId: 0
   };
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.values.registered) {
       const intervalId = setInterval(this.scrollStep.bind(this), 16.66);
       this.setState({ intervalId });
@@ -70,8 +70,8 @@ class register extends PureComponent {
                   className="delete"
                   onClick={() => setFieldValue("registered", false, false)}
                 />
-                Por favor confirme su correo electrónico para poder entrar a Te
-                vi EPE.
+                Por favor revise su correo electrónico para poder entrar a Te vi
+                EPE.
               </div>
             )}
 

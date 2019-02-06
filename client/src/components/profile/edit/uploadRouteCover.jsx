@@ -2,66 +2,62 @@ import React, { PureComponent } from "react";
 import Dropzone from "react-dropzone";
 
 class uploadRouteCover extends PureComponent {
-  state = {
-    files: []
-  };
-
   componentWillUnmount() {
-    // Make sure to revoke the data uris to avoid memory leaks
-    this.state.files.forEach(file => URL.revokeObjectURL(file.preview));
+    const {
+      field: { value }
+    } = this.props;
+
+    if (Array.isArray(value)) {
+      // Make sure to revoke the data uris to avoid memory leaks
+      value.forEach(file => URL.revokeObjectURL(file.preview));
+    }
   }
 
-  onDrop = information => {
-    const { setFieldValue } = this.props;
+  onDrop = ([information]) => {
+    const {
+      field: { name },
+      form: { setFieldValue }
+    } = this.props;
 
-    this.setState({
-      files: information.map(file =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        })
-      )
-    });
-
-    setFieldValue("routeCover", information);
+    setFieldValue(
+      name,
+      Object.assign(information, {
+        preview: URL.createObjectURL(information)
+      })
+    );
   };
 
   render() {
-    const { data } = this.props;
-    const { files } = this.state;
-    const previewPhoto = `http://localhost:4000/${data.information.routeCover}`;
+    const {
+      field: { value },
+      ...props
+    } = this.props;
+    const cover = value ? value.preview : null;
 
     return (
-      <Dropzone accept="image/*" onDrop={this.onDrop} multiple={false}>
+      <Dropzone
+        accept="image/*"
+        onDrop={this.onDrop}
+        multiple={false}
+        {...props}
+      >
         {({ getRootProps, getInputProps }) => (
-          <div {...getRootProps()} className="background-cover">
+          <div {...getRootProps()}>
             <input {...getInputProps()} />
-
-            {data.information.routeCover || files.length ? (
-              <>
-                {files.length ? (
-                  files.map((file, i) => (
-                    <img
-                      key={i}
-                      alt="user cover"
-                      src={file.preview}
-                      style={{
-                        width: "100%",
-                        height: "100%"
-                      }}
-                    />
-                  ))
-                ) : (
-                  <img
-                    alt="user cover"
-                    src={previewPhoto}
-                    style={{
-                      width: "100%",
-                      height: "100%"
-                    }}
-                  />
-                )}
-              </>
-            ) : null}
+            {cover ? (
+              <div className="background-cover background-cover-edit">
+                <img
+                  style={{
+                    width: "100%",
+                    height: "100%"
+                  }}
+                  src={cover}
+                  alt="user cover"
+                />
+              </div>
+            ) : (
+              <div className="background-cover background-cover-edit" />
+            )}
           </div>
         )}
       </Dropzone>

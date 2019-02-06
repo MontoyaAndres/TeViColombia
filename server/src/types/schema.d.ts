@@ -23,12 +23,18 @@ column: number;
 interface IQuery {
 __typename: "Query";
 feedback: Array<IFeedback | null>;
+countFeedbackStars: number | null;
 information: IUserInformation | null;
 necessity: Array<INecessity | null>;
+countNecessity: number;
 me: IUser | null;
 }
 
 interface IFeedbackOnQueryArguments {
+userId: string;
+}
+
+interface ICountFeedbackStarsOnQueryArguments {
 userId: string;
 }
 
@@ -37,6 +43,10 @@ id: string;
 }
 
 interface INecessityOnQueryArguments {
+userId: string;
+}
+
+interface ICountNecessityOnQueryArguments {
 userId: string;
 }
 
@@ -70,7 +80,7 @@ identificationDocument: any;
 address: string | null;
 telephone: any;
 departament: string | null;
-city: string | null;
+town: string | null;
 nationality: string | null;
 civilStatus: string | null;
 linkedin: string | null;
@@ -139,7 +149,6 @@ deleteNecessity: boolean;
 portafolio: boolean;
 editPortafolio: boolean;
 deletePortafolio: boolean;
-trainingEmployment: boolean;
 sendForgotPasswordEmail: boolean | null;
 forgotPasswordChange: Array<IError> | null;
 login: Array<IError> | null;
@@ -193,11 +202,6 @@ interface IDeletePortafolioOnMutationArguments {
 idPortafolio: string;
 }
 
-interface ITrainingEmploymentOnMutationArguments {
-id?: string | null;
-information?: ITrainingEmploymentInput | null;
-}
-
 interface ISendForgotPasswordEmailOnMutationArguments {
 email: string;
 }
@@ -245,7 +249,7 @@ identificationDocument: any;
 address?: string | null;
 telephone: any;
 departament: string;
-city: string;
+town: string;
 nationality: string;
 civilStatus: string;
 linkedin?: string | null;
@@ -254,18 +258,15 @@ website?: string | null;
 gender: string;
 skills?: Array<string | null> | null;
 language?: Array<ILanguageInput | null> | null;
+study?: Array<IStudyInput | null> | null;
+work?: Array<IWorkInput | null> | null;
+cv?: Array<ICVInput | null> | null;
 }
 
 interface ILanguageInput {
 id?: string | null;
 language: string;
 level: string;
-}
-
-interface ITrainingEmploymentInput {
-study?: Array<IStudyInput | null> | null;
-work?: Array<IWorkInput | null> | null;
-cv?: Array<ICVInput | null> | null;
 }
 
 interface IStudyInput {
@@ -284,7 +285,7 @@ job: string;
 departament: string;
 sector: string;
 area: string;
-goals: string;
+goals?: string | null;
 startedOn: any;
 finishIn?: any | null;
 }

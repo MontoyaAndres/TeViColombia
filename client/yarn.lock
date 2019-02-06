@@ -1158,12 +1158,12 @@ apollo-client@^2.4.12:
     tslib "^1.9.3"
     zen-observable "^0.8.0"
 
-apollo-link-context@1.0.12:
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/apollo-link-context/-/apollo-link-context-1.0.12.tgz#02d72e621a3b75239d4419a9bfd38d8bd9bb0d3f"
-  integrity sha512-gb4UptV9O6Kp3i5b2TlDEfPSL2LG//mTSb3zyuR5U2cAzu/huw98f1CCxcjUKTrlIMsQuE6G/hbaThDxnoIThQ==
+apollo-link-context@1.0.13:
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/apollo-link-context/-/apollo-link-context-1.0.13.tgz#16b811daf43295c8c9f93702a36b8c69af75e2eb"
+  integrity sha512-Zlk+vEaMudzWFt1aXgOl88vFolgZhbT6A3KKiuiDg5ya9gxS5NDhW3Il8LNjw9ZEBIgj1A+kKDKuiB/+GS3PAA==
   dependencies:
-    apollo-link "^1.2.6"
+    apollo-link "^1.2.7"
 
 apollo-link-dedup@^1.0.0:
   version "1.0.13"
@@ -1187,7 +1187,22 @@ apollo-link-http-common@^0.2.8:
   dependencies:
     apollo-link "^1.2.6"
 
-apollo-link-http@1.5.9, apollo-link-http@^1.3.1:
+apollo-link-http-common@^0.2.9:
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/apollo-link-http-common/-/apollo-link-http-common-0.2.10.tgz#b5bbf502ff40a81cc00281ba3b8543b7ad866dfe"
+  integrity sha512-KY9nhpAurw3z48OIYV0sCZFXrzWp/wjECsveK+Q9GUhhSe1kEbbUjFfmi+qigg+iELgdp5V8ioRJhinl1vPojw==
+  dependencies:
+    apollo-link "^1.2.8"
+
+apollo-link-http@1.5.10:
+  version "1.5.10"
+  resolved "https://registry.yarnpkg.com/apollo-link-http/-/apollo-link-http-1.5.10.tgz#c2027e407f23c43fe870cce15af6ce009eeab92a"
+  integrity sha512-/0IcpZ8cWbSg+MKOMpYLZwKbitnQ6Qs2+ZN4W0o61EFv3bjFRodMdKvQLid2XOEQpgaDU2lZXqXeweuxnUN1wA==
+  dependencies:
+    apollo-link "^1.2.7"
+    apollo-link-http-common "^0.2.9"
+
+apollo-link-http@^1.3.1:
   version "1.5.9"
   resolved "https://registry.yarnpkg.com/apollo-link-http/-/apollo-link-http-1.5.9.tgz#9046f5640a94c8a8b508a39e0f2c628b781baecc"
   integrity sha512-9tJy2zGm4Cm/1ycScDNZJe51dgnTSfKx7pKIgPZmcxkdDpgUY2DZitDH6ZBv4yp9z8MC9Xr9wgwc29s6hcadUQ==
@@ -1210,6 +1225,13 @@ apollo-link@^1.0.0, apollo-link@^1.0.6, apollo-link@^1.2.6:
   dependencies:
     apollo-utilities "^1.0.0"
     zen-observable-ts "^0.8.13"
+
+apollo-link@^1.2.7, apollo-link@^1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.8.tgz#0f252adefd5047ac1a9f35ba9439d216587dcd84"
+  integrity sha512-lfzGRxhK9RmiH3HPFi7TIEBhhDY9M5a2ZDnllcfy5QDk7cCQHQ1WQArcw1FK0g1B+mV4Kl72DSrlvZHZJEolrA==
+  dependencies:
+    zen-observable-ts "^0.8.15"
 
 apollo-utilities@1.1.2, apollo-utilities@^1.1.2:
   version "1.1.2"
@@ -2037,9 +2059,9 @@ core-js@^2.4.1:
   integrity sha512-kLRC6ncVpuEW/1kwrOXYX6KQASCVtrh1gQr/UiaVgFlf9WE5Vp+lNe5+h3LuMr5PAucWnnEXwH0nQHRH/gpGtw==
 
 core-js@^2.5.0:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.1.tgz#87416ae817de957a3f249b3b5ca475d4aaed6042"
-  integrity sha512-L72mmmEayPJBejKIWe2pYtGis5r0tQ5NaJekdhyXgeMQTpJoBsH0NL4ElY2LfSoV15xeQWKQ+XTTOZdyero5Xg==
+  version "2.6.3"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.3.tgz#4b70938bdffdaf64931e66e2db158f0892289c49"
+  integrity sha512-l00tmFFZOBHtYhN4Cz7k32VM7vTn3rE2ANjQDxdEN6zmXZ/xq1jQuutnmHvMG1ZJ7xd72+TA5YpUK8wz3rWsfQ==
 
 core-util-is@~1.0.0:
   version "1.0.2"
@@ -4939,10 +4961,10 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-apollo@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-2.4.0.tgz#22f68c429120d3c332adaef0d02c60771055d9ea"
-  integrity sha512-m3wJ/NFKMsxNTp0CNlQDUMkOxTY9imVEh72+N6r7jULjO5DimCQkUXQyHP8IzInCEYoEJAx3r0xLPm/qPsqIoA==
+react-apollo@2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-2.4.1.tgz#89db63ebacf01c1603553bb476f089492aaeab2c"
+  integrity sha512-fSaiwXzY5xRmqKuGCtkMON8paL4/rKf4pB2aSI/0Ot8tn+gJisFqZ0iz9Pxvl6MHnJm1/gjJD3X1J4KmbYN2Yw==
   dependencies:
     fbjs "^1.0.0"
     hoist-non-react-statics "^3.0.0"
@@ -4961,7 +4983,7 @@ react-dom@16.7.0:
     prop-types "^15.6.2"
     scheduler "^0.12.0"
 
-react-dropzone@8.0.4:
+react-dropzone@^8.0.4:
   version "8.0.4"
   resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-8.0.4.tgz#c461ec6074425a8b636bfde12800ec43edc35d86"
   integrity sha512-RL9lCPbAbVifUShqpH009BhGPiyx6T+STpr3Ig+WnArOtJBFRfLjzB4mghUGFzDorZ++Mhc3FD12d7Oxd/SWSg==
@@ -6484,6 +6506,13 @@ zen-observable-ts@^0.8.13:
   version "0.8.13"
   resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-0.8.13.tgz#ae1fd77c84ef95510188b1f8bca579d7a5448fc2"
   integrity sha512-WDb8SM0tHCb6c0l1k60qXWlm1ok3zN9U4VkLdnBKQwIYwUoB9psH7LIFgR+JVCCMmBxUgOjskIid8/N02k/2Bg==
+  dependencies:
+    zen-observable "^0.8.0"
+
+zen-observable-ts@^0.8.15:
+  version "0.8.15"
+  resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-0.8.15.tgz#6cf7df6aa619076e4af2f707ccf8a6290d26699b"
+  integrity sha512-sXKPWiw6JszNEkRv5dQ+lQCttyjHM2Iks74QU5NP8mMPS/NrzTlHDr780gf/wOBqmHkPO6NCLMlsa+fAQ8VE8w==
   dependencies:
     zen-observable "^0.8.0"
 

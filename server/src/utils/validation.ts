@@ -72,6 +72,9 @@ export const UserConfigurationValidation = Yup.object().shape({
 });
 
 export const GeneralInformationValidation = Yup.object().shape({
+  description: Yup.string()
+    .max(100, "La descripción no debe de tener más de 100 caracteres.")
+    .typeError("Campo incorrecto."),
   identificationDocument: Yup.number()
     .positive("Número de documento de identificación incorrecto.")
     .max(MAX_INT, "Número erróneo.")
@@ -84,6 +87,15 @@ export const GeneralInformationValidation = Yup.object().shape({
     )
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!"),
+  linkedin: Yup.string()
+    .matches(
+      /https:\/\/([a-z]{2,3}[.])?linkedin[.]com\/.*/,
+      "Perfil de linkedin incorrecto."
+    )
+    .typeError("Campo incorrecto"),
+  skype: Yup.string()
+    .matches(/live:.+/, "Usuario de skype incorrecto.")
+    .typeError("Campo incorrecto"),
   website: Yup.string()
     .matches(/http(s)?:\/\/(.*\.)?.*/, "Sitio web incorrecto.")
     .typeError("Campo incorrecto")

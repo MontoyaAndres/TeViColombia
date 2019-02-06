@@ -1,12 +1,16 @@
 import React from "react";
 
-import {
-  TextAreaField,
-  SelectField,
-  TextField
-} from "../../shared/globalField";
+import { SelectField, TextField } from "../../shared/globalField";
+import EntityGlobalEnum from "../../../utils/entityGlobalEnum";
+import TownsByDepartament from "../../../utils/townsByDepartament";
+import EditSkills from "./editSkills";
 
-const editGeneralInformation = () => (
+const editGeneralInformation = ({
+  departament,
+  nationality,
+  skills,
+  setFieldValue
+}) => (
   <div className="card">
     <div className="card-header">
       <div className="card-header-title">Información general</div>
@@ -17,10 +21,32 @@ const editGeneralInformation = () => (
         <div className="columns is-multiline">
           <div className="column is-12">
             <label className="label">Descripción de perfil profesional</label>
-            <TextAreaField
+            <TextField
+              type="text"
               name="description"
               placeholder="Descripción de perfil profesional"
               isRequired={false}
+              maxLength="100"
+            />
+          </div>
+
+          <div className="column is-6">
+            <label className="label">Nombre</label>
+            <TextField
+              type="text"
+              name="name"
+              placeholder="Nombre"
+              isRequired
+            />
+          </div>
+
+          <div className="column is-6">
+            <label className="label">Apellido</label>
+            <TextField
+              type="text"
+              name="lastname"
+              placeholder="Apellido"
+              isRequired
             />
           </div>
 
@@ -71,41 +97,11 @@ const editGeneralInformation = () => (
           </div>
 
           <div className="column is-6">
-            <label className="label">Sitio web</label>
-            <TextField
-              type="url"
-              name="website"
-              placeholder="Sitio web"
-              isRequired={false}
-            />
-          </div>
-
-          <div className="column is-6">
             <label className="label">Género</label>
             <SelectField
               arrayPlaceholder={["HOMBRE", "MUJER"]}
               name="gender"
-              isRequired={false}
-            />
-          </div>
-
-          <div className="column is-6">
-            <label className="label">Ciudad/Pueblo/Villa</label>
-            <TextField
-              type="text"
-              name="city"
-              placeholder="Ciudad/Pueblo/Villa"
-              isRequired={false}
-            />
-          </div>
-
-          <div className="column is-6">
-            <label className="label">Departamento</label>
-            <TextField
-              type="text"
-              name="departament"
-              placeholder="Departamento"
-              isRequired={false}
+              isRequired
             />
           </div>
 
@@ -122,6 +118,70 @@ const editGeneralInformation = () => (
               isRequired={false}
             />
           </div>
+
+          <div className="column is-6">
+            <label className="label">Nacionalidad</label>
+            <SelectField
+              arrayPlaceholder={EntityGlobalEnum.ENUMCountry}
+              name="nationality"
+              isRequired
+            />
+          </div>
+
+          <div className="column is-6">
+            <label className="label">Departamento</label>
+            <SelectField
+              arrayPlaceholder={EntityGlobalEnum.ENUMDepartament}
+              name="departament"
+              isRequired
+            />
+          </div>
+
+          {departament !== "Extranjero" && nationality === "Colombia" ? (
+            <div className="column is-6">
+              <label className="label">Municipio</label>
+              <SelectField
+                arrayPlaceholder={Object.values(
+                  TownsByDepartament[departament]
+                )}
+                name="town"
+                placeholder="Municipio"
+                isRequired
+              />
+            </div>
+          ) : null}
+
+          <div className="column is-6">
+            <label className="label">Perfil de Linkedin</label>
+            <TextField
+              type="url"
+              name="linkedin"
+              placeholder="Perfil de Linkedin"
+              isRequired={false}
+            />
+          </div>
+
+          <div className="column is-6">
+            <label className="label">Usuario de Skype</label>
+            <TextField
+              type="text"
+              name="skype"
+              placeholder="Usuario de Skype"
+              isRequired={false}
+            />
+          </div>
+
+          <div className="column is-6">
+            <label className="label">Sitio web</label>
+            <TextField
+              type="url"
+              name="website"
+              placeholder="Sitio web"
+              isRequired={false}
+            />
+          </div>
+
+          <EditSkills skills={skills} setFieldValue={setFieldValue} />
         </div>
       </div>
     </div>

@@ -39,8 +39,7 @@ export async function startServer() {
           client: redis
         }),
         windowMs: 15 * 60 * 1000, // 15 minutes
-        max: 100, // Limit each IP to 100 requests per windowMs
-        delayMs: 0 // Disable delaying - full speed until the max limit is reached
+        max: 100 // Limit each IP to 100 requests per windowMs
       })
     )
     .use(

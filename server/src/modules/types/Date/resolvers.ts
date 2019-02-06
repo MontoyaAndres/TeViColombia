@@ -10,6 +10,10 @@ export const resolvers: ResolveMap = {
     name: "Date",
     description: "Date custom scalar type",
     parseValue(value) {
+      if (value === "") {
+        return null;
+      }
+
       return value; // value from the client
     },
     serialize(value) {
