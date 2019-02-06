@@ -29,9 +29,12 @@ const generalInformation = ({ information }) => (
             <p className="subtitle">
               <strong>Departamento:</strong> {information.departament}
             </p>
-            <p className="subtitle">
-              <strong>Ciudad:</strong> {information.city}
-            </p>
+            {information.departament !== "Extranjero" &&
+            information.nationality === "Colombia" ? (
+              <p className="subtitle">
+                <strong>Municipio:</strong> {information.town}
+              </p>
+            ) : null}
           </div>
         </div>
       </div>

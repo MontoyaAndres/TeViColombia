@@ -1,9 +1,10 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { FieldArray } from "formik";
 
-import { TextField } from "../../shared/globalField";
+import { SelectField } from "../../shared/globalField";
+import EntityGlobalEnum from "../../../utils/entityGlobalEnum";
 
-const editLanguage = ({ values }) => (
+const editLanguage = ({ language }) => (
   <div className="card">
     <div className="card-header">
       <div className="card-header-title">Idiomas</div>
@@ -13,73 +14,80 @@ const editLanguage = ({ values }) => (
       <div className="content">
         <FieldArray
           name="language"
-          render={arrayHelpers => (
-            <>
-              {values.language && values.language.length > 0 ? (
-                <div className="columns is-multiline">
-                  {values.language.map((lang, index) => (
-                    <Fragment key={index}>
-                      <div className="column is-6">
-                        <label className="label">Idioma</label>
-                        <TextField
-                          type="text"
-                          name={`language.${index}.language`}
-                          placeholder="Idioma"
-                        />
+          render={arrayHelpers =>
+            language && language.length > 0 ? (
+              <div className="columns is-multiline">
+                {language.map((_, index) => (
+                  <div className="column is-6" key={index}>
+                    <label className="label">Nivel de idioma</label>
+                    <SelectField
+                      name={`language.${index}.level`}
+                      arrayPlaceholder={EntityGlobalEnum.ENUMLanguageLevel}
+                      isRequired
+                    />
 
-                        <label className="label">Nivel de idioma</label>
-                        <div className="control has-icons-right">
-                          <TextField
-                            type="text"
-                            name={`language.${index}.level`}
-                            placeholder="Nivel de idioma"
-                          />
+                    <label className="label">Idioma</label>
+                    <SelectField
+                      name={`language.${index}.language`}
+                      arrayPlaceholder={EntityGlobalEnum.ENUMLanguage}
+                      isRequired
+                    />
 
-                          <span
-                            className="icon is-medium is-right"
-                            onClick={() => arrayHelpers.remove(index)}
-                          >
+                    <div className="field is-grouped is-grouped-centered">
+                      <div className="control">
+                        <button
+                          type="button"
+                          className="button is-danger"
+                          onClick={() => arrayHelpers.remove(index)}
+                        >
+                          <span className="icon is-large">
                             <i
-                              className="delete is-medium"
+                              className="fas fa-lg fa-trash-alt"
                               aria-hidden="true"
                             />
                           </span>
-                        </div>
+                        </button>
                       </div>
-                    </Fragment>
-                  ))}
-
-                  <div className="column is-12">
-                    <div className="buttons has-addons is-centered">
-                      <button
-                        type="button"
-                        className="button is-primary is-large"
-                        onClick={() =>
-                          arrayHelpers.push({ language: "", level: "" })
-                        }
-                        style={{ width: 200 }}
-                      >
-                        <i className="fas fa-plus" aria-hidden="true" />
-                      </button>
                     </div>
                   </div>
+                ))}
+
+                <div className="column is-12">
+                  <div className="buttons has-addons is-centered">
+                    <button
+                      type="button"
+                      className="button is-primary is-large"
+                      onClick={() =>
+                        arrayHelpers.push({
+                          language: "Español",
+                          level: "Muy básico"
+                        })
+                      }
+                      style={{ width: 200 }}
+                    >
+                      <i className="fas fa-plus" aria-hidden="true" />
+                    </button>
+                  </div>
                 </div>
-              ) : (
-                <div className="buttons has-addons is-centered">
-                  <button
-                    type="button"
-                    className="button is-primary is-large"
-                    onClick={() =>
-                      arrayHelpers.push({ language: "", level: "" })
-                    }
-                    style={{ width: 200 }}
-                  >
-                    <i className="fas fa-plus" aria-hidden="true" />
-                  </button>
-                </div>
-              )}
-            </>
-          )}
+              </div>
+            ) : (
+              <div className="buttons has-addons is-centered">
+                <button
+                  type="button"
+                  className="button is-primary is-large"
+                  onClick={() =>
+                    arrayHelpers.push({
+                      language: "Español",
+                      level: "Muy básico"
+                    })
+                  }
+                  style={{ width: 200 }}
+                >
+                  <i className="fas fa-plus" aria-hidden="true" />
+                </button>
+              </div>
+            )
+          }
         />
       </div>
     </div>

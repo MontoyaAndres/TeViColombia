@@ -33,7 +33,7 @@ export class Work extends BaseEntity {
   @Column("enum", { enum: ENUMArea })
   area: string;
 
-  @Column("text")
+  @Column("text", { nullable: true })
   goals: string;
 
   @Column("date")

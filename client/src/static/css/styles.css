@@ -63,6 +63,7 @@ a.navbar-item:hover,
 
 #fullpage {
   background: url(/static/img/background.jpg) no-repeat center center fixed;
+  background-color: rgba(214, 214, 214, 0.1);
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -141,11 +142,16 @@ textarea.textarea:-moz-placeholder {
   border-radius: 4px;
 }
 
-/*No arrows in number inputs*/
+/* No arrows in number inputs */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+/* No arrows in number inputs for firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 .columns {
@@ -162,7 +168,8 @@ input[type="number"]::-webkit-inner-spin-button {
   transform: translate(-50%, -50%);
 }
 
-.overlay-icon:hover {
+.overlay-icon:hover,
+.background-cover-edit:hover {
   opacity: 0.8;
   cursor: pointer;
 }
@@ -177,6 +184,11 @@ input[type="number"]::-webkit-inner-spin-button {
 .update-finished:hover {
   cursor: pointer;
   animation: growBubble 0.5s infinite alternate;
+}
+
+a span.tag {
+  margin-left: 5px;
+  font-size: 1rem;
 }
 
 @keyframes growBubble {

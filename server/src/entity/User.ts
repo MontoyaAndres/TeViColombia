@@ -58,7 +58,7 @@ export class User extends BaseEntity {
   @Column("varchar", { length: 255 })
   lastname: string;
 
-  @Column("text", { nullable: true })
+  @Column("varchar", { length: 100, nullable: true })
   description: string;
 
   @Column("enum", { enum: ENUMIdentificationDocumentType })
@@ -77,7 +77,7 @@ export class User extends BaseEntity {
   departament: string;
 
   @Column("varchar", { length: 255, nullable: true })
-  city: string;
+  town: string;
 
   @Column("enum", { enum: ENUMCountry, nullable: true })
   nationality: string;

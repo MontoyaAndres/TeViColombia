@@ -1,24 +1,35 @@
-async function UpdateCreate(Model: any, id: any, information: any) {
-  // Check if the user exists in any model.
-  const query = await Model.findOne({ where: { user: id } });
+async function UpdateCreate(
+  Model: any,
+  id: string,
+  information: Array<any | null>
+) {
+  if (information) {
+    const getAllIds = await Model.find({ where: { user: { id } } });
+    const getAllIdsPassingArray = getAllIds.map((ids: any) => ids.id);
 
-  if (query) {
-    // If the user exists in any model, this user will insert or update any data.
-    if (information) {
-      return information.map((data: any) =>
-        data.id
-          ? Model.update({ id: data.id }, { ...data })
-          : Model.create({ ...data, user: { id } }).save()
-      );
-    }
-  } else {
-    // If is the first time, all the data will be create.
-    if (information) {
-      return information.map((data: any) =>
-        Model.create({ ...data, user: { id } }).save()
-      );
-    }
+    const getAllIdsFromInformation = information
+      .map(data => data.id)
+      .filter(value => value);
+
+    // Getting all ids the user is not using.
+    const IdsUnused = getAllIdsPassingArray.filter(
+      (value: any) => !getAllIdsFromInformation.includes(value)
+    );
+
+    // Removing all ids the user is not using.
+    await IdsUnused.map((idsUnused: string) => Model.delete({ id: idsUnused }));
+
+    // If id exists update data, if not create data.
+    await information.map(data =>
+      data.id
+        ? Model.update({ id: data.id }, { ...data })
+        : Model.create({ ...data, user: { id } }).save()
+    );
+
+    return true;
   }
+
+  return true;
 }
 
 export default UpdateCreate;

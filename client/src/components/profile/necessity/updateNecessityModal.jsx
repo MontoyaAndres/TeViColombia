@@ -5,7 +5,10 @@ import { withFormik, Form } from "formik";
 
 import AskModal from "../../shared/askModal";
 import { TextAreaField } from "../../shared/globalField";
-import { necessityQuery } from "../../../graphql/queries/account";
+import {
+  necessityQuery,
+  countNecessityQuery
+} from "../../../graphql/queries/account";
 
 const updateNecessityMutation = gql`
   mutation UpdateNecessityMutation(
@@ -100,7 +103,10 @@ export default compose(
             finished: values.updateFinished,
             comment: values.updateComment
           },
-          refetchQueries: [{ query: necessityQuery, variables: { userId: id } }]
+          refetchQueries: [
+            { query: necessityQuery, variables: { userId: id } },
+            { query: countNecessityQuery, variables: { userId: id } }
+          ]
         });
       }
 

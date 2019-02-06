@@ -2,33 +2,40 @@ import React, { PureComponent } from "react";
 import Dropzone from "react-dropzone";
 
 class uploadRoutePhoto extends PureComponent {
-  state = {
-    files: []
-  };
-
   componentWillUnmount() {
-    // Make sure to revoke the data uris to avoid memory leaks
-    this.state.files.forEach(file => URL.revokeObjectURL(file.preview));
+    const {
+      field: { value }
+    } = this.props;
+
+    if (Array.isArray(value)) {
+      // Make sure to revoke the data uris to avoid memory leaks
+      value.forEach(file => URL.revokeObjectURL(file.preview));
+    }
   }
 
-  onDrop = information => {
-    const { setFieldValue } = this.props;
+  onDrop = ([file]) => {
+    const {
+      field: { name },
+      form: { setFieldValue }
+    } = this.props;
 
-    this.setState({
-      files: information.map(file =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        })
-      )
-    });
-
-    setFieldValue("routePhoto", information);
+    setFieldValue(
+      name,
+      Object.assign(file, {
+        preview: URL.createObjectURL(file)
+      })
+    );
   };
 
   render() {
-    const { data } = this.props;
-    const { files } = this.state;
-    const previewPhoto = `http://localhost:4000/${data.information.routePhoto}`;
+    const {
+      field: { value },
+      form: { values },
+      ...props
+    } = this.props;
+    const photo =
+      (value ? value.preview : null) ||
+      `http://localhost:4000/${values.routePhoto}`;
 
     return (
       <div
@@ -41,38 +48,28 @@ class uploadRoutePhoto extends PureComponent {
         }}
       >
         <figure className="avatar-profile">
-          <Dropzone accept="image/*" onDrop={this.onDrop} multiple={false}>
+          <Dropzone
+            accept="image/*"
+            onDrop={this.onDrop}
+            multiple={false}
+            {...props}
+          >
             {({ getRootProps, getInputProps, isDragActive }) => (
               <div style={{ textAlign: "center" }}>
-                <input {...getInputProps()} />
-                {files.length ? (
-                  files.map((file, i) => (
-                    <img
-                      key={i}
-                      style={{
-                        width: 200,
-                        height: 200,
-                        opacity: isDragActive ? 0.5 : 1
-                      }}
-                      src={file.preview}
-                      alt="profile"
-                    />
-                  ))
-                ) : (
-                  <img
-                    style={{
-                      width: 200,
-                      height: 200,
-                      opacity: isDragActive ? 0.5 : 1
-                    }}
-                    src={previewPhoto}
-                    alt="profile"
-                  />
-                )}
+                <img
+                  style={{
+                    width: 200,
+                    height: 200,
+                    opacity: isDragActive ? 0.5 : 1
+                  }}
+                  src={photo}
+                  alt="profile"
+                />
                 <span
                   className="icon is-large overlay-icon"
                   {...getRootProps()}
                 >
+                  <input {...getInputProps()} />
                   <i className="fas fa-5x fa-camera" aria-hidden="true" />
                 </span>
               </div>

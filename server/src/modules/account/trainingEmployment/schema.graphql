@@ -1,3 +1,0 @@
-type Mutation {
-  trainingEmployment(id: ID, information: TrainingEmploymentInput): Boolean!
-}

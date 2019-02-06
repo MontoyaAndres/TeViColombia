@@ -2,12 +2,15 @@ import React, { PureComponent } from "react";
 import { withRouter } from "next/router";
 import Error from "next/error";
 import dynamic from "next/dynamic";
-import { Query } from "react-apollo";
+import { compose, graphql } from "react-apollo";
 
 import Loading from "../../components/shared/loading";
 import checkLoggedIn from "../../lib/checkLoggedIn";
 import redirect from "../../lib/redirect";
-import { informationQuery } from "../../graphql/queries/account";
+import {
+  informationQuery,
+  countNecessityQuery
+} from "../../graphql/queries/account";
 
 const DynamicGeneralInformation = dynamic(
   () => import("../../components/profile/generalInformation"),
@@ -55,106 +58,101 @@ class profile extends PureComponent {
     const {
       router: {
         query: { id }
-      }
+      },
+      loadingInformation,
+      loadingCountNecessity,
+      dataInformation,
+      dataCountNecessity
     } = this.props;
 
+    if (loadingInformation && loadingCountNecessity) {
+      return <Loading />;
+    }
+
+    if (!dataInformation) {
+      return <Error statusCode={404} />;
+    }
+
     return (
-      <Query query={informationQuery} variables={{ id }}>
-        {({ loading, data }) => {
-          if (loading) {
-            return <Loading />;
-          }
+      <>
+        {dataInformation.routeCover ? (
+          <div className="background-cover">
+            <img
+              alt="user cover"
+              src={`http://localhost:4000/${dataInformation.routeCover}`}
+            />
+          </div>
+        ) : (
+          <div className="background-cover" />
+        )}
 
-          if (!data.information) {
-            return <Error statusCode={404} />;
-          }
-
-          return (
-            <>
-              {data.information.routeCover ? (
-                <div className="background-cover">
-                  <img
-                    alt="user cover"
-                    src={`http://localhost:4000/${data.information.routeCover}`}
-                  />
-                </div>
-              ) : (
-                <div className="background-cover" />
-              )}
-
-              <div className="container is-fullhd">
-                <figure
-                  className="avatar-profile"
-                  style={{ textAlign: "center" }}
+        <div className="container is-fullhd">
+          <figure className="avatar-profile" style={{ textAlign: "center" }}>
+            <img
+              style={{ width: 200 }}
+              src={`http://localhost:4000/${dataInformation.routePhoto}`}
+              alt="profile"
+            />
+          </figure>
+          <h3 className="title" style={{ textAlign: "center" }}>
+            {dataInformation.name} {dataInformation.lastname}
+          </h3>
+          <h3 className="subtitle" style={{ textAlign: "center" }}>
+            {dataInformation.description}
+          </h3>
+          <div className="tabs is-medium is-centered">
+            <ul>
+              <li
+                className={value === 1 ? "is-active" : ""}
+                onClick={() => this.handleValue(1)}
+              >
+                <a>Información general</a>
+              </li>
+              {dataInformation.study.length && dataInformation.work.length ? (
+                <li
+                  className={value === 2 ? "is-active" : ""}
+                  onClick={() => this.handleValue(2)}
                 >
-                  <img
-                    style={{ width: 200 }}
-                    src={`http://localhost:4000/${data.information.routePhoto}`}
-                    alt="profile"
-                  />
-                </figure>
-                <h3 className="title" style={{ textAlign: "center" }}>
-                  {data.information.name} {data.information.lastname}
-                </h3>
-                <h3 className="subtitle" style={{ textAlign: "center" }}>
-                  {data.information.description}
-                </h3>
-                <div className="tabs is-medium is-centered">
-                  <ul>
-                    <li
-                      className={`${value === 1 ? "is-active" : ""}`}
-                      onClick={() => this.handleValue(1)}
-                    >
-                      <a>Información general</a>
-                    </li>
-                    {data.information.study.length &&
-                    data.information.work.length ? (
-                      <li
-                        className={`${value === 2 ? "is-active" : ""}`}
-                        onClick={() => this.handleValue(2)}
-                      >
-                        <a>Formación y empleo</a>
-                      </li>
-                    ) : null}
-                    <li
-                      className={`${value === 3 ? "is-active" : ""}`}
-                      onClick={() => this.handleValue(3)}
-                    >
-                      <a>Feedback</a>
-                    </li>
-                    <li
-                      className={`${value === 4 ? "is-active" : ""}`}
-                      onClick={() => this.handleValue(4)}
-                    >
-                      <a>Mi negocio</a>
-                    </li>
-                    <li
-                      className={`${value === 5 ? "is-active" : ""}`}
-                      onClick={() => this.handleValue(5)}
-                    >
-                      <a>Necesidades</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+                  <a>Formación y empleo</a>
+                </li>
+              ) : null}
+              <li
+                className={value === 3 ? "is-active" : ""}
+                onClick={() => this.handleValue(3)}
+              >
+                <a>Feedback</a>
+              </li>
+              <li
+                className={value === 4 ? "is-active" : ""}
+                onClick={() => this.handleValue(4)}
+              >
+                <a>Mi negocio</a>
+              </li>
+              <li
+                className={value === 5 ? "is-active" : ""}
+                onClick={() => this.handleValue(5)}
+              >
+                <a>
+                  Necesidades
+                  <span className="tag is-primary">{dataCountNecessity}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
 
-              {value === 1 && (
-                <DynamicGeneralInformation information={data.information} />
-              )}
-              {value === 2 && (
-                <DynamicTrainingEmployment information={data.information} />
-              )}
-              {value === 3 && <DynamicFeedback id={id} />}
-              {value === 4 && (
-                <DynameicCommercialEstablishment
-                  information={data.information}
-                />
-              )}
-              {value === 5 && <DynamicNecessity id={id} />}
-            </>
-          );
-        }}
-      </Query>
+        {value === 1 && (
+          <DynamicGeneralInformation information={dataInformation} />
+        )}
+        {value === 2 && (
+          <DynamicTrainingEmployment information={dataInformation} />
+        )}
+        {value === 3 && <DynamicFeedback id={id} />}
+        {value === 4 && (
+          <DynameicCommercialEstablishment information={dataInformation} />
+        )}
+        {value === 5 && <DynamicNecessity id={id} />}
+      </>
     );
   }
 }
@@ -169,4 +167,28 @@ profile.getInitialProps = async context => {
   return {};
 };
 
-export default withRouter(profile);
+export default compose(
+  withRouter,
+  graphql(informationQuery, {
+    options: ({
+      router: {
+        query: { id }
+      }
+    }) => ({ variables: { id } }),
+    props: ({ data }) => ({
+      loadingInformation: data.loading,
+      dataInformation: data.information
+    })
+  }),
+  graphql(countNecessityQuery, {
+    options: ({
+      router: {
+        query: { id }
+      }
+    }) => ({ variables: { userId: id } }),
+    props: ({ data }) => ({
+      loadingCountNecessity: data.loading,
+      dataCountNecessity: data.countNecessity
+    })
+  })
+)(profile);

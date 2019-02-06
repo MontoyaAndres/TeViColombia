@@ -13,7 +13,7 @@ const informationQuery = gql`
       address
       telephone
       departament
-      city
+      town
       nationality
       civilStatus
       linkedin
@@ -80,4 +80,10 @@ const necessityQuery = gql`
   }
 `;
 
-export { informationQuery, feedbackQuery, necessityQuery };
+const countNecessityQuery = gql`
+  query CountNecessityQuery($userId: ID!) {
+    countNecessity(userId: $userId)
+  }
+`;
+
+export { informationQuery, feedbackQuery, necessityQuery, countNecessityQuery };

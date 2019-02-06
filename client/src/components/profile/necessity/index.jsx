@@ -3,7 +3,10 @@ import { gql } from "apollo-boost";
 import { compose, graphql } from "react-apollo";
 import { withFormik, Form } from "formik";
 
-import { necessityQuery } from "../../../graphql/queries/account";
+import {
+  necessityQuery,
+  countNecessityQuery
+} from "../../../graphql/queries/account";
 import Loading from "../../shared/loading";
 import meQuery from "../../../graphql/queries/me";
 import { TextAreaField } from "../../shared/globalField";
@@ -262,7 +265,10 @@ export default compose(
     ) => {
       await NECESSITY_MUTATION({
         variables: values,
-        refetchQueries: [{ query: necessityQuery, variables: { userId: id } }]
+        refetchQueries: [
+          { query: necessityQuery, variables: { userId: id } },
+          { query: countNecessityQuery, variables: { userId: id } }
+        ]
       });
 
       setSubmitting(false);

@@ -6,6 +6,7 @@ type Necessity {
 
 type Query {
   necessity(userId: ID!): [Necessity]!
+  countNecessity(userId: ID!): Int!
 }
 
 type Mutation {

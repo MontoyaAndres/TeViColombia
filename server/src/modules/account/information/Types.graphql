@@ -42,7 +42,7 @@ type UserInformation {
   address: String
   telephone: BigInt!
   departament: String
-  city: String
+  town: String
   nationality: String
   civilStatus: String
   linkedin: String

@@ -13,6 +13,12 @@ import { TextAreaField } from "../../shared/globalField";
 import ChangeStars from "../../shared/changeStars";
 import DeleteFeedbackModal from "./deleteFeedbackModal";
 
+const countFeedbackStarsQuery = gql`
+  query CountFeedbackStarsQuery($userId: ID!) {
+    countFeedbackStars(userId: $userId)
+  }
+`;
+
 const feedbackMutation = gql`
   mutation FeedbackMutation($id: ID!, $stars: Int!, $comment: String!) {
     feedback(id: $id, stars: $stars, comment: $comment) {
@@ -68,8 +74,10 @@ class index extends React.PureComponent {
   render() {
     const {
       loadingFeedback,
+      loadingCountFeedbackStars,
       loadingMe,
       dataFeedback,
+      dataCountFeedbackStars,
       dataMe,
       id,
       values,
@@ -79,7 +87,7 @@ class index extends React.PureComponent {
     } = this.props;
     const { deleteFeedback, idFeedback } = this.state;
 
-    if (loadingFeedback && loadingMe) {
+    if (loadingFeedback && loadingCountFeedbackStars && loadingMe) {
       return <Loading />;
     }
 
@@ -104,63 +112,79 @@ class index extends React.PureComponent {
             />
           )}
 
-          {dataFeedback && dataFeedback.length ? (
-            dataFeedback.map(feed => (
-              <div style={{ marginTop: "1.1rem" }} key={feed.id}>
-                <div className="control has-icons-right">
-                  {dataMe.id === id && (
-                    <span
-                      className="icon is-medium is-right"
-                      onClick={() => this.handleAskDeleteFeedback(feed.id)}
-                    >
-                      <i className="delete is-medium" aria-hidden="true" />
-                    </span>
-                  )}
+          <div className="notification is-info">
+            {dataCountFeedbackStars ? (
+              <p className="subtitle">
+                Tienes la cantidad de{" "}
+                {dataCountFeedbackStars === 1
+                  ? `${dataCountFeedbackStars} estrella`
+                  : `${dataCountFeedbackStars} estrellas`}{" "}
+                <span role="img" aria-label="happy">
+                  🤗🥳🤩.
+                </span>
+              </p>
+            ) : (
+              <p className="subtitle">
+                Tienes la cantidad de 0 estrellas{" "}
+                <span role="img" aria-label="sad">
+                  🥺🙁
+                </span>
+                . Busca personas para que te den Feedback y crezcas en Te vi
+                Colombia!
+              </p>
+            )}
+          </div>
 
-                  <div className="card" style={{ borderRadius: 6 }}>
-                    <div className="card-content" style={{ borderRadius: 6 }}>
-                      <div className="media">
-                        <div className="media-left">
-                          <figure className="image is-48x48">
-                            <img
-                              src={`http://localhost:4000/${
-                                feed.user.routePhoto
-                              }`}
-                              alt="profile"
-                            />
-                          </figure>
+          {dataFeedback && dataFeedback.length
+            ? dataFeedback.map(feed => (
+                <div style={{ marginTop: "1.1rem" }} key={feed.id}>
+                  <div className="control has-icons-right">
+                    {dataMe.id === id && (
+                      <span
+                        className="icon is-medium is-right"
+                        onClick={() => this.handleAskDeleteFeedback(feed.id)}
+                      >
+                        <i className="delete is-medium" aria-hidden="true" />
+                      </span>
+                    )}
+
+                    <div className="card" style={{ borderRadius: 6 }}>
+                      <div className="card-content" style={{ borderRadius: 6 }}>
+                        <div className="media">
+                          <div className="media-left">
+                            <figure className="image is-48x48">
+                              <img
+                                src={`http://localhost:4000/${
+                                  feed.user.routePhoto
+                                }`}
+                                alt="profile"
+                              />
+                            </figure>
+                          </div>
+
+                          <div className="media-content">
+                            <Link
+                              href={{
+                                pathname: "/profile",
+                                query: { id: feed.user.id }
+                              }}
+                              prefetch
+                            >
+                              <a className="title is-4">
+                                {feed.user.name} {feed.user.lastname}
+                              </a>
+                            </Link>
+                            <StaticStars stars={feed.stars} />
+                          </div>
                         </div>
 
-                        <div className="media-content">
-                          <Link
-                            href={{
-                              pathname: "/profile",
-                              query: { id: feed.user.id }
-                            }}
-                            prefetch
-                          >
-                            <a className="title is-4">
-                              {feed.user.name} {feed.user.lastname}
-                            </a>
-                          </Link>
-                          <StaticStars stars={feed.stars} />
-                        </div>
+                        <div className="content">{feed.comment}</div>
                       </div>
-
-                      <div className="content">{feed.comment}</div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <h2
-              className="subtitle is-3"
-              style={{ textAlign: "center", padding: 20 }}
-            >
-              No se ha encontrado información al respecto.
-            </h2>
-          )}
+              ))
+            : null}
         </div>
       </div>
     );
@@ -173,6 +197,13 @@ export default compose(
     props: ({ data }) => ({
       loadingFeedback: data.loading,
       dataFeedback: data.feedback
+    })
+  }),
+  graphql(countFeedbackStarsQuery, {
+    options: ({ id }) => ({ variables: { userId: id } }),
+    props: ({ data }) => ({
+      loadingCountFeedbackStars: data.loading,
+      dataCountFeedbackStars: data.countFeedbackStars
     })
   }),
   graphql(meQuery, {

@@ -33,7 +33,7 @@ function create(initialState, { getToken }) {
     connectToDevTools: isBrowser,
     ssrMode: !isBrowser,
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache().restore(initialState || {})
+    cache: new InMemoryCache({ addTypename: false }).restore(initialState || {})
   });
 }
 
