@@ -3,7 +3,7 @@ import { Form, withFormik, Field } from "formik";
 import { withRouter } from "next/router";
 import Error from "next/error";
 import { compose, graphql } from "react-apollo";
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 
 import Loading from "../../components/shared/loading";
 import checkLoggedIn from "../../lib/checkLoggedIn";

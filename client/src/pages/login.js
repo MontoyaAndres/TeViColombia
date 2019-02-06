@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { Mutation, withApollo } from "react-apollo";
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 import Router from "next/router";
 
 import { TextField } from "../components/shared/globalField";
