@@ -1,6 +1,6 @@
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import { createHttpLink } from "apollo-link-http";
+import { createUploadLink } from "apollo-upload-client";
 import { setContext } from "apollo-link-context";
 import fetch from "isomorphic-unfetch";
 
@@ -12,7 +12,7 @@ if (!isBrowser) {
 }
 
 function create(initialState, { getToken }) {
-  const httpLink = createHttpLink({
+  const httpLink = createUploadLink({
     uri:
       process.env.NODE_ENV === "production"
         ? "https://api.barhalem.com/"

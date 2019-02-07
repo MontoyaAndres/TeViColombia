@@ -168,13 +168,11 @@ export default compose(
         }
       });
 
-      console.log(values);
-
-      const response = await mutate({
+      const { data } = await mutate({
         variables: { id, information: values },
         refetchQueries: [{ query: informationQuery, variables: { id } }]
       });
-      const { data } = response;
+
       // if generalInformation has data, it has the errors
       if (data.generalInformation && data.generalInformation.length) {
         setSubmitting(false);

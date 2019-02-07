@@ -1,5 +1,5 @@
-/* import { createWriteStream } from "fs";
-import { v4 } from "uuid"; */
+import { createWriteStream, existsSync, mkdirSync } from "fs";
+import { v4 } from "uuid";
 
 import { ResolveMap } from "../../../types/graphql-utils";
 import { GQL } from "../../../types/schema";
@@ -14,18 +14,25 @@ import { middleware } from "../../shared/authMiddleware";
 import { GeneralInformationValidation } from "../../../utils/validation";
 import { formatYupError } from "../../../utils/formatYupError";
 
-/* const storeUpload = (stream: any, type: string): Promise<any> => {
-  const extension = type.split("/")[1];
-  const id = `${v4()}.${extension}`;
-  const path = `public/${id}`;
+const storeUpload = (
+  stream: any,
+  mimetype: string,
+  path: string
+): Promise<any> => {
+  const extension = mimetype.split("/")[1];
+  const fileId = `${v4()}-${Date.now()}.${extension}`;
+
+  if (!existsSync(path)) {
+    mkdirSync(path);
+  }
 
   return new Promise((resolve, reject) =>
     stream
-      .pipe(createWriteStream(path))
-      .on("finish", () => resolve({ id, path }))
+      .pipe(createWriteStream(`${path}/${fileId}`))
+      .on("finish", () => resolve({ fileId }))
       .on("error", reject)
   );
-}; */
+};
 
 export const resolvers: ResolveMap = {
   Mutation: {
@@ -75,17 +82,57 @@ export const resolvers: ResolveMap = {
           }
         });
 
-        // https://github.com/prisma/graphql-yoga/tree/master/examples/file-upload
-        // https://github.com/jaydenseric/graphql-upload/issues/49
-        // Update images
-        if (information.routePhoto || information.routeCover) {
-          const info = await information.routePhoto;
-          console.log(info);
-          /* const response = await storeUpload(stream, type);
-          console.log(response); */
+        if (information.routePhoto instanceof Object) {
+          const { createReadStream, mimetype } = await information.routePhoto;
+          const extension = mimetype.split("/")[1];
+
+          if (
+            extension === "png" ||
+            extension === "jpeg" ||
+            extension === "gif"
+          ) {
+            const stream = createReadStream();
+            const { fileId } = await storeUpload(
+              stream,
+              mimetype,
+              `public/userPhoto`
+            );
+            await User.update({ id }, { routePhoto: `userPhoto/${fileId}` });
+          } else {
+            return [
+              {
+                path: "routePhoto",
+                message: "Por favor suba una imagen."
+              }
+            ];
+          }
         }
 
-        return null;
+        if (information.routeCover instanceof Object) {
+          const { createReadStream, mimetype } = await information.routeCover;
+          const extension = mimetype.split("/")[1];
+
+          if (
+            extension === "png" ||
+            extension === "jpeg" ||
+            extension === "gif"
+          ) {
+            const stream = createReadStream();
+            const { fileId } = await storeUpload(
+              stream,
+              mimetype,
+              `public/userCover`
+            );
+            await User.update({ id }, { routeCover: `userCover/${fileId}` });
+          } else {
+            return [
+              {
+                path: "routeCover",
+                message: "Por favor suba una imagen."
+              }
+            ];
+          }
+        }
 
         // Update user information
         await User.update(

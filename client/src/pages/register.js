@@ -187,10 +187,10 @@ export default compose(
       values,
       { props: { mutate }, setSubmitting, setErrors, resetForm, setFieldValue }
     ) => {
-      const response = await mutate({
+      const { data } = await mutate({
         variables: values
       });
-      const { data } = response;
+
       // if login has data, it has the errors
       if (data.register && data.register.length) {
         setSubmitting(false);

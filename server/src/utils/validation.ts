@@ -88,15 +88,18 @@ export const GeneralInformationValidation = Yup.object().shape({
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!"),
   linkedin: Yup.string()
+    .nullable(true)
     .matches(
       /https:\/\/([a-z]{2,3}[.])?linkedin[.]com\/.*/,
       "Perfil de linkedin incorrecto."
     )
     .typeError("Campo incorrecto"),
   skype: Yup.string()
+    .nullable(true)
     .matches(/live:.+/, "Usuario de skype incorrecto.")
     .typeError("Campo incorrecto"),
   website: Yup.string()
+    .nullable(true)
     .matches(/http(s)?:\/\/(.*\.)?.*/, "Sitio web incorrecto.")
     .typeError("Campo incorrecto")
 });
