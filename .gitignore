@@ -1,6 +1,8 @@
 # App
 server.env
 DatabaseModel.mwb.bak
+userPhoto/
+userCover/
 
 # Logs
 logs

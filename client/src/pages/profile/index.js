@@ -78,67 +78,76 @@ class profile extends PureComponent {
         {dataInformation.routeCover ? (
           <div className="background-cover">
             <img
-              alt="user cover"
               src={`http://localhost:4000/${dataInformation.routeCover}`}
+              alt="user cover"
             />
           </div>
         ) : (
           <div className="background-cover" />
         )}
 
-        <div className="container is-fullhd">
-          <figure className="avatar-profile" style={{ textAlign: "center" }}>
+        <div
+          style={{
+            display: "block",
+            position: "relative",
+            width: 200,
+            left: "50%",
+            transform: "translateX(-50%)"
+          }}
+        >
+          <figure className="avatar-profile">
             <img
-              style={{ width: 200 }}
+              style={{ width: 200, height: 200 }}
               src={`http://localhost:4000/${dataInformation.routePhoto}`}
               alt="profile"
             />
           </figure>
-          <h3 className="title" style={{ textAlign: "center" }}>
-            {dataInformation.name} {dataInformation.lastname}
-          </h3>
-          <h3 className="subtitle" style={{ textAlign: "center" }}>
-            {dataInformation.description}
-          </h3>
-          <div className="tabs is-medium is-centered">
-            <ul>
+        </div>
+
+        <h3 className="title" style={{ textAlign: "center" }}>
+          {dataInformation.name} {dataInformation.lastname}
+        </h3>
+        <h3 className="subtitle" style={{ textAlign: "center" }}>
+          {dataInformation.description}
+        </h3>
+        <div className="tabs is-medium is-centered">
+          <ul>
+            <li
+              className={value === 1 ? "is-active" : ""}
+              onClick={() => this.handleValue(1)}
+            >
+              <a>Información general</a>
+            </li>
+            {dataInformation.study.length && dataInformation.work.length ? (
               <li
-                className={value === 1 ? "is-active" : ""}
-                onClick={() => this.handleValue(1)}
+                className={value === 2 ? "is-active" : ""}
+                onClick={() => this.handleValue(2)}
               >
-                <a>Información general</a>
+                <a>Formación y empleo</a>
               </li>
-              {dataInformation.study.length && dataInformation.work.length ? (
-                <li
-                  className={value === 2 ? "is-active" : ""}
-                  onClick={() => this.handleValue(2)}
-                >
-                  <a>Formación y empleo</a>
-                </li>
-              ) : null}
-              <li
-                className={value === 3 ? "is-active" : ""}
-                onClick={() => this.handleValue(3)}
-              >
-                <a>Feedback</a>
-              </li>
-              <li
-                className={value === 4 ? "is-active" : ""}
-                onClick={() => this.handleValue(4)}
-              >
-                <a>Mi negocio</a>
-              </li>
-              <li
-                className={value === 5 ? "is-active" : ""}
-                onClick={() => this.handleValue(5)}
-              >
-                <a>
-                  Necesidades
-                  <span className="tag is-primary">{dataCountNecessity}</span>
-                </a>
-              </li>
-            </ul>
-          </div>
+            ) : null}
+            <li
+              className={value === 3 ? "is-active" : ""}
+              onClick={() => this.handleValue(3)}
+            >
+              <a>Feedback</a>
+            </li>
+            <li
+              className={value === 4 ? "is-active" : ""}
+              onClick={() => this.handleValue(4)}
+            >
+              <a>Mi negocio</a>
+            </li>
+            <li
+              className={value === 5 ? "is-active" : ""}
+              onClick={() => this.handleValue(5)}
+            >
+              <a>
+                Necesidades
+                <span className="tag is-primary">{dataCountNecessity}</span>
+              </a>
+            </li>
+          </ul>
         </div>
 
         {value === 1 && (

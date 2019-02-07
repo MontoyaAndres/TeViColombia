@@ -30,13 +30,16 @@ class uploadRouteCover extends PureComponent {
   render() {
     const {
       field: { value },
+      form: { values },
       ...props
     } = this.props;
-    const cover = value ? value.preview : null;
+    const cover =
+      (value ? value.preview : null) ||
+      `http://localhost:4000/${values.routeCover}`;
 
     return (
       <Dropzone
-        accept="image/*"
+        accept="image/png,image/gif,image/jpeg"
         onDrop={this.onDrop}
         multiple={false}
         {...props}
@@ -46,14 +49,7 @@ class uploadRouteCover extends PureComponent {
             <input {...getInputProps()} />
             {cover ? (
               <div className="background-cover background-cover-edit">
-                <img
-                  style={{
-                    width: "100%",
-                    height: "100%"
-                  }}
-                  src={cover}
-                  alt="user cover"
-                />
+                <img src={cover} alt="user cover" />
               </div>
             ) : (
               <div className="background-cover background-cover-edit" />

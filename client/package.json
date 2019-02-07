@@ -27,7 +27,7 @@
 		"apollo-cache-inmemory": "^1.4.2",
 		"apollo-client": "^2.4.12",
 		"apollo-link-context": "1.0.13",
-		"apollo-link-http": "1.5.10",
+		"apollo-upload-client": "^10.0.0",
 		"cookie-parser": "1.4.3",
 		"express": "4.16.4",
 		"formik": "1.4.3",

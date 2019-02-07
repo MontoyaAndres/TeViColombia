@@ -49,7 +49,7 @@ class uploadRoutePhoto extends PureComponent {
       >
         <figure className="avatar-profile">
           <Dropzone
-            accept="image/*"
+            accept="image/png,image/gif,image/jpeg"
             onDrop={this.onDrop}
             multiple={false}
             {...props}
