@@ -102,7 +102,10 @@ const trainingEmployment = ({ information }) => (
                       <div className="media">
                         <div className="media-left">
                           <a
-                            href={`http://localhost:4000/cv/${cv.routeCV}`}
+                            href={`http://localhost:4000/cv/${cv.name.replace(
+                              /(cv\/)/g,
+                              ""
+                            )}`}
                             download
                           >
                             <i
@@ -112,7 +115,10 @@ const trainingEmployment = ({ information }) => (
                           </a>
                         </div>
                         <div className="media-content">
-                          <span className="subtitle">{cv.routeCV}</span>
+                          <span className="subtitle">{`archivo_tevi_${cv.name.replace(
+                            /(cv\/)/g,
+                            ""
+                          )}`}</span>
                         </div>
                       </div>
                     </div>

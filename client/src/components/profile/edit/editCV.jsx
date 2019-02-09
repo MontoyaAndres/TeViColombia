@@ -1,23 +1,35 @@
 import React, { PureComponent } from "react";
 import Dropzone from "react-dropzone";
 
-// TODO: Subir CV con un modal, cuando la suba, enviarla al backend y al terminal la respuesta, mostrar lista de CV
-
 class editCV extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      files: []
-    };
-  }
+  onDrop = files => {
+    const {
+      field: { name },
+      form: { setFieldValue, values }
+    } = this.props;
 
-  componentWillUnmount() {
-    // Make sure to revoke the data uris to avoid memory leaks
-    this.state.files.forEach(file => URL.revokeObjectURL(file.preview));
-  }
+    // This is to freeze the `file` array, and may concat it with the `values.cv` objects.
+    const assignFile = files.map(file => Object.assign(file));
+    setFieldValue(name, assignFile.concat(values.cv));
+  };
+
+  handleDeleteFile = index => {
+    const {
+      field: { name },
+      form: { setFieldValue, values }
+    } = this.props;
+
+    setFieldValue(name, [
+      ...values.cv.slice(0, index),
+      ...values.cv.slice(index + 1)
+    ]);
+  };
 
   render() {
-    const { CVFiles } = this.state;
+    const {
+      form: { values },
+      ...props
+    } = this.props;
 
     return (
       <div className="card">
@@ -27,7 +39,7 @@ class editCV extends PureComponent {
 
         <div className="card-content">
           <div className="content">
-            <Dropzone accept=".pdf, .doc, .docx" onDrop={this.onDrop}>
+            <Dropzone accept=".doc,.docx,.pdf" onDrop={this.onDrop} {...props}>
               {({ getRootProps, getInputProps, isDragActive }) => (
                 <div
                   {...getRootProps()}
@@ -56,9 +68,9 @@ class editCV extends PureComponent {
               )}
             </Dropzone>
 
-            {CVFiles && CVFiles.length ? (
+            {values.cv && values.cv.length ? (
               <div className="columns is-multiline">
-                {CVFiles.map((CVFile, i) => (
+                {values.cv.map((CVFile, i) => (
                   <div className="column is-6" key={i}>
                     <div style={{ marginTop: "0.5rem" }}>
                       <div className="card" style={{ borderRadius: 6 }}>
@@ -76,9 +88,10 @@ class editCV extends PureComponent {
                                 />
                               </div>
                               <div className="media-content">
-                                <span className="subtitle">
-                                  {CVFile.routeCV}
-                                </span>
+                                <span className="subtitle">{`archivo_tevi_${CVFile.name.replace(
+                                  /(cv\/)/g,
+                                  ""
+                                )}`}</span>
                               </div>
                             </div>
                           </div>

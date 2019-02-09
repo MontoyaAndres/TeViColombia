@@ -34,7 +34,7 @@ const generalInformationMutation = gql`
 
 class edit extends React.PureComponent {
   UNSAFE_componentWillReceiveProps({ values }) {
-    // If the select `departament` changes to "Extranjero" and `town` is empty.
+    // If the select `departament` changes of "Extranjero" and `town` is empty.
     if (!values.town && values.departament !== "Extranjero") {
       values.town = Object.values(TownsByDepartament[values.departament])[0];
     }
@@ -74,7 +74,7 @@ class edit extends React.PureComponent {
           <EditLanguage language={values.language} />
           <EditStudy study={values.study} />
           <EditWork work={values.work} />
-          <EditCV cv={values.cv} setFieldValue={setFieldValue} />
+          <Field name="cv" component={EditCV} />
 
           <div
             className="buttons has-addons is-centered"
@@ -167,6 +167,8 @@ export default compose(
           study.area = null;
         }
       });
+
+      console.log(values);
 
       const { data } = await mutate({
         variables: { id, information: values },

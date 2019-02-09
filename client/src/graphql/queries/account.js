@@ -48,7 +48,7 @@ const informationQuery = gql`
       }
       cv {
         id
-        routeCV
+        name
       }
     }
   }
