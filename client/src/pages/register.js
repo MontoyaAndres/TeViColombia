@@ -34,129 +34,105 @@ const registerMutation = gql`
   }
 `;
 
-class register extends PureComponent {
-  state = {
-    intervalId: 0
-  };
+const register = ({ values, handleSubmit, isSubmitting, setFieldValue }) => (
+  <div className="hero is-fullheight-with-navbar">
+    <div className="hero-body">
+      <div className="container has-text-centered">
+        {/* User created successfully */}
+        {values.registered && (
+          <div className="animated bounceIn notification is-primary">
+            <button
+              type="button"
+              className="delete"
+              onClick={() => setFieldValue("registered", false, false)}
+            />
+            <p className="subtitle">
+              Por favor revise su correo electrónico para poder entrar a Te vi
+              Colombia.
+            </p>
+          </div>
+        )}
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.values.registered) {
-      const intervalId = setInterval(this.scrollStep.bind(this), 16.66);
-      this.setState({ intervalId });
-    }
-  }
+        <div className="column is-4 is-offset-4">
+          <h3 className="title has-text-grey">Crea una nueva cuenta</h3>
+          <div className="box animated bounceInLeft">
+            <figure className="avatar">
+              <img src="https://placehold.it/128x128" alt="login" />
+            </figure>
+            <Form method="POST" onSubmit={handleSubmit}>
+              <TextField
+                type="text"
+                name="name"
+                placeholder="Nombre"
+                isRequired
+              />
 
-  scrollStep() {
-    const { intervalId } = this.state;
+              <TextField
+                type="text"
+                name="lastname"
+                placeholder="Apellido"
+                isRequired
+              />
 
-    if (window.pageYOffset === 0) {
-      clearInterval(intervalId);
-    }
-    window.scroll(0, window.pageYOffset - 50);
-  }
+              <TextField
+                type="number"
+                pattern="\d*"
+                name="telephone"
+                placeholder="Teléfono celular"
+                isRequired
+              />
 
-  render() {
-    const { values, handleSubmit, isSubmitting, setFieldValue } = this.props;
+              <SelectField
+                name="identificationDocumentType"
+                arrayPlaceholder={[
+                  "Tarjeta de identidad",
+                  "Cédula de ciudadania"
+                ]}
+                isRequired
+              />
 
-    return (
-      <div className="hero is-fullheight-with-navbar">
-        <div className="hero-body">
-          <div className="container has-text-centered">
-            {/* User created successfully */}
-            {values.registered && (
-              <div className="animated bounceIn notification is-primary">
-                <button
-                  type="button"
-                  className="delete"
-                  onClick={() => setFieldValue("registered", false, false)}
-                />
-                Por favor revise su correo electrónico para poder entrar a Te vi
-                EPE.
-              </div>
-            )}
+              <TextField
+                type="number"
+                pattern="\d*"
+                name="identificationDocument"
+                placeholder="Número de documento"
+                isRequired
+              />
 
-            <div className="column is-4 is-offset-4">
-              <h3 className="title has-text-grey">Crea una nueva cuenta</h3>
-              <div className="box animated bounceInLeft">
-                <figure className="avatar">
-                  <img src="https://placehold.it/128x128" alt="login" />
-                </figure>
-                <Form method="POST" onSubmit={handleSubmit}>
-                  <TextField
-                    type="text"
-                    name="name"
-                    placeholder="Nombre"
-                    isRequired
-                  />
+              <TextField
+                type="email"
+                name="email"
+                placeholder="Correo electrónico"
+                isRequired
+              />
 
-                  <TextField
-                    type="text"
-                    name="lastname"
-                    placeholder="Apellido"
-                    isRequired
-                  />
+              <TextField
+                type="password"
+                name="password"
+                placeholder="Contraseña"
+                isRequired
+              />
 
-                  <TextField
-                    type="number"
-                    pattern="\d*"
-                    name="telephone"
-                    placeholder="Teléfono celular"
-                    isRequired
-                  />
-
-                  <SelectField
-                    name="identificationDocumentType"
-                    arrayPlaceholder={[
-                      "Tarjeta de identidad",
-                      "Cédula de ciudadania"
-                    ]}
-                    isRequired
-                  />
-
-                  <TextField
-                    type="number"
-                    pattern="\d*"
-                    name="identificationDocument"
-                    placeholder="Número de documento"
-                    isRequired
-                  />
-
-                  <TextField
-                    type="email"
-                    name="email"
-                    placeholder="Correo electrónico"
-                    isRequired
-                  />
-
-                  <TextField
-                    type="password"
-                    name="password"
-                    placeholder="Contraseña"
-                    isRequired
-                  />
-
-                  <label className="checkbox" style={{ paddingBottom: "1em" }}>
-                    <input type="checkbox" required /> He leido los{" "}
-                    <a href="#">terminos y condiciones</a>
-                  </label>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className={`button is-block is-primary is-large is-fullwidth ${
-                      isSubmitting ? "is-loading" : ""
-                    }`}
-                  >
-                    Entrar
-                  </button>
-                </Form>
-              </div>
-            </div>
+              <label className="checkbox" style={{ paddingBottom: "1em" }}>
+                <input type="checkbox" required /> He leido los{" "}
+                <a href="#">terminos y condiciones</a>
+              </label>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`button is-block is-primary is-large is-fullwidth ${
+                  isSubmitting ? "is-loading" : ""
+                }`}
+              >
+                Entrar
+              </button>
+            </Form>
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  </div>
+);
 
 register.getInitialProps = async context => {
   const { loggedInUser } = await checkLoggedIn(context.apolloClient);
@@ -200,6 +176,11 @@ export default compose(
         setSubmitting(false);
         resetForm();
         setFieldValue("registered", true, false);
+        window.scrollTo({
+          top: 100,
+          left: 100,
+          behavior: "smooth"
+        });
       }
     }
   })

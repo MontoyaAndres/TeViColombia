@@ -64,7 +64,18 @@ class edit extends React.PureComponent {
         <Field name="routeCover" component={UploadRouteCover} />
         <Field name="routePhoto" component={UploadRoutePhoto} />
 
-        <div className="container">
+        <div id="edited" className="container">
+          {/* User edited successfully */}
+          {values.edited && (
+            <div className="animated bounceIn notification is-primary">
+              <button
+                type="button"
+                className="delete"
+                onClick={() => setFieldValue("edited", false, false)}
+              />
+              Los cambios se han realizado con exito.
+            </div>
+          )}
           <EditGeneralInformation
             departament={values.departament}
             nationality={values.nationality}
@@ -155,7 +166,8 @@ export default compose(
           }
         },
         setSubmitting,
-        setErrors
+        setErrors,
+        setFieldValue
       }
     ) => {
       await values.study.forEach(study => {
@@ -168,8 +180,6 @@ export default compose(
         }
       });
 
-      console.log(values);
-
       const { data } = await mutate({
         variables: { id, information: values },
         refetchQueries: [{ query: informationQuery, variables: { id } }]
@@ -178,9 +188,14 @@ export default compose(
       // if generalInformation has data, it has the errors
       if (data.generalInformation && data.generalInformation.length) {
         setSubmitting(false);
+        setFieldValue("edited", false, false);
         setErrors(normalizeErrors(data.generalInformation));
       } else {
         setSubmitting(false);
+        setFieldValue("edited", true, false);
+        document.getElementById("edited").scrollIntoView({
+          behavior: "smooth"
+        });
       }
     }
   })
