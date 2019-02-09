@@ -25,11 +25,6 @@ input WorkInput {
   finishIn: Date
 }
 
-input CVInput {
-  id: ID
-  routeCV: String!
-}
-
 input GeneralInformationInput {
   routePhoto: Upload
   routeCover: Upload
@@ -52,5 +47,5 @@ input GeneralInformationInput {
   language: [LanguageInput]
   study: [StudyInput]
   work: [WorkInput]
-  cv: [CVInput]
+  cv: [Upload]
 }

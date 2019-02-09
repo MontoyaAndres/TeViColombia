@@ -13,7 +13,7 @@ export class CV extends BaseEntity {
   id: string;
 
   @Column("text")
-  routeCV: string;
+  name: string;
 
   @ManyToOne(_ => User, user => user.cv)
   user: User;

@@ -27,7 +27,7 @@ type Work {
 
 type CV {
   id: ID
-  routeCV: String
+  name: String
 }
 
 type UserInformation {

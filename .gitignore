@@ -3,6 +3,7 @@ server.env
 DatabaseModel.mwb.bak
 userPhoto/
 userCover/
+cv/
 
 # Logs
 logs

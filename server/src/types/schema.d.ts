@@ -128,7 +128,7 @@ finishIn: any | null;
 interface ICV {
 __typename: "CV";
 id: string | null;
-routeCV: string | null;
+name: string | null;
 }
 
 interface INecessity {
@@ -260,7 +260,7 @@ skills?: Array<string | null> | null;
 language?: Array<ILanguageInput | null> | null;
 study?: Array<IStudyInput | null> | null;
 work?: Array<IWorkInput | null> | null;
-cv?: Array<ICVInput | null> | null;
+cv?: Array<any | null> | null;
 }
 
 interface ILanguageInput {
@@ -288,11 +288,6 @@ area: string;
 goals?: string | null;
 startedOn: any;
 finishIn?: any | null;
-}
-
-interface ICVInput {
-id?: string | null;
-routeCV: string;
 }
 }
 

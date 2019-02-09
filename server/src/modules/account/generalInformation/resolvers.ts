@@ -19,8 +19,22 @@ const storeUpload = (
   mimetype: string,
   path: string
 ): Promise<any> => {
-  const extension = mimetype.split("/")[1];
-  const fileId = `${v4()}-${Date.now()}.${extension}`;
+  const extension = () => {
+    if (
+      mimetype ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+      mimetype === "application/msword"
+    ) {
+      if (mimetype === "application/msword") {
+        return "doc";
+      }
+      return "docx";
+    } else {
+      return mimetype.split("/")[1];
+    }
+  };
+
+  const fileId = `${v4()}-${Date.now()}.${extension()}`;
 
   if (!existsSync(path)) {
     mkdirSync(path);
@@ -71,16 +85,6 @@ export const resolvers: ResolveMap = {
             }
           ];
         }
-
-        await information.study.forEach(study => {
-          if (
-            study.level === "EDUCACIÓN BÁSICA PRIMARIA" ||
-            study.level === "EDUCACIÓN BÁSICA SECUNDARIA" ||
-            study.level === "BACHILLERATO / EDUCACIÓN MEDIA"
-          ) {
-            study.area = null;
-          }
-        });
 
         if (information.routePhoto instanceof Object) {
           const { createReadStream, mimetype } = await information.routePhoto;
@@ -134,6 +138,17 @@ export const resolvers: ResolveMap = {
           }
         }
 
+        // `area` is only for university careers
+        await information.study.forEach(study => {
+          if (
+            study.level === "EDUCACIÓN BÁSICA PRIMARIA" ||
+            study.level === "EDUCACIÓN BÁSICA SECUNDARIA" ||
+            study.level === "BACHILLERATO / EDUCACIÓN MEDIA"
+          ) {
+            study.area = null;
+          }
+        });
+
         // Update user information
         await User.update(
           { id },
@@ -157,11 +172,34 @@ export const resolvers: ResolveMap = {
           }
         );
 
+        const updateCV: any[] = [];
+
+        await information.cv.forEach(async cv => {
+          const { createReadStream, mimetype } = await cv;
+
+          if (
+            mimetype === "application/pdf" ||
+            mimetype ===
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+            mimetype === "application/msword"
+          ) {
+            const stream = createReadStream();
+            const { fileId } = await storeUpload(stream, mimetype, `public/cv`);
+
+            await CV.create({ name: `cv/${fileId}`, user: { id } }).save();
+          }
+
+          // There is a bug with graphql when is uploading files.
+          // Every object that has the file is merge with a promise.
+          // To resolve this, the best solution was creating a new array with the same values.
+          updateCV.push(cv);
+        });
+
         await Promise.all([
           UpdateCreate(Languages, id, information.language),
           UpdateCreate(Study, id, information.study),
           UpdateCreate(Work, id, information.work),
-          UpdateCreate(CV, id, information.cv)
+          UpdateCreate(CV, id, updateCV)
         ]);
 
         return null;
