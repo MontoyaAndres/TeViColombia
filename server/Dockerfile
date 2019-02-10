@@ -6,7 +6,7 @@ ENV NODE_ENV development
 
 RUN apk add --no-cache bash
 
-WORKDIR /teviepe-dev
+WORKDIR /tevi-dev
 
 COPY ./package.json .
 

@@ -14,14 +14,14 @@ services:
     ports:
       - "8999:3306"
     environment:
-      MYSQL_DATABASE: teviepe_test
+      MYSQL_DATABASE: tevi_test
       MYSQL_ROOT_PASSWORD: root
   server:
     build:
       context: .
     volumes:
-      - ./:/teviepe-dev
-      - /teviepe-dev/node_modules
+      - ./:/tevi-dev
+      - /tevi-dev/node_modules
     env_file:
       - ./server.env
     environment:

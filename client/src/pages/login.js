@@ -25,7 +25,7 @@ const login = () => (
     <div className="hero-body">
       <div className="container has-text-centered">
         <div className="column is-4 is-offset-4">
-          <h3 className="title has-text-grey">Entra a Te vi EPE</h3>
+          <h3 className="title has-text-grey">Entra a Te vi Colombia</h3>
           <div className="box animated bounceInLeft">
             <figure className="avatar">
               <img src="https://placehold.it/128x128" alt="login" />

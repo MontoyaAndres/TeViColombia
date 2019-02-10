@@ -41,8 +41,8 @@
       "type": "image/png"
     }
   ],
-  "name": "Te vi EPE",
-  "short_name": "Te vi EPE",
+  "name": "Te vi Colombia",
+  "short_name": "Te vi Colombia",
   "orientation": "portrait",
   "display": "standalone",
   "start_url": "/?utm_source=web_app_manifest",
