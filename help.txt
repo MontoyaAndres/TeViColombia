@@ -1,8 +1,0 @@
-sudo docker-compose up --build
-sudo docker-compose exec db bash
-
-### Clean cache of yarn and update
-
-yarn cache clean
-
-yarn upgrade
