@@ -24,7 +24,7 @@ class MyDocument extends Document {
             content="black-translucent"
           />
           <meta name="format-detection" content="telephone=no" />
-          <meta name="apple-mobile-web-app-title" content="Te vi EPE" />
+          <meta name="apple-mobile-web-app-title" content="Te vi Colombia" />
           <link
             rel="apple-touch-icon"
             sizes="180x180"
@@ -47,7 +47,7 @@ class MyDocument extends Document {
           <meta property="og:locale" content="es_CO" />
           <meta property="og:type" content="website" />
           <meta property="og:image" content="icons/icon-128x128.png" />
-          <meta property="og:site_name" content="Te vi EPE" />
+          <meta property="og:site_name" content="Te vi Colombia" />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
