@@ -4,6 +4,7 @@ import { withRouter } from "next/router";
 import Error from "next/error";
 import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
+import omit from "lodash.omit";
 
 import Loading from "../../components/shared/loading";
 import checkLoggedIn from "../../lib/checkLoggedIn";
@@ -73,7 +74,9 @@ class edit extends React.PureComponent {
                 className="delete"
                 onClick={() => setFieldValue("edited", false, false)}
               />
-              Los cambios se han realizado con exito.
+              <p className="subtitle">
+                Los cambios se han realizado con exito.
+              </p>
             </div>
           )}
           <EditGeneralInformation
@@ -181,7 +184,7 @@ export default compose(
       });
 
       const { data } = await mutate({
-        variables: { id, information: values },
+        variables: { id, information: omit(values, "edited") },
         refetchQueries: [{ query: informationQuery, variables: { id } }]
       });
 

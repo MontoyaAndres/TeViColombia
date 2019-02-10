@@ -100,6 +100,6 @@ export const GeneralInformationValidation = Yup.object().shape({
     .typeError("Campo incorrecto"),
   website: Yup.string()
     .nullable(true)
-    .matches(/http(s)?:\/\/(.*\.)?.*/, "Sitio web incorrecto.")
+    .url("Sitio web incorrecto.")
     .typeError("Campo incorrecto")
 });
