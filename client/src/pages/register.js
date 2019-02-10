@@ -1,7 +1,8 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import { withFormik, Form } from "formik";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
+import omit from "lodash.omit";
 
 import { TextField, SelectField } from "../components/shared/globalField";
 import { RegisterValidation } from "../utils/validation";
@@ -164,7 +165,7 @@ export default compose(
       { props: { mutate }, setSubmitting, setErrors, resetForm, setFieldValue }
     ) => {
       const { data } = await mutate({
-        variables: values
+        variables: omit(values, "registered")
       });
 
       // if login has data, it has the errors
