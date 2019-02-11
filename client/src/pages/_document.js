@@ -58,10 +58,16 @@ class MyDocument extends Document {
             integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
             crossOrigin="anonymous"
           />
-          <link rel="stylesheet" href="/static/css/nprogress.css" />
-          <link rel="stylesheet" href="/static/css/bulma.min.css" />
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css"
+          />
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"
+          />
           <link rel="stylesheet" href="/static/css/bulma-divider.min.css" />
-          <link rel="stylesheet" href="/static/css/animate.min.css" />
+          <link rel="stylesheet" href="/static/css/nprogress.css" />
           <link rel="stylesheet" href="/static/css/stars.css" />
           <link rel="stylesheet" href="/static/css/styles.css" />
           <link rel="stylesheet" href="/static/css/loading.css" />
