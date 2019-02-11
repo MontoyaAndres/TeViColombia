@@ -35,7 +35,9 @@ class uploadRouteCover extends PureComponent {
     } = this.props;
     const cover =
       (value ? value.preview : null) ||
-      `http://localhost:4000/${values.routeCover}`;
+      (values.routeCover
+        ? `${process.env.API_HOST}/${values.routeCover}`
+        : null);
 
     return (
       <Dropzone
@@ -52,7 +54,10 @@ class uploadRouteCover extends PureComponent {
                 <img src={cover} alt="user cover" />
               </div>
             ) : (
-              <div className="background-cover background-cover-edit" />
+              <div
+                className="background-cover background-cover-edit"
+                style={{ height: 450, width: "100%" }}
+              />
             )}
           </div>
         )}

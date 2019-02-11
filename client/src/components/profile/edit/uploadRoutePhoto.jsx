@@ -35,7 +35,7 @@ class uploadRoutePhoto extends PureComponent {
     } = this.props;
     const photo =
       (value ? value.preview : null) ||
-      `http://localhost:4000/${values.routePhoto}`;
+      `${process.env.API_HOST}/${values.routePhoto}`;
 
     return (
       <div
