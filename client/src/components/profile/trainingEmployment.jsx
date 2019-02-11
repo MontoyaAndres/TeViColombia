@@ -102,7 +102,7 @@ const trainingEmployment = ({ information }) => (
                       <div className="media">
                         <div className="media-left">
                           <a
-                            href={`http://localhost:4000/cv/${cv.name.replace(
+                            href={`${process.env.API_HOST}/cv/${cv.name.replace(
                               /(cv\/)/g,
                               ""
                             )}`}

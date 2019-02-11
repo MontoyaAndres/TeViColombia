@@ -13,10 +13,7 @@ if (!isBrowser) {
 
 function create(initialState, { getToken }) {
   const httpLink = createUploadLink({
-    uri:
-      process.env.NODE_ENV === "production"
-        ? "https://api.barhalem.com/"
-        : "http://localhost:4000/",
+    uri: process.env.API_HOST,
     credentials: "include"
   });
 

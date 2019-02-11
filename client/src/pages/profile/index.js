@@ -72,18 +72,22 @@ class profile extends PureComponent {
     if (!dataInformation) {
       return <Error statusCode={404} />;
     }
+    console.log(dataInformation);
 
     return (
       <>
         {dataInformation.routeCover ? (
           <div className="background-cover">
             <img
-              src={`http://localhost:4000/${dataInformation.routeCover}`}
+              src={`${process.env.API_HOST}/${dataInformation.routeCover}`}
               alt="user cover"
             />
           </div>
         ) : (
-          <div className="background-cover" />
+          <div
+            className="background-cover"
+            style={{ height: 450, width: "100%" }}
+          />
         )}
 
         <div
@@ -98,7 +102,7 @@ class profile extends PureComponent {
           <figure className="avatar-profile">
             <img
               style={{ width: 200, height: 200 }}
-              src={`http://localhost:4000/${dataInformation.routePhoto}`}
+              src={`${process.env.API_HOST}/${dataInformation.routePhoto}`}
               alt="profile"
             />
           </figure>
@@ -118,7 +122,9 @@ class profile extends PureComponent {
             >
               <a>Información general</a>
             </li>
-            {dataInformation.study.length && dataInformation.work.length ? (
+            {dataInformation.study.length ||
+            dataInformation.work.length ||
+            dataInformation.cv.length ? (
               <li
                 className={value === 2 ? "is-active" : ""}
                 onClick={() => this.handleValue(2)}

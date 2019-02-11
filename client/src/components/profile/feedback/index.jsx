@@ -112,28 +112,30 @@ class index extends React.PureComponent {
             />
           )}
 
-          <div className="notification is-info">
-            {dataCountFeedbackStars ? (
-              <p className="subtitle">
-                Tienes la cantidad de{" "}
-                {dataCountFeedbackStars === 1
-                  ? `${dataCountFeedbackStars} estrella`
-                  : `${dataCountFeedbackStars} estrellas`}{" "}
-                <span role="img" aria-label="happy">
-                  🤗🥳🤩.
-                </span>
-              </p>
-            ) : (
-              <p className="subtitle">
-                Tienes la cantidad de 0 estrellas{" "}
-                <span role="img" aria-label="sad">
-                  🥺🙁
-                </span>
-                . Busca personas para que te den Feedback y crezcas en Te vi
-                Colombia!
-              </p>
-            )}
-          </div>
+          {dataMe.id === id && (
+            <div className="notification is-info">
+              {dataCountFeedbackStars ? (
+                <p className="subtitle">
+                  Tienes la cantidad de{" "}
+                  {dataCountFeedbackStars === 1
+                    ? `${dataCountFeedbackStars} estrella`
+                    : `${dataCountFeedbackStars} estrellas`}{" "}
+                  <span role="img" aria-label="happy">
+                    🤗🥳🤩.
+                  </span>
+                </p>
+              ) : (
+                <p className="subtitle">
+                  Tienes la cantidad de 0 estrellas{" "}
+                  <span role="img" aria-label="sad">
+                    🥺🙁
+                  </span>
+                  . Busca personas para que te den Feedback y crezcas en Te vi
+                  Colombia!
+                </p>
+              )}
+            </div>
+          )}
 
           {dataFeedback && dataFeedback.length
             ? dataFeedback.map(feed => (
@@ -154,7 +156,7 @@ class index extends React.PureComponent {
                           <div className="media-left">
                             <figure className="image is-48x48">
                               <img
-                                src={`http://localhost:4000/${
+                                src={`${process.env.API_HOST}/${
                                   feed.user.routePhoto
                                 }`}
                                 alt="profile"

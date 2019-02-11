@@ -133,8 +133,8 @@ export default compose(
   graphql(generalInformationMutation),
   withFormik({
     mapPropsToValues: ({ data }) => ({
-      routePhoto: data.information.routePhoto,
-      routeCover: data.information.routeCover,
+      routePhoto: data.information.routePhoto || "",
+      routeCover: data.information.routeCover || "",
       name: data.information.name,
       lastname: data.information.lastname,
       description: data.information.description || "",
@@ -196,7 +196,9 @@ export default compose(
       } else {
         setSubmitting(false);
         setFieldValue("edited", true, false);
-        document.getElementById("edited").scrollIntoView({
+        window.scrollTo({
+          top: document.getElementById("edited").offsetTop,
+          left: 100,
           behavior: "smooth"
         });
       }
