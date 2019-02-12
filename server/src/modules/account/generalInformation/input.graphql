@@ -38,6 +38,7 @@ input GeneralInformationInput {
   departament: String!
   town: String!
   nationality: String!
+  birth: Date
   civilStatus: String!
   linkedin: String
   skype: String

@@ -152,6 +152,16 @@ const editGeneralInformation = ({
           ) : null}
 
           <div className="column is-6">
+            <label className="label">Fecha de nacimiento</label>
+            <TextField
+              type="date"
+              name="birth"
+              placeholder="Fechas de nacimiento"
+              isRequired={false}
+            />
+          </div>
+
+          <div className="column is-6">
             <label className="label">Perfil de Linkedin</label>
             <TextField
               type="url"
