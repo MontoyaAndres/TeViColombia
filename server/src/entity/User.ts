@@ -82,6 +82,9 @@ export class User extends BaseEntity {
   @Column("enum", { enum: ENUMCountry, nullable: true })
   nationality: string;
 
+  @Column("date", { nullable: true })
+  birth: Date;
+
   @Column("enum", { enum: ENUMCivilStatus, nullable: true })
   civilStatus: string;
 

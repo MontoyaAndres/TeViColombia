@@ -35,6 +35,9 @@ const generalInformation = ({ information }) => (
                 <strong>Municipio:</strong> {information.town}
               </p>
             ) : null}
+            <p className="subtitle">
+              <strong>Fecha de nacimiento:</strong> {information.birth}
+            </p>
           </div>
         </div>
       </div>

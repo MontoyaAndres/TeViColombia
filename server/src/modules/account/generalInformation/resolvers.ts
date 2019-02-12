@@ -163,6 +163,7 @@ export const resolvers: ResolveMap = {
             departament: information.departament,
             town: information.town,
             nationality: information.nationality,
+            birth: information.birth,
             civilStatus: information.civilStatus,
             linkedin: information.linkedin,
             skype: information.skype,

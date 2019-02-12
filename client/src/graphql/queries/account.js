@@ -15,6 +15,7 @@ const informationQuery = gql`
       departament
       town
       nationality
+      birth
       civilStatus
       linkedin
       skype
