@@ -1,8 +1,18 @@
+type Portafolio {
+  id: ID
+  multimedia: [String]
+  description: String
+}
+
+type Query {
+  portafolio(userId: ID!): [Portafolio]
+}
+
 type Mutation {
-  portafolio(multimedia: Upload!, description: String!): Boolean!
+  portafolio(id: ID!, multimedia: [Upload!], description: String!): Boolean!
   editPortafolio(
     idPortafolio: ID!
-    multimedia: Upload!
+    multimedia: [Upload!]
     description: String!
   ): Boolean!
   deletePortafolio(idPortafolio: ID!): Boolean!

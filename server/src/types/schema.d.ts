@@ -27,6 +27,7 @@ countFeedbackStars: number | null;
 information: IUserInformation | null;
 necessity: Array<INecessity | null>;
 countNecessity: number;
+portafolio: Array<IPortafolio | null> | null;
 me: IUser | null;
 }
 
@@ -47,6 +48,10 @@ userId: string;
 }
 
 interface ICountNecessityOnQueryArguments {
+userId: string;
+}
+
+interface IPortafolioOnQueryArguments {
 userId: string;
 }
 
@@ -139,6 +144,13 @@ finished: boolean | null;
 comment: string | null;
 }
 
+interface IPortafolio {
+__typename: "Portafolio";
+id: string | null;
+multimedia: Array<string | null> | null;
+description: string | null;
+}
+
 interface IMutation {
 __typename: "Mutation";
 feedback: Array<IError> | null;
@@ -189,13 +201,14 @@ id: string;
 }
 
 interface IPortafolioOnMutationArguments {
-multimedia: any;
+id: string;
+multimedia?: Array<any> | null;
 description: string;
 }
 
 interface IEditPortafolioOnMutationArguments {
 idPortafolio: string;
-multimedia: any;
+multimedia?: Array<any> | null;
 description: string;
 }
 

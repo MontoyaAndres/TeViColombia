@@ -36,6 +36,10 @@ const DynamicNecessity = dynamic(
   () => import("../../components/profile/necessity"),
   { loading: () => <Loading /> }
 );
+const DynamicPortafolio = dynamic(
+  () => import("../../components/profile/portafolio"),
+  { loading: () => <Loading /> }
+);
 
 class profile extends PureComponent {
   state = {
@@ -72,7 +76,6 @@ class profile extends PureComponent {
     if (!dataInformation) {
       return <Error statusCode={404} />;
     }
-    console.log(dataInformation);
 
     return (
       <>
@@ -153,6 +156,12 @@ class profile extends PureComponent {
                 <span className="tag is-primary">{dataCountNecessity}</span>
               </a>
             </li>
+            <li
+              className={value === 6 ? "is-active" : ""}
+              onClick={() => this.handleValue(6)}
+            >
+              <a>Portafolio</a>
+            </li>
           </ul>
         </div>
 
@@ -167,6 +176,7 @@ class profile extends PureComponent {
           <DynameicCommercialEstablishment information={dataInformation} />
         )}
         {value === 5 && <DynamicNecessity id={id} />}
+        {value === 6 && <DynamicPortafolio id={id} />}
       </>
     );
   }

@@ -87,4 +87,20 @@ const countNecessityQuery = gql`
   }
 `;
 
-export { informationQuery, feedbackQuery, necessityQuery, countNecessityQuery };
+const portafolioQuery = gql`
+  query PortafolioQuery($userId: ID!) {
+    portafolio(userId: $userId) {
+      id
+      multimedia
+      description
+    }
+  }
+`;
+
+export {
+  informationQuery,
+  feedbackQuery,
+  necessityQuery,
+  countNecessityQuery,
+  portafolioQuery
+};

@@ -4,7 +4,7 @@ const trainingEmployment = ({ information }) => (
   <div className="container">
     <div style={{ padding: ".75rem" }}>
       {information.study && information.study.length ? (
-        <div className="box" style={{ marginTop: "1.2rem" }}>
+        <div className="box" style={{ marginTop: "0.5rem" }}>
           <p className="title">Estudio</p>
           {information.study.map((study, i) => (
             <div className="content" key={i}>

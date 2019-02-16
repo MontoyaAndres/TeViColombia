@@ -3,7 +3,8 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne
+  ManyToOne,
+  CreateDateColumn
 } from "typeorm";
 
 // Models
@@ -19,6 +20,9 @@ export class Portafolio extends BaseEntity {
 
   @Column("text")
   description: string;
+
+  @CreateDateColumn({ type: "timestamp" })
+  createdAt: Date;
 
   @ManyToOne(_ => User, user => user.portafolio)
   user: User;

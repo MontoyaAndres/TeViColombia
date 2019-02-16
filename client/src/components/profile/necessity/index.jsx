@@ -12,6 +12,7 @@ import meQuery from "../../../graphql/queries/me";
 import { TextAreaField } from "../../shared/globalField";
 import UpdateNecessityModal from "./updateNecessityModal";
 import DeleteNecessityModal from "./deleteNecessityModal";
+import linkify from "../../shared/linkify";
 
 const necessityMutation = gql`
   mutation NecessityMutation($finished: Boolean!, $comment: String!) {
@@ -22,7 +23,7 @@ const necessityMutation = gql`
 const InputNecessity = ({ isSubmitting, handleSubmit }) => (
   <Form method="POST" onSubmit={handleSubmit}>
     <div style={{ padding: ".75rem" }}>
-      <div className="box" style={{ marginTop: "0.8rem" }}>
+      <div className="box" style={{ marginTop: "0.5rem" }}>
         <label className="label">Escribe qué es lo que necesitas.</label>
         <TextAreaField name="comment" placeholder="Comentario" isRequired />
 
@@ -176,7 +177,12 @@ class index extends React.PureComponent {
                             </div>
                           </div>
                           <div className="media-content">
-                            <p className="subtitle">{neces.comment}</p>
+                            <p
+                              className="subtitle"
+                              dangerouslySetInnerHTML={{
+                                __html: linkify(neces.comment)
+                              }}
+                            />
                           </div>
                         </div>
                       </div>
