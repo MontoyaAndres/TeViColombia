@@ -1,9 +1,10 @@
 # App
 server.env
 DatabaseModel.mwb.bak
-userPhoto/
-userCover/
-cv/
+server/public/userPhoto/
+server/public/userCover/
+server/public/cv/
+server/public/portafolio/
 
 # Logs
 logs

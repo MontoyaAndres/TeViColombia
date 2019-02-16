@@ -67,6 +67,7 @@ class MyDocument extends Document {
             href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"
           />
           <link rel="stylesheet" href="/static/css/bulma-divider.min.css" />
+          <link rel="stylesheet" href="/static/css/carousel.min.css" />
           <link rel="stylesheet" href="/static/css/nprogress.css" />
           <link rel="stylesheet" href="/static/css/stars.css" />
           <link rel="stylesheet" href="/static/css/styles.css" />

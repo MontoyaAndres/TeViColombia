@@ -109,9 +109,27 @@ textarea.textarea:-moz-placeholder {
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.5), 0 0 0 1px rgba(10, 10, 10, 0.5);
 }
 
-.card-header,
-.card-content {
-  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.5), 0 0 0 1px rgba(10, 10, 10, 0.5);
+.card {
+  box-shadow: none;
+}
+
+.card > * {
+  border: 1px solid rgba(10, 10, 10, 0.5);
+}
+
+.card-image > * {
+  width: 640px;
+  height: 480px;
+  background-color: rgba(214, 214, 214, 0.1);
+}
+
+.card-footer {
+  border-top: none;
+  border-right: none;
+}
+
+.card-footer .card-footer-item {
+  border-right: 1px solid rgba(10, 10, 10, 0.5);
 }
 
 .avatar {
@@ -194,6 +212,32 @@ input[type="number"] {
 a span.tag {
   margin-left: 5px;
   font-size: 1rem;
+}
+
+.portafolio {
+  overflow-y: hidden;
+  white-space: nowrap;
+  overflow-x: auto;
+  object-fit: cover;
+  margin: 10px;
+}
+
+.portafolio .portafolio-list {
+  position: relative;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.portafolio .portafolio-list > * {
+  width: 200px !important;
+  height: 200px !important;
+}
+
+.portafolio .portafolio-list > .delete {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  z-index: 1;
 }
 
 @keyframes growBubble {

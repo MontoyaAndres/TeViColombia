@@ -12,6 +12,7 @@ import normalizeErrors from "../../../utils/normalizeErrors";
 import { TextAreaField } from "../../shared/globalField";
 import ChangeStars from "../../shared/changeStars";
 import DeleteFeedbackModal from "./deleteFeedbackModal";
+import linkify from "../../shared/linkify";
 
 const countFeedbackStarsQuery = gql`
   query CountFeedbackStarsQuery($userId: ID!) {
@@ -35,7 +36,7 @@ const InputFeedback = ({
   setFieldValue
 }) => (
   <Form method="POST" onSubmit={handleSubmit}>
-    <div className="box" style={{ marginTop: "0.8rem" }}>
+    <div className="box" style={{ marginTop: "0.5rem" }}>
       <span className="label">
         Valoración general
         <ChangeStars stars={stars} setFieldValue={setFieldValue} />
@@ -180,7 +181,12 @@ class index extends React.PureComponent {
                           </div>
                         </div>
 
-                        <div className="content">{feed.comment}</div>
+                        <div
+                          className="content"
+                          dangerouslySetInnerHTML={{
+                            __html: linkify(feed.comment)
+                          }}
+                        />
                       </div>
                     </div>
                   </div>
