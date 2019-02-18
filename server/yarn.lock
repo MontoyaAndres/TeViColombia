@@ -94,7 +94,15 @@
     "@types/node" "*"
     "@types/range-parser" "*"
 
-"@types/express-session@*", "@types/express-session@1.15.11":
+"@types/express-session@*":
+  version "1.15.12"
+  resolved "https://registry.yarnpkg.com/@types/express-session/-/express-session-1.15.12.tgz#1126704826e80f8381da4fbbb35a199f550d1433"
+  integrity sha512-DHZXzWy6Nu5Ng0syXUiVFRpZ6/1DOXoTCWa6RG3itGrub2ioBYvgtDbkT6VHHNo3iOdHRROyWANsMBJVaflblQ==
+  dependencies:
+    "@types/express" "*"
+    "@types/node" "*"
+
+"@types/express-session@1.15.11":
   version "1.15.11"
   resolved "https://registry.yarnpkg.com/@types/express-session/-/express-session-1.15.11.tgz#49bca7a8fb5c00402907e8ec0d3546ee28de2c41"
   integrity sha512-BRgOXYBhmt71CuOR/PQvKBRgcS567xJmE7dT3r/FvTmWc1ZsR5joVH32dgH+z6F4FugniF04tMyXc4UF9M8Hfg==
@@ -126,10 +134,15 @@
   resolved "https://registry.yarnpkg.com/@types/graphql-deduplicator/-/graphql-deduplicator-2.0.0.tgz#9e577b8f3feb3d067b0ca756f4a1fb356d533922"
   integrity sha512-swUwj5hWF1yFzbUXStLJrUa0ksAt11B8+SwhsAjQAX0LYJ1LLioAyuDcJ9bovWbsNzIXJYXLvljSPQw8nR728w==
 
-"@types/graphql@14.0.5", "@types/graphql@^14.0.0":
+"@types/graphql@14.0.5":
   version "14.0.5"
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-14.0.5.tgz#e696292fd2d77dc168b5b791710f83463aa39abd"
   integrity sha512-bwGYLE0SRy5ZraC91dqI2bxbspfm10kyJ2Yjuvk4OjdGznh7fkoWW+xXZHfFydJaqu9syZi099cpiZw3GlPDiA==
+
+"@types/graphql@^14.0.0":
+  version "14.0.7"
+  resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-14.0.7.tgz#daa09397220a68ce1cbb3f76a315ff3cd92312f6"
+  integrity sha512-BoLDjdvLQsXPZLJux3lEZANwGr3Xag56Ngy0U3y8uoRSDdeLcn43H3oBcgZlnd++iOQElBpaRVDHPzEDekyvXQ==
 
 "@types/helmet@0.0.42":
   version "0.0.42"
@@ -162,7 +175,12 @@
   dependencies:
     "@types/express" "*"
 
-"@types/node@*", "@types/node@10.12.24":
+"@types/node@*":
+  version "11.9.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.4.tgz#ceb0048a546db453f6248f2d1d95e937a6f00a14"
+  integrity sha512-Zl8dGvAcEmadgs1tmSPcvwzO1YRsz38bVJQvH1RvRqSR9/5n61Q1ktcDL0ht3FXWR+ZpVmXVwN1LuH4Ax23NsA==
+
+"@types/node@10.12.24":
   version "10.12.24"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.24.tgz#b13564af612a22a20b5d95ca40f1bffb3af315cf"
   integrity sha512-GWWbvt+z9G5otRBW8rssOFgRY87J9N/qbhqfjMZ+gUuL6zoL+Hm6gP/8qQBG4jjimqdaNLCehcVapZ/Fs2WjCQ==
@@ -329,9 +347,9 @@ apollo-upload-server@^7.0.0:
     object-path "^0.11.4"
 
 apollo-utilities@^1.0.1:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.1.2.tgz#aa5eca9d1f1eb721c381a22e0dde03559d856db3"
-  integrity sha512-EjDx8vToK+zkWIxc76ZQY/irRX52puNg04xf/w8R0kVTDAgHuVfnFVC01O5vE25kFnIaa5em0pFI0p9b6YMkhQ==
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.1.3.tgz#a8883c0392f6b46eac0d366204ebf34be9307c87"
+  integrity sha512-pF9abhiClX5gfj/WFWZh8DiI33nOLGxRhXH9ZMquaM1V8bhq1WLFPt2QjShWH3kGQVeIGUK+FQefnhe+ZaaAYg==
   dependencies:
     fast-json-stable-stringify "^2.0.0"
     tslib "^1.9.3"
@@ -421,9 +439,9 @@ aws-lambda@^0.1.2:
     dotenv "^0.4.0"
 
 aws-sdk@^*:
-  version "2.400.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.400.0.tgz#21041439ceeba8e6339b7bed54f2f3703243bbef"
-  integrity sha512-FJjRXajLnI52F0C1E4nFARk/907x4ZuffwFd6jiBQfaepT03wsY1PcJNEQ5CNHYA2qxAx4HezL2pKySEX+g87g==
+  version "2.404.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.404.0.tgz#f657db41bc4dab759e897eaa55bc377ac3e15f45"
+  integrity sha512-eQ+hv2hOpcyHUoUUIXcb7TVItzFfgTC0HIribcaDlbF4Kc1p9PSg+2jnK7ibjT6iMcoERx9Hr/vt6Cfc3Sgh5w==
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -643,9 +661,9 @@ chalk@^2.0.1, chalk@^2.3.0, chalk@^2.3.2:
     supports-color "^5.3.0"
 
 chokidar@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.0.tgz#5fcb70d0b28ebe0867eb0f09d5f6a08f29a1efa0"
-  integrity sha512-5t6G2SH8eO6lCvYOoUpaRnF5Qfd//gd7qJAkwRUw9qlGVkiQ13uwQngqbWWaurOsaAm9+kUGbITADxt6H0XFNQ==
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.1.tgz#adc39ad55a2adf26548bd2afa048f611091f9184"
+  integrity sha512-gfw3p2oQV2wEt+8VuMlNsPjCxDxvvgnm/kz+uATu805mWVF8IJN7uz9DN7iBz+RMJISmiVbCOBFs9qBGMjtPfQ==
   dependencies:
     anymatch "^2.0.0"
     async-each "^1.0.1"
@@ -832,9 +850,9 @@ copy-descriptor@^0.1.0:
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
 core-js@^2.5.3:
-  version "2.6.4"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.4.tgz#b8897c062c4d769dd30a0ac5c73976c47f92ea0d"
-  integrity sha512-05qQ5hXShcqGkPZpXEFLIpxayZscVD2kuMBZewxiIPPEagukO4mqgPA9CWhUvFBJfy3ODdK2p9xyHh7FTU9/7A==
+  version "2.6.5"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.5.tgz#44bc8d249e7fb2ff5d00e0341a7ffb94fbf67895"
+  integrity sha512-klh/kDpwX8hryYL14M9w/xei6vrv6sE8gTHDG7/T/+SEovB/G4ejwcfE/CBzO6Edsu+OETZMZ3wcX/EjUkrl5A==
 
 core-util-is@~1.0.0:
   version "1.0.2"
@@ -2163,22 +2181,17 @@ micromatch@^3.1.10, micromatch@^3.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-"mime-db@>= 1.36.0 < 2":
+"mime-db@>= 1.36.0 < 2", mime-db@~1.38.0:
   version "1.38.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.38.0.tgz#1a2aab16da9eb167b49c6e4df2d9c68d63d8e2ad"
   integrity sha512-bqVioMFFzc2awcdJZIzR3HjZFX20QhilVS7hytkKrv7xFAn8bM1gzc/FOX2awLISvWe0PV8ptFKcon+wZ5qYkg==
 
-mime-db@~1.37.0:
-  version "1.37.0"
-  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.37.0.tgz#0b6a0ce6fdbe9576e25f1f2d2fde8830dc0ad0d8"
-  integrity sha512-R3C4db6bgQhlIhPU48fUtdVmKnflq+hRdad7IyKhtFj06VPNVdk2RhiYL3UjQIlso8L+YxAtFkobT0VK+S/ybg==
-
 mime-types@~2.1.18:
-  version "2.1.21"
-  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.21.tgz#28995aa1ecb770742fe6ae7e58f9181c744b3f96"
-  integrity sha512-3iL6DbwpyLzjR3xHSFNFeb9Nz/M8WDkX33t1GFQnFOllWk8pOrh/LSrB5OXlnlW5P9LH73X6loW/eogc+F5lJg==
+  version "2.1.22"
+  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.22.tgz#fe6b355a190926ab7698c9a0556a11199b2199bd"
+  integrity sha512-aGl6TZGnhm/li6F7yx82bJiBZwgiEa4Hf6CNr8YO+r5UHr53tSTYZb102zyU50DOWWKeOv0uQLRL0/9EiKWCog==
   dependencies:
-    mime-db "~1.37.0"
+    mime-db "~1.38.0"
 
 mime@1.4.1:
   version "1.4.1"
