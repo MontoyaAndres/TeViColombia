@@ -81,26 +81,11 @@ const index = ({
 
                 <div className="card-content">
                   <div
-                    className="control has-icons-right"
-                    style={{ top: "none" }}
-                  >
-                    <span
-                      className="icon is-medium"
-                      style={{ left: "94%", bottom: 1 }}
-                    >
-                      <i
-                        className="fas fa-ellipsis-v is-medium"
-                        style={{ color: "gray" }}
-                        aria-hidden="true"
-                      />
-                    </span>
-                    <div
-                      className="content"
-                      dangerouslySetInnerHTML={{
-                        __html: linkify(portafolio.description)
-                      }}
-                    />
-                  </div>
+                    className="content"
+                    dangerouslySetInnerHTML={{
+                      __html: linkify(portafolio.description)
+                    }}
+                  />
                 </div>
 
                 {dataMe.id === id && (
