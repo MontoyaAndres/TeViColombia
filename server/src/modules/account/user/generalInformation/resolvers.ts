@@ -1,16 +1,16 @@
-import { ResolveMap } from "../../../types/graphql-utils";
-import { GQL } from "../../../types/schema";
-import { User } from "../../../entity/User";
-import { Languages } from "../../../entity/Languages";
-import { Study } from "../../../entity/Study";
-import { Work } from "../../../entity/Work";
-import { CV } from "../../../entity/CV";
-import UpdateCreate from "../shared/UpdateCreate";
-import { createMiddleware } from "../../../utils/createMiddleware";
-import { middleware } from "../../shared/authMiddleware";
-import { GeneralInformationValidation } from "../../../utils/validation";
-import { formatYupError } from "../../../utils/formatYupError";
-import storeUpload from "../../../utils/storeUpload";
+import { ResolveMap } from "../../../../types/graphql-utils";
+import { GQL } from "../../../../types/schema";
+import { User } from "../../../../entity/User";
+import { Language } from "../../../../entity/Language";
+import { Study } from "../../../../entity/Study";
+import { Work } from "../../../../entity/Work";
+import { CV } from "../../../../entity/CV";
+import UpdateCreate from "../../shared/UpdateCreate";
+import { createMiddleware } from "../../../../utils/createMiddleware";
+import { middleware } from "../../../shared/authMiddleware";
+import { GeneralInformationValidation } from "../../../../utils/validation";
+import { formatYupError } from "../../../../utils/formatYupError";
+import storeUpload from "../../../../utils/storeUpload";
 
 export const resolvers: ResolveMap = {
   Mutation: {
@@ -137,34 +137,41 @@ export const resolvers: ResolveMap = {
           }
         );
 
-        const updateCV: any[] = [];
+        const saveCV = await Promise.all(
+          information.cv.map(async cv => {
+            const { createReadStream, mimetype, filename } = await cv;
 
-        await information.cv.forEach(async cv => {
-          const { createReadStream, mimetype } = await cv;
+            if (
+              mimetype === "application/pdf" ||
+              mimetype ===
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+              mimetype === "application/msword"
+            ) {
+              const stream = createReadStream();
+              const { fileId } = await storeUpload(
+                stream,
+                mimetype,
+                `public/cv`
+              );
 
-          if (
-            mimetype === "application/pdf" ||
-            mimetype ===
-              "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-            mimetype === "application/msword"
-          ) {
-            const stream = createReadStream();
-            const { fileId } = await storeUpload(stream, mimetype, `public/cv`);
+              const cvUploaded = await CV.create({
+                routeCV: `cv/${fileId}`,
+                filename,
+                user: { id }
+              }).save();
 
-            await CV.create({ name: `cv/${fileId}`, user: { id } }).save();
-          }
+              return cvUploaded;
+            }
 
-          // There is a bug with graphql when is uploading files.
-          // Every object that has the file is merge with a promise.
-          // To resolve this, the best solution was creating a new array with the same values.
-          updateCV.push(cv);
-        });
+            return cv;
+          })
+        );
 
         await Promise.all([
-          UpdateCreate(Languages, id, information.language),
+          UpdateCreate(Language, id, information.language),
           UpdateCreate(Study, id, information.study),
           UpdateCreate(Work, id, information.work),
-          UpdateCreate(CV, id, updateCV)
+          UpdateCreate(CV, id, saveCV)
         ]);
 
         return null;

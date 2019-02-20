@@ -14,14 +14,14 @@ export class Study extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("varchar", { length: 255 })
+  @Column("varchar")
   place: string;
 
   @Column("enum", { enum: ENUMStudyLevel })
   level: string;
 
   // This is only for university careers
-  @Column("varchar", { length: 255, nullable: true })
+  @Column("varchar", { nullable: true })
   area: string;
 
   @Column("date")

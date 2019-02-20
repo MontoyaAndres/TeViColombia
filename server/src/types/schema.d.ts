@@ -24,19 +24,26 @@ interface IQuery {
 __typename: "Query";
 feedback: Array<IFeedback | null>;
 countFeedbackStars: number | null;
+portfolio: Array<IPortfolio | null> | null;
 information: IUserInformation | null;
 necessity: Array<INecessity | null>;
 countNecessity: number;
-portafolio: Array<IPortafolio | null> | null;
 me: IUser | null;
 }
 
 interface IFeedbackOnQueryArguments {
-userId: string;
+id: string;
+type: string;
 }
 
 interface ICountFeedbackStarsOnQueryArguments {
-userId: string;
+id: string;
+type: string;
+}
+
+interface IPortfolioOnQueryArguments {
+id: string;
+type: string;
 }
 
 interface IInformationOnQueryArguments {
@@ -51,16 +58,12 @@ interface ICountNecessityOnQueryArguments {
 userId: string;
 }
 
-interface IPortafolioOnQueryArguments {
-userId: string;
-}
-
 interface IFeedback {
 __typename: "Feedback";
 id: string | null;
 stars: number | null;
 comment: string | null;
-user: IUser | null;
+from: IUser | null;
 }
 
 interface IUser {
@@ -70,6 +73,13 @@ name: string;
 lastname: string;
 email: string;
 routePhoto: string;
+}
+
+interface IPortfolio {
+__typename: "Portfolio";
+id: string | null;
+multimedia: Array<string | null> | null;
+description: string | null;
 }
 
 interface IUserInformation {
@@ -134,7 +144,8 @@ finishIn: any | null;
 interface ICV {
 __typename: "CV";
 id: string | null;
-name: string | null;
+filename: string | null;
+routeCV: string | null;
 }
 
 interface INecessity {
@@ -144,24 +155,17 @@ finished: boolean | null;
 comment: string | null;
 }
 
-interface IPortafolio {
-__typename: "Portafolio";
-id: string | null;
-multimedia: Array<string | null> | null;
-description: string | null;
-}
-
 interface IMutation {
 __typename: "Mutation";
 feedback: Array<IError> | null;
 deleteFeedback: boolean;
+portfolio: boolean;
+updatePortfolio: boolean;
+deletePortfolio: boolean;
 generalInformation: Array<IError> | null;
 necessity: boolean;
 updateNecessity: boolean;
 deleteNecessity: boolean;
-portafolio: boolean;
-editPortafolio: boolean;
-deletePortafolio: boolean;
 sendForgotPasswordEmail: boolean | null;
 forgotPasswordChange: Array<IError> | null;
 login: Array<IError> | null;
@@ -171,13 +175,30 @@ userSettings: Array<IError> | null;
 }
 
 interface IFeedbackOnMutationArguments {
-id: string;
+toId: string;
 stars: number;
 comment: string;
 }
 
 interface IDeleteFeedbackOnMutationArguments {
 id: string;
+}
+
+interface IPortfolioOnMutationArguments {
+id: string;
+multimedia?: Array<any> | null;
+description: string;
+}
+
+interface IUpdatePortfolioOnMutationArguments {
+id: string;
+idPortfolio: string;
+multimedia?: Array<any> | null;
+description: string;
+}
+
+interface IDeletePortfolioOnMutationArguments {
+idPortfolio: string;
 }
 
 interface IGeneralInformationOnMutationArguments {
@@ -198,22 +219,6 @@ comment: string;
 
 interface IDeleteNecessityOnMutationArguments {
 id: string;
-}
-
-interface IPortafolioOnMutationArguments {
-id: string;
-multimedia?: Array<any> | null;
-description: string;
-}
-
-interface IEditPortafolioOnMutationArguments {
-idPortafolio: string;
-multimedia?: Array<any> | null;
-description: string;
-}
-
-interface IDeletePortafolioOnMutationArguments {
-idPortafolio: string;
 }
 
 interface ISendForgotPasswordEmailOnMutationArguments {

@@ -88,10 +88,9 @@ class editCV extends PureComponent {
                                 />
                               </div>
                               <div className="media-content">
-                                <span className="subtitle">{`archivo_tevi_${CVFile.name.replace(
-                                  /(cv\/)/g,
-                                  ""
-                                )}`}</span>
+                                <span className="subtitle">
+                                  {CVFile.filename || CVFile.name}
+                                </span>
                               </div>
                             </div>
                           </div>

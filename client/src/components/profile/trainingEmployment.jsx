@@ -102,10 +102,7 @@ const trainingEmployment = ({ information }) => (
                       <div className="media">
                         <div className="media-left">
                           <a
-                            href={`${process.env.API_HOST}/cv/${cv.name.replace(
-                              /(cv\/)/g,
-                              ""
-                            )}`}
+                            href={`${process.env.API_HOST}/${cv.routeCV}`}
                             download
                           >
                             <i
@@ -115,10 +112,7 @@ const trainingEmployment = ({ information }) => (
                           </a>
                         </div>
                         <div className="media-content">
-                          <span className="subtitle">{`archivo_tevi_${cv.name.replace(
-                            /(cv\/)/g,
-                            ""
-                          )}`}</span>
+                          <span className="subtitle">{cv.filename}</span>
                         </div>
                       </div>
                     </div>

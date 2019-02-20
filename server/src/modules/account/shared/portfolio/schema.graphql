@@ -1,0 +1,20 @@
+type Portfolio {
+  id: ID
+  multimedia: [String]
+  description: String
+}
+
+type Query {
+  portfolio(id: ID!, type: String!): [Portfolio]
+}
+
+type Mutation {
+  portfolio(id: ID!, multimedia: [Upload!], description: String!): Boolean!
+  updatePortfolio(
+    id: ID!
+    idPortfolio: ID!
+    multimedia: [Upload!]
+    description: String!
+  ): Boolean!
+  deletePortfolio(idPortfolio: ID!): Boolean!
+}

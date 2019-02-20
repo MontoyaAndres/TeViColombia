@@ -7,8 +7,12 @@ import {
 } from "typeorm";
 
 // Models
-import { ENUMCountry, ENUMDepartament } from "../utils/entityGlobalEnum";
-import { BusinessUpdate } from "./BusinessUpdate";
+import {
+  ENUMCountry,
+  ENUMDepartament,
+  ENUMSector
+} from "../utils/entityGlobalEnum";
+import { Employ } from "./Employ";
 
 @Entity()
 export class Business extends BaseEntity {
@@ -18,11 +22,11 @@ export class Business extends BaseEntity {
   @Column("varchar", { default: "default/default-home.png" })
   routePhoto: string;
 
-  @Column("varchar", { length: 255 })
+  @Column("varchar")
   routeCover: string;
 
-  @Column("varchar", { length: 255, unique: true })
-  name: string;
+  @Column("varchar", { unique: true })
+  companyName: string;
 
   @Column("text", { nullable: true })
   description: string;
@@ -30,8 +34,11 @@ export class Business extends BaseEntity {
   @Column("integer")
   telephone: number;
 
-  @Column("varchar", { length: 255, nullable: true })
+  @Column("varchar", { unique: true })
   email: string;
+
+  @Column("varchar", { nullable: true })
+  address: string;
 
   @Column("enum", { enum: ENUMCountry, default: "Colombia" })
   nationality: string;
@@ -39,18 +46,24 @@ export class Business extends BaseEntity {
   @Column("enum", { enum: ENUMDepartament, default: "Bogotá, D.C." })
   departament: string;
 
-  @Column("varchar", { length: 255, nullable: true })
+  @Column("varchar", { nullable: true })
   city: string;
 
-  @Column("varchar", { length: 255, nullable: true })
-  address: string;
+  @Column("enum", { enum: ENUMSector })
+  sector: string;
 
-  @Column("varchar", { length: 255, nullable: true })
+  @Column("varchar", { nullable: true })
+  linkedin: string;
+
+  @Column("varchar", { nullable: true })
+  skype: string;
+
+  @Column("varchar", { nullable: true })
   website: string;
 
   @Column("text", { nullable: true })
   googleMapsLocalization: string;
 
-  @OneToMany(_ => BusinessUpdate, businessUpdate => businessUpdate.business)
-  businessUpdate: BusinessUpdate[];
+  @OneToMany(_ => Employ, employ => employ.business)
+  employ: Employ[];
 }

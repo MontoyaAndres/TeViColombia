@@ -4,7 +4,10 @@ import { compose, graphql } from "react-apollo";
 import { withFormik } from "formik";
 
 import AskModal from "../../shared/askModal";
-import { feedbackQuery } from "../../../graphql/queries/account";
+import {
+  feedbackQuery,
+  countFeedbackStarsQuery
+} from "../../../graphql/queries/account";
 
 const deleteFeedbackMutation = gql`
   mutation DeleteFeedbackMutation($id: ID!) {
@@ -47,7 +50,10 @@ export default compose(
       if (idFeedback) {
         await DELETE_FEEDBACK_MUTATION({
           variables: { id: idFeedback },
-          refetchQueries: [{ query: feedbackQuery, variables: { userId: id } }]
+          refetchQueries: [
+            { query: feedbackQuery, variables: { id, type: "User" } },
+            { query: countFeedbackStarsQuery, variables: { id, type: "User" } }
+          ]
         });
       }
 

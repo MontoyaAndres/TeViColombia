@@ -27,7 +27,8 @@ type Work {
 
 type CV {
   id: ID
-  name: String
+  filename: String
+  routeCV: String
 }
 
 type UserInformation {

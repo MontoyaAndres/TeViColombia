@@ -1,17 +1,15 @@
+// This is a polymorphic relation, because in portfolioType will save the database type
+
 import {
   Entity,
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
   CreateDateColumn
 } from "typeorm";
 
-// Models
-import { User } from "./User";
-
 @Entity()
-export class Portafolio extends BaseEntity {
+export class Portfolio extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -21,9 +19,12 @@ export class Portafolio extends BaseEntity {
   @Column("text")
   description: string;
 
+  @Column("uuid")
+  portfolioId: string;
+
+  @Column("varchar")
+  portfolioType: string;
+
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;
-
-  @ManyToOne(_ => User, user => user.portafolio)
-  user: User;
 }

@@ -1,14 +1,12 @@
+// This is a polymorphic relation, because in feedbackType will save the database type
+
 import {
   Entity,
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
   CreateDateColumn
 } from "typeorm";
-
-// Models
-import { User } from "./User";
 
 @Entity()
 export class FeedBack extends BaseEntity {
@@ -23,11 +21,14 @@ export class FeedBack extends BaseEntity {
   comment: string;
 
   @Column("uuid")
-  receiver: string;
+  fromId: string;
+
+  @Column("uuid")
+  toId: string;
+
+  @Column("varchar")
+  feedbackType: string;
 
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;
-
-  @ManyToOne(_ => User, user => user.feedback)
-  user: User;
 }

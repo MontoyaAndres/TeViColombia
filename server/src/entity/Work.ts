@@ -18,10 +18,10 @@ export class Work extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("varchar", { length: 255 })
+  @Column("varchar")
   company: string;
 
-  @Column("varchar", { length: 255 })
+  @Column("varchar")
   job: string;
 
   @Column("enum", { enum: ENUMDepartament })
