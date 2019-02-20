@@ -8,7 +8,7 @@ import Loading from "../../shared/loading";
 import { portfolioQuery } from "../../../graphql/queries/account";
 import InputPortfolio from "./inputPortfolio";
 import Carousel from "../../shared/carousel";
-import linkify from "../../shared/linkify";
+import Linkify from "../../shared/linkify";
 import UpdatePortfolioModal from "./updatePortfolioModal";
 import DeletePortfolioModal from "./deletePortfolioModal";
 
@@ -120,12 +120,9 @@ const index = ({
                 </Carousel>
 
                 <div className="card-content">
-                  <div
-                    className="content"
-                    dangerouslySetInnerHTML={{
-                      __html: linkify(portfolio.description)
-                    }}
-                  />
+                  <div className="content">
+                    <Linkify text={portfolio.description} />
+                  </div>
                 </div>
 
                 {dataMe.id === id && (

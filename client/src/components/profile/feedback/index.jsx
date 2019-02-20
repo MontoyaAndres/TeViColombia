@@ -15,7 +15,7 @@ import normalizeErrors from "../../../utils/normalizeErrors";
 import { TextAreaField } from "../../shared/globalField";
 import ChangeStars from "../../shared/changeStars";
 import DeleteFeedbackModal from "./deleteFeedbackModal";
-import linkify from "../../shared/linkify";
+import Linkify from "../../shared/linkify";
 
 const feedbackMutation = gql`
   mutation FeedbackMutation($toId: ID!, $stars: Int!, $comment: String!) {
@@ -178,12 +178,9 @@ class index extends React.PureComponent {
                           </div>
                         </div>
 
-                        <div
-                          className="content"
-                          dangerouslySetInnerHTML={{
-                            __html: linkify(feed.comment)
-                          }}
-                        />
+                        <div className="content">
+                          <Linkify text={feed.comment} />
+                        </div>
                       </div>
                     </div>
                   </div>
