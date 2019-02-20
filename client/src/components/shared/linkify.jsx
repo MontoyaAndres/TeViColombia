@@ -1,9 +1,28 @@
-// Code from https://stackoverflow.com/questions/1500260/detect-urls-in-text-with-javascript
+import React, { useState } from "react";
+import Linkify from "react-linkify";
 
-function linkify(text) {
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
+const linkify = ({ text }) => {
+  const [expression, setExpression] = useState(false);
 
-  return text.replace(urlRegex, url => '<a href="' + url + '">' + url + "</a>");
-}
+  return (
+    <p className="subtitle">
+      {text.length > 80 ? (
+        expression ? (
+          <>
+            <Linkify>{text}</Linkify>{" "}
+            <a onClick={() => setExpression(!expression)}>Mostrar menos</a>
+          </>
+        ) : (
+          <>
+            <Linkify>{text.slice(0, 80)}...</Linkify>{" "}
+            <a onClick={() => setExpression(!expression)}>Mostrar más</a>
+          </>
+        )
+      ) : (
+        <Linkify>{text}</Linkify>
+      )}
+    </p>
+  );
+};
 
 export default linkify;

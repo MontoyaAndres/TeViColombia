@@ -12,7 +12,7 @@ import meQuery from "../../../graphql/queries/me";
 import { TextAreaField } from "../../shared/globalField";
 import UpdateNecessityModal from "./updateNecessityModal";
 import DeleteNecessityModal from "./deleteNecessityModal";
-import linkify from "../../shared/linkify";
+import Linkify from "../../shared/linkify";
 
 const necessityMutation = gql`
   mutation NecessityMutation($finished: Boolean!, $comment: String!) {
@@ -177,12 +177,9 @@ class index extends React.PureComponent {
                             </div>
                           </div>
                           <div className="media-content">
-                            <p
-                              className="subtitle"
-                              dangerouslySetInnerHTML={{
-                                __html: linkify(neces.comment)
-                              }}
-                            />
+                            <div className="content">
+                              <Linkify text={neces.comment} />
+                            </div>
                           </div>
                         </div>
                       </div>
