@@ -14,12 +14,12 @@ export class Employ extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("varchar", { length: 255 })
+  @Column("varchar")
   position: string;
 
   @Column("text")
   description: string;
 
-  @ManyToOne(_ => Business, business => business.businessUpdate)
+  @ManyToOne(_ => Business, business => business.employ)
   business: Business;
 }

@@ -1,0 +1,16 @@
+type Feedback {
+  id: ID
+  stars: Int
+  comment: String
+  from: User
+}
+
+type Query {
+  feedback(id: ID!, type: String!): [Feedback]!
+  countFeedbackStars(id: ID!, type: String!): Int
+}
+
+type Mutation {
+  feedback(toId: ID!, stars: Int!, comment: String!): [Error!]
+  deleteFeedback(id: ID!): Boolean!
+}

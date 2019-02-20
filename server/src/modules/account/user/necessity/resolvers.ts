@@ -1,9 +1,9 @@
-import { ResolveMap } from "../../../types/graphql-utils";
-import { createMiddleware } from "../../../utils/createMiddleware";
-import { middleware } from "../../shared/authMiddleware";
-import { GQL } from "../../../types/schema";
-import { Necessity } from "../../../entity/Necessity";
-import { User } from "../../../entity/User";
+import { ResolveMap } from "../../../../types/graphql-utils";
+import { createMiddleware } from "../../../../utils/createMiddleware";
+import { middleware } from "../../../shared/authMiddleware";
+import { GQL } from "../../../../types/schema";
+import { Necessity } from "../../../../entity/Necessity";
+import { User } from "../../../../entity/User";
 
 export const resolvers: ResolveMap = {
   Query: {

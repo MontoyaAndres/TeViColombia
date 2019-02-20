@@ -205,7 +205,7 @@ enum ENUMLanguageLevel {
 }
 
 @Entity()
-export class Languages extends BaseEntity {
+export class Language extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 

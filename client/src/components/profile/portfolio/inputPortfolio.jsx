@@ -4,8 +4,8 @@ import { Field } from "formik";
 import { TextAreaField } from "../../shared/globalField";
 import UploadFile from "./uploadFile";
 
-const InputPortafolio = ({ isSubmitting, values, setFieldValue }) => (
-  <div className="box" style={{ marginTop: "0.5rem" }}>
+const InputPortfolio = ({ values, setFieldValue }) => (
+  <>
     <label className="label">Descripción.</label>
     <TextAreaField
       name="description"
@@ -33,9 +33,9 @@ const InputPortafolio = ({ isSubmitting, values, setFieldValue }) => (
     </div>
 
     {values.multimedia.length > 0 && (
-      <div className="portafolio">
+      <div className="portfolio">
         {values.multimedia.map((file, i) => (
-          <div className="portafolio-list" key={i}>
+          <div className="portfolio-list" key={i}>
             <button
               type="button"
               className="delete"
@@ -47,30 +47,30 @@ const InputPortafolio = ({ isSubmitting, values, setFieldValue }) => (
               }
             />
 
-            {file.type.split("/")[0] === "image" && (
-              <img src={file.preview} alt="uploaded" />
-            )}
-
-            {file.type.split("/")[0] === "video" && (
+            {/* If `type` exists is because the user wants to insert a new file, if not, the user wants to edit it */}
+            {file.type ? (
+              file.type.split("/")[0] === "image" ? (
+                <img src={file.preview} alt="uploaded" />
+              ) : (
+                <video>
+                  <source src={file.preview} type="video/mp4" />
+                </video>
+              )
+            ) : file.split(".").pop() !== "mp4" ? (
+              <img src={`${process.env.API_HOST}/${file}`} alt="uploaded" />
+            ) : (
               <video>
-                <source src={file.preview} type="video/mp4" />
+                <source
+                  src={`${process.env.API_HOST}/${file}`}
+                  type="video/mp4"
+                />
               </video>
             )}
           </div>
         ))}
       </div>
     )}
-
-    <button
-      type="submit"
-      disabled={isSubmitting}
-      className={`button is-block is-primary is-large ${
-        isSubmitting ? "is-loading" : ""
-      }`}
-    >
-      Enviar
-    </button>
-  </div>
+  </>
 );
 
-export default InputPortafolio;
+export default InputPortfolio;

@@ -4,7 +4,10 @@ import gql from "graphql-tag";
 import Link from "next/link";
 import { withFormik, Form, ErrorMessage } from "formik";
 
-import { feedbackQuery } from "../../../graphql/queries/account";
+import {
+  feedbackQuery,
+  countFeedbackStarsQuery
+} from "../../../graphql/queries/account";
 import meQuery from "../../../graphql/queries/me";
 import Loading from "../../shared/loading";
 import StaticStars from "../../shared/staticStars";
@@ -14,15 +17,9 @@ import ChangeStars from "../../shared/changeStars";
 import DeleteFeedbackModal from "./deleteFeedbackModal";
 import linkify from "../../shared/linkify";
 
-const countFeedbackStarsQuery = gql`
-  query CountFeedbackStarsQuery($userId: ID!) {
-    countFeedbackStars(userId: $userId)
-  }
-`;
-
 const feedbackMutation = gql`
-  mutation FeedbackMutation($id: ID!, $stars: Int!, $comment: String!) {
-    feedback(id: $id, stars: $stars, comment: $comment) {
+  mutation FeedbackMutation($toId: ID!, $stars: Int!, $comment: String!) {
+    feedback(toId: $toId, stars: $stars, comment: $comment) {
       path
       message
     }
@@ -116,7 +113,7 @@ class index extends React.PureComponent {
           {dataMe.id === id && (
             <div className="notification is-info">
               {dataCountFeedbackStars ? (
-                <p className="subtitle">
+                <p className="subtitle" style={{ textAlign: "center" }}>
                   Tienes la cantidad de{" "}
                   {dataCountFeedbackStars === 1
                     ? `${dataCountFeedbackStars} estrella`
@@ -126,7 +123,7 @@ class index extends React.PureComponent {
                   </span>
                 </p>
               ) : (
-                <p className="subtitle">
+                <p className="subtitle" style={{ textAlign: "center" }}>
                   Tienes la cantidad de 0 estrellas{" "}
                   <span role="img" aria-label="sad">
                     🥺🙁
@@ -158,7 +155,7 @@ class index extends React.PureComponent {
                             <figure className="image is-48x48">
                               <img
                                 src={`${process.env.API_HOST}/${
-                                  feed.user.routePhoto
+                                  feed.from.routePhoto
                                 }`}
                                 alt="profile"
                               />
@@ -169,12 +166,12 @@ class index extends React.PureComponent {
                             <Link
                               href={{
                                 pathname: "/profile",
-                                query: { id: feed.user.id }
+                                query: { id: feed.from.id }
                               }}
                               prefetch
                             >
                               <a className="title is-4">
-                                {feed.user.name} {feed.user.lastname}
+                                {feed.from.name} {feed.from.lastname}
                               </a>
                             </Link>
                             <StaticStars stars={feed.stars} />
@@ -201,14 +198,14 @@ class index extends React.PureComponent {
 
 export default compose(
   graphql(feedbackQuery, {
-    options: ({ id }) => ({ variables: { userId: id } }),
+    options: ({ id }) => ({ variables: { id, type: "User" } }),
     props: ({ data }) => ({
       loadingFeedback: data.loading,
       dataFeedback: data.feedback
     })
   }),
   graphql(countFeedbackStarsQuery, {
-    options: ({ id }) => ({ variables: { userId: id } }),
+    options: ({ id }) => ({ variables: { id, type: "User" } }),
     props: ({ data }) => ({
       loadingCountFeedbackStars: data.loading,
       dataCountFeedbackStars: data.countFeedbackStars
@@ -228,8 +225,10 @@ export default compose(
       { props: { id, FEEDBACK_MUTATION }, setSubmitting, setErrors, resetForm }
     ) => {
       const { data } = await FEEDBACK_MUTATION({
-        variables: { id, ...values },
-        refetchQueries: [{ query: feedbackQuery, variables: { userId: id } }]
+        variables: { toId: id, ...values },
+        refetchQueries: [
+          { query: feedbackQuery, variables: { id, type: "User" } }
+        ]
       });
 
       // if feedback has data, it has the errors

@@ -49,25 +49,32 @@ const informationQuery = gql`
       }
       cv {
         id
-        name
+        routeCV
+        filename
       }
     }
   }
 `;
 
 const feedbackQuery = gql`
-  query FeedbackQuery($userId: ID!) {
-    feedback(userId: $userId) {
+  query FeedbackQuery($id: ID!, $type: String!) {
+    feedback(id: $id, type: $type) {
       id
       stars
       comment
-      user {
+      from {
         id
         name
         lastname
         routePhoto
       }
     }
+  }
+`;
+
+const countFeedbackStarsQuery = gql`
+  query CountFeedbackStarsQuery($id: ID!, $type: String!) {
+    countFeedbackStars(id: $id, type: $type)
   }
 `;
 
@@ -87,9 +94,9 @@ const countNecessityQuery = gql`
   }
 `;
 
-const portafolioQuery = gql`
-  query PortafolioQuery($userId: ID!) {
-    portafolio(userId: $userId) {
+const portfolioQuery = gql`
+  query PortfolioQuery($id: ID!, $type: String!) {
+    portfolio(id: $id, type: $type) {
       id
       multimedia
       description
@@ -100,7 +107,8 @@ const portafolioQuery = gql`
 export {
   informationQuery,
   feedbackQuery,
+  countFeedbackStarsQuery,
   necessityQuery,
   countNecessityQuery,
-  portafolioQuery
+  portfolioQuery
 };

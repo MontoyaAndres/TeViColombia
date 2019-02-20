@@ -36,8 +36,8 @@ const DynamicNecessity = dynamic(
   () => import("../../components/profile/necessity"),
   { loading: () => <Loading /> }
 );
-const DynamicPortafolio = dynamic(
-  () => import("../../components/profile/portafolio"),
+const DynamicPortfolio = dynamic(
+  () => import("../../components/profile/portfolio"),
   { loading: () => <Loading /> }
 );
 
@@ -160,7 +160,7 @@ class profile extends PureComponent {
               className={value === 6 ? "is-active" : ""}
               onClick={() => this.handleValue(6)}
             >
-              <a>Portafolio</a>
+              <a>Portfolio</a>
             </li>
           </ul>
         </div>
@@ -176,7 +176,7 @@ class profile extends PureComponent {
           <DynameicCommercialEstablishment information={dataInformation} />
         )}
         {value === 5 && <DynamicNecessity id={id} />}
-        {value === 6 && <DynamicPortafolio id={id} />}
+        {value === 6 && <DynamicPortfolio id={id} />}
       </>
     );
   }
