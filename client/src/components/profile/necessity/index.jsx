@@ -151,87 +151,83 @@ class index extends React.PureComponent {
         )}
 
         {dataNecessity && dataNecessity.length ? (
-          <div className="columns is-multiline">
-            {dataNecessity.map((neces, i) => (
-              <div className="column is-6" key={i}>
-                <div style={{ marginTop: "0.5rem" }}>
-                  <div className="card" style={{ borderRadius: 6 }}>
-                    <header className="card-header" style={{ borderRadius: 6 }}>
-                      <div className="card-header-title">
-                        <div className="media">
-                          <div className="media-left">
-                            <div>
-                              {neces.finished ? (
-                                <i
-                                  className="fas fa-2x fa-check is-medium"
-                                  style={{ color: "lightgreen" }}
-                                  aria-hidden="true"
-                                />
-                              ) : (
-                                <i
-                                  className="fas fa-2x fa-clock is-medium"
-                                  style={{ color: "gray" }}
-                                  aria-hidden="true"
-                                />
-                              )}
-                            </div>
-                          </div>
-                          <div className="media-content">
-                            <div className="content">
-                              <Linkify text={neces.comment} />
-                            </div>
+          dataNecessity.map((neces, i) => (
+            <div style={{ marginTop: "0.5rem", padding: "0 0.75rem" }} key={i}>
+              <div className="card" style={{ borderRadius: 6 }}>
+                <header className="card-header" style={{ borderRadius: 6 }}>
+                  <div className="card-header-title">
+                    <div className="media">
+                      <div className="media-left">
+                        <div>
+                          {neces.finished ? (
+                            <i
+                              className="fas fa-2x fa-check is-medium"
+                              style={{ color: "lightgreen" }}
+                              aria-hidden="true"
+                            />
+                          ) : (
+                            <i
+                              className="fas fa-2x fa-clock is-medium"
+                              style={{ color: "gray" }}
+                              aria-hidden="true"
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <div className="media-content">
+                        <div className="content">
+                          <Linkify text={neces.comment} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {dataMe.id === id && (
+                    <span className="card-header-icon">
+                      <div
+                        className="dropdown is-right"
+                        ref={dropdown => {
+                          this.dropdown[i] = dropdown;
+                        }}
+                        onClick={() => this.handleOpenDropdown(i)}
+                      >
+                        <div className="dropdown-trigger">
+                          <span className="icon is-medium">
+                            <i
+                              className="fas fa-ellipsis-v is-medium"
+                              style={{ color: "gray" }}
+                              aria-hidden="true"
+                            />
+                          </span>
+                        </div>
+
+                        <div className="dropdown-menu" role="menu">
+                          <div className="dropdown-content">
+                            <a
+                              className="dropdown-item"
+                              onClick={() =>
+                                this.handleAskUpdateNecessity(neces.id)
+                              }
+                            >
+                              Editar
+                            </a>
+                            <a
+                              className="dropdown-item"
+                              onClick={() =>
+                                this.handleAskDeleteNecessity(neces.id)
+                              }
+                            >
+                              Eliminar
+                            </a>
                           </div>
                         </div>
                       </div>
-
-                      {dataMe.id === id && (
-                        <span className="card-header-icon">
-                          <div
-                            className="dropdown is-right"
-                            ref={dropdown => {
-                              this.dropdown[i] = dropdown;
-                            }}
-                            onClick={() => this.handleOpenDropdown(i)}
-                          >
-                            <div className="dropdown-trigger">
-                              <span className="icon is-medium">
-                                <i
-                                  className="fas fa-ellipsis-v is-medium"
-                                  style={{ color: "gray" }}
-                                  aria-hidden="true"
-                                />
-                              </span>
-                            </div>
-
-                            <div className="dropdown-menu" role="menu">
-                              <div className="dropdown-content">
-                                <a
-                                  className="dropdown-item"
-                                  onClick={() =>
-                                    this.handleAskUpdateNecessity(neces.id)
-                                  }
-                                >
-                                  Editar
-                                </a>
-                                <a
-                                  className="dropdown-item"
-                                  onClick={() =>
-                                    this.handleAskDeleteNecessity(neces.id)
-                                  }
-                                >
-                                  Eliminar
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </span>
-                      )}
-                    </header>
-                  </div>
-                </div>
+                    </span>
+                  )}
+                </header>
               </div>
-            ))}
-          </div>
+            </div>
+          ))
         ) : (
           <h2
             className="subtitle is-3"

@@ -16,7 +16,7 @@ export class Portfolio extends BaseEntity {
   @Column("simple-array", { nullable: true })
   multimedia: string[];
 
-  @Column("text")
+  @Column("varchar", { length: 200 })
   description: string;
 
   @Column("uuid")

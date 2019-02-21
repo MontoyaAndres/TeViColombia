@@ -9,12 +9,12 @@ type Query {
 }
 
 type Mutation {
-  portfolio(id: ID!, multimedia: [Upload!], description: String!): Boolean!
+  portfolio(id: ID!, multimedia: [Upload!], description: String!): [Error!]
   updatePortfolio(
     id: ID!
     idPortfolio: ID!
     multimedia: [Upload!]
     description: String!
-  ): Boolean!
+  ): [Error!]
   deletePortfolio(idPortfolio: ID!): Boolean!
 }

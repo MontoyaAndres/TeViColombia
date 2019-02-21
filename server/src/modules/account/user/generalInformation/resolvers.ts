@@ -50,6 +50,15 @@ export const resolvers: ResolveMap = {
           ];
         }
 
+        if (information.description.length > 100) {
+          return [
+            {
+              path: "description",
+              message: "La descripción no puede tener más de 100 caracteres."
+            }
+          ];
+        }
+
         if (information.routePhoto instanceof Object) {
           const { createReadStream, mimetype } = await information.routePhoto;
           const extension = mimetype.split("/")[1];

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withFormik, Form } from "formik";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
@@ -35,105 +35,118 @@ const registerMutation = gql`
   }
 `;
 
-const register = ({ values, handleSubmit, isSubmitting, setFieldValue }) => (
-  <div className="hero is-fullheight-with-navbar">
-    <div className="hero-body">
-      <div className="container has-text-centered">
-        {/* User created successfully */}
-        {values.registered && (
-          <div className="animated bounceIn notification is-primary">
-            <button
-              type="button"
-              className="delete"
-              onClick={() => setFieldValue("registered", false, false)}
-            />
-            <p className="subtitle">
-              Por favor revise su correo electrónico para poder entrar a Te vi
-              Colombia.
-            </p>
-          </div>
-        )}
+const register = ({ values, handleSubmit, isSubmitting, setFieldValue }) => {
+  const [light, setLight] = useState(true);
 
-        <div className="column is-4 is-offset-4">
-          <h3 className="title has-text-grey">Crea una nueva cuenta</h3>
-          <div className="box animated bounceInLeft">
-            <figure className="avatar">
-              <img src="https://placehold.it/128x128" alt="login" />
-            </figure>
-            <Form method="POST" onSubmit={handleSubmit}>
-              <TextField
-                type="text"
-                name="name"
-                placeholder="Nombre"
-                isRequired
-              />
-
-              <TextField
-                type="text"
-                name="lastname"
-                placeholder="Apellido"
-                isRequired
-              />
-
-              <TextField
-                type="number"
-                pattern="\d*"
-                name="telephone"
-                placeholder="Teléfono celular"
-                isRequired
-              />
-
-              <SelectField
-                name="identificationDocumentType"
-                arrayPlaceholder={[
-                  "Tarjeta de identidad",
-                  "Cédula de ciudadania"
-                ]}
-                isRequired
-              />
-
-              <TextField
-                type="number"
-                pattern="\d*"
-                name="identificationDocument"
-                placeholder="Número de documento"
-                isRequired
-              />
-
-              <TextField
-                type="email"
-                name="email"
-                placeholder="Correo electrónico"
-                isRequired
-              />
-
-              <TextField
-                type="password"
-                name="password"
-                placeholder="Contraseña"
-                isRequired
-              />
-
-              <label className="checkbox" style={{ paddingBottom: "1em" }}>
-                <input type="checkbox" required /> He leido los{" "}
-                <a href="#">terminos y condiciones</a>
-              </label>
+  return (
+    <div className="hero is-fullheight-with-navbar">
+      <div className="hero-body">
+        <div className="container has-text-centered">
+          {/* User created successfully */}
+          {values.registered && (
+            <div className="animated bounceIn notification is-primary">
               <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`button is-block is-primary is-large is-fullwidth ${
-                  isSubmitting ? "is-loading" : ""
-                }`}
-              >
-                Entrar
-              </button>
-            </Form>
+                type="button"
+                className="delete"
+                onClick={() => setFieldValue("registered", false, false)}
+              />
+              <p className="subtitle">
+                Por favor revise su correo electrónico para poder entrar a Te vi
+                Colombia.
+              </p>
+            </div>
+          )}
+
+          <div className="column is-4 is-offset-4">
+            <h3 className="title has-text-grey">Crea una nueva cuenta</h3>
+            <div className="box animated bounceInLeft">
+              <figure className="avatar">
+                <img
+                  className="logo"
+                  src={
+                    light
+                      ? "/static/img/lightOn.svg"
+                      : "/static/img/lightOff.svg"
+                  }
+                  onClick={() => setLight(!light)}
+                  alt="login"
+                />
+              </figure>
+              <Form method="POST" onSubmit={handleSubmit}>
+                <TextField
+                  type="text"
+                  name="name"
+                  placeholder="Nombre"
+                  isRequired
+                />
+
+                <TextField
+                  type="text"
+                  name="lastname"
+                  placeholder="Apellido"
+                  isRequired
+                />
+
+                <TextField
+                  type="number"
+                  pattern="\d*"
+                  name="telephone"
+                  placeholder="Teléfono celular"
+                  isRequired
+                />
+
+                <SelectField
+                  name="identificationDocumentType"
+                  arrayPlaceholder={[
+                    "Tarjeta de identidad",
+                    "Cédula de ciudadania"
+                  ]}
+                  isRequired
+                />
+
+                <TextField
+                  type="number"
+                  pattern="\d*"
+                  name="identificationDocument"
+                  placeholder="Número de documento"
+                  isRequired
+                />
+
+                <TextField
+                  type="email"
+                  name="email"
+                  placeholder="Correo electrónico"
+                  isRequired
+                />
+
+                <TextField
+                  type="password"
+                  name="password"
+                  placeholder="Contraseña"
+                  isRequired
+                />
+
+                <label className="checkbox" style={{ paddingBottom: "1em" }}>
+                  <input type="checkbox" required /> He leido los{" "}
+                  <a href="#">terminos y condiciones</a>
+                </label>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`button is-block is-primary is-large is-fullwidth ${
+                    isSubmitting ? "is-loading" : ""
+                  }`}
+                >
+                  Entrar
+                </button>
+              </Form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 register.getInitialProps = async context => {
   const { loggedInUser } = await checkLoggedIn(context.apolloClient);
