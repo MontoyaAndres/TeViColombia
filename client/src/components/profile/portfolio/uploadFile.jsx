@@ -1,7 +1,7 @@
 import React from "react";
 import Dropzone from "react-dropzone";
 
-const uploadVideo = ({
+const uploadFile = ({
   accept,
   icon,
   field: { name },
@@ -30,4 +30,4 @@ const uploadVideo = ({
   </Dropzone>
 );
 
-export default uploadVideo;
+export default uploadFile;

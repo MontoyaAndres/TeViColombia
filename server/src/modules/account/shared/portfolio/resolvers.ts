@@ -52,6 +52,15 @@ export const resolvers: ResolveMap = {
         _,
         { id, multimedia, description }: GQL.IPortfolioOnMutationArguments
       ) => {
+        if (description.length > 200) {
+          return [
+            {
+              path: "description",
+              message: "La descripción no puede tener más de 200 caracteres."
+            }
+          ];
+        }
+
         const user: Array<{ id: string }> = await User.find({
           where: { id },
           select: ["id"]
@@ -66,7 +75,7 @@ export const resolvers: ResolveMap = {
           description
         }).save();
 
-        return true;
+        return null;
       }
     ),
     updatePortfolio: createMiddleware(
@@ -80,6 +89,15 @@ export const resolvers: ResolveMap = {
           description
         }: GQL.IUpdatePortfolioOnMutationArguments
       ) => {
+        if (description.length > 200) {
+          return [
+            {
+              path: "description",
+              message: "La descripción no puede tener más de 200 caracteres."
+            }
+          ];
+        }
+
         const user: Array<{ id: string }> = await User.find({
           where: { id },
           select: ["id"]
@@ -97,7 +115,7 @@ export const resolvers: ResolveMap = {
           }
         );
 
-        return true;
+        return null;
       }
     ),
     deletePortfolio: createMiddleware(

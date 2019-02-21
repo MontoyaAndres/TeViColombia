@@ -159,8 +159,8 @@ interface IMutation {
 __typename: "Mutation";
 feedback: Array<IError> | null;
 deleteFeedback: boolean;
-portfolio: boolean;
-updatePortfolio: boolean;
+portfolio: Array<IError> | null;
+updatePortfolio: Array<IError> | null;
 deletePortfolio: boolean;
 generalInformation: Array<IError> | null;
 necessity: boolean;

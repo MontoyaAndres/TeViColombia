@@ -4,13 +4,14 @@ import { Field } from "formik";
 import { TextAreaField } from "../../shared/globalField";
 import UploadFile from "./uploadFile";
 
-const InputPortfolio = ({ values, setFieldValue }) => (
+const InputPortfolio = ({ values, setFieldValue, ...rest }) => (
   <>
     <label className="label">Descripción.</label>
     <TextAreaField
       name="description"
       placeholder="Describe de qué trata tu proyecto."
       isRequired
+      {...rest}
     />
 
     <div className="buttons are-medium">

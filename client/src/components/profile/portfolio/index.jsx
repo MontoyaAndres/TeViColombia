@@ -11,6 +11,7 @@ import Carousel from "../../shared/carousel";
 import Linkify from "../../shared/linkify";
 import UpdatePortfolioModal from "./updatePortfolioModal";
 import DeletePortfolioModal from "./deletePortfolioModal";
+import normalizeErrors from "../../../utils/normalizeErrors";
 
 const portfolioMutation = gql`
   mutation PortfolioMutation(
@@ -18,7 +19,10 @@ const portfolioMutation = gql`
     $multimedia: [Upload!]
     $description: String!
   ) {
-    portfolio(id: $id, multimedia: $multimedia, description: $description)
+    portfolio(id: $id, multimedia: $multimedia, description: $description) {
+      path
+      message
+    }
   }
 `;
 
@@ -60,7 +64,11 @@ const index = ({
           style={{ padding: ".75rem" }}
         >
           <div className="box" style={{ marginTop: "0.5rem" }}>
-            <InputPortfolio values={values} setFieldValue={setFieldValue} />
+            <InputPortfolio
+              values={values}
+              setFieldValue={setFieldValue}
+              maxLength="200"
+            />
 
             <button
               type="submit"
@@ -176,17 +184,24 @@ export default compose(
     mapPropsToValues: () => ({ multimedia: [], description: "" }),
     handleSubmit: async (
       values,
-      { props: { id, PORTFOLIO_MUTATION }, setSubmitting, resetForm }
+      { props: { id, PORTFOLIO_MUTATION }, setSubmitting, resetForm, setErrors }
     ) => {
-      await PORTFOLIO_MUTATION({
+      const response = await PORTFOLIO_MUTATION({
         variables: { id, ...values },
         refetchQueries: [
           { query: portfolioQuery, variables: { id, type: "User" } }
         ]
       });
 
-      setSubmitting(false);
-      resetForm();
+      const { data } = response;
+      // if portafolio has data, it has the errors
+      if (data.portfolio && data.portfolio.length) {
+        setSubmitting(false);
+        setErrors(normalizeErrors(data.portfolio));
+      } else {
+        setSubmitting(false);
+        resetForm();
+      }
     }
   })
 )(index);

@@ -160,7 +160,7 @@ class profile extends PureComponent {
               className={value === 6 ? "is-active" : ""}
               onClick={() => this.handleValue(6)}
             >
-              <a>Portfolio</a>
+              <a>Portafolio</a>
             </li>
           </ul>
         </div>

@@ -6,6 +6,7 @@ import { withFormik } from "formik";
 import AskModal from "../../shared/askModal";
 import { portfolioQuery } from "../../../graphql/queries/account";
 import InputPortfolio from "./inputPortfolio";
+import normalizeErrors from "../../../utils/normalizeErrors";
 
 const updatePortfolioMutation = gql`
   mutation UpdatePortfolioMutation(
@@ -19,7 +20,10 @@ const updatePortfolioMutation = gql`
       id: $id
       multimedia: $multimedia
       description: $description
-    )
+    ) {
+      path
+      message
+    }
   }
 `;
 
@@ -38,7 +42,11 @@ const updatePortfolioModal = ({
     mutation={handleSubmit}
     isSubmitting={isSubmitting}
   >
-    <InputPortfolio setFieldValue={setFieldValue} values={values} />
+    <InputPortfolio
+      setFieldValue={setFieldValue}
+      values={values}
+      maxLength="200"
+    />
   </AskModal>
 );
 
@@ -64,11 +72,12 @@ export default compose(
           handleAskUpdatePortfolio,
           UPDATE_PORTFOLIO_MUTATION
         },
-        setSubmitting
+        setSubmitting,
+        setErrors
       }
     ) => {
       if (idPortfolio) {
-        await UPDATE_PORTFOLIO_MUTATION({
+        const response = await UPDATE_PORTFOLIO_MUTATION({
           variables: {
             id,
             idPortfolio,
@@ -79,6 +88,12 @@ export default compose(
             { query: portfolioQuery, variables: { id, type: "User" } }
           ]
         });
+
+        const { data } = response;
+        // if updatePortafolio has data, it has the errors
+        if (data.updatePortafolio && data.updatePortafolio.length) {
+          setErrors(normalizeErrors(data.updatePortafolio));
+        }
       }
 
       setSubmitting(false);

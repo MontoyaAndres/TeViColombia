@@ -240,6 +240,15 @@ a span.tag {
   z-index: 1;
 }
 
+.logo {
+  width: 136px;
+  height: 140px;
+}
+
+.logo:hover {
+  cursor: pointer;
+}
+
 @keyframes growBubble {
   0% {
     transform: scale(1);

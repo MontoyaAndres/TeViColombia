@@ -56,7 +56,13 @@ const SelectField = ({ name, arrayPlaceholder, isRequired, ...props }) => (
   </>
 );
 
-const TextAreaField = ({ name, placeholder, isRequired = true, ...props }) => (
+const TextAreaField = ({
+  name,
+  placeholder,
+  isRequired = true,
+  maxLength,
+  ...props
+}) => (
   <>
     <div className="field">
       <div className="control">
@@ -66,6 +72,7 @@ const TextAreaField = ({ name, placeholder, isRequired = true, ...props }) => (
           render={({ field }) => (
             <textarea
               {...field}
+              maxLength={maxLength}
               placeholder={placeholder}
               required={isRequired}
               className="textarea"
