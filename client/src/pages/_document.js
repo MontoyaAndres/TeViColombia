@@ -14,7 +14,7 @@ class MyDocument extends Document {
           <meta name="theme-color" content="#ffffff" />
           <meta
             name="description"
-            content="Tejidos virtuales para el Emprendimiento, las Prácticas profesionales y la Empleabilidad."
+            content="Tejidos virtuales para el emprendimiento, las prácticas profesionales y la empleabilidad."
           />
           <link rel="manifest" href="/static/manifest.json" />
           <link rel="shortcut icon" href="/static/favicon.ico" />
@@ -28,11 +28,11 @@ class MyDocument extends Document {
           <link
             rel="apple-touch-icon"
             sizes="180x180"
-            href="/static/img/apple-touch-icon.png"
+            href="/static/img/lightOn.svg"
           />
           <link
             rel="mask-icon"
-            href="/static/img/safari-pinned-tab.svg"
+            href="/static/img/lightOn.svg"
             color="#ffffff"
           />
           <meta name="msapplication-TileColor" content="#ffffff" />
@@ -42,7 +42,7 @@ class MyDocument extends Document {
           />
           <meta
             property="og:title"
-            content="Tejidos virtuales para el Emprendimiento, las Prácticas profesionales y la Empleabilidad."
+            content="Tejidos virtuales para el emprendimiento, las prácticas profesionales y la empleabilidad."
           />
           <meta property="og:locale" content="es_CO" />
           <meta property="og:type" content="website" />
