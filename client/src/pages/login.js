@@ -3,6 +3,7 @@ import { Formik, Form } from "formik";
 import { Mutation, withApollo } from "react-apollo";
 import gql from "graphql-tag";
 import Router from "next/router";
+import Link from "next/link";
 
 import { TextField } from "../components/shared/globalField";
 import { LoginValidation } from "../utils/validation";
@@ -93,6 +94,12 @@ const login = () => {
                         >
                           Entrar
                         </button>
+
+                        <div style={{ padding: 10 }}>
+                          <Link href="/password" prefetch>
+                            <a>¿Ha olvidado la contraseña?</a>
+                          </Link>
+                        </div>
                       </Form>
                     )}
                   />

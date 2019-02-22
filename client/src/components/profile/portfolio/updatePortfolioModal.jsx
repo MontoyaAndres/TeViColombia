@@ -91,13 +91,14 @@ export default compose(
 
         const { data } = response;
         // if updatePortafolio has data, it has the errors
-        if (data.updatePortafolio && data.updatePortafolio.length) {
-          setErrors(normalizeErrors(data.updatePortafolio));
+        if (data.updatePortfolio && data.updatePortfolio.length) {
+          setSubmitting(false);
+          setErrors(normalizeErrors(data.updatePortfolio));
+        } else {
+          setSubmitting(false);
+          handleAskUpdatePortfolio();
         }
       }
-
-      setSubmitting(false);
-      handleAskUpdatePortfolio();
     }
   })
 )(updatePortfolioModal);
