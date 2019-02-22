@@ -26,7 +26,7 @@ export class Business extends BaseEntity {
   routeCover: string;
 
   @Column("varchar", { unique: true })
-  companyName: string;
+  name: string;
 
   @Column("text", { nullable: true })
   description: string;

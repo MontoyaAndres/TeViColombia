@@ -7,6 +7,7 @@ import { Business } from "../../../../entity/Business";
 import { FeedBack } from "../../../../entity/FeedBack";
 import { createMiddleware } from "../../../../utils/createMiddleware";
 import { middleware } from "../../../shared/authMiddleware";
+import { sendFeedbackEmail } from "../../../../utils/sendEmail";
 
 export const resolvers: ResolveMap = {
   Feedback: {
@@ -58,11 +59,15 @@ export const resolvers: ResolveMap = {
         { toId, stars, comment }: GQL.IFeedbackOnMutationArguments,
         { session }
       ) => {
-        const user: Array<{ id: string }> = await User.find({
+        const user: Array<{
+          id: string;
+        }> = await User.find({
           where: { id: session.userId },
           select: ["id"]
         });
-        const business: Array<{ id: string }> = await Business.find({
+        const business: Array<{
+          id: string;
+        }> = await Business.find({
           where: { id: session.userId },
           select: ["id"]
         });
@@ -118,6 +123,22 @@ export const resolvers: ResolveMap = {
           stars,
           comment
         }).save();
+
+        // Getting name and email from toId
+        const toUser = await User.findOne({
+          where: { id: toId },
+          select: ["name", "email"]
+        });
+        const toBusiness = await Business.findOne({
+          where: { id: toId },
+          select: ["name", "email"]
+        });
+
+        sendFeedbackEmail(
+          toUser.email ? toUser.email : toBusiness.email,
+          toUser.name ? toUser.name : toBusiness.name,
+          comment
+        );
 
         return null;
       }
