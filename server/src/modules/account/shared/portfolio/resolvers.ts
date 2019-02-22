@@ -66,14 +66,23 @@ export const resolvers: ResolveMap = {
           select: ["id"]
         });
 
-        const filesSaved = (await saveMultimedia(multimedia)) as any;
+        if (multimedia.length > 0) {
+          const filesSaved = (await saveMultimedia(multimedia)) as any;
 
-        await Portfolio.create({
-          portfolioId: id,
-          portfolioType: user.length > 0 ? "User" : "Business", // If there's values on user
-          multimedia: filesSaved,
-          description
-        }).save();
+          await Portfolio.create({
+            portfolioId: id,
+            portfolioType: user.length > 0 ? "User" : "Business", // If there's values on user
+            multimedia: filesSaved,
+            description
+          }).save();
+        } else {
+          return [
+            {
+              path: "multimedia",
+              message: "Por favor suba una imagen o vídeo."
+            }
+          ];
+        }
 
         return null;
       }
@@ -103,17 +112,26 @@ export const resolvers: ResolveMap = {
           select: ["id"]
         });
 
-        const filesSaved = (await saveMultimedia(multimedia)) as any;
+        if (multimedia.length > 0) {
+          const filesSaved = (await saveMultimedia(multimedia)) as any;
 
-        await Portfolio.update(
-          { id: idPortfolio },
-          {
-            portfolioId: id,
-            portfolioType: user.length > 0 ? "User" : "Business", // If there's values on user
-            multimedia: filesSaved,
-            description
-          }
-        );
+          await Portfolio.update(
+            { id: idPortfolio },
+            {
+              portfolioId: id,
+              portfolioType: user.length > 0 ? "User" : "Business", // If there's values on user
+              multimedia: filesSaved,
+              description
+            }
+          );
+        } else {
+          return [
+            {
+              path: "multimedia",
+              message: "Por favor suba una imagen o vídeo."
+            }
+          ];
+        }
 
         return null;
       }

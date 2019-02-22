@@ -1,5 +1,5 @@
 import React from "react";
-import { Field } from "formik";
+import { Field, ErrorMessage } from "formik";
 
 import { TextAreaField } from "../../shared/globalField";
 import UploadFile from "./uploadFile";
@@ -31,6 +31,10 @@ const InputPortfolio = ({ values, setFieldValue, ...rest }) => (
           <UploadFile accept="video/mp4" icon="fa-video" {...props} />
         )}
       />
+    </div>
+
+    <div className="error">
+      <ErrorMessage name="multimedia" />
     </div>
 
     {values.multimedia.length > 0 && (
