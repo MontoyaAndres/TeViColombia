@@ -28,11 +28,11 @@ class MyDocument extends Document {
           <link
             rel="apple-touch-icon"
             sizes="180x180"
-            href="/static/img/lightOn.svg"
+            href="/static/img/lightOn.png"
           />
           <link
             rel="mask-icon"
-            href="/static/img/lightOn.svg"
+            href="/static/img/lightOn.png"
             color="#ffffff"
           />
           <meta name="msapplication-TileColor" content="#ffffff" />
