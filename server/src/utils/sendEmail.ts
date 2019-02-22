@@ -8,19 +8,41 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+const sendEmailTemplate = (
+  title: string,
+  message: string,
+  url?: string,
+  button?: string
+) => `
+<html>
+  <body>
+  <section style="text-align: center">
+    <h2 style="color: #626262; font-weight: bold;">${title}</h2>
+    <p style="color: #525252; font-weight: 400; font-size: 1.25rem; padding: 10px;">${message}</p>
+    ${
+      url
+        ? "<a style='background-color: #00d1b2; padding: 10px; border-radius: 10px; color: white; font-weight: 400; font-size: 1.25rem; text-decoration: none;' href='" +
+          url +
+          "'>" +
+          button +
+          "</a>"
+        : ""
+    }
+  </section>
+  </body>
+</html>
+`;
+
 export const sendConfirmEmailLink = async (recipient: string, url: string) => {
   transporter.sendMail({
     to: recipient,
-    subject: "Confirmar correo electrónico.",
-    html: `<html>
-	<body>
-	<div style="text-align: 'center'">
-		<p>Por favor de clic en el botón de abajo para confirmar su cuenta.</p>
-		<a href="${url}">Confirmar correo</a>
-	</div>
-  </body>
-</html>
-`
+    subject: "Confirmación Te vi Colombia",
+    html: sendEmailTemplate(
+      "Confirmación Te vi Colombia.",
+      "Para confirmar que el correo electrónico que ha ingresado en Te vi Colombia es correcto y poder ingresar con normalidad, de clic en Confirmar correo. Si recibio este correo por error, por favor eliminarlo.",
+      url,
+      "Confirmar correo"
+    )
   });
 };
 
@@ -30,15 +52,24 @@ export const sendForgotPasswordEmailLink = async (
 ) => {
   transporter.sendMail({
     to: recipient,
-    subject: "Cambio de contraseña",
-    html: `<html>
-	<body>
-	<div style="text-align: 'center'">
-		<p>Por favor de clic en el botón de abajo para cambiar su contraseña.</p>
-		<a href="${url}">Cambiar contraseña</a>
-	</div>
-  </body>
-</html>
-`
+    subject: "Cambio de contraseña Te vi Colombia",
+    html: sendEmailTemplate(
+      "Cambio de contraseña Te vi Colombia",
+      "Para confirmar que el correo electrónico que ha ingresado es correcto y el cambio de contraseña sea efectuado en la plataforma Te vi Colombia con normalidad, de clic en Cambiar contraseña. Si recibio este correo por error, por favor eliminarlo.",
+      url,
+      "Cambiar contraseña"
+    )
+  });
+};
+
+export const sendFeedbackEmail = async (
+  recipient: string,
+  name: string,
+  message: string
+) => {
+  transporter.sendMail({
+    to: recipient,
+    subject: `${name} ha hecho una observación`,
+    html: sendEmailTemplate(`Observación de ${name}.`, message)
   });
 };
