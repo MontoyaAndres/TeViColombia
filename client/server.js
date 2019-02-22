@@ -5,7 +5,7 @@ const { join } = require("path");
 const { parse } = require("url");
 
 const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev, dir: "src" });
+const app = next({ dev });
 const handler = app.getRequestHandler();
 const server = express();
 

@@ -214,10 +214,6 @@ a span.tag {
   font-size: 1rem;
 }
 
-.buttons .button {
-  margin-bottom: 0;
-}
-
 .portfolio {
   overflow-y: hidden;
   white-space: nowrap;
