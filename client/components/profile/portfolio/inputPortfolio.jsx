@@ -14,7 +14,7 @@ const InputPortfolio = ({ values, setFieldValue, ...rest }) => (
       {...rest}
     />
 
-    <div className="buttons are-medium">
+    <div className="buttons are-medium" style={{ marginBottom: 0 }}>
       <Field
         name="multimedia"
         render={props => (
