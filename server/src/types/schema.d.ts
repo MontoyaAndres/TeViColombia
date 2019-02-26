@@ -93,22 +93,31 @@ description: string | null;
 identificationDocumentType: string;
 identificationDocument: any;
 address: string | null;
+telephoneCountry: number;
 telephone: any;
+telephone2Country: number | null;
+telephone2: any | null;
 departament: string | null;
 town: string | null;
 nationality: string | null;
 birth: any | null;
 civilStatus: string | null;
-linkedin: string | null;
-skype: string | null;
 website: string | null;
 gender: string | null;
+optionalEmail: string | null;
 email: string;
 skills: Array<string | null> | null;
+socialnetwork: Array<ISocialNetwork | null> | null;
 language: Array<ILanguage | null> | null;
 study: Array<IStudy | null> | null;
 work: Array<IWork | null> | null;
 cv: Array<ICV | null> | null;
+}
+
+interface ISocialNetwork {
+__typename: "SocialNetwork";
+name: string;
+url: string;
 }
 
 interface ILanguage {
@@ -238,6 +247,7 @@ password: string;
 interface IRegisterOnMutationArguments {
 name: string;
 lastname: string;
+telephoneCountry: number;
 telephone: any;
 identificationDocumentType: string;
 identificationDocument: any;
@@ -266,21 +276,29 @@ description?: string | null;
 identificationDocumentType: string;
 identificationDocument: any;
 address?: string | null;
+telephoneCountry: number;
 telephone: any;
+telephone2Country?: number | null;
+telephone2?: any | null;
 departament: string;
 town: string;
 nationality: string;
 birth?: any | null;
 civilStatus: string;
-linkedin?: string | null;
-skype?: string | null;
 website?: string | null;
 gender: string;
+optionalEmail?: string | null;
 skills?: Array<string | null> | null;
+socialnetwork?: Array<ISocialNetworkInput | null> | null;
 language?: Array<ILanguageInput | null> | null;
 study?: Array<IStudyInput | null> | null;
 work?: Array<IWorkInput | null> | null;
 cv?: Array<any | null> | null;
+}
+
+interface ISocialNetworkInput {
+name: string;
+url: string;
 }
 
 interface ILanguageInput {

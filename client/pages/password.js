@@ -4,7 +4,7 @@ import { Form, withFormik } from "formik";
 import { TextField } from "../components/shared/globalField";
 
 const password = ({ isSubmitting }) => (
-  <div className="hero is-fullheight">
+  <div className="hero is-fullheight-with-navbar">
     <div className="hero-body">
       <div className="container animated bounceInLeft">
         <div className="notification is-warning">
@@ -20,7 +20,7 @@ const password = ({ isSubmitting }) => (
           llega a ser aceptado por el dueño del correo electrónico, la cuenta se
           mantendra bloqueada hasta que se cumpla su respectiva confirmación.
           Todas las secciones establecidas en teléfonos, laptops y computadoras
-          hechas por el correo electronico serán eliminadas para evitar posibles
+          hechas por el correo electrónico serán eliminadas para evitar posibles
           inconvenientes.
         </div>
 

@@ -11,18 +11,24 @@ const informationQuery = gql`
       identificationDocumentType
       identificationDocument
       address
+      telephoneCountry
       telephone
+      telephone2Country
+      telephone2
       departament
       town
       nationality
       birth
       civilStatus
-      linkedin
-      skype
       website
       gender
+      optionalEmail
       email
       skills
+      socialnetwork {
+        name
+        url
+      }
       language {
         id
         language

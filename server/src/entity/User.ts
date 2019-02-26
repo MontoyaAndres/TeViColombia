@@ -68,8 +68,17 @@ export class User extends BaseEntity {
   @Column("varchar", { nullable: true })
   address: string;
 
+  @Column("integer")
+  telephoneCountry: number;
+
   @Column("bigint", { unique: true })
   telephone: number;
+
+  @Column("integer", { nullable: true })
+  telephone2Country: number;
+
+  @Column("bigint", { unique: true, nullable: true })
+  telephone2: number;
 
   @Column("enum", { enum: ENUMDepartament, nullable: true })
   departament: string;
@@ -87,16 +96,13 @@ export class User extends BaseEntity {
   civilStatus: string;
 
   @Column("varchar", { nullable: true })
-  linkedin: string;
-
-  @Column("varchar", { nullable: true })
-  skype: string;
-
-  @Column("varchar", { nullable: true })
   website: string;
 
   @Column("enum", { enum: ENUMGender, nullable: true })
   gender: string;
+
+  @Column("varchar", { unique: true, nullable: true })
+  optionalEmail: string;
 
   @Column("varchar", { unique: true })
   email: string;
@@ -106,6 +112,9 @@ export class User extends BaseEntity {
 
   @Column("simple-array", { nullable: true })
   skills: string[];
+
+  @Column("json", { nullable: true })
+  socialnetwork: Array<{ name: string; url: string }>;
 
   @Column({ default: false })
   confirmed: boolean;

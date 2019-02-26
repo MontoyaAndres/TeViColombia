@@ -1,6 +1,10 @@
 import React from "react";
 
-import { SelectField, TextField } from "../../shared/globalField";
+import {
+  SelectField,
+  TextField,
+  TextFieldAddonsCountry
+} from "../../shared/globalField";
 import EntityGlobalEnum from "../../../utils/entityGlobalEnum";
 import TownsByDepartament from "../../../utils/townsByDepartament";
 import EditSkills from "./editSkills";
@@ -31,7 +35,7 @@ const editGeneralInformation = ({
           </div>
 
           <div className="column is-6">
-            <label className="label">Nombre</label>
+            <label className="label">Nombres</label>
             <TextField
               type="text"
               name="name"
@@ -41,7 +45,7 @@ const editGeneralInformation = ({
           </div>
 
           <div className="column is-6">
-            <label className="label">Apellido</label>
+            <label className="label">Apellidos</label>
             <TextField
               type="text"
               name="lastname"
@@ -77,7 +81,7 @@ const editGeneralInformation = ({
           </div>
 
           <div className="column is-6">
-            <label className="label">Dirección</label>
+            <label className="label">Dirección, complemento y localidad</label>
             <TextField
               type="text"
               name="address"
@@ -87,12 +91,28 @@ const editGeneralInformation = ({
           </div>
 
           <div className="column is-6">
-            <label className="label">Teléfono</label>
-            <TextField
+            <label className="label">Teléfono celular/fijo/oficina</label>
+            <TextFieldAddonsCountry
               type="number"
+              pattern="\d*"
               name="telephone"
-              placeholder="Teléfono"
+              selectName="telephoneCountry"
+              placeholder="Teléfono celular/fijo/oficina"
               isRequired
+            />
+          </div>
+
+          <div className="column is-6">
+            <label className="label">
+              Teléfono secundario celular/fijo/oficina
+            </label>
+            <TextFieldAddonsCountry
+              type="number"
+              pattern="\d*"
+              name="telephone2"
+              selectName="telephone2Country"
+              placeholder="Teléfono secundario celular/fijo/oficina"
+              isRequired={false}
             />
           </div>
 
@@ -102,6 +122,16 @@ const editGeneralInformation = ({
               arrayPlaceholder={["HOMBRE", "MUJER"]}
               name="gender"
               isRequired
+            />
+          </div>
+
+          <div className="column is-6">
+            <label className="label">Correo electrónico secundario</label>
+            <TextField
+              type="email"
+              name="optionalEmail"
+              placeholder="Correo electrónico secundario"
+              isRequired={false}
             />
           </div>
 
@@ -157,26 +187,6 @@ const editGeneralInformation = ({
               type="date"
               name="birth"
               placeholder="Fechas de nacimiento"
-              isRequired={false}
-            />
-          </div>
-
-          <div className="column is-6">
-            <label className="label">Perfil de Linkedin</label>
-            <TextField
-              type="url"
-              name="linkedin"
-              placeholder="Perfil de Linkedin"
-              isRequired={false}
-            />
-          </div>
-
-          <div className="column is-6">
-            <label className="label">Usuario de Skype</label>
-            <TextField
-              type="text"
-              name="skype"
-              placeholder="Usuario de Skype"
               isRequired={false}
             />
           </div>

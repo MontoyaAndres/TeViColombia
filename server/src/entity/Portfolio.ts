@@ -22,7 +22,7 @@ export class Portfolio extends BaseEntity {
   @Column("uuid")
   portfolioId: string;
 
-  @Column("varchar")
+  @Column("varchar", { length: 8 })
   portfolioType: string;
 
   @CreateDateColumn({ type: "timestamp" })

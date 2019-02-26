@@ -8,9 +8,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development node src/server.js",
+    "dev": "NODE_ENV=development node server.js",
     "build": "next build src",
-    "start": "NODE_ENV=production node dist/server.js"
+    "start": "NODE_ENV=production node server.js"
   },
   "devDependencies": {
     "babel-eslint": "latest",

@@ -1,5 +1,6 @@
 import React from "react";
 import { Field, ErrorMessage } from "formik";
+import CountryJSON from "../../static/countries.json";
 
 const TextField = ({
   type,
@@ -96,12 +97,63 @@ const CheckboxField = ({ name, isRequired = true, message, ...props }) => (
       required={isRequired}
       render={({ field }) => (
         <>
-          <input {...field} type="checkbox" checked={field.value} />
-          {message}
+          <input {...field} type="checkbox" checked={field.value} /> {message}
         </>
       )}
     />
   </label>
 );
 
-export { TextField, SelectField, TextAreaField, CheckboxField };
+const TextFieldAddonsCountry = ({
+  type,
+  name,
+  selectName,
+  placeholder,
+  isRequired = true,
+  ...props
+}) => (
+  <>
+    <div className="field has-addons">
+      <div className="control">
+        <span className="select">
+          <Field
+            {...props}
+            component="select"
+            name={selectName}
+            required={isRequired}
+            className="is-hovered"
+          >
+            {CountryJSON.map((item, i) => (
+              <option key={i} value={item.phone}>
+                {item.emoji + " " + item.phone}
+              </option>
+            ))}
+          </Field>
+        </span>
+      </div>
+
+      <div className="control is-expanded">
+        <Field
+          {...props}
+          className="input is-hovered"
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          required={isRequired}
+        />
+      </div>
+    </div>
+
+    <div className="error">
+      <ErrorMessage name={name} />
+    </div>
+  </>
+);
+
+export {
+  TextField,
+  SelectField,
+  TextAreaField,
+  CheckboxField,
+  TextFieldAddonsCountry
+};

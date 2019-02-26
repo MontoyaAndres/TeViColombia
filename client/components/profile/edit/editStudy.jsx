@@ -1,7 +1,11 @@
 import React from "react";
 import { FieldArray } from "formik";
 
-import { TextField, SelectField } from "../../shared/globalField";
+import {
+  TextField,
+  SelectField,
+  CheckboxField
+} from "../../shared/globalField";
 import EntityGlobalEnum from "../../../utils/entityGlobalEnum";
 
 const editStudy = ({ study }) => (
@@ -60,19 +64,24 @@ const editStudy = ({ study }) => (
                         placeholder="Fecha de inicio"
                         isRequired
                       />
+
+                      <CheckboxField
+                        name={`study.${index}.studyingOn`}
+                        message="¿Esta estudianto actualmente?"
+                        isRequired
+                      />
                     </div>
 
-                    {stdy.startedOn !== "" && (
-                      <div className="column is-6">
-                        <label className="label">Fecha de finalización</label>
-                        <TextField
-                          type="date"
-                          name={`study.${index}.finishIn`}
-                          placeholder="Fecha de finalización"
-                          isRequired={false}
-                        />
-                      </div>
-                    )}
+                    <div className="column is-6">
+                      <label className="label">Fecha de finalización</label>
+                      <TextField
+                        type="date"
+                        name={`study.${index}.finishIn`}
+                        placeholder="Fecha de finalización"
+                        disabled={stdy.studyingOn}
+                        isRequired={false}
+                      />
+                    </div>
 
                     <div className="column is-12">
                       <div className="buttons has-addons is-centered">

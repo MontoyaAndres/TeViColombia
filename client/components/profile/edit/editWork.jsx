@@ -4,7 +4,8 @@ import { FieldArray } from "formik";
 import {
   TextField,
   SelectField,
-  TextAreaField
+  TextAreaField,
+  CheckboxField
 } from "../../shared/globalField";
 import EntityGlobalEnum from "../../../utils/entityGlobalEnum";
 
@@ -78,19 +79,24 @@ const editWork = ({ work }) => (
                         placeholder="Fecha de inicio"
                         isRequired
                       />
+
+                      <CheckboxField
+                        name={`work.${index}.workingOn`}
+                        message="¿Esta trabajando actualmente?"
+                        isRequired
+                      />
                     </div>
 
-                    {wrk.startedOn !== "" && (
-                      <div className="column is-6">
-                        <label className="label">Fecha de finalización</label>
-                        <TextField
-                          type="date"
-                          name={`work.${index}.finishIn`}
-                          placeholder="Fecha de finalización"
-                          isRequired={false}
-                        />
-                      </div>
-                    )}
+                    <div className="column is-6">
+                      <label className="label">Fecha de finalización</label>
+                      <TextField
+                        type="date"
+                        name={`work.${index}.finishIn`}
+                        placeholder="Fecha de finalización"
+                        disabled={wrk.workingOn}
+                        isRequired={false}
+                      />
+                    </div>
 
                     <div className="column is-12">
                       <label className="label">
