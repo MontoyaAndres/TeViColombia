@@ -5,7 +5,7 @@ import { Language } from "../../../../entity/Language";
 import { Study } from "../../../../entity/Study";
 import { Work } from "../../../../entity/Work";
 import { CV } from "../../../../entity/CV";
-import UpdateCreate from "../../shared/UpdateCreate";
+import UpdateCreate from "../UpdateCreate";
 import { createMiddleware } from "../../../../utils/createMiddleware";
 import { middleware } from "../../../shared/authMiddleware";
 import { GeneralInformationValidation } from "../../../../utils/validation";
@@ -26,8 +26,7 @@ export const resolvers: ResolveMap = {
               description: information.description,
               identificationDocument: information.identificationDocument,
               telephone: information.telephone,
-              linkedin: information.linkedin,
-              skype: information.skype,
+              telephone2: information.telephone2,
               website: information.website
             },
             { abortEarly: false }
@@ -132,17 +131,20 @@ export const resolvers: ResolveMap = {
             identificationDocumentType: information.identificationDocumentType,
             identificationDocument: information.identificationDocument,
             address: information.address,
+            telephoneCountry: information.telephoneCountry,
             telephone: information.telephone,
+            telephone2Country: information.telephone2Country,
+            telephone2: information.telephone2,
             departament: information.departament,
             town: information.town,
             nationality: information.nationality,
             birth: information.birth,
             civilStatus: information.civilStatus,
-            linkedin: information.linkedin,
-            skype: information.skype,
             website: information.website,
             gender: information.gender,
-            skills: information.skills
+            optionalEmail: information.optionalEmail,
+            skills: information.skills,
+            socialnetwork: information.socialnetwork
           }
         );
 

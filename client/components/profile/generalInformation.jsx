@@ -15,12 +15,28 @@ const generalInformation = ({ information }) => (
               {information.identificationDocument}
             </p>
             <p className="subtitle">
-              <strong>Dirección:</strong> {information.address}
+              <strong>Dirección, complemento y localidad:</strong>{" "}
+              {information.address}
             </p>
             <p className="subtitle">
-              <strong>Teléfono celular:</strong>{" "}
-              <a href={`tel:${information.telephone}`}>
-                {information.telephone}
+              <strong>Teléfono celular/fijo/oficina:</strong>{" "}
+              <a
+                href={`tel:+${information.telephoneCountry} ${
+                  information.telephone
+                }`}
+              >
+                {`+${information.telephoneCountry} ${information.telephone}`}
+              </a>
+            </p>
+            <p className="subtitle">
+              <strong>Teléfono secundario celular/fijo/oficina:</strong>{" "}
+              <a
+                href={`tel:+${information.telephone2Country} ${
+                  information.telephone2
+                }`}
+              >
+                {information.telephone2 &&
+                  `+${information.telephone2Country} ${information.telephone2}`}
               </a>
             </p>
             <p className="subtitle">
@@ -56,6 +72,12 @@ const generalInformation = ({ information }) => (
               <a href={`mailto:${information.email}`}>{information.email}</a>
             </p>
             <p className="subtitle">
+              <strong>Correo electrónico secundario:</strong>{" "}
+              <a href={`mailto:${information.optionalEmail}`}>
+                {information.optionalEmail}
+              </a>
+            </p>
+            <p className="subtitle">
               <strong>Sitio web:</strong>{" "}
               <a
                 rel="noopener noreferrer"
@@ -65,23 +87,7 @@ const generalInformation = ({ information }) => (
                 {information.website}
               </a>
             </p>
-            <p className="subtitle">
-              <strong>Linkedin:</strong>{" "}
-              <a
-                rel="noopener noreferrer"
-                target="_blank"
-                href={information.linkedin}
-              >
-                {information.linkedin}
-              </a>
-            </p>
-            <p className="subtitle">
-              <strong>Skype:</strong>{" "}
-              <a href={`skype:${information.skype}?chat`}>
-                {information.skype}
-              </a>
-            </p>
-            {information.language && information.language.length ? (
+            {information.language && information.language.length > 0 ? (
               <>
                 <p className="subtitle">
                   <strong>Idiomas:</strong>
@@ -97,11 +103,56 @@ const generalInformation = ({ information }) => (
                 </ul>
               </>
             ) : null}
+
+            {information.socialnetwork &&
+            information.socialnetwork.length > 0 ? (
+              <>
+                <p className="subtitle">
+                  <strong>Redes sociales:</strong>
+                </p>
+
+                <ul>
+                  {information.socialnetwork.map((socialnetwork, i) => (
+                    <li key={i}>
+                      <span className="subtitle">
+                        <i
+                          className={`fab fa-${socialnetwork.name.toLowerCase()}`}
+                          aria-hidden="true"
+                        />{" "}
+                        {socialnetwork.name === "Skype" ? (
+                          <a href={`skype:${socialnetwork.url}?chat`}>
+                            {socialnetwork.url}
+                          </a>
+                        ) : socialnetwork.name === "Whatsapp" ? (
+                          <a
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            href={`https://wa.me/${
+                              socialnetwork.url
+                            }?text=Hola,%20¿Cómo%20te%20va?`}
+                          >
+                            {socialnetwork.url}
+                          </a>
+                        ) : (
+                          <a
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            href={socialnetwork.url}
+                          >
+                            {socialnetwork.url.replace(/(https:\/\/.*\/)/, "")}
+                          </a>
+                        )}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
           </div>
         </div>
       </div>
 
-      {information.skills && information.skills.length ? (
+      {information.skills && information.skills.length > 0 ? (
         <div className="column is-12">
           <div className="box" style={{ marginTop: "0.5rem" }}>
             <p className="title">Habilidades</p>

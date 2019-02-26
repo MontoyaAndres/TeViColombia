@@ -34,7 +34,7 @@ class editCV extends PureComponent {
     return (
       <div className="card">
         <div className="card-header">
-          <div className="card-header-title">Hoja de vida</div>
+          <div className="card-header-title">Anexos</div>
         </div>
 
         <div className="card-content">
@@ -62,7 +62,7 @@ class editCV extends PureComponent {
                     }}
                   >
                     <input {...getInputProps()} />
-                    <h3 className="h3">Subir hoja de vida en PDF o Word</h3>
+                    <h3 className="h3">Subir Anexo en PDF o Word</h3>
                   </div>
                 </div>
               )}

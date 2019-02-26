@@ -4,7 +4,11 @@ import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
 import omit from "lodash.omit";
 
-import { TextField, SelectField } from "../components/shared/globalField";
+import {
+  TextField,
+  SelectField,
+  TextFieldAddonsCountry
+} from "../components/shared/globalField";
 import { RegisterValidation } from "../utils/validation";
 import normalizeErrors from "../utils/normalizeErrors";
 import checkLoggedIn from "../lib/checkLoggedIn";
@@ -14,6 +18,7 @@ const registerMutation = gql`
   mutation RegisterMutation(
     $name: String!
     $lastname: String!
+    $telephoneCountry: Int!
     $telephone: BigInt!
     $identificationDocumentType: String!
     $identificationDocument: BigInt!
@@ -23,6 +28,7 @@ const registerMutation = gql`
     register(
       name: $name
       lastname: $lastname
+      telephoneCountry: $telephoneCountry
       telephone: $telephone
       identificationDocumentType: $identificationDocumentType
       identificationDocument: $identificationDocument
@@ -44,7 +50,10 @@ const register = ({ values, handleSubmit, isSubmitting, setFieldValue }) => {
         <div className="container has-text-centered">
           {/* User created successfully */}
           {values.registered && (
-            <div className="animated bounceIn notification is-primary">
+            <div
+              id="registered"
+              className="animated bounceIn notification is-primary"
+            >
               <button
                 type="button"
                 className="delete"
@@ -57,7 +66,7 @@ const register = ({ values, handleSubmit, isSubmitting, setFieldValue }) => {
             </div>
           )}
 
-          <div className="column is-4 is-offset-4">
+          <div className="column is-6 is-offset-3">
             <h3 className="title has-text-grey">Crea una nueva cuenta</h3>
             <div className="box animated bounceInLeft">
               <figure className="avatar">
@@ -76,22 +85,23 @@ const register = ({ values, handleSubmit, isSubmitting, setFieldValue }) => {
                 <TextField
                   type="text"
                   name="name"
-                  placeholder="Nombre"
+                  placeholder="Nombres"
                   isRequired
                 />
 
                 <TextField
                   type="text"
                   name="lastname"
-                  placeholder="Apellido"
+                  placeholder="Apellidos"
                   isRequired
                 />
 
-                <TextField
+                <TextFieldAddonsCountry
                   type="number"
                   pattern="\d*"
+                  selectName="telephoneCountry"
                   name="telephone"
-                  placeholder="Teléfono celular"
+                  placeholder="Teléfono secundario celular/fijo/oficina"
                   isRequired
                 />
 
@@ -164,6 +174,7 @@ export default compose(
     mapPropsToValues: () => ({
       name: "",
       lastname: "",
+      telephoneCountry: 57,
       telephone: "",
       identificationDocumentType: "Tarjeta de identidad",
       identificationDocument: "",
@@ -178,7 +189,10 @@ export default compose(
       { props: { mutate }, setSubmitting, setErrors, resetForm, setFieldValue }
     ) => {
       const { data } = await mutate({
-        variables: omit(values, "registered")
+        variables: omit(
+          { values, telephoneCountry: Number(values.telephoneCountry) },
+          ["registered"]
+        )
       });
 
       // if login has data, it has the errors
@@ -191,8 +205,7 @@ export default compose(
         resetForm();
         setFieldValue("registered", true, false);
         window.scrollTo({
-          top: 100,
-          left: 100,
+          top: document.getElementById("registered").offsetTop - 100,
           behavior: "smooth"
         });
       }

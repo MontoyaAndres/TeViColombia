@@ -31,6 +31,11 @@ type CV {
   routeCV: String
 }
 
+type SocialNetwork {
+  name: String!
+  url: String!
+}
+
 type UserInformation {
   id: ID
   routePhoto: String!
@@ -41,18 +46,21 @@ type UserInformation {
   identificationDocumentType: String!
   identificationDocument: BigInt!
   address: String
+  telephoneCountry: Int!
   telephone: BigInt!
+  telephone2Country: Int
+  telephone2: BigInt
   departament: String
   town: String
   nationality: String
   birth: Date
   civilStatus: String
-  linkedin: String
-  skype: String
   website: String
   gender: String
+  optionalEmail: String
   email: String!
   skills: [String]
+  socialnetwork: [SocialNetwork]
   language: [Language]
   study: [Study]
   work: [Work]

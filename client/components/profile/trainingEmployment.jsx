@@ -3,7 +3,7 @@ import React from "react";
 const trainingEmployment = ({ information }) => (
   <div className="container">
     <div style={{ padding: ".75rem" }}>
-      {information.study && information.study.length ? (
+      {information.study && information.study.length > 0 ? (
         <div className="box" style={{ marginTop: "0.5rem" }}>
           <p className="title">Estudio</p>
           {information.study.map((study, i) => (
@@ -39,7 +39,7 @@ const trainingEmployment = ({ information }) => (
         </div>
       ) : null}
 
-      {information.work && information.work.length ? (
+      {information.work && information.work.length > 0 ? (
         <div className="box" style={{ marginTop: "0.5rem" }}>
           <p className="title">Trabajo</p>
           {information.work.map((work, i) => (
@@ -90,7 +90,7 @@ const trainingEmployment = ({ information }) => (
         </div>
       ) : null}
 
-      {information.cv && information.cv.length ? (
+      {information.cv && information.cv.length > 0 ? (
         <div className="box" style={{ marginTop: "0.5rem" }}>
           <p className="title">Hoja de vida</p>
           <div className="content">

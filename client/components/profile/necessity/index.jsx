@@ -176,7 +176,7 @@ class index extends React.PureComponent {
                       </div>
                       <div className="media-content">
                         <div className="content">
-                          <Linkify text={neces.comment} />
+                          <Linkify text={neces.comment} length={80} />
                         </div>
                       </div>
                     </div>

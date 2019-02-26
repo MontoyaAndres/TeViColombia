@@ -26,7 +26,7 @@ export class FeedBack extends BaseEntity {
   @Column("uuid")
   toId: string;
 
-  @Column("varchar")
+  @Column("varchar", { length: 8 })
   feedbackType: string;
 
   @CreateDateColumn({ type: "timestamp" })

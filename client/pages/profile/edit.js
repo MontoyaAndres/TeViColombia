@@ -20,6 +20,7 @@ import EditCV from "../../components/profile/edit/editCV";
 import TownsByDepartament from "../../utils/townsByDepartament";
 import { GeneralInformationValidation } from "../../utils/validation";
 import normalizeErrors from "../../utils/normalizeErrors";
+import EditSocialNetwork from "../../components/profile/edit/editSocialNetwork";
 
 const generalInformationMutation = gql`
   mutation GeneralInformationMutation(
@@ -85,6 +86,10 @@ class edit extends React.PureComponent {
             skills={values.skills}
             setFieldValue={setFieldValue}
           />
+          <EditSocialNetwork
+            socialnetwork={values.socialnetwork}
+            setFieldValue={setFieldValue}
+          />
           <EditLanguage language={values.language} />
           <EditStudy study={values.study} />
           <EditWork work={values.work} />
@@ -141,16 +146,19 @@ export default compose(
       identificationDocumentType: data.information.identificationDocumentType,
       identificationDocument: data.information.identificationDocument,
       address: data.information.address || "",
+      telephoneCountry: data.information.telephoneCountry || 57,
       telephone: data.information.telephone,
+      telephone2Country: data.information.telephone2Country || 57,
+      telephone2: data.information.telephone2 || 0,
       nationality: data.information.nationality || "Colombia",
       departament: data.information.departament || "Bogotá, D.C.",
       town: data.information.town || "",
       civilStatus: data.information.civilStatus || "SOLTERO(A)",
-      linkedin: data.information.linkedin || "",
-      skype: data.information.skype || "",
       website: data.information.website || "",
       gender: data.information.gender || "HOMBRE",
+      optionalEmail: data.information.optionalEmail || "",
       skills: data.information.skills || [],
+      socialnetwork: data.information.socialnetwork || [],
       language: data.information.language || [],
       study: data.information.study || [],
       work: data.information.work || [],
@@ -183,8 +191,23 @@ export default compose(
         }
       });
 
+      // Omitting all about `edited`, `studyingOn`, `workingOn` because the database does not need to save them.
+      const valuesOmitted = await omit(
+        {
+          ...values,
+          telephoneCountry: Number(values.telephoneCountry),
+          telephone2Country: Number(values.telephone2Country),
+          study: values.study.map(item => omit(item, ["studyingOn"])),
+          work: values.work.map(item => omit(item, ["workingOn"]))
+        },
+        ["edited", "studyingOn", "workingOn"]
+      );
+
       const { data } = await mutate({
-        variables: { id, information: omit(values, "edited") },
+        variables: {
+          id,
+          information: valuesOmitted
+        },
         refetchQueries: [{ query: informationQuery, variables: { id } }]
       });
 
@@ -197,8 +220,7 @@ export default compose(
         setSubmitting(false);
         setFieldValue("edited", true, false);
         window.scrollTo({
-          top: document.getElementById("edited").offsetTop,
-          left: 100,
+          top: document.getElementById("edited").offsetTop - 100,
           behavior: "smooth"
         });
       }

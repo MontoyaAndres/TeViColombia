@@ -129,7 +129,7 @@ const index = ({
 
                 <div className="card-content">
                   <div className="content">
-                    <Linkify text={portfolio.description} />
+                    <Linkify text={portfolio.description} length={80} />
                   </div>
                 </div>
 

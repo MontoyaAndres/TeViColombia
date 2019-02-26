@@ -25,6 +25,11 @@ input WorkInput {
   finishIn: Date
 }
 
+input SocialNetworkInput {
+  name: String!
+  url: String!
+}
+
 input GeneralInformationInput {
   routePhoto: Upload
   routeCover: Upload
@@ -34,17 +39,20 @@ input GeneralInformationInput {
   identificationDocumentType: String!
   identificationDocument: BigInt!
   address: String
+  telephoneCountry: Int!
   telephone: BigInt!
+  telephone2Country: Int
+  telephone2: BigInt
   departament: String!
   town: String!
   nationality: String!
   birth: Date
   civilStatus: String!
-  linkedin: String
-  skype: String
   website: String
   gender: String!
+  optionalEmail: String
   skills: [String]
+  socialnetwork: [SocialNetworkInput]
   language: [LanguageInput]
   study: [StudyInput]
   work: [WorkInput]

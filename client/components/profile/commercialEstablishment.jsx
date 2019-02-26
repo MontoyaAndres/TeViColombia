@@ -28,7 +28,7 @@ const commercialEstablishment = ({ id }) => (
           {!Object.keys(data.information).length ? (
             <div className="columns is-multiline">
               {data.information.commercialEstablishment &&
-              data.information.commercialEstablishment.length ? (
+              data.information.commercialEstablishment.length > 0 ? (
                 <div className="column is-6">
                   <div className="box" style={{ marginTop: "0.5rem" }}>
                     <p className="subtitle">
