@@ -50,7 +50,7 @@ export const resolvers: ResolveMap = {
       if (!userId) {
         return [
           {
-            path: "key",
+            path: "newPassword",
             message: "La llave ha caducado."
           }
         ];

@@ -55,11 +55,11 @@ const login = () => {
                     validateOnBlur={false}
                     validateOnChange={false}
                     onSubmit={async (values, { setSubmitting, setErrors }) => {
-                      const response = await mutate({
+                      const { data } = await mutate({
                         variables: values,
                         refetchQueries: [{ query: meQuery }]
                       });
-                      const { data } = response;
+
                       // if login has data, it has the errors
                       if (data.login && data.login.length) {
                         setSubmitting(false);

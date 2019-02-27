@@ -26,6 +26,9 @@ app
       .get("/profile/edit/:id", (req, res) =>
         app.render(req, res, "/profile/edit", { id: req.params.id })
       )
+      .get("/change-password/:key", (req, res) =>
+        app.render(req, res, "/change-password", { key: req.params.key })
+      )
       .get("*", (req, res) => handler(req, res))
       .listen(3000);
   })
