@@ -102,7 +102,7 @@ const index = ({
         />
       )}
 
-      {dataPortfolio && dataPortfolio.length ? (
+      {dataPortfolio && dataPortfolio.length > 0 ? (
         <div className="columns is-multiline">
           {dataPortfolio.map(portfolio => (
             <div className="column is-6" key={portfolio.id}>

@@ -25,6 +25,17 @@ input WorkInput {
   finishIn: Date
 }
 
+input PreferWorkInput {
+  id: ID
+  currentSituation: String!
+  job: String!
+  area: [String!]!
+  salary: BigInt!
+  departament: [String!]!
+  travel: String!
+  residence: String!
+}
+
 input SocialNetworkInput {
   name: String!
   url: String!
@@ -50,11 +61,13 @@ input GeneralInformationInput {
   civilStatus: String!
   website: String
   gender: String!
+  disability: String
   optionalEmail: String
   skills: [String]
   socialnetwork: [SocialNetworkInput]
   language: [LanguageInput]
   study: [StudyInput]
   work: [WorkInput]
+  preferWork: PreferWorkInput
   cv: [Upload]
 }

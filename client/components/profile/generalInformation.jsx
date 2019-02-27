@@ -15,11 +15,10 @@ const generalInformation = ({ information }) => (
               {information.identificationDocument}
             </p>
             <p className="subtitle">
-              <strong>Dirección, complemento y localidad:</strong>{" "}
-              {information.address}
+              <strong>Dirección y localidad:</strong> {information.address}
             </p>
             <p className="subtitle">
-              <strong>Teléfono celular/fijo/oficina:</strong>{" "}
+              <strong>Teléfono celular/fijo:</strong>{" "}
               <a
                 href={`tel:+${information.telephoneCountry} ${
                   information.telephone
@@ -29,7 +28,7 @@ const generalInformation = ({ information }) => (
               </a>
             </p>
             <p className="subtitle">
-              <strong>Teléfono secundario celular/fijo/oficina:</strong>{" "}
+              <strong>Teléfono sec celular/fijo:</strong>{" "}
               <a
                 href={`tel:+${information.telephone2Country} ${
                   information.telephone2
@@ -54,6 +53,9 @@ const generalInformation = ({ information }) => (
             <p className="subtitle">
               <strong>Fecha de nacimiento:</strong> {information.birth}
             </p>
+            <p className="subtitle">
+              <strong>Con discapacidad:</strong> {information.disability}
+            </p>
           </div>
         </div>
       </div>
@@ -72,7 +74,7 @@ const generalInformation = ({ information }) => (
               <a href={`mailto:${information.email}`}>{information.email}</a>
             </p>
             <p className="subtitle">
-              <strong>Correo electrónico secundario:</strong>{" "}
+              <strong>Correo electrónico sec:</strong>{" "}
               <a href={`mailto:${information.optionalEmail}`}>
                 {information.optionalEmail}
               </a>
@@ -133,6 +135,15 @@ const generalInformation = ({ information }) => (
                           >
                             {socialnetwork.url}
                           </a>
+                        ) : socialnetwork.name === "YouTube" ||
+                          socialnetwork.name === "Spotify" ? (
+                          <a
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            href={socialnetwork.url}
+                          >
+                            {socialnetwork.name}
+                          </a>
                         ) : (
                           <a
                             rel="noopener noreferrer"
@@ -152,8 +163,69 @@ const generalInformation = ({ information }) => (
         </div>
       </div>
 
+      {information.preferwork.currentSituation && (
+        <div className="column is-6">
+          <div className="box" style={{ marginTop: "0.5rem" }}>
+            <p className="title">Preferencias de empleo</p>
+            <div className="content">
+              <p className="subtitle">
+                <strong>Situación actual:</strong>{" "}
+                {information.preferwork.currentSituation}
+              </p>
+
+              <p className="subtitle">
+                <strong>Puesto de trabajo deseado:</strong>{" "}
+                {information.preferwork.job}
+              </p>
+
+              <p className="subtitle">
+                <strong>Área:</strong> <br />
+                {information.preferwork.area.map(area => (
+                  <span
+                    key={area}
+                    className="tag is-info is-large"
+                    style={{ margin: 5 }}
+                  >
+                    {area}
+                  </span>
+                ))}
+              </p>
+
+              <p className="subtitle">
+                <strong>Salario mínimo aceptado:</strong>{" "}
+                {information.preferwork.salary}
+              </p>
+
+              <p className="subtitle">
+                <strong>Departamento:</strong>
+                <br />
+                {information.preferwork.departament.map(departament => (
+                  <span
+                    key={departament}
+                    className="tag is-info is-large"
+                    style={{ margin: 5 }}
+                  >
+                    {departament}
+                  </span>
+                ))}
+              </p>
+
+              <p className="subtitle">
+                <strong>Disponibilidad para viajar:</strong>{" "}
+                {information.preferwork.travel}
+              </p>
+
+              <p className="subtitle">
+                <strong>Disponibilidad para cambiar de residencia:</strong>{" "}
+                {information.preferwork.residence}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {information.skills && information.skills.length > 0 ? (
-        <div className="column is-12">
+        <div className="column is-6">
           <div className="box" style={{ marginTop: "0.5rem" }}>
             <p className="title">Habilidades</p>
             <div className="content">

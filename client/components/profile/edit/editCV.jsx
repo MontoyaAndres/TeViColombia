@@ -68,7 +68,7 @@ class editCV extends PureComponent {
               )}
             </Dropzone>
 
-            {values.cv && values.cv.length ? (
+            {values.cv && values.cv.length > 0 ? (
               <div className="columns is-multiline">
                 {values.cv.map((CVFile, i) => (
                   <div className="column is-6" key={i}>
