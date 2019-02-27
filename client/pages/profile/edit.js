@@ -17,10 +17,11 @@ import EditLanguage from "../../components/profile/edit/editLanguage";
 import EditStudy from "../../components/profile/edit/editStudy";
 import EditWork from "../../components/profile/edit/editWork";
 import EditCV from "../../components/profile/edit/editCV";
+import EditSocialNetwork from "../../components/profile/edit/editSocialNetwork";
+import EditPreferWork from "../../components/profile/edit/editPreferWork";
 import TownsByDepartament from "../../utils/townsByDepartament";
 import { GeneralInformationValidation } from "../../utils/validation";
 import normalizeErrors from "../../utils/normalizeErrors";
-import EditSocialNetwork from "../../components/profile/edit/editSocialNetwork";
 
 const generalInformationMutation = gql`
   mutation GeneralInformationMutation(
@@ -93,6 +94,7 @@ class edit extends React.PureComponent {
           <EditLanguage language={values.language} />
           <EditStudy study={values.study} />
           <EditWork work={values.work} />
+          <EditPreferWork setFieldValue={setFieldValue} />
           <Field name="cv" component={EditCV} />
 
           <div
@@ -156,12 +158,22 @@ export default compose(
       civilStatus: data.information.civilStatus || "SOLTERO(A)",
       website: data.information.website || "",
       gender: data.information.gender || "HOMBRE",
+      disability: data.information.disability || "No",
       optionalEmail: data.information.optionalEmail || "",
       skills: data.information.skills || [],
       socialnetwork: data.information.socialnetwork || [],
       language: data.information.language || [],
       study: data.information.study || [],
       work: data.information.work || [],
+      preferWork: data.information.preferwork || {
+        currentSituation: "No tengo empleo",
+        job: "",
+        area: ["Administración / Oficina"],
+        salary: "",
+        departament: ["Bogotá, D.C."],
+        travel: "No",
+        residence: "No"
+      },
       cv: data.information.cv || []
     }),
     validationSchema: GeneralInformationValidation,

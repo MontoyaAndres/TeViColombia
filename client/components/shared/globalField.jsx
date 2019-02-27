@@ -57,6 +57,49 @@ const SelectField = ({ name, arrayPlaceholder, isRequired, ...props }) => (
   </>
 );
 
+const SelectMultipleField = ({
+  name,
+  arrayPlaceholder,
+  isRequired,
+  setFieldValue,
+  ...props
+}) => (
+  <>
+    <div className="field">
+      <div className="control">
+        <div className="select is-fullwidth is-multiple">
+          <Field
+            {...props}
+            component="select"
+            name={name}
+            required={isRequired}
+            className="is-hovered"
+            multiple
+            onChange={evt =>
+              setFieldValue(
+                name,
+                [].slice
+                  .call(evt.target.selectedOptions)
+                  .map(option => option.value)
+              )
+            }
+          >
+            {arrayPlaceholder.map((placeholder, index) => (
+              <option key={index} value={placeholder}>
+                {placeholder}
+              </option>
+            ))}
+          </Field>
+        </div>
+      </div>
+    </div>
+
+    <div className="error">
+      <ErrorMessage name={name} />
+    </div>
+  </>
+);
+
 const TextAreaField = ({
   name,
   placeholder,
@@ -150,10 +193,37 @@ const TextFieldAddonsCountry = ({
   </>
 );
 
+const RadioField = ({ name, arrayRadio, isRequired = true, ...props }) => (
+  <div className="control">
+    {arrayRadio.map(radio => (
+      <label className="radio" key={radio}>
+        <Field
+          {...props}
+          name={name}
+          required={isRequired}
+          render={({ field }) => (
+            <>
+              <input
+                {...field}
+                type="radio"
+                value={radio}
+                checked={field.value === radio}
+              />{" "}
+              {radio}
+            </>
+          )}
+        />
+      </label>
+    ))}
+  </div>
+);
+
 export {
   TextField,
   SelectField,
+  SelectMultipleField,
   TextAreaField,
   CheckboxField,
-  TextFieldAddonsCountry
+  TextFieldAddonsCountry,
+  RadioField
 };

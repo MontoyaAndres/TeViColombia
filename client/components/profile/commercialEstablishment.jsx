@@ -25,7 +25,7 @@ const commercialEstablishment = ({ id }) => (
 
       return (
         <div className="container">
-          {!Object.keys(data.information).length ? (
+          {!Object.keys(data.information).length > 0 ? (
             <div className="columns is-multiline">
               {data.information.commercialEstablishment &&
               data.information.commercialEstablishment.length > 0 ? (

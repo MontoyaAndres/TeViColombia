@@ -22,6 +22,7 @@ const informationQuery = gql`
       civilStatus
       website
       gender
+      disability
       optionalEmail
       email
       skills
@@ -52,6 +53,16 @@ const informationQuery = gql`
         goals
         startedOn
         finishIn
+      }
+      preferwork {
+        id
+        currentSituation
+        job
+        area
+        salary
+        departament
+        travel
+        residence
       }
       cv {
         id

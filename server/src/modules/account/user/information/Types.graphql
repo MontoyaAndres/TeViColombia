@@ -25,6 +25,17 @@ type Work {
   finishIn: Date
 }
 
+type PreferWork {
+  id: ID
+  currentSituation: String
+  job: String
+  area: [String]
+  salary: BigInt
+  departament: [String]
+  travel: String
+  residence: String
+}
+
 type CV {
   id: ID
   filename: String
@@ -57,6 +68,7 @@ type UserInformation {
   civilStatus: String
   website: String
   gender: String
+  disability: String
   optionalEmail: String
   email: String!
   skills: [String]
@@ -64,5 +76,6 @@ type UserInformation {
   language: [Language]
   study: [Study]
   work: [Work]
+  preferwork: PreferWork
   cv: [CV]
 }

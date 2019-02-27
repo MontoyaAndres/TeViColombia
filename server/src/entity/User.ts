@@ -7,7 +7,9 @@ import {
   BeforeInsert,
   OneToMany,
   ManyToMany,
-  JoinTable
+  JoinTable,
+  OneToOne,
+  JoinColumn
 } from "typeorm";
 
 // Models
@@ -17,6 +19,7 @@ import { Work } from "./Work";
 import { CV } from "./CV";
 import { Language } from "./Language";
 import { Business } from "./Business";
+import { PreferWork } from "./PreferWork";
 import { ENUMCountry, ENUMDepartament } from "../utils/entityGlobalEnum";
 
 enum ENUMIdentificationDocumentType {
@@ -101,6 +104,9 @@ export class User extends BaseEntity {
   @Column("enum", { enum: ENUMGender, nullable: true })
   gender: string;
 
+  @Column("varchar", { length: 2, default: "No" })
+  disability: string;
+
   @Column("varchar", { unique: true, nullable: true })
   optionalEmail: string;
 
@@ -130,6 +136,10 @@ export class User extends BaseEntity {
 
   @OneToMany(_ => Work, work => work.user)
   work: Work[];
+
+  @OneToOne(_ => PreferWork)
+  @JoinColumn()
+  preferwork: PreferWork;
 
   @OneToMany(_ => CV, cv => cv.user)
   cv: CV[];

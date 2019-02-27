@@ -104,6 +104,7 @@ birth: any | null;
 civilStatus: string | null;
 website: string | null;
 gender: string | null;
+disability: string | null;
 optionalEmail: string | null;
 email: string;
 skills: Array<string | null> | null;
@@ -111,6 +112,7 @@ socialnetwork: Array<ISocialNetwork | null> | null;
 language: Array<ILanguage | null> | null;
 study: Array<IStudy | null> | null;
 work: Array<IWork | null> | null;
+preferwork: IPreferWork | null;
 cv: Array<ICV | null> | null;
 }
 
@@ -148,6 +150,18 @@ area: string | null;
 goals: string | null;
 startedOn: any | null;
 finishIn: any | null;
+}
+
+interface IPreferWork {
+__typename: "PreferWork";
+id: string | null;
+currentSituation: string | null;
+job: string | null;
+area: Array<string | null> | null;
+salary: any | null;
+departament: Array<string | null> | null;
+travel: string | null;
+residence: string | null;
 }
 
 interface ICV {
@@ -287,12 +301,14 @@ birth?: any | null;
 civilStatus: string;
 website?: string | null;
 gender: string;
+disability?: string | null;
 optionalEmail?: string | null;
 skills?: Array<string | null> | null;
 socialnetwork?: Array<ISocialNetworkInput | null> | null;
 language?: Array<ILanguageInput | null> | null;
 study?: Array<IStudyInput | null> | null;
 work?: Array<IWorkInput | null> | null;
+preferWork?: IPreferWorkInput | null;
 cv?: Array<any | null> | null;
 }
 
@@ -326,6 +342,17 @@ area: string;
 goals?: string | null;
 startedOn: any;
 finishIn?: any | null;
+}
+
+interface IPreferWorkInput {
+id?: string | null;
+currentSituation: string;
+job: string;
+area: Array<string>;
+salary: any;
+departament: Array<string>;
+travel: string;
+residence: string;
 }
 }
 

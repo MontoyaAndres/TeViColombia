@@ -3,7 +3,8 @@ import React from "react";
 import {
   SelectField,
   TextField,
-  TextFieldAddonsCountry
+  TextFieldAddonsCountry,
+  RadioField
 } from "../../shared/globalField";
 import EntityGlobalEnum from "../../../utils/entityGlobalEnum";
 import TownsByDepartament from "../../../utils/townsByDepartament";
@@ -122,6 +123,15 @@ const editGeneralInformation = ({
               arrayPlaceholder={["HOMBRE", "MUJER"]}
               name="gender"
               isRequired
+            />
+          </div>
+
+          <div className="column is-6">
+            <label className="label">¿Tiene alguna discapacidad?</label>
+            <RadioField
+              name="disability"
+              arrayRadio={["Sí", "No"]}
+              isRequired={false}
             />
           </div>
 

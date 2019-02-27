@@ -65,7 +65,7 @@ class editSkills extends React.PureComponent {
             </div>
           </div>
 
-          {skills && skills.length
+          {skills && skills.length > 0
             ? skills.map((skill, i) => (
                 <span
                   key={i}

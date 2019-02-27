@@ -8,7 +8,7 @@ type BatchInformation = (ids: string[]) => Promise<User[]>;
 const batchInformations: BatchInformation = async ids => {
   const user = await User.find({
     where: { id: In(ids) },
-    relations: ["language", "study", "work", "cv"]
+    relations: ["language", "study", "work", "preferwork", "cv"]
   });
 
   const userMap: { [key: string]: User } = {};

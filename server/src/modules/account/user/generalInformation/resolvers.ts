@@ -5,6 +5,7 @@ import { Language } from "../../../../entity/Language";
 import { Study } from "../../../../entity/Study";
 import { Work } from "../../../../entity/Work";
 import { CV } from "../../../../entity/CV";
+import { PreferWork } from "../../../../entity/PreferWork";
 import UpdateCreate from "../UpdateCreate";
 import { createMiddleware } from "../../../../utils/createMiddleware";
 import { middleware } from "../../../shared/authMiddleware";
@@ -121,6 +122,19 @@ export const resolvers: ResolveMap = {
           }
         });
 
+        // Update preferWork information
+        if (information.preferWork.id) {
+          await PreferWork.update(
+            { id: information.preferWork.id },
+            information.preferWork
+          );
+        } else {
+          const preferwork = await PreferWork.create(
+            information.preferWork
+          ).save();
+          await User.update({ id }, { preferwork });
+        }
+
         // Update user information
         await User.update(
           { id },
@@ -142,6 +156,7 @@ export const resolvers: ResolveMap = {
             civilStatus: information.civilStatus,
             website: information.website,
             gender: information.gender,
+            disability: information.disability,
             optionalEmail: information.optionalEmail,
             skills: information.skills,
             socialnetwork: information.socialnetwork

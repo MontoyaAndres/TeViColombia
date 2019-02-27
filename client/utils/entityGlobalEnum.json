@@ -538,5 +538,12 @@
     "Intermedio",
     "Avanzado",
     "Nativo"
+  ],
+  "ENUMCurrentSituation": [
+    "No tengo empleo",
+    "Estoy buscando trabajo activamente",
+    "Estoy trabajando actualmente",
+    "No busco trabajo pero estoy dispuesto a escuchar ofertas",
+    "No tengo ningún interés en un nuevo empleo"
   ]
 }

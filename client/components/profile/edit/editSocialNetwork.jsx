@@ -76,6 +76,16 @@ const editSocialNetwork = ({ socialnetwork, setFieldValue }) => {
       </div>
 
       <div className="card-content">
+        <div className="notification is-warning">
+          <p className="subtitle">
+            Por favor asignar el nombre de usuario en las plataformas de
+            Twitter, GitHub, Facebook, Linkedin, Instagram y Skype. En Whatsapp
+            debe de poner su número de telefóno con su respectivo indicativo de
+            país. En otros entornos como YouTube o Spotify, solo añada la URL de
+            su perfil.
+          </p>
+        </div>
+
         <div className="content">
           <div className="field is-grouped">
             <div className="control has-icons-left">
@@ -116,7 +126,7 @@ const editSocialNetwork = ({ socialnetwork, setFieldValue }) => {
                 onKeyPress={e => {
                   if (e.key === "Enter") e.preventDefault();
                 }}
-                placeholder="Url, nombre de usuario o teléfono de red social"
+                placeholder="Url, nombre de usuario o teléfono"
               />
             </div>
 
@@ -161,6 +171,15 @@ const editSocialNetwork = ({ socialnetwork, setFieldValue }) => {
                     >
                       {sn.url}
                     </a>
+                  ) : sn.name === "YouTube" || sn.name === "Spotify" ? (
+                    <a
+                      style={{ color: "white" }}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      href={sn.url}
+                    >
+                      {sn.name}
+                    </a>
                   ) : (
                     <a
                       style={{ color: "white" }}
@@ -168,7 +187,7 @@ const editSocialNetwork = ({ socialnetwork, setFieldValue }) => {
                       target="_blank"
                       href={sn.url}
                     >
-                      {sn.url}
+                      {sn.url.replace(/(https:\/\/.*\/)/, "")}
                     </a>
                   )}
 

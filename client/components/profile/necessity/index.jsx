@@ -150,7 +150,7 @@ class index extends React.PureComponent {
           />
         )}
 
-        {dataNecessity && dataNecessity.length ? (
+        {dataNecessity && dataNecessity.length > 0 ? (
           dataNecessity.map((neces, i) => (
             <div style={{ marginTop: "0.5rem", padding: "0 0.75rem" }} key={i}>
               <div className="card" style={{ borderRadius: 6 }}>
