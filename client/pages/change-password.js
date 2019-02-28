@@ -24,7 +24,7 @@ const changePassword = ({
 }) => (
   <div className="hero is-fullheight-with-navbar">
     <div className="hero-body">
-      <div id="sended" className="container animated bounceInLeft">
+      <div className="container animated bounceInLeft">
         <div className="notification is-warning">
           Si esta aquí, es porque usted desea cambiar la contraseña de su
           cuenta. Recuerde que no puede ingresar a Te vi Colombia hasta que el

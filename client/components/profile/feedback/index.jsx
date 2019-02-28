@@ -3,6 +3,7 @@ import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
 import Link from "next/link";
 import { withFormik, Form, ErrorMessage } from "formik";
+import { SimpleImg } from "react-simple-img";
 
 import {
   feedbackQuery,
@@ -152,14 +153,15 @@ class index extends React.PureComponent {
                       <div className="card-content" style={{ borderRadius: 6 }}>
                         <div className="media">
                           <div className="media-left">
-                            <figure className="image is-48x48">
-                              <img
-                                src={`${process.env.API_HOST}/${
-                                  feed.from.routePhoto
-                                }`}
-                                alt="profile"
-                              />
-                            </figure>
+                            <SimpleImg
+                              applyAspectRatio={false}
+                              src={`${process.env.API_HOST}/${
+                                feed.from.routePhoto
+                              }`}
+                              height={44}
+                              width={48}
+                              alt="profile"
+                            />
                           </div>
 
                           <div className="media-content">

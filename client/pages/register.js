@@ -190,7 +190,7 @@ export default compose(
     ) => {
       const { data } = await mutate({
         variables: omit(
-          { values, telephoneCountry: Number(values.telephoneCountry) },
+          { ...values, telephoneCountry: Number(values.telephoneCountry) },
           ["registered"]
         )
       });

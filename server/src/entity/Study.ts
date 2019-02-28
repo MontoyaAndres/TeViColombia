@@ -8,6 +8,7 @@ import {
 
 import { User } from "./User";
 import { ENUMStudyLevel } from "../utils/entityGlobalEnum";
+import EmptyStringToNull from "../utils/emptyStringToNull";
 
 @Entity()
 export class Study extends BaseEntity {
@@ -21,13 +22,13 @@ export class Study extends BaseEntity {
   level: string;
 
   // This is only for university careers
-  @Column("varchar", { nullable: true })
+  @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   area: string;
 
   @Column("date")
   startedOn: Date;
 
-  @Column("date", { nullable: true })
+  @Column("date", { nullable: true, transformer: new EmptyStringToNull() })
   finishIn: Date;
 
   @ManyToOne(_ => User, user => user.study)

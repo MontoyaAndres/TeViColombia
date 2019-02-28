@@ -21,6 +21,7 @@ import { Language } from "./Language";
 import { Business } from "./Business";
 import { PreferWork } from "./PreferWork";
 import { ENUMCountry, ENUMDepartament } from "../utils/entityGlobalEnum";
+import EmptyStringToNull from "../utils/emptyStringToNull";
 
 enum ENUMIdentificationDocumentType {
   A1 = "CÉDULA DE CIUDADANÍA",
@@ -50,7 +51,7 @@ export class User extends BaseEntity {
   @Column("varchar", { default: "default/default-photo.png" })
   routePhoto: string;
 
-  @Column("varchar", { nullable: true })
+  @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   routeCover: string;
 
   @Column("varchar")
@@ -59,7 +60,11 @@ export class User extends BaseEntity {
   @Column("varchar")
   lastname: string;
 
-  @Column("varchar", { length: 100, nullable: true })
+  @Column("varchar", {
+    length: 100,
+    nullable: true,
+    transformer: new EmptyStringToNull()
+  })
   description: string;
 
   @Column("enum", { enum: ENUMIdentificationDocumentType })
@@ -68,7 +73,7 @@ export class User extends BaseEntity {
   @Column("bigint", { unique: true })
   identificationDocument: number;
 
-  @Column("varchar", { nullable: true })
+  @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   address: string;
 
   @Column("integer")
@@ -77,37 +82,57 @@ export class User extends BaseEntity {
   @Column("bigint", { unique: true })
   telephone: number;
 
-  @Column("integer", { nullable: true })
+  @Column("integer", { nullable: true, transformer: new EmptyStringToNull() })
   telephone2Country: number;
 
-  @Column("bigint", { unique: true, nullable: true })
+  @Column("bigint", {
+    unique: true,
+    nullable: true,
+    transformer: new EmptyStringToNull()
+  })
   telephone2: number;
 
-  @Column("enum", { enum: ENUMDepartament, nullable: true })
+  @Column("enum", {
+    enum: ENUMDepartament,
+    nullable: true,
+    transformer: new EmptyStringToNull()
+  })
   departament: string;
 
-  @Column("varchar", { nullable: true })
+  @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   town: string;
 
-  @Column("enum", { enum: ENUMCountry, nullable: true })
+  @Column("enum", {
+    enum: ENUMCountry,
+    nullable: true,
+    transformer: new EmptyStringToNull()
+  })
   nationality: string;
 
-  @Column("date", { nullable: true })
+  @Column("date", { nullable: true, transformer: new EmptyStringToNull() })
   birth: Date;
 
-  @Column("enum", { enum: ENUMCivilStatus, nullable: true })
+  @Column("enum", {
+    enum: ENUMCivilStatus,
+    nullable: true,
+    transformer: new EmptyStringToNull()
+  })
   civilStatus: string;
 
-  @Column("varchar", { nullable: true })
+  @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   website: string;
 
-  @Column("enum", { enum: ENUMGender, nullable: true })
+  @Column("enum", {
+    enum: ENUMGender,
+    nullable: true,
+    transformer: new EmptyStringToNull()
+  })
   gender: string;
 
   @Column("varchar", { length: 2, default: "No" })
   disability: string;
 
-  @Column("varchar", { unique: true, nullable: true })
+  @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   optionalEmail: string;
 
   @Column("varchar", { unique: true })
@@ -116,10 +141,13 @@ export class User extends BaseEntity {
   @Column("text")
   password: string;
 
-  @Column("simple-array", { nullable: true })
+  @Column("simple-array", {
+    nullable: true,
+    transformer: new EmptyStringToNull()
+  })
   skills: string[];
 
-  @Column("json", { nullable: true })
+  @Column("json", { nullable: true, transformer: new EmptyStringToNull() })
   socialnetwork: Array<{ name: string; url: string }>;
 
   @Column({ default: false })
