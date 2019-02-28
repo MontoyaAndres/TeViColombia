@@ -125,6 +125,11 @@ edit.getInitialProps = async context => {
     redirect(context, "/login");
   }
 
+  // Users with differents ids cannot edit information.
+  if (loggedInUser.me.id !== context.req.params.id) {
+    redirect(context, "/");
+  }
+
   return {};
 };
 

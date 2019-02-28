@@ -25,7 +25,19 @@ export class PreferWork extends BaseEntity {
   @Column("bigint")
   salary: number;
 
-  @Column("simple-array")
+  @Column("simple-array", {
+    transformer: {
+      to: (value: string[]) => value,
+      from: (value: string[]) => {
+        // Bogotá, D.C. is saved as ["Bogotá", " D.C."] passing it to ["Bogotá, D.C."]
+        const valuesSeparated = value
+          .filter(val => !val.includes("Bogotá") && !val.includes(" D.C."))
+          .concat("Bogotá, D.C.");
+
+        return valuesSeparated;
+      }
+    }
+  })
   departament: string[];
 
   @Column("varchar", { length: 2, default: "No" })

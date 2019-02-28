@@ -16,8 +16,8 @@ const sendForgotPasswordEmailMutation = gql`
 const password = ({ values, isSubmitting }) => (
   <div className="hero is-fullheight-with-navbar">
     <div className="hero-body">
-      <div id="sended" className="container animated bounceInLeft">
-        {values.sended ? (
+      <div id="sent" className="container animated bounceInLeft">
+        {values.sent ? (
           <div className="notification is-primary">
             <p className="subtitle">
               Por favor revise su correo electrónico para poder cambiar la
@@ -78,20 +78,20 @@ export default compose(
       { props: { mutate }, setSubmitting, setErrors, setFieldValue, resetForm }
     ) => {
       const { data } = await mutate({
-        variables: omit(values, ["sended"])
+        variables: omit(values, ["sent"])
       });
 
       // if sendForgotPasswordEmail has data, it has the errors
       if (data.sendForgotPasswordEmail && data.sendForgotPasswordEmail.length) {
         setSubmitting(false);
-        setFieldValue("sended", false, false);
+        setFieldValue("sent", false, false);
         setErrors(normalizeErrors(data.sendForgotPasswordEmail));
       } else {
         setSubmitting(false);
         resetForm();
-        setFieldValue("sended", true, false);
+        setFieldValue("sent", true, false);
         window.scrollTo({
-          top: document.getElementById("sended").offsetTop - 100,
+          top: document.getElementById("sent").offsetTop - 100,
           behavior: "smooth"
         });
       }

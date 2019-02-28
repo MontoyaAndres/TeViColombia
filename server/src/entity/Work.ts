@@ -12,6 +12,7 @@ import {
   ENUMSector,
   ENUMArea
 } from "../utils/entityGlobalEnum";
+import EmptyStringToNull from "../utils/emptyStringToNull";
 
 @Entity()
 export class Work extends BaseEntity {
@@ -33,13 +34,13 @@ export class Work extends BaseEntity {
   @Column("enum", { enum: ENUMArea })
   area: string;
 
-  @Column("text", { nullable: true })
+  @Column("text", { nullable: true, transformer: new EmptyStringToNull() })
   goals: string;
 
   @Column("date")
   startedOn: Date;
 
-  @Column("date", { nullable: true })
+  @Column("date", { nullable: true, transformer: new EmptyStringToNull() })
   finishIn: Date;
 
   @ManyToOne(_ => User, user => user.work)

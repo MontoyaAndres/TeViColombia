@@ -7,6 +7,7 @@ import {
   Column,
   CreateDateColumn
 } from "typeorm";
+import EmptyStringToNull from "../utils/emptyStringToNull";
 
 @Entity()
 export class FeedBack extends BaseEntity {
@@ -17,7 +18,7 @@ export class FeedBack extends BaseEntity {
   @Column("integer")
   stars: number;
 
-  @Column("text", { nullable: true })
+  @Column("text", { nullable: true, transformer: new EmptyStringToNull() })
   comment: string;
 
   @Column("uuid")

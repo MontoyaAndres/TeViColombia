@@ -13,6 +13,7 @@ import {
   ENUMSector
 } from "../utils/entityGlobalEnum";
 import { Employ } from "./Employ";
+import EmptyStringToNull from "../utils/emptyStringToNull";
 
 @Entity()
 export class Business extends BaseEntity {
@@ -28,7 +29,7 @@ export class Business extends BaseEntity {
   @Column("varchar", { unique: true })
   name: string;
 
-  @Column("text", { nullable: true })
+  @Column("text", { nullable: true, transformer: new EmptyStringToNull() })
   description: string;
 
   @Column("integer")
@@ -37,7 +38,7 @@ export class Business extends BaseEntity {
   @Column("varchar", { unique: true })
   email: string;
 
-  @Column("varchar", { nullable: true })
+  @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   address: string;
 
   @Column("enum", { enum: ENUMCountry, default: "Colombia" })
@@ -46,22 +47,16 @@ export class Business extends BaseEntity {
   @Column("enum", { enum: ENUMDepartament, default: "Bogotá, D.C." })
   departament: string;
 
-  @Column("varchar", { nullable: true })
+  @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   city: string;
 
   @Column("enum", { enum: ENUMSector })
   sector: string;
 
-  @Column("varchar", { nullable: true })
-  linkedin: string;
-
-  @Column("varchar", { nullable: true })
-  skype: string;
-
-  @Column("varchar", { nullable: true })
+  @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   website: string;
 
-  @Column("text", { nullable: true })
+  @Column("text", { nullable: true, transformer: new EmptyStringToNull() })
   googleMapsLocalization: string;
 
   @OneToMany(_ => Employ, employ => employ.business)
