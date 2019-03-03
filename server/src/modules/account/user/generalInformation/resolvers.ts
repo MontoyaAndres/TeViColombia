@@ -14,6 +14,16 @@ import { formatYupError } from "../../../../utils/formatYupError";
 import storeUpload from "../../../../utils/storeUpload";
 
 export const resolvers: ResolveMap = {
+  Query: {
+    information: createMiddleware(
+      middleware.auth,
+      async (
+        _,
+        { id }: GQL.IInformationOnQueryArguments,
+        { informationUserLoader }
+      ) => informationUserLoader.load(id)
+    )
+  },
   Mutation: {
     generalInformation: createMiddleware(
       middleware.auth,

@@ -38,9 +38,9 @@ export const resolvers: ResolveMap = {
   Query: {
     portfolio: createMiddleware(
       middleware.auth,
-      (_, { id, type }: GQL.IPortfolioOnQueryArguments) =>
+      (_, { id }: GQL.IPortfolioOnQueryArguments) =>
         Portfolio.find({
-          where: { portfolioId: id, portfolioType: type },
+          where: { portfolioId: id },
           order: { createdAt: "DESC" }
         })
     )
@@ -61,18 +61,18 @@ export const resolvers: ResolveMap = {
           ];
         }
 
-        const user: Array<{ id: string }> = await User.find({
+        const user = await User.findOne({
           where: { id },
           select: ["id"]
         });
 
         if (multimedia.length > 0) {
-          const filesSaved = (await saveMultimedia(multimedia)) as any;
+          const fileSaved = (await saveMultimedia(multimedia)) as any;
 
           await Portfolio.create({
             portfolioId: id,
-            portfolioType: user.length > 0 ? "User" : "Business", // If there's values on user
-            multimedia: filesSaved,
+            portfolioType: user ? "User" : "Business", // If there's values on user
+            multimedia: fileSaved,
             description
           }).save();
         } else {
@@ -107,7 +107,7 @@ export const resolvers: ResolveMap = {
           ];
         }
 
-        const user: Array<{ id: string }> = await User.find({
+        const user = await User.findOne({
           where: { id },
           select: ["id"]
         });
@@ -119,7 +119,7 @@ export const resolvers: ResolveMap = {
             { id: idPortfolio },
             {
               portfolioId: id,
-              portfolioType: user.length > 0 ? "User" : "Business", // If there's values on user
+              portfolioType: user ? "User" : "Business", // If there's values on user
               multimedia: filesSaved,
               description
             }

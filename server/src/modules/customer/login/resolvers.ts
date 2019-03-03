@@ -25,8 +25,12 @@ export const resolvers: ResolveMap = {
       }
 
       const user = await User.findOne({ where: { email } });
+      const business = await Business.findOne({ where: { email } });
 
-      if (!user) {
+      // Who want to log in, an user or a business
+      const account = user ? user : business;
+
+      if (!account) {
         return [
           {
             path: "email",
@@ -35,7 +39,7 @@ export const resolvers: ResolveMap = {
         ];
       }
 
-      if (!user.confirmed) {
+      if (!account.confirmed) {
         return [
           {
             path: "email",
@@ -44,7 +48,7 @@ export const resolvers: ResolveMap = {
         ];
       }
 
-      if (user.forgotPasswordLocked) {
+      if (account.forgotPasswordLocked) {
         return [
           {
             path: "email",
@@ -53,7 +57,7 @@ export const resolvers: ResolveMap = {
         ];
       }
 
-      const valid = await bcrypt.compare(password, user.password);
+      const valid = await bcrypt.compare(password, account.password);
 
       if (!valid) {
         return [
@@ -65,77 +69,11 @@ export const resolvers: ResolveMap = {
       }
 
       // login successful
-      session.userId = user.id;
+      session.userId = account.id;
 
       if (request.sessionID) {
         await redis.lpush(
-          `${accountSessionIdPrefix}${user.id}`,
-          request.sessionID
-        );
-      }
-
-      return null;
-    },
-    loginBusiness: async (
-      _,
-      { email, password }: GQL.ILoginBusinessOnMutationArguments,
-      { session, redis, request }
-    ) => {
-      try {
-        await LoginValidation.validate(
-          { email, password },
-          { abortEarly: false }
-        );
-      } catch (err) {
-        return formatYupError(err);
-      }
-
-      const business = await Business.findOne({ where: { email } });
-
-      if (!business) {
-        return [
-          {
-            path: "email",
-            message: "Correo incorrecto."
-          }
-        ];
-      }
-
-      if (!business.confirmed) {
-        return [
-          {
-            path: "email",
-            message: "La empresa no ha confirmado su correo."
-          }
-        ];
-      }
-
-      if (business.forgotPasswordLocked) {
-        return [
-          {
-            path: "email",
-            message: "Cambio de contraseña, esperando para activar."
-          }
-        ];
-      }
-
-      const valid = await bcrypt.compare(password, business.password);
-
-      if (!valid) {
-        return [
-          {
-            path: "password",
-            message: "Contraseña incorrecta."
-          }
-        ];
-      }
-
-      // login successful
-      session.userId = business.id;
-
-      if (request.sessionID) {
-        await redis.lpush(
-          `${accountSessionIdPrefix}${business.id}`,
+          `${accountSessionIdPrefix}${account.id}`,
           request.sessionID
         );
       }

@@ -22,13 +22,6 @@ export const RegisterValidation = Yup.object().shape({
     )
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!"),
-  telephone2: Yup.number()
-    .test(
-      "is-telephone2",
-      "Ingrese un número de teléfono correcto.",
-      value => /\w{6,}[0-9]/.test(value) || !value
-    )
-    .typeError("Campo incorrecto."),
   identificationDocument: Yup.number()
     .positive("Número de documento de identificación incorrecto.")
     .max(MAX_INT, "Número erróneo.")
@@ -118,6 +111,36 @@ export const GeneralInformationValidation = Yup.object().shape({
     )
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!"),
+  telephone2: Yup.number()
+    .test(
+      "is-telephone2",
+      "Ingrese un número de teléfono correcto.",
+      value => /\w{6,}[0-9]/.test(value) || !value
+    )
+    .typeError("Campo incorrecto."),
+  website: Yup.string()
+    .ensure()
+    .url("Sitio web incorrecto.")
+    .typeError("Campo incorrecto")
+});
+
+export const GeneralInformationBusinessValidation = Yup.object().shape({
+  description: Yup.string()
+    .max(100, "La descripción no debe de tener más de 100 caracteres.")
+    .typeError("Campo incorrecto."),
+  telephone: Yup.number()
+    .test("is-telephone", "Ingrese un número de teléfono correcto.", value =>
+      /\w{6,}[1-9]/.test(value)
+    )
+    .typeError("Campo incorrecto.")
+    .required("El campo es obligatorio!"),
+  telephone2: Yup.number()
+    .test(
+      "is-telephone2",
+      "Ingrese un número de teléfono correcto.",
+      value => /\w{6,}[0-9]/.test(value) || !value
+    )
+    .typeError("Campo incorrecto."),
   website: Yup.string()
     .ensure()
     .url("Sitio web incorrecto.")

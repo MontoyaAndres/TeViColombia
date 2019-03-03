@@ -1,0 +1,25 @@
+type SocialNetworkBusiness {
+  name: String!
+  url: String!
+}
+
+type BusinessInformation {
+  id: ID
+  routePhone: String!
+  routeCover: String
+  name: String!
+  description: String
+  address: String
+  telephoneCountry: Int!
+  telephone: BigInt!
+  telephone2Country: Int
+  telephone2: BigInt
+  departament: String
+  town: String
+  nationality: String
+  sector: String!
+  website: String
+  googleMapsLocalization: String
+  optionalEmail: String
+  socialnetwork: [SocialNetworkBusiness]
+}
