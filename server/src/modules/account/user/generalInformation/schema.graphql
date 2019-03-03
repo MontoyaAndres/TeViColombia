@@ -1,3 +1,7 @@
 type Mutation {
   generalInformation(id: ID, information: GeneralInformationInput): [Error!]
 }
+
+type Query {
+  information(id: ID!): UserInformation
+}

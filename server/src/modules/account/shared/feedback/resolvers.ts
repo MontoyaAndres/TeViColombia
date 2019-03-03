@@ -1,5 +1,3 @@
-import { In } from "typeorm";
-
 import { ResolveMap } from "../../../../types/graphql-utils";
 import { GQL } from "../../../../types/schema";
 import { User } from "../../../../entity/User";
@@ -19,11 +17,11 @@ export const resolvers: ResolveMap = {
         where: { id: fromId }
       });
 
-      if (Object.keys(user).length) {
+      if (user) {
         return user;
       }
 
-      if (Object.keys(business).length) {
+      if (business) {
         return business;
       }
 
@@ -33,21 +31,18 @@ export const resolvers: ResolveMap = {
   Query: {
     feedback: createMiddleware(
       middleware.auth,
-      async (_, { id, type }: GQL.IFeedbackOnQueryArguments) =>
-        FeedBack.find({
-          where: { toId: id, feedbackType: type },
+      async (_, { id }: GQL.IFeedbackOnQueryArguments) => {
+        const response = await FeedBack.find({
+          where: { toId: id },
           order: { createdAt: "DESC" }
-        })
-    ),
-    countFeedbackStars: createMiddleware(
-      middleware.auth,
-      async (_, { id, type }: GQL.ICountFeedbackStarsOnQueryArguments) => {
-        const response = await FeedBack.query(
-          "SELECT SUM(stars) AS sum FROM feed_back WHERE toId = ? AND feedbackType = ?",
-          [id, type]
+        });
+
+        const count = await FeedBack.query(
+          "SELECT SUM(stars) AS sum FROM feed_back WHERE toId = ?",
+          [id]
         );
 
-        return response[0].sum;
+        return { response, count: count[0].sum };
       }
     )
   },
@@ -59,24 +54,21 @@ export const resolvers: ResolveMap = {
         { toId, stars, comment }: GQL.IFeedbackOnMutationArguments,
         { session }
       ) => {
-        const user: Array<{
-          id: string;
-        }> = await User.find({
+        const user = await User.findOne({
           where: { id: session.userId },
-          select: ["id"]
+          select: ["id", "name"]
         });
-        const business: Array<{
-          id: string;
-        }> = await Business.find({
+        const business = await Business.findOne({
           where: { id: session.userId },
-          select: ["id"]
+          select: ["id", "name"]
         });
 
-        const accountsIds = await user.concat(business).map(value => value.id);
+        // Who is logged in, an user or a business
+        const accountId = user ? user.id : business.id;
 
-        if (accountsIds.length > 0) {
+        if (accountId) {
           const alreadyCommented = await FeedBack.findOne({
-            where: { fromId: In(accountsIds) }
+            where: { fromId: accountId }
           });
 
           if (alreadyCommented) {
@@ -119,24 +111,24 @@ export const resolvers: ResolveMap = {
         await FeedBack.create({
           toId,
           fromId: session.userId,
-          feedbackType: user.length > 0 ? "User" : "Business",
+          feedbackType: user ? "User" : "Business",
           stars,
           comment
         }).save();
 
-        // Getting name and email from toId
+        // Getting email from toId
         const toUser = await User.findOne({
           where: { id: toId },
-          select: ["name", "email"]
+          select: ["email"]
         });
         const toBusiness = await Business.findOne({
           where: { id: toId },
-          select: ["name", "email"]
+          select: ["email"]
         });
 
         sendFeedbackEmail(
-          toUser.email ? toUser.email : toBusiness.email,
-          toUser.name ? toUser.name : toBusiness.name,
+          toUser ? toUser.email : toBusiness.email,
+          user ? user.name : business.name,
           comment
         );
 

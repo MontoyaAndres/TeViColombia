@@ -22,8 +22,8 @@ column: number;
 
 interface IQuery {
 __typename: "Query";
-feedback: Array<IFeedback | null>;
-countFeedbackStars: number | null;
+informationBusiness: IBusinessInformation | null;
+feedback: IFeedbackResponse | null;
 portfolio: Array<IPortfolio | null> | null;
 information: IUserInformation | null;
 necessity: Array<INecessity | null>;
@@ -31,19 +31,16 @@ countNecessity: number;
 me: ICustomer | null;
 }
 
-interface IFeedbackOnQueryArguments {
+interface IInformationBusinessOnQueryArguments {
 id: string;
-type: string;
 }
 
-interface ICountFeedbackStarsOnQueryArguments {
+interface IFeedbackOnQueryArguments {
 id: string;
-type: string;
 }
 
 interface IPortfolioOnQueryArguments {
 id: string;
-type: string;
 }
 
 interface IInformationOnQueryArguments {
@@ -56,6 +53,40 @@ userId: string;
 
 interface ICountNecessityOnQueryArguments {
 userId: string;
+}
+
+interface IBusinessInformation {
+__typename: "BusinessInformation";
+id: string | null;
+routePhone: string;
+routeCover: string | null;
+name: string;
+description: string | null;
+address: string | null;
+telephoneCountry: number;
+telephone: any;
+telephone2Country: number | null;
+telephone2: any | null;
+departament: string | null;
+town: string | null;
+nationality: string | null;
+sector: string;
+website: string | null;
+googleMapsLocalization: string | null;
+optionalEmail: string | null;
+socialnetwork: Array<ISocialNetworkBusiness | null> | null;
+}
+
+interface ISocialNetworkBusiness {
+__typename: "SocialNetworkBusiness";
+name: string;
+url: string;
+}
+
+interface IFeedbackResponse {
+__typename: "FeedbackResponse";
+response: Array<IFeedback | null>;
+count: number | null;
 }
 
 interface IFeedback {
@@ -180,6 +211,7 @@ comment: string | null;
 
 interface IMutation {
 __typename: "Mutation";
+generalInformationBusiness: Array<IError> | null;
 feedback: Array<IError> | null;
 deleteFeedback: boolean;
 portfolio: Array<IError> | null;
@@ -192,11 +224,15 @@ deleteNecessity: boolean;
 sendForgotPasswordEmail: boolean | null;
 forgotPasswordChange: Array<IError> | null;
 login: Array<IError> | null;
-loginBusiness: Array<IError> | null;
 logout: boolean | null;
 register: Array<IError> | null;
 registerBusiness: Array<IError> | null;
 settings: Array<IError> | null;
+}
+
+interface IGeneralInformationBusinessOnMutationArguments {
+id?: string | null;
+information?: IGeneralInformationBusinessInput | null;
 }
 
 interface IFeedbackOnMutationArguments {
@@ -262,11 +298,6 @@ email: string;
 password: string;
 }
 
-interface ILoginBusinessOnMutationArguments {
-email: string;
-password: string;
-}
-
 interface IRegisterOnMutationArguments {
 name: string;
 lastname: string;
@@ -292,6 +323,31 @@ email: string;
 password: string;
 newPassword: string;
 type: string;
+}
+
+interface IGeneralInformationBusinessInput {
+routePhoto?: any | null;
+routeCover?: any | null;
+name: string;
+description?: string | null;
+address?: string | null;
+telephoneCountry: number;
+telephone: any;
+telephone2Country?: number | null;
+telephone2?: any | null;
+departament?: string | null;
+town?: string | null;
+nationality?: string | null;
+sector: string;
+website?: string | null;
+googleMapsLocalization?: string | null;
+optionalEmail?: string | null;
+socialnetwork?: Array<ISocialNetworkBusinessInput | null> | null;
+}
+
+interface ISocialNetworkBusinessInput {
+name: string;
+url: string;
 }
 
 interface IError {

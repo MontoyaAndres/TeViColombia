@@ -5,9 +5,13 @@ type Feedback {
   from: Customer
 }
 
+type FeedbackResponse {
+  response: [Feedback]!
+  count: Int
+}
+
 type Query {
-  feedback(id: ID!, type: String!): [Feedback]!
-  countFeedbackStars(id: ID!, type: String!): Int
+  feedback(id: ID!): FeedbackResponse
 }
 
 type Mutation {

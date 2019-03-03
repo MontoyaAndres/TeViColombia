@@ -1,0 +1,24 @@
+input SocialNetworkBusinessInput {
+  name: String!
+  url: String!
+}
+
+input GeneralInformationBusinessInput {
+  routePhoto: Upload
+  routeCover: Upload
+  name: String!
+  description: String
+  address: String
+  telephoneCountry: Int!
+  telephone: BigInt!
+  telephone2Country: Int
+  telephone2: BigInt
+  departament: String
+  town: String
+  nationality: String
+  sector: String!
+  website: String
+  googleMapsLocalization: String
+  optionalEmail: String
+  socialnetwork: [SocialNetworkBusinessInput]
+}

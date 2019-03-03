@@ -13,7 +13,10 @@ import { redis } from "./redis";
 import { genSchema } from "./utils/genSchema";
 import Routes from "./routes";
 import { redisSessionPrefix } from "./constants";
-import { informationLoader } from "./loaders/informationLoader";
+import {
+  informationUserLoader,
+  informationBusinessLoader
+} from "./loaders/informationLoader";
 
 const RedisStore = connectRedis(session);
 
@@ -25,7 +28,8 @@ export async function startServer() {
       url: request.protocol + "://" + request.get("host"),
       session: request.session,
       request,
-      informationLoader: informationLoader()
+      informationUserLoader: informationUserLoader(),
+      informationBusinessLoader: informationBusinessLoader()
     })
   });
 
