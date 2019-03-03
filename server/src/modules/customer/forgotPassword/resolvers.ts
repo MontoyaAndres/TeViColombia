@@ -2,6 +2,7 @@ import * as bcrypt from "bcryptjs";
 
 import { ResolveMap } from "../../../types/graphql-utils";
 import { User } from "../../../entity/User";
+import { Business } from "../../../entity/Business";
 import { GQL } from "../../../types/schema";
 import { createForgotPasswordLink } from "./createForgotPasswordLink";
 import { forgotPasswordPrefix } from "../../../constants";
@@ -14,12 +15,15 @@ export const resolvers: ResolveMap = {
   Mutation: {
     sendForgotPasswordEmail: async (
       _,
-      { email }: GQL.ISendForgotPasswordEmailOnMutationArguments,
+      { email, type }: GQL.ISendForgotPasswordEmailOnMutationArguments,
       { redis }
     ) => {
-      const user = await User.findOne({ where: { email } });
+      const account =
+        type === "User"
+          ? await User.findOne({ where: { email } })
+          : await Business.findOne({ where: { email } });
 
-      if (!user) {
+      if (!account) {
         return [
           {
             path: "email",
@@ -28,10 +32,11 @@ export const resolvers: ResolveMap = {
         ];
       }
 
-      await forgotPasswordLockAccount(user.id, redis);
+      await forgotPasswordLockAccount(account.id, type, redis);
       const url = await createForgotPasswordLink(
         process.env.FRONTEND_HOST as string,
-        user.id,
+        account.id,
+        type,
         redis
       );
 
@@ -40,14 +45,14 @@ export const resolvers: ResolveMap = {
     },
     forgotPasswordChange: async (
       _,
-      { newPassword, key }: GQL.IForgotPasswordChangeOnMutationArguments,
+      { newPassword, key, type }: GQL.IForgotPasswordChangeOnMutationArguments,
       { redis }
     ) => {
       const redisKey = `${forgotPasswordPrefix}${key}`;
 
-      const userId = await redis.get(redisKey);
+      const accountId = await redis.get(redisKey);
 
-      if (!userId) {
+      if (!accountId) {
         return [
           {
             path: "newPassword",
@@ -67,13 +72,22 @@ export const resolvers: ResolveMap = {
 
       const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-      const updatePromise = User.update(
-        { id: userId },
-        {
-          forgotPasswordLocked: false,
-          password: hashedPassword
-        }
-      );
+      const updatePromise =
+        type === "User"
+          ? User.update(
+              { id: accountId },
+              {
+                forgotPasswordLocked: false,
+                password: hashedPassword
+              }
+            )
+          : Business.update(
+              { id: accountId },
+              {
+                forgotPasswordLocked: false,
+                password: hashedPassword
+              }
+            );
 
       const deleteKeyPromise = redis.del(redisKey);
 

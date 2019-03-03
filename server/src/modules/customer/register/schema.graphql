@@ -9,4 +9,13 @@ type Mutation {
     email: String!
     password: String!
   ): [Error!]
+
+  registerBusiness(
+    name: String!
+    telephoneCountry: Int!
+    telephone: BigInt!
+    sector: String!
+    email: String!
+    password: String!
+  ): [Error!]
 }

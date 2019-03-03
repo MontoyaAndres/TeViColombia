@@ -2,7 +2,7 @@ type Feedback {
   id: ID
   stars: Int
   comment: String
-  from: User
+  from: Customer
 }
 
 type Query {

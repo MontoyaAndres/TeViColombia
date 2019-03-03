@@ -1,0 +1,8 @@
+type Mutation {
+  settings(
+    email: String!
+    password: String!
+    newPassword: String!
+    type: String!
+  ): [Error!]
+}

@@ -1,3 +1,0 @@
-type Mutation {
-  userSettings(email: String!, password: String, newPassword: String): [Error!]
-}

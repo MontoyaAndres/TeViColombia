@@ -1,9 +1,11 @@
+import * as bcrypt from "bcryptjs";
 import {
   Entity,
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  OneToMany
+  OneToMany,
+  BeforeInsert
 } from "typeorm";
 
 // Models
@@ -23,7 +25,7 @@ export class Business extends BaseEntity {
   @Column("varchar", { default: "default/default-home.png" })
   routePhoto: string;
 
-  @Column("varchar")
+  @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   routeCover: string;
 
   @Column("varchar", { unique: true })
@@ -32,23 +34,41 @@ export class Business extends BaseEntity {
   @Column("text", { nullable: true, transformer: new EmptyStringToNull() })
   description: string;
 
-  @Column("integer")
-  telephone: number;
-
-  @Column("varchar", { unique: true })
-  email: string;
-
   @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   address: string;
 
-  @Column("enum", { enum: ENUMCountry, default: "Colombia" })
-  nationality: string;
+  @Column("integer")
+  telephoneCountry: number;
 
-  @Column("enum", { enum: ENUMDepartament, default: "Bogotá, D.C." })
+  @Column("bigint", { unique: true })
+  telephone: number;
+
+  @Column("integer", { nullable: true, transformer: new EmptyStringToNull() })
+  telephone2Country: number;
+
+  @Column("bigint", {
+    unique: true,
+    nullable: true,
+    transformer: new EmptyStringToNull()
+  })
+  telephone2: number;
+
+  @Column("enum", {
+    nullable: true,
+    enum: ENUMDepartament,
+    transformer: new EmptyStringToNull()
+  })
   departament: string;
 
   @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
-  city: string;
+  town: string;
+
+  @Column("enum", {
+    enum: ENUMCountry,
+    nullable: true,
+    transformer: new EmptyStringToNull()
+  })
+  nationality: string;
 
   @Column("enum", { enum: ENUMSector })
   sector: string;
@@ -59,6 +79,29 @@ export class Business extends BaseEntity {
   @Column("text", { nullable: true, transformer: new EmptyStringToNull() })
   googleMapsLocalization: string;
 
+  @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
+  optionalEmail: string;
+
+  @Column("varchar", { unique: true })
+  email: string;
+
+  @Column("text")
+  password: string;
+
+  @Column("json", { nullable: true, transformer: new EmptyStringToNull() })
+  socialnetwork: Array<{ name: string; url: string }>;
+
+  @Column({ default: false })
+  confirmed: boolean;
+
+  @Column({ default: false })
+  forgotPasswordLocked: boolean;
+
   @OneToMany(_ => Employ, employ => employ.business)
   employ: Employ[];
+
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
 }
