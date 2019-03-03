@@ -1,3 +1,4 @@
 type Mutation {
   login(email: String!, password: String!): [Error!]
+  loginBusiness(email: String!, password: String!): [Error!]
 }

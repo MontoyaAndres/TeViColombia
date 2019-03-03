@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Form, withFormik } from "formik";
 import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
+import { Carousel } from "react-responsive-carousel";
 
 import meQuery from "../../../graphql/queries/me";
 import Loading from "../../shared/loading";
 import { portfolioQuery } from "../../../graphql/queries/account";
 import InputPortfolio from "./inputPortfolio";
-import Carousel from "../../shared/carousel";
 import Linkify from "../../shared/linkify";
 import UpdatePortfolioModal from "./updatePortfolioModal";
 import DeletePortfolioModal from "./deletePortfolioModal";
@@ -107,7 +107,14 @@ const index = ({
           {dataPortfolio.map(portfolio => (
             <div className="column is-6" key={portfolio.id}>
               <div className="card">
-                <Carousel>
+                <Carousel
+                  showThumbs={false}
+                  showStatus={false}
+                  stopOnHover={false}
+                  showIndicators={false}
+                  infiniteLoop
+                  emulateTouch
+                >
                   {portfolio.multimedia.map((multimedia, i) => (
                     <div className="card-image" key={i}>
                       {multimedia.split(".").pop() !== "mp4" ? (
@@ -158,7 +165,7 @@ const index = ({
           className="subtitle is-3"
           style={{ textAlign: "center", padding: 20 }}
         >
-          No se ha encontrado información al respecto.
+          No se ha encontrado información.
         </h2>
       )}
     </div>

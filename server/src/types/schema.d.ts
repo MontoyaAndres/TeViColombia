@@ -28,7 +28,7 @@ portfolio: Array<IPortfolio | null> | null;
 information: IUserInformation | null;
 necessity: Array<INecessity | null>;
 countNecessity: number;
-me: IUser | null;
+me: ICustomer | null;
 }
 
 interface IFeedbackOnQueryArguments {
@@ -63,14 +63,14 @@ __typename: "Feedback";
 id: string | null;
 stars: number | null;
 comment: string | null;
-from: IUser | null;
+from: ICustomer | null;
 }
 
-interface IUser {
-__typename: "User";
+interface ICustomer {
+__typename: "Customer";
 id: string;
 name: string;
-lastname: string;
+lastname: string | null;
 email: string;
 routePhoto: string;
 }
@@ -192,9 +192,11 @@ deleteNecessity: boolean;
 sendForgotPasswordEmail: boolean | null;
 forgotPasswordChange: Array<IError> | null;
 login: Array<IError> | null;
+loginBusiness: Array<IError> | null;
 logout: boolean | null;
 register: Array<IError> | null;
-userSettings: Array<IError> | null;
+registerBusiness: Array<IError> | null;
+settings: Array<IError> | null;
 }
 
 interface IFeedbackOnMutationArguments {
@@ -246,14 +248,21 @@ id: string;
 
 interface ISendForgotPasswordEmailOnMutationArguments {
 email: string;
+type: string;
 }
 
 interface IForgotPasswordChangeOnMutationArguments {
 newPassword: string;
 key: string;
+type: string;
 }
 
 interface ILoginOnMutationArguments {
+email: string;
+password: string;
+}
+
+interface ILoginBusinessOnMutationArguments {
 email: string;
 password: string;
 }
@@ -269,10 +278,20 @@ email: string;
 password: string;
 }
 
-interface IUserSettingsOnMutationArguments {
+interface IRegisterBusinessOnMutationArguments {
+name: string;
+telephoneCountry: number;
+telephone: any;
+sector: string;
 email: string;
-password?: string | null;
-newPassword?: string | null;
+password: string;
+}
+
+interface ISettingsOnMutationArguments {
+email: string;
+password: string;
+newPassword: string;
+type: string;
 }
 
 interface IError {

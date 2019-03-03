@@ -1,10 +1,14 @@
 import { ResolveMap } from "../../../types/graphql-utils";
-import { RegisterValidation } from "../../../utils/validation";
+import {
+  RegisterValidation,
+  RegisterBusinessValidation
+} from "../../../utils/validation";
 import { formatYupError } from "../../../utils/formatYupError";
 import { User } from "../../../entity/User";
 import { sendConfirmEmailLink } from "../../../utils/sendEmail";
 import { createConfimEmailLink } from "./createConfimEmailLink";
 import { GQL } from "../../../types/schema";
+import { Business } from "../../../entity/Business";
 
 export const resolvers: ResolveMap = {
   Mutation: {
@@ -87,7 +91,74 @@ export const resolvers: ResolveMap = {
 
       sendConfirmEmailLink(
         email,
-        await createConfimEmailLink(url, user.id, redis)
+        await createConfimEmailLink(url, "User", user.id, redis)
+      );
+
+      return null;
+    },
+    registerBusiness: async (
+      _,
+      {
+        name,
+        telephone,
+        telephoneCountry,
+        sector,
+        email,
+        password
+      }: GQL.IRegisterBusinessOnMutationArguments,
+      { redis, url }
+    ) => {
+      try {
+        await RegisterBusinessValidation.validate(
+          { name, telephone, email, password },
+          { abortEarly: false }
+        );
+      } catch (err) {
+        return formatYupError(err);
+      }
+
+      const emailAlreadyExists = await Business.findOne({
+        where: { email },
+        select: ["id"]
+      });
+
+      const telephoneAlreadyExists = await Business.findOne({
+        where: { telephone },
+        select: ["id"]
+      });
+
+      if (emailAlreadyExists) {
+        return [
+          {
+            path: "email",
+            message: "El correo ya existe."
+          }
+        ];
+      }
+
+      if (telephoneAlreadyExists) {
+        return [
+          {
+            path: "telephone",
+            message: "El teléfono ya existe."
+          }
+        ];
+      }
+
+      const business = Business.create({
+        name,
+        telephoneCountry,
+        telephone,
+        sector,
+        email,
+        password
+      });
+
+      await business.save();
+
+      sendConfirmEmailLink(
+        email,
+        await createConfimEmailLink(url, "Business", business.id, redis)
       );
 
       return null;

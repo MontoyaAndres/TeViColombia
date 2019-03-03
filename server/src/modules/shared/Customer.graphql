@@ -1,7 +1,7 @@
-type User {
+type Customer {
   id: ID!
   name: String!
-  lastname: String!
+  lastname: String
   email: String!
   routePhoto: String!
 }
