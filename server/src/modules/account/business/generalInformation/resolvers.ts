@@ -9,14 +9,11 @@ import { Business } from "../../../../entity/Business";
 
 export const resolvers: ResolveMap = {
   Query: {
-    informationBusiness: createMiddleware(
-      middleware.auth,
-      async (
-        _,
-        { id }: GQL.IInformationBusinessOnQueryArguments,
-        { informationBusinessLoader }
-      ) => informationBusinessLoader.load(id)
-    )
+    informationBusiness: async (
+      _,
+      { id }: GQL.IInformationBusinessOnQueryArguments,
+      { informationBusinessLoader }
+    ) => informationBusinessLoader.load(id)
   },
   Mutation: {
     generalInformationBusiness: createMiddleware(

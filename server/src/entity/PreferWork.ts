@@ -1,5 +1,8 @@
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column } from "typeorm";
 
+import { ENUMCurrency } from "../utils/entityGlobalEnum";
+import EmptyStringToNull from "../utils/emptyStringToNull";
+
 enum ENUMCurrentSituation {
   A1 = "No tengo empleo",
   A2 = "Estoy buscando trabajo activamente",
@@ -24,6 +27,13 @@ export class PreferWork extends BaseEntity {
 
   @Column("bigint")
   salary: number;
+
+  @Column("enum", {
+    enum: ENUMCurrency,
+    nullable: true,
+    transformer: new EmptyStringToNull()
+  })
+  currency: string;
 
   @Column("simple-array", {
     transformer: {
