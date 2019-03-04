@@ -22,6 +22,8 @@ column: number;
 
 interface IQuery {
 __typename: "Query";
+employs: Array<IEmploy | null> | null;
+employ: IEmploy | null;
 informationBusiness: IBusinessInformation | null;
 feedback: IFeedbackResponse | null;
 portfolio: Array<IPortfolio | null> | null;
@@ -29,6 +31,14 @@ information: IUserInformation | null;
 necessity: Array<INecessity | null>;
 countNecessity: number;
 me: ICustomer | null;
+}
+
+interface IEmploysOnQueryArguments {
+businessId: string;
+}
+
+interface IEmployOnQueryArguments {
+employId: string;
 }
 
 interface IInformationBusinessOnQueryArguments {
@@ -53,6 +63,26 @@ userId: string;
 
 interface ICountNecessityOnQueryArguments {
 userId: string;
+}
+
+interface IEmploy {
+__typename: "Employ";
+id: string | null;
+position: string;
+description: string;
+minStudy: string;
+minExperience: number;
+language: Array<string | null> | null;
+travel: string;
+residence: string;
+country: string;
+departament: string;
+town: string;
+time: string;
+contract: string;
+minSalary: any | null;
+maxSalary: any | null;
+currency: string | null;
 }
 
 interface IBusinessInformation {
@@ -190,6 +220,7 @@ currentSituation: string | null;
 job: string | null;
 area: Array<string | null> | null;
 salary: any | null;
+currency: string | null;
 departament: Array<string | null> | null;
 travel: string | null;
 residence: string | null;
@@ -211,6 +242,8 @@ comment: string | null;
 
 interface IMutation {
 __typename: "Mutation";
+employ: Array<IError> | null;
+deleteEmploy: boolean;
 generalInformationBusiness: Array<IError> | null;
 feedback: Array<IError> | null;
 deleteFeedback: boolean;
@@ -228,6 +261,14 @@ logout: boolean | null;
 register: Array<IError> | null;
 registerBusiness: Array<IError> | null;
 settings: Array<IError> | null;
+}
+
+interface IEmployOnMutationArguments {
+employInput?: IEmployInput | null;
+}
+
+interface IDeleteEmployOnMutationArguments {
+employId: string;
 }
 
 interface IGeneralInformationBusinessOnMutationArguments {
@@ -325,6 +366,31 @@ newPassword: string;
 type: string;
 }
 
+interface IEmployInput {
+id?: string | null;
+position: string;
+description: string;
+minStudy: string;
+minExperience: number;
+language?: Array<string | null> | null;
+travel: string;
+residence: string;
+country: string;
+departament: string;
+town: string;
+time: string;
+contract: string;
+minSalary?: any | null;
+maxSalary?: any | null;
+currency?: string | null;
+}
+
+interface IError {
+__typename: "Error";
+path: string;
+message: string;
+}
+
 interface IGeneralInformationBusinessInput {
 routePhoto?: any | null;
 routeCover?: any | null;
@@ -348,12 +414,6 @@ socialnetwork?: Array<ISocialNetworkBusinessInput | null> | null;
 interface ISocialNetworkBusinessInput {
 name: string;
 url: string;
-}
-
-interface IError {
-__typename: "Error";
-path: string;
-message: string;
 }
 
 interface IGeneralInformationInput {
@@ -425,6 +485,7 @@ currentSituation: string;
 job: string;
 area: Array<string>;
 salary: any;
+currency: string;
 departament: Array<string>;
 travel: string;
 residence: string;

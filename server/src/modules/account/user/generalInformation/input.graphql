@@ -31,6 +31,7 @@ input PreferWorkInput {
   job: String!
   area: [String!]!
   salary: BigInt!
+  currency: String!
   departament: [String!]!
   travel: String!
   residence: String!

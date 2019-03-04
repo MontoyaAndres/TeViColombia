@@ -1,0 +1,47 @@
+input EmployInput {
+  id: ID
+  position: String!
+  description: String!
+  minStudy: String!
+  minExperience: Int!
+  language: [String]
+  travel: String!
+  residence: String!
+  country: String!
+  departament: String!
+  town: String!
+  time: String!
+  contract: String!
+  minSalary: BigInt
+  maxSalary: BigInt
+  currency: String
+}
+
+type Employ {
+  id: ID
+  position: String!
+  description: String!
+  minStudy: String!
+  minExperience: Int!
+  language: [String]
+  travel: String!
+  residence: String!
+  country: String!
+  departament: String!
+  town: String!
+  time: String!
+  contract: String!
+  minSalary: BigInt
+  maxSalary: BigInt
+  currency: String
+}
+
+type Query {
+  employs(businessId: ID!): [Employ]
+  employ(employId: ID!): Employ
+}
+
+type Mutation {
+  employ(employInput: EmployInput): [Error!]
+  deleteEmploy(employId: ID!): Boolean!
+}

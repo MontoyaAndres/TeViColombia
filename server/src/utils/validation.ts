@@ -146,3 +146,10 @@ export const GeneralInformationBusinessValidation = Yup.object().shape({
     .url("Sitio web incorrecto.")
     .typeError("Campo incorrecto")
 });
+
+export const EmployValidation = Yup.object().shape({
+  minExperience: Yup.number()
+    .max(100, "El número no puede ser mayor a 100.")
+    .typeError("Campo incorrecto.")
+    .required("El campo es obligatorio!")
+});
