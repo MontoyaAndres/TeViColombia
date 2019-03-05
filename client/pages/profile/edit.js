@@ -175,6 +175,7 @@ export default compose(
         job: "",
         area: ["Administración / Oficina"],
         salary: "",
+        currency: "Modena local",
         departament: ["Bogotá, D.C."],
         travel: "No",
         residence: "No"

@@ -47,9 +47,7 @@ export default compose(
       if (idPortfolio) {
         await DELETE_PORTFOLIO_MUTATION({
           variables: { idPortfolio },
-          refetchQueries: [
-            { query: portfolioQuery, variables: { id, type: "User" } }
-          ]
+          refetchQueries: [{ query: portfolioQuery, variables: { id } }]
         });
       }
 

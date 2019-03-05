@@ -10,7 +10,7 @@ export const resolvers: ResolveMap = {
     necessity: createMiddleware(
       middleware.auth,
       async (_, { userId }: GQL.INecessityOnQueryArguments) => {
-        const necessity = await Necessity.find({
+        const response = await Necessity.find({
           where: {
             user: {
               id: userId
@@ -19,20 +19,20 @@ export const resolvers: ResolveMap = {
           order: { updatedAt: "DESC" }
         });
 
-        return necessity;
-      }
-    ),
-    countNecessity: createMiddleware(
-      middleware.auth,
-      async (_, { userId }: GQL.ICountNecessityOnQueryArguments) =>
-        Necessity.count({
+        const count = await Necessity.count({
           where: {
             user: {
               id: userId
             },
             finished: false
           }
-        })
+        });
+
+        return {
+          response,
+          count
+        };
+      }
     )
   },
   Mutation: {

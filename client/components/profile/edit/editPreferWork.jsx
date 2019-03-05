@@ -37,22 +37,31 @@ const editPreferWork = ({ setFieldValue }) => (
           </div>
 
           <div className="column is-6">
-            <label className="label">Área</label>
-            <SelectMultipleField
-              name="preferWork.area"
-              arrayPlaceholder={EntityGlobalEnum.ENUMArea}
-              setFieldValue={setFieldValue}
-              isRequired
-            />
-          </div>
-
-          <div className="column is-6">
             <label className="label">Salario mínimo aceptado</label>
             <TextField
               type="number"
               pattern="\d*"
               name="preferWork.salary"
               placeholder="Salario mínimo aceptado"
+              isRequired
+            />
+          </div>
+
+          <div className="column is-6">
+            <label className="label">Moneda</label>
+            <SelectField
+              name="preferWork.currency"
+              arrayPlaceholder={["Modena local", "US Dólar"]}
+              isRequired
+            />
+          </div>
+
+          <div className="column is-6">
+            <label className="label">Área</label>
+            <SelectMultipleField
+              name="preferWork.area"
+              arrayPlaceholder={EntityGlobalEnum.ENUMArea}
+              setFieldValue={setFieldValue}
               isRequired
             />
           </div>

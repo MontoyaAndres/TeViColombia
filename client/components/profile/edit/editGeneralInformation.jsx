@@ -92,27 +92,25 @@ const editGeneralInformation = ({
           </div>
 
           <div className="column is-6">
-            <label className="label">Teléfono celular/fijo/oficina</label>
+            <label className="label">Teléfono celular/fijo</label>
             <TextFieldAddonsCountry
               type="number"
               pattern="\d*"
               name="telephone"
               selectName="telephoneCountry"
-              placeholder="Teléfono celular/fijo/oficina"
+              placeholder="Teléfono celular/fijo"
               isRequired
             />
           </div>
 
           <div className="column is-6">
-            <label className="label">
-              Teléfono secundario celular/fijo/oficina
-            </label>
+            <label className="label">Teléfono secundario celular/fijo</label>
             <TextFieldAddonsCountry
               type="number"
               pattern="\d*"
               name="telephone2"
               selectName="telephone2Country"
-              placeholder="Teléfono secundario celular/fijo/oficina"
+              placeholder="Teléfono secundario celular/fijo"
               isRequired={false}
             />
           </div>

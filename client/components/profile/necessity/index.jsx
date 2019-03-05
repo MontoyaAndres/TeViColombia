@@ -3,10 +3,7 @@ import gql from "graphql-tag";
 import { compose, graphql } from "react-apollo";
 import { withFormik, Form } from "formik";
 
-import {
-  necessityQuery,
-  countNecessityQuery
-} from "../../../graphql/queries/account";
+import { necessityQuery } from "../../../graphql/queries/account";
 import Loading from "../../shared/loading";
 import meQuery from "../../../graphql/queries/me";
 import { TextAreaField } from "../../shared/globalField";
@@ -150,8 +147,8 @@ class index extends React.PureComponent {
           />
         )}
 
-        {dataNecessity && dataNecessity.length > 0 ? (
-          dataNecessity.map((neces, i) => (
+        {dataNecessity && dataNecessity.response ? (
+          dataNecessity.response.map((neces, i) => (
             <div style={{ marginTop: "0.5rem", padding: "0 0.75rem" }} key={i}>
               <div className="card" style={{ borderRadius: 6 }}>
                 <header className="card-header" style={{ borderRadius: 6 }}>
@@ -264,10 +261,7 @@ export default compose(
     ) => {
       await NECESSITY_MUTATION({
         variables: values,
-        refetchQueries: [
-          { query: necessityQuery, variables: { userId: id } },
-          { query: countNecessityQuery, variables: { userId: id } }
-        ]
+        refetchQueries: [{ query: necessityQuery, variables: { userId: id } }]
       });
 
       setSubmitting(false);

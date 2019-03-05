@@ -84,9 +84,7 @@ export default compose(
             multimedia: values.multimedia,
             description: values.description
           },
-          refetchQueries: [
-            { query: portfolioQuery, variables: { id, type: "User" } }
-          ]
+          refetchQueries: [{ query: portfolioQuery, variables: { id } }]
         });
 
         const { data } = response;
