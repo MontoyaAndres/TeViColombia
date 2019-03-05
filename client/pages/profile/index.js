@@ -9,7 +9,7 @@ import checkLoggedIn from "../../lib/checkLoggedIn";
 import redirect from "../../lib/redirect";
 import {
   informationQuery,
-  countNecessityQuery
+  necessityQuery as countNecessityQuery
 } from "../../graphql/queries/account";
 
 const DynamicGeneralInformation = dynamic(
@@ -153,7 +153,9 @@ class profile extends PureComponent {
             >
               <a>
                 Necesidades
-                <span className="tag is-primary">{dataCountNecessity}</span>
+                <span className="tag is-primary">
+                  {dataCountNecessity.count}
+                </span>
               </a>
             </li>
             <li
@@ -194,6 +196,17 @@ profile.getInitialProps = async context => {
 
 export default compose(
   withRouter,
+  graphql(countNecessityQuery, {
+    options: ({
+      router: {
+        query: { id }
+      }
+    }) => ({ variables: { userId: id } }),
+    props: ({ data }) => ({
+      loadingCountNecessity: data.loading,
+      dataCountNecessity: data.necessity
+    })
+  }),
   graphql(informationQuery, {
     options: ({
       router: {
@@ -203,17 +216,6 @@ export default compose(
     props: ({ data }) => ({
       loadingInformation: data.loading,
       dataInformation: data.information
-    })
-  }),
-  graphql(countNecessityQuery, {
-    options: ({
-      router: {
-        query: { id }
-      }
-    }) => ({ variables: { userId: id } }),
-    props: ({ data }) => ({
-      loadingCountNecessity: data.loading,
-      dataCountNecessity: data.countNecessity
     })
   })
 )(profile);

@@ -101,7 +101,7 @@ const register = ({ values, handleSubmit, isSubmitting, setFieldValue }) => {
                   pattern="\d*"
                   selectName="telephoneCountry"
                   name="telephone"
-                  placeholder="Teléfono secundario celular/fijo/oficina"
+                  placeholder="Teléfono celular/fijo"
                   isRequired
                 />
 

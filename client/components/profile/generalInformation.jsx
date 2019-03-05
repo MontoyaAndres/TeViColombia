@@ -163,7 +163,7 @@ const generalInformation = ({ information }) => (
         </div>
       </div>
 
-      {information.preferwork.currentSituation && (
+      {information.preferwork && information.preferwork.currentSituation ? (
         <div className="column is-6">
           <div className="box" style={{ marginTop: "0.5rem" }}>
             <p className="title">Preferencias de empleo</p>
@@ -189,6 +189,10 @@ const generalInformation = ({ information }) => (
                     {area}
                   </span>
                 ))}
+              </p>
+
+              <p className="subtitle">
+                <strong>Moneda:</strong> {information.preferwork.currency}
               </p>
 
               <p className="subtitle">
@@ -222,7 +226,7 @@ const generalInformation = ({ information }) => (
             </div>
           </div>
         </div>
-      )}
+      ) : null}
 
       {information.skills && information.skills.length > 0 ? (
         <div className="column is-6">

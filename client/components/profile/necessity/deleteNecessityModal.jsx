@@ -4,10 +4,7 @@ import { compose, graphql } from "react-apollo";
 import { withFormik } from "formik";
 
 import AskModal from "../../shared/askModal";
-import {
-  necessityQuery,
-  countNecessityQuery
-} from "../../../graphql/queries/account";
+import { necessityQuery } from "../../../graphql/queries/account";
 
 const deleteNecessityMutation = gql`
   mutation DeleteNecessityMutation($id: ID!) {
@@ -50,10 +47,7 @@ export default compose(
       if (idNecessity) {
         await DELETE_NECESSITY_MUTATION({
           variables: { id: idNecessity },
-          refetchQueries: [
-            { query: necessityQuery, variables: { userId: id } },
-            { query: countNecessityQuery, variables: { userId: id } }
-          ]
+          refetchQueries: [{ query: necessityQuery, variables: { userId: id } }]
         });
       }
 

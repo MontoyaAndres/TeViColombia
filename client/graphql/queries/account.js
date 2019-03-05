@@ -46,9 +46,9 @@ const informationQuery = gql`
       work {
         id
         company
+        job
         departament
         sector
-        job
         area
         goals
         startedOn
@@ -60,6 +60,7 @@ const informationQuery = gql`
         job
         area
         salary
+        currency
         departament
         travel
         residence
@@ -74,46 +75,40 @@ const informationQuery = gql`
 `;
 
 const feedbackQuery = gql`
-  query FeedbackQuery($id: ID!, $type: String!) {
-    feedback(id: $id, type: $type) {
-      id
-      stars
-      comment
-      from {
+  query FeedbackQuery($id: ID!) {
+    feedback(id: $id) {
+      response {
         id
-        name
-        lastname
-        routePhoto
+        stars
+        comment
+        from {
+          id
+          name
+          lastname
+          routePhoto
+        }
       }
+      count
     }
-  }
-`;
-
-const countFeedbackStarsQuery = gql`
-  query CountFeedbackStarsQuery($id: ID!, $type: String!) {
-    countFeedbackStars(id: $id, type: $type)
   }
 `;
 
 const necessityQuery = gql`
   query NecessityQuery($userId: ID!) {
     necessity(userId: $userId) {
-      id
-      finished
-      comment
+      response {
+        id
+        finished
+        comment
+      }
+      count
     }
   }
 `;
 
-const countNecessityQuery = gql`
-  query CountNecessityQuery($userId: ID!) {
-    countNecessity(userId: $userId)
-  }
-`;
-
 const portfolioQuery = gql`
-  query PortfolioQuery($id: ID!, $type: String!) {
-    portfolio(id: $id, type: $type) {
+  query PortfolioQuery($id: ID!) {
+    portfolio(id: $id) {
       id
       multimedia
       description
@@ -121,11 +116,4 @@ const portfolioQuery = gql`
   }
 `;
 
-export {
-  informationQuery,
-  feedbackQuery,
-  countFeedbackStarsQuery,
-  necessityQuery,
-  countNecessityQuery,
-  portfolioQuery
-};
+export { informationQuery, feedbackQuery, necessityQuery, portfolioQuery };

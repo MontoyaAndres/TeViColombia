@@ -195,9 +195,7 @@ export default compose(
     ) => {
       const response = await PORTFOLIO_MUTATION({
         variables: { id, ...values },
-        refetchQueries: [
-          { query: portfolioQuery, variables: { id, type: "User" } }
-        ]
+        refetchQueries: [{ query: portfolioQuery, variables: { id } }]
       });
 
       const { data } = response;

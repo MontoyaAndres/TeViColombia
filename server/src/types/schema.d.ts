@@ -28,8 +28,7 @@ informationBusiness: IBusinessInformation | null;
 feedback: IFeedbackResponse | null;
 portfolio: Array<IPortfolio | null> | null;
 information: IUserInformation | null;
-necessity: Array<INecessity | null>;
-countNecessity: number;
+necessity: INecessityResponse | null;
 me: ICustomer | null;
 }
 
@@ -58,10 +57,6 @@ id: string;
 }
 
 interface INecessityOnQueryArguments {
-userId: string;
-}
-
-interface ICountNecessityOnQueryArguments {
 userId: string;
 }
 
@@ -231,6 +226,12 @@ __typename: "CV";
 id: string | null;
 filename: string | null;
 routeCV: string | null;
+}
+
+interface INecessityResponse {
+__typename: "NecessityResponse";
+response: Array<INecessity | null>;
+count: number;
 }
 
 interface INecessity {

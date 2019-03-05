@@ -5,10 +5,7 @@ import Link from "next/link";
 import { withFormik, Form, ErrorMessage } from "formik";
 import { SimpleImg } from "react-simple-img";
 
-import {
-  feedbackQuery,
-  countFeedbackStarsQuery
-} from "../../../graphql/queries/account";
+import { feedbackQuery } from "../../../graphql/queries/account";
 import meQuery from "../../../graphql/queries/me";
 import Loading from "../../shared/loading";
 import StaticStars from "../../shared/staticStars";
@@ -73,10 +70,8 @@ class index extends React.PureComponent {
   render() {
     const {
       loadingFeedback,
-      loadingCountFeedbackStars,
       loadingMe,
       dataFeedback,
-      dataCountFeedbackStars,
       dataMe,
       id,
       values,
@@ -86,7 +81,7 @@ class index extends React.PureComponent {
     } = this.props;
     const { deleteFeedback, idFeedback } = this.state;
 
-    if (loadingFeedback && loadingCountFeedbackStars && loadingMe) {
+    if (loadingFeedback && loadingMe) {
       return <Loading />;
     }
 
@@ -113,12 +108,12 @@ class index extends React.PureComponent {
 
           {dataMe.id === id && (
             <div className="notification is-info">
-              {dataCountFeedbackStars ? (
+              {dataFeedback && dataFeedback.count > 0 ? (
                 <p className="subtitle" style={{ textAlign: "center" }}>
                   Tienes la cantidad de{" "}
-                  {dataCountFeedbackStars === 1
-                    ? `${dataCountFeedbackStars} estrella`
-                    : `${dataCountFeedbackStars} estrellas`}{" "}
+                  {dataFeedback.count === 1
+                    ? `${dataFeedback.count} estrella`
+                    : `${dataFeedback.count} estrellas`}{" "}
                   <span role="img" aria-label="happy">
                     🤗🥳🤩.
                   </span>
@@ -136,8 +131,8 @@ class index extends React.PureComponent {
             </div>
           )}
 
-          {dataFeedback && dataFeedback.length
-            ? dataFeedback.map(feed => (
+          {dataFeedback && dataFeedback.response
+            ? dataFeedback.response.map(feed => (
                 <div style={{ marginTop: "1.1rem" }} key={feed.id}>
                   <div className="control has-icons-right">
                     {dataMe.id === id && (
@@ -197,17 +192,10 @@ class index extends React.PureComponent {
 
 export default compose(
   graphql(feedbackQuery, {
-    options: ({ id }) => ({ variables: { id, type: "User" } }),
+    options: ({ id }) => ({ variables: { id } }),
     props: ({ data }) => ({
       loadingFeedback: data.loading,
       dataFeedback: data.feedback
-    })
-  }),
-  graphql(countFeedbackStarsQuery, {
-    options: ({ id }) => ({ variables: { id, type: "User" } }),
-    props: ({ data }) => ({
-      loadingCountFeedbackStars: data.loading,
-      dataCountFeedbackStars: data.countFeedbackStars
     })
   }),
   graphql(meQuery, {
@@ -225,9 +213,7 @@ export default compose(
     ) => {
       const { data } = await FEEDBACK_MUTATION({
         variables: { toId: id, ...values },
-        refetchQueries: [
-          { query: feedbackQuery, variables: { id, type: "User" } }
-        ]
+        refetchQueries: [{ query: feedbackQuery, variables: { id } }]
       });
 
       // if feedback has data, it has the errors
