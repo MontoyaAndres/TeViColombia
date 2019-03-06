@@ -13,7 +13,7 @@ const sendForgotPasswordEmailMutation = gql`
   }
 `;
 
-const password = ({ values, isSubmitting }) => (
+const password = ({ values, handleSubmit, isSubmitting }) => (
   <div className="hero is-fullheight-with-navbar">
     <div className="hero-body">
       <div id="sent" className="container animated bounceInLeft">
@@ -43,7 +43,11 @@ const password = ({ values, isSubmitting }) => (
           </div>
         )}
 
-        <Form method="POST" style={{ padding: "0 10vw" }}>
+        <Form
+          method="POST"
+          onSubmit={handleSubmit}
+          style={{ padding: "0 10vw" }}
+        >
           <label className="label">Correo electrónico</label>
           <TextField
             type="email"

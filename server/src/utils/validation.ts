@@ -96,6 +96,14 @@ export const UserConfigurationValidation = Yup.object().shape({
 });
 
 export const GeneralInformationValidation = Yup.object().shape({
+  name: Yup.string()
+    .matches(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/, "Ingrese un nombre correcto.")
+    .typeError("Campo incorrecto")
+    .required("El campo es obligatorio!"),
+  lastname: Yup.string()
+    .matches(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/, "Ingrese un apellido correcto.")
+    .typeError("Campo incorrecto.")
+    .required("El campo es obligatorio!"),
   description: Yup.string()
     .max(100, "La descripción no debe de tener más de 100 caracteres.")
     .typeError("Campo incorrecto."),
@@ -125,6 +133,10 @@ export const GeneralInformationValidation = Yup.object().shape({
 });
 
 export const GeneralInformationBusinessValidation = Yup.object().shape({
+  name: Yup.string()
+    .matches(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/, "Ingrese un nombre correcto.")
+    .typeError("Campo incorrecto")
+    .required("El campo es obligatorio!"),
   description: Yup.string()
     .max(100, "La descripción no debe de tener más de 100 caracteres.")
     .typeError("Campo incorrecto."),

@@ -19,7 +19,8 @@ type BusinessInformation {
   nationality: String
   sector: String!
   website: String
-  googleMapsLocalization: String
   optionalEmail: String
+  email: String!
+  googleMapsLocalization: String
   socialnetwork: [SocialNetworkBusiness]
 }

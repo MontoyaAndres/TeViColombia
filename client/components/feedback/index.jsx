@@ -81,7 +81,7 @@ class index extends React.PureComponent {
     } = this.props;
     const { deleteFeedback, idFeedback } = this.state;
 
-    if (loadingFeedback && loadingMe) {
+    if (loadingFeedback || loadingMe) {
       return <Loading />;
     }
 

@@ -7,7 +7,14 @@ const generalInformation = ({ information }) => (
         <div className="box" style={{ marginTop: "0.5rem" }}>
           <div className="content">
             <p className="subtitle">
-              <strong>Dirección y localidad:</strong> {information.address}
+              <strong>Correo electrónico:</strong>{" "}
+              <a href={`mailto:${information.email}`}>{information.email}</a>
+            </p>
+            <p className="subtitle">
+              <strong>Correo electrónico sec:</strong>{" "}
+              <a href={`mailto:${information.optionalEmail}`}>
+                {information.optionalEmail}
+              </a>
             </p>
             <p className="subtitle">
               <strong>Teléfono celular/fijo:</strong>{" "}
@@ -43,13 +50,10 @@ const generalInformation = ({ information }) => (
               </p>
             ) : null}
             <p className="subtitle">
-              <strong>sector:</strong> {information.sector}
+              <strong>Dirección y localidad:</strong> {information.address}
             </p>
             <p className="subtitle">
-              <strong>Correo electrónico sec:</strong>{" "}
-              <a href={`mailto:${information.optionalEmail}`}>
-                {information.optionalEmail}
-              </a>
+              <strong>sector:</strong> {information.sector}
             </p>
             <p className="subtitle">
               <strong>Sitio web:</strong>{" "}

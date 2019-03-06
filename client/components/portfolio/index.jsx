@@ -51,7 +51,7 @@ const index = ({
     setState({ updatePortfolio: !state.updatePortfolio, idPortfolio });
   }
 
-  if (loadingMe && loadingPortfolio) {
+  if (loadingMe || loadingPortfolio) {
     return <Loading />;
   }
 
