@@ -31,11 +31,6 @@ export const resolvers: ResolveMap = {
 };
 
 function coerceBigInt(value: any) {
-  if (value === "") {
-    throw new TypeError(
-      "BigInt cannot represent non 53-bit signed integer value: (empty string)"
-    );
-  }
   const num = Number(value);
   if (num !== num || num > MAX_INT || num < MIN_INT) {
     throw new TypeError(

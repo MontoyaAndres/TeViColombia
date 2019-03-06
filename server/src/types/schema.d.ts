@@ -97,8 +97,9 @@ town: string | null;
 nationality: string | null;
 sector: string;
 website: string | null;
-googleMapsLocalization: string | null;
 optionalEmail: string | null;
+email: string;
+googleMapsLocalization: string | null;
 socialnetwork: Array<ISocialNetworkBusiness | null> | null;
 }
 

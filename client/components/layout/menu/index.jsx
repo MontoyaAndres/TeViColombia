@@ -21,6 +21,7 @@ class menu extends PureComponent {
     e.preventDefault();
 
     if (
+      this.menu.current &&
       this.menu.current.classList.contains("is-active") &&
       this.state.clicked
     ) {

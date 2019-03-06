@@ -14,6 +14,13 @@ const DynamicGeneralInformation = dynamic(
     loading: () => <Loading />
   }
 );
+const DynamicFeedback = dynamic(() => import("../../../components/feedback"), {
+  loading: () => <Loading />
+});
+const DynamicPortfolio = dynamic(
+  () => import("../../../components/portfolio"),
+  { loading: () => <Loading /> }
+);
 
 const business = ({
   router: {
@@ -80,9 +87,8 @@ const business = ({
           )}
           {value === 2 && <h1>2</h1>}
           {value === 3 && <h1>3</h1>}
-          {value === 4 && <h1>4</h1>}
-          {value === 5 && <h1>5</h1>}
-          {value === 6 && <h1>6</h1>}
+          {value === 4 && <DynamicFeedback id={id} />}
+          {value === 5 && <DynamicPortfolio id={id} />}
         </>
       )}
     </ProfileContainer>

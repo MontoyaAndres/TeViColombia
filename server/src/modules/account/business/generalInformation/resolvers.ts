@@ -25,6 +25,7 @@ export const resolvers: ResolveMap = {
         try {
           await GeneralInformationBusinessValidation.validate(
             {
+              name: information.name,
               description: information.description,
               telephone: information.telephone,
               telephone2: information.telephone2,

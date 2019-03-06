@@ -34,6 +34,8 @@ export const resolvers: ResolveMap = {
         try {
           await GeneralInformationValidation.validate(
             {
+              name: information.name,
+              lastname: information.lastname,
               description: information.description,
               identificationDocument: information.identificationDocument,
               telephone: information.telephone,

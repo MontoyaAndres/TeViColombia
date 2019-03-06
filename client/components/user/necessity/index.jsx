@@ -113,7 +113,7 @@ class index extends React.PureComponent {
     } = this.props;
     const { deleteNecessity, idNecessity, updateNecessity } = this.state;
 
-    if (loadingNecessity && loadingMe) {
+    if (loadingNecessity || loadingMe) {
       return <Loading />;
     }
 

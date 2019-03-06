@@ -10,6 +10,7 @@ import Loading from "../../../components/shared/loading";
 import checkLoggedIn from "../../../lib/checkLoggedIn";
 import redirect from "../../../lib/redirect";
 import { informationQuery } from "../../../graphql/queries/account";
+import meQuery from "../../../graphql/queries/me";
 import UploadRoutePhoto from "../../../components/user/edit/uploadRoutePhoto";
 import UploadRouteCover from "../../../components/user/edit/uploadRouteCover";
 import EditGeneralInformation from "../../../components/user/edit/editGeneralInformation";
@@ -52,7 +53,14 @@ class edit extends React.PureComponent {
   }
 
   render() {
-    const { loading, data, setFieldValue, values, isSubmitting } = this.props;
+    const {
+      loading,
+      data,
+      setFieldValue,
+      values,
+      handleSubmit,
+      isSubmitting
+    } = this.props;
 
     if (loading) {
       return <Loading />;
@@ -63,7 +71,7 @@ class edit extends React.PureComponent {
     }
 
     return (
-      <Form method="POST">
+      <Form method="POST" onSubmit={handleSubmit}>
         <Field name="routeCover" component={UploadRouteCover} />
         <Field name="routePhoto" component={UploadRoutePhoto} />
 
@@ -242,7 +250,10 @@ export default compose(
           id,
           information: valuesOmitted
         },
-        refetchQueries: [{ query: informationQuery, variables: { id } }]
+        refetchQueries: [
+          { query: informationQuery, variables: { id } },
+          { query: meQuery }
+        ]
       });
 
       // if generalInformation has data, it has the errors

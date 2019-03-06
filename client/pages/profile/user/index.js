@@ -48,7 +48,7 @@ const user = ({
   dataInformation,
   dataCountNecessity
 }) => {
-  if (loadingCountNecessity && loadingInformation) {
+  if (loadingCountNecessity || loadingInformation) {
     return <Loading />;
   }
 

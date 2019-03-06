@@ -86,7 +86,6 @@ export class User extends BaseEntity {
   telephone2Country: number;
 
   @Column("bigint", {
-    unique: true,
     nullable: true,
     transformer: new EmptyStringToNull()
   })
