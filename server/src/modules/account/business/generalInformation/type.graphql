@@ -5,7 +5,7 @@ type SocialNetworkBusiness {
 
 type BusinessInformation {
   id: ID
-  routePhone: String!
+  routePhoto: String!
   routeCover: String
   name: String!
   description: String

@@ -74,6 +74,33 @@ const informationQuery = gql`
   }
 `;
 
+const informationBusinessQuery = gql`
+  query InformationBusinessQuery($id: ID!) {
+    informationBusiness(id: $id) {
+      routePhoto
+      routeCover
+      name
+      description
+      address
+      telephoneCountry
+      telephone
+      telephone2Country
+      telephone2
+      departament
+      town
+      nationality
+      sector
+      website
+      googleMapsLocalization
+      optionalEmail
+      socialnetwork {
+        name
+        url
+      }
+    }
+  }
+`;
+
 const feedbackQuery = gql`
   query FeedbackQuery($id: ID!) {
     feedback(id: $id) {
@@ -86,6 +113,7 @@ const feedbackQuery = gql`
           name
           lastname
           routePhoto
+          type
         }
       }
       count
@@ -116,4 +144,10 @@ const portfolioQuery = gql`
   }
 `;
 
-export { informationQuery, feedbackQuery, necessityQuery, portfolioQuery };
+export {
+  informationQuery,
+  informationBusinessQuery,
+  feedbackQuery,
+  necessityQuery,
+  portfolioQuery
+};

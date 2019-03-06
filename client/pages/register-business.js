@@ -10,30 +10,27 @@ import {
   SelectField,
   TextFieldAddonsCountry
 } from "../components/shared/globalField";
-import { RegisterValidation } from "../utils/validation";
+import { RegisterBusinessValidation } from "../utils/validation";
 import normalizeErrors from "../utils/normalizeErrors";
 import checkLoggedIn from "../lib/checkLoggedIn";
 import redirect from "../lib/redirect";
+import EntityGlobalEnum from "../utils/entityGlobalEnum";
 import RegisterContainer from "../containers/register";
 
-const registerMutation = gql`
-  mutation RegisterMutation(
+const registerBusinessMutation = gql`
+  mutation RegisterBusinessMutation(
     $name: String!
-    $lastname: String!
     $telephoneCountry: Int!
     $telephone: BigInt!
-    $identificationDocumentType: String!
-    $identificationDocument: BigInt!
+    $sector: String!
     $email: String!
     $password: String!
   ) {
-    register(
+    registerBusiness(
       name: $name
-      lastname: $lastname
       telephoneCountry: $telephoneCountry
       telephone: $telephone
-      identificationDocumentType: $identificationDocumentType
-      identificationDocument: $identificationDocument
+      sector: $sector
       email: $email
       password: $password
     ) {
@@ -43,19 +40,22 @@ const registerMutation = gql`
   }
 `;
 
-const register = ({ values, handleSubmit, isSubmitting, setFieldValue }) => (
+const registerBusiness = ({
+  values,
+  handleSubmit,
+  isSubmitting,
+  setFieldValue
+}) => (
   <RegisterContainer
     registered={values.registered}
     errorRegistered={values.errorRegistered}
     setFieldValue={setFieldValue}
   >
     <Form method="POST" onSubmit={handleSubmit}>
-      <TextField type="text" name="name" placeholder="Nombres" isRequired />
-
       <TextField
         type="text"
-        name="lastname"
-        placeholder="Apellidos"
+        name="name"
+        placeholder="Nombre de la compañia"
         isRequired
       />
 
@@ -69,16 +69,8 @@ const register = ({ values, handleSubmit, isSubmitting, setFieldValue }) => (
       />
 
       <SelectField
-        name="identificationDocumentType"
-        arrayPlaceholder={["Tarjeta de identidad", "Cédula de ciudadania"]}
-        isRequired
-      />
-
-      <TextField
-        type="number"
-        pattern="\d*"
-        name="identificationDocument"
-        placeholder="Número de documento"
+        name="sector"
+        arrayPlaceholder={EntityGlobalEnum.ENUMSector}
         isRequired
       />
 
@@ -112,15 +104,15 @@ const register = ({ values, handleSubmit, isSubmitting, setFieldValue }) => (
       </button>
 
       <label className="checkbox" style={{ padding: "1em" }}>
-        <Link href="/register-business" prefetch>
-          <a>Registrar nueva cuenta para empresas</a>
+        <Link href="/register" prefetch>
+          <a>Registrar nueva cuenta para usuarios</a>
         </Link>
       </label>
     </Form>
   </RegisterContainer>
 );
 
-register.getInitialProps = async context => {
+registerBusiness.getInitialProps = async context => {
   const { loggedInUser } = await checkLoggedIn(context.apolloClient);
 
   if (loggedInUser.me) {
@@ -131,19 +123,17 @@ register.getInitialProps = async context => {
 };
 
 export default compose(
-  graphql(registerMutation),
+  graphql(registerBusinessMutation),
   withFormik({
     mapPropsToValues: () => ({
       name: "",
-      lastname: "",
       telephoneCountry: 57,
       telephone: "",
-      identificationDocumentType: "Tarjeta de identidad",
-      identificationDocument: "",
+      sector: "Agricultura / Pesca / Ganadería",
       email: "",
       password: ""
     }),
-    validationSchema: RegisterValidation,
+    validationSchema: RegisterBusinessValidation,
     validateOnBlur: false,
     validateOnChange: false,
     handleSubmit: async (
@@ -157,12 +147,12 @@ export default compose(
         )
       });
 
-      // if register has data, it has the errors
-      if (data.register && data.register.length) {
+      // if registerBusiness has data, it has the errors
+      if (data.registerBusiness && data.registerBusiness.length) {
         setSubmitting(false);
         setFieldValue("registered", false, false);
         setFieldValue("errorRegistered", true, false);
-        setErrors(normalizeErrors(data.register));
+        setErrors(normalizeErrors(data.registerBusiness));
       } else {
         setSubmitting(false);
         resetForm();
@@ -176,4 +166,4 @@ export default compose(
       });
     }
   })
-)(register);
+)(registerBusiness);

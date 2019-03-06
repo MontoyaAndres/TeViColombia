@@ -15,6 +15,17 @@
   color: lightgray;
 }
 
+.stars_item::before {
+  font-size: 35px;
+  content: "★";
+  color: lightgray;
+}
+
+.feedback_star,
+.feedback_star::before {
+  font-size: 35px;
+}
+
 .stars_input {
   position: absolute;
   visibility: hidden;

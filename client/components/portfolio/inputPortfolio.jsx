@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, ErrorMessage } from "formik";
 
-import { TextAreaField } from "../../shared/globalField";
+import { TextAreaField } from "../shared/globalField";
 import UploadFile from "./uploadFile";
 
 const InputPortfolio = ({ values, setFieldValue, ...rest }) => (

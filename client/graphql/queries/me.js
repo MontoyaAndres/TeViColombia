@@ -7,6 +7,7 @@ const meQuery = gql`
       name
       lastname
       email
+      type
     }
   }
 `;

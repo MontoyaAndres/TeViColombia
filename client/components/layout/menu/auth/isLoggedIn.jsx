@@ -12,8 +12,13 @@ const logout = gql`
 class isLoggedIn extends PureComponent {
   redirect = e => {
     const { me, closeMenu } = this.props;
+
     closeMenu(e);
-    Router.push(`/profile/edit/${me.id}`);
+    if (me.type === "User") {
+      Router.push(`/profile/user/edit/${me.id}`);
+    } else if (me.type === "Business") {
+      Router.push(`/profile/business/edit/${me.id}`);
+    }
   };
 
   render() {
@@ -35,7 +40,7 @@ class isLoggedIn extends PureComponent {
             onClick={openMenu}
             ref={menu}
           >
-            <a className="navbar-link">
+            <a className="navbar-link" onClick={closeMenu}>
               {me.name} {me.lastname}
             </a>
 
@@ -44,7 +49,7 @@ class isLoggedIn extends PureComponent {
                 <span className="icon">
                   <i className="fas fa-user" aria-hidden="true" />
                 </span>
-                <span>Configuración de usuario</span>
+                <span>Configuración de perfil</span>
               </a>
 
               <a className="navbar-item" onClick={mutate}>

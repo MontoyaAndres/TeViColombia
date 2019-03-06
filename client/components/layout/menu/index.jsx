@@ -33,12 +33,10 @@ class menu extends PureComponent {
     }
   };
 
-  closeMenu = e => {
-    if (!this.menu.current.contains(e.target)) {
-      this.setState({ clicked: false }, () => {
-        document.removeEventListener("click", this.closeMenu);
-      });
-    }
+  closeMenu = () => {
+    this.setState({ clicked: false }, () => {
+      document.removeEventListener("click", this.closeMenu);
+    });
   };
 
   render() {
@@ -99,16 +97,17 @@ class menu extends PureComponent {
                 {me && (
                   <>
                     <Link
-                      href={{ pathname: "/profile", query: { id: me.id } }}
+                      href={{
+                        pathname:
+                          me.type === "User"
+                            ? "/profile/user"
+                            : "/profile/business",
+                        query: { id: me.id }
+                      }}
                       prefetch
                     >
                       <a className="navbar-item" onClick={this.closeMenu}>
                         Mi perfil
-                      </a>
-                    </Link>
-                    <Link href="/negocio" prefetch>
-                      <a className="navbar-item" onClick={this.closeMenu}>
-                        Mi negocio
                       </a>
                     </Link>
                   </>

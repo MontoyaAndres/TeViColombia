@@ -9,9 +9,9 @@ export const confirmEmail = async (req: Request, res: Response) => {
   const userId = await redis.get(id);
 
   if (userId) {
-    if (type === "user") {
+    if (type === "User") {
       await User.update({ id: userId }, { confirmed: true });
-    } else if (type === "business") {
+    } else if (type === "Business") {
       await Business.update({ id: userId }, { confirmed: true });
     }
 
