@@ -18,11 +18,17 @@ export const resolvers: ResolveMap = {
       });
 
       if (user) {
-        return user;
+        return {
+          type: "User",
+          ...user
+        };
       }
 
       if (business) {
-        return business;
+        return {
+          type: "Business",
+          ...business
+        };
       }
 
       return null;

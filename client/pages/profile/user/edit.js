@@ -6,22 +6,22 @@ import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
 import omit from "lodash.omit";
 
-import Loading from "../../components/shared/loading";
-import checkLoggedIn from "../../lib/checkLoggedIn";
-import redirect from "../../lib/redirect";
-import { informationQuery } from "../../graphql/queries/account";
-import UploadRoutePhoto from "../../components/profile/edit/uploadRoutePhoto";
-import UploadRouteCover from "../../components/profile/edit/uploadRouteCover";
-import EditGeneralInformation from "../../components/profile/edit/editGeneralInformation";
-import EditLanguage from "../../components/profile/edit/editLanguage";
-import EditStudy from "../../components/profile/edit/editStudy";
-import EditWork from "../../components/profile/edit/editWork";
-import EditCV from "../../components/profile/edit/editCV";
-import EditSocialNetwork from "../../components/profile/edit/editSocialNetwork";
-import EditPreferWork from "../../components/profile/edit/editPreferWork";
-import TownsByDepartament from "../../utils/townsByDepartament";
-import { GeneralInformationValidation } from "../../utils/validation";
-import normalizeErrors from "../../utils/normalizeErrors";
+import Loading from "../../../components/shared/loading";
+import checkLoggedIn from "../../../lib/checkLoggedIn";
+import redirect from "../../../lib/redirect";
+import { informationQuery } from "../../../graphql/queries/account";
+import UploadRoutePhoto from "../../../components/user/edit/uploadRoutePhoto";
+import UploadRouteCover from "../../../components/user/edit/uploadRouteCover";
+import EditGeneralInformation from "../../../components/user/edit/editGeneralInformation";
+import EditLanguage from "../../../components/user/edit/editLanguage";
+import EditStudy from "../../../components/user/edit/editStudy";
+import EditWork from "../../../components/user/edit/editWork";
+import EditCV from "../../../components/user/edit/editCV";
+import EditSocialNetwork from "../../../components/user/edit/editSocialNetwork";
+import EditPreferWork from "../../../components/user/edit/editPreferWork";
+import TownsByDepartament from "../../../utils/townsByDepartament";
+import { GeneralInformationValidation } from "../../../utils/validation";
+import normalizeErrors from "../../../utils/normalizeErrors";
 
 const generalInformationMutation = gql`
   mutation GeneralInformationMutation(
@@ -68,7 +68,7 @@ class edit extends React.PureComponent {
         <Field name="routePhoto" component={UploadRoutePhoto} />
 
         <div id="edited" className="container">
-          {/* User edited successfully */}
+          {/* User updated successfully */}
           {values.edited && (
             <div className="animated bounceIn notification is-primary">
               <button
@@ -81,6 +81,22 @@ class edit extends React.PureComponent {
               </p>
             </div>
           )}
+
+          {/* Error updating user */}
+          {values.errorEdited && (
+            <div className="animated bounceIn notification is-danger">
+              <button
+                type="button"
+                className="delete"
+                onClick={() => setFieldValue("errorEdited", false, false)}
+              />
+              <p className="subtitle">
+                Se han encontrado errores, por favor revise nuevamente el
+                formulario.
+              </p>
+            </div>
+          )}
+
           <EditGeneralInformation
             departament={values.departament}
             nationality={values.nationality}
@@ -209,7 +225,7 @@ export default compose(
         }
       });
 
-      // Omitting all about `edited`, `studyingOn`, `workingOn` because the database does not need to save them.
+      // Omitting all about `edited`, `errorEdited`, `studyingOn`, `workingOn` because the database does not need to save them.
       const valuesOmitted = await omit(
         {
           ...values,
@@ -218,7 +234,7 @@ export default compose(
           study: values.study.map(item => omit(item, ["studyingOn"])),
           work: values.work.map(item => omit(item, ["workingOn"]))
         },
-        ["edited", "studyingOn", "workingOn"]
+        ["edited", "errorEdited", "studyingOn", "workingOn"]
       );
 
       const { data } = await mutate({
@@ -233,15 +249,18 @@ export default compose(
       if (data.generalInformation && data.generalInformation.length) {
         setSubmitting(false);
         setFieldValue("edited", false, false);
+        setFieldValue("errorEdited", true, false);
         setErrors(normalizeErrors(data.generalInformation));
       } else {
         setSubmitting(false);
         setFieldValue("edited", true, false);
-        window.scrollTo({
-          top: document.getElementById("edited").offsetTop - 100,
-          behavior: "smooth"
-        });
+        setFieldValue("errorEdited", false, false);
       }
+
+      window.scrollTo({
+        top: document.getElementById("edited").offsetTop - 100,
+        behavior: "smooth"
+      });
     }
   })
 )(edit);

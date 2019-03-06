@@ -4,14 +4,14 @@ import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
 import { Carousel } from "react-responsive-carousel";
 
-import meQuery from "../../../graphql/queries/me";
-import Loading from "../../shared/loading";
-import { portfolioQuery } from "../../../graphql/queries/account";
+import meQuery from "../../graphql/queries/me";
+import Loading from "../shared/loading";
+import { portfolioQuery } from "../../graphql/queries/account";
 import InputPortfolio from "./inputPortfolio";
-import Linkify from "../../shared/linkify";
+import Linkify from "../shared/linkify";
 import UpdatePortfolioModal from "./updatePortfolioModal";
 import DeletePortfolioModal from "./deletePortfolioModal";
-import normalizeErrors from "../../../utils/normalizeErrors";
+import normalizeErrors from "../../utils/normalizeErrors";
 
 const portfolioMutation = gql`
   mutation PortfolioMutation(

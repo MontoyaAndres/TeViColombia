@@ -3,10 +3,10 @@ import gql from "graphql-tag";
 import { compose, graphql } from "react-apollo";
 import { withFormik } from "formik";
 
-import AskModal from "../../shared/askModal";
-import { portfolioQuery } from "../../../graphql/queries/account";
+import AskModal from "../shared/askModal";
+import { portfolioQuery } from "../../graphql/queries/account";
 import InputPortfolio from "./inputPortfolio";
-import normalizeErrors from "../../../utils/normalizeErrors";
+import normalizeErrors from "../../utils/normalizeErrors";
 
 const updatePortfolioMutation = gql`
   mutation UpdatePortfolioMutation(

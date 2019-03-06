@@ -5,15 +5,15 @@ import Link from "next/link";
 import { withFormik, Form, ErrorMessage } from "formik";
 import { SimpleImg } from "react-simple-img";
 
-import { feedbackQuery } from "../../../graphql/queries/account";
-import meQuery from "../../../graphql/queries/me";
-import Loading from "../../shared/loading";
-import StaticStars from "../../shared/staticStars";
-import normalizeErrors from "../../../utils/normalizeErrors";
-import { TextAreaField } from "../../shared/globalField";
-import ChangeStars from "../../shared/changeStars";
+import { feedbackQuery } from "../../graphql/queries/account";
+import meQuery from "../../graphql/queries/me";
+import Loading from "../shared/loading";
+import StaticStars from "../shared/staticStars";
+import normalizeErrors from "../../utils/normalizeErrors";
+import { TextAreaField } from "../shared/globalField";
+import ChangeStars from "../shared/changeStars";
 import DeleteFeedbackModal from "./deleteFeedbackModal";
-import Linkify from "../../shared/linkify";
+import Linkify from "../shared/linkify";
 
 const feedbackMutation = gql`
   mutation FeedbackMutation($toId: ID!, $stars: Int!, $comment: String!) {
@@ -162,7 +162,10 @@ class index extends React.PureComponent {
                           <div className="media-content">
                             <Link
                               href={{
-                                pathname: "/profile",
+                                pathname:
+                                  feed.from.type === "User"
+                                    ? "/profile/user"
+                                    : "/profile/business",
                                 query: { id: feed.from.id }
                               }}
                               prefetch

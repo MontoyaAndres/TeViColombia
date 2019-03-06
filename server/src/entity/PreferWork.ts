@@ -32,15 +32,11 @@ export class PreferWork extends BaseEntity {
 
   @Column("simple-array", {
     transformer: {
-      to: (value: string[]) => value,
-      from: (value: string[]) => {
-        // Bogotá, D.C. is saved as ["Bogotá", " D.C."] passing it to ["Bogotá, D.C."]
-        const valuesSeparated = value
-          .filter(val => !val.includes("Bogotá") && !val.includes(" D.C."))
-          .concat("Bogotá, D.C.");
-
-        return valuesSeparated;
-      }
+      // Bogotá, D.C. is saved as ["Bogotá", " D.C."] passing it to ["Bogotá, D.C."].
+      to: (value: string[]) =>
+        value.map(val => (val === "Bogotá, D.C." ? "Bogotá D.C." : val)),
+      from: (value: string[]) =>
+        value.map(val => (val === "Bogotá D.C." ? "Bogotá, D.C." : val))
     }
   })
   departament: string[];

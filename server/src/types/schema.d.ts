@@ -83,7 +83,7 @@ currency: string | null;
 interface IBusinessInformation {
 __typename: "BusinessInformation";
 id: string | null;
-routePhone: string;
+routePhoto: string;
 routeCover: string | null;
 name: string;
 description: string | null;
@@ -129,6 +129,7 @@ name: string;
 lastname: string | null;
 email: string;
 routePhoto: string;
+type: string;
 }
 
 interface IPortfolio {

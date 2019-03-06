@@ -117,6 +117,11 @@ export const resolvers: ResolveMap = {
         return formatYupError(err);
       }
 
+      const nameAlreadyExists = await Business.findOne({
+        where: { name },
+        select: ["id"]
+      });
+
       const emailAlreadyExists = await Business.findOne({
         where: { email },
         select: ["id"]
@@ -126,6 +131,15 @@ export const resolvers: ResolveMap = {
         where: { telephone },
         select: ["id"]
       });
+
+      if (nameAlreadyExists) {
+        return [
+          {
+            path: "name",
+            message: "El nombre de la compañia ya existe."
+          }
+        ];
+      }
 
       if (emailAlreadyExists) {
         return [

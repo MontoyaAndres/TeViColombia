@@ -8,12 +8,25 @@ export const resolvers: ResolveMap = {
   Query: {
     me: createMiddleware(middleware, async (_, __, { session }) => {
       const user = await User.findOne({ where: { id: session.userId } });
+      const business = await Business.findOne({
+        where: { id: session.userId }
+      });
 
-      if (!user) {
-        return Business.findOne({ where: { id: session.userId } });
+      if (user) {
+        return {
+          type: "User",
+          ...user
+        };
       }
 
-      return user;
+      if (business) {
+        return {
+          type: "Business",
+          ...business
+        };
+      }
+
+      return null;
     })
   }
 };
