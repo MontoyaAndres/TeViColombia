@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import gql from "graphql-tag";
 import { compose, graphql } from "react-apollo";
 import { withFormik, Form } from "formik";
@@ -10,6 +10,7 @@ import { TextAreaField } from "../../shared/globalField";
 import UpdateNecessityModal from "./updateNecessityModal";
 import DeleteNecessityModal from "./deleteNecessityModal";
 import Linkify from "../../shared/linkify";
+import DropdownIcon from "../../shared/dropdrownIcon";
 
 const necessityMutation = gql`
   mutation NecessityMutation($finished: Boolean!, $comment: String!) {
@@ -38,205 +39,130 @@ const InputNecessity = ({ isSubmitting, handleSubmit }) => (
   </Form>
 );
 
-class index extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.dropdown = [];
-    this.state = {
-      deleteNecessity: false,
-      updateNecessity: false,
-      idNecessity: null
-    };
+const index = ({
+  loadingNecessity,
+  loadingMe,
+  dataNecessity,
+  dataMe,
+  id,
+  isSubmitting,
+  handleSubmit
+}) => {
+  const [state, setState] = useState({
+    deleteNecessity: false,
+    updateNecessity: false,
+    idNecessity: null
+  });
+
+  function handleAskDeleteNecessity(idNecessity = null) {
+    setState({ deleteNecessity: !state.deleteNecessity, idNecessity });
   }
 
-  componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutsideToClose);
+  function handleAskUpdateNecessity(idNecessity = null) {
+    setState({ updateNecessity: !state.updateNecessity, idNecessity });
   }
 
-  componentWillUnmount() {
-    document.addEventListener("mousedown", this.handleClickOutsideToClose);
+  if (loadingNecessity || loadingMe) {
+    return <Loading />;
   }
 
-  handleClickOutsideToClose = e => {
-    let toClose = true;
+  return (
+    <div className="container">
+      {dataMe.id === id && (
+        <InputNecessity
+          isSubmitting={isSubmitting}
+          handleSubmit={handleSubmit}
+        />
+      )}
 
-    this.dropdown.forEach(dropdown => {
-      if (dropdown !== null && dropdown.contains(e.target)) {
-        toClose = false;
-      }
-    });
+      {/* Delete necessity modal */}
+      {state.deleteNecessity && (
+        <DeleteNecessityModal
+          id={id}
+          idNecessity={state.idNecessity}
+          deleteNecessity={state.deleteNecessity}
+          handleAskDeleteNecessity={handleAskDeleteNecessity}
+        />
+      )}
 
-    if (toClose) {
-      this.handleCloseAll();
-    }
-  };
+      {/* Update necessity modal */}
+      {state.updateNecessity && (
+        <UpdateNecessityModal
+          id={id}
+          dataNecessity={dataNecessity}
+          idNecessity={state.idNecessity}
+          updateNecessity={state.updateNecessity}
+          handleAskUpdateNecessity={handleAskUpdateNecessity}
+        />
+      )}
 
-  handleCloseAll = () => {
-    this.dropdown.forEach(dropdown => {
-      if (dropdown !== null) {
-        dropdown.classList.remove("is-active");
-      }
-    });
-  };
-
-  handleOpenDropdown = indexDropdown => {
-    this.dropdown.forEach(dropdown => {
-      if (dropdown !== null) {
-        if (dropdown === this.dropdown[indexDropdown]) {
-          dropdown.classList.toggle("is-active");
-        } else {
-          dropdown.classList.remove("is-active");
-        }
-      }
-    });
-  };
-
-  handleAskDeleteNecessity = (idNecessity = null) => {
-    const { deleteNecessity } = this.state;
-    this.setState({ deleteNecessity: !deleteNecessity, idNecessity });
-  };
-
-  handleAskUpdateNecessity = (idNecessity = null) => {
-    const { updateNecessity } = this.state;
-    this.setState({ updateNecessity: !updateNecessity, idNecessity });
-  };
-
-  render() {
-    const {
-      loadingNecessity,
-      loadingMe,
-      dataNecessity,
-      dataMe,
-      id,
-      isSubmitting,
-      handleSubmit
-    } = this.props;
-    const { deleteNecessity, idNecessity, updateNecessity } = this.state;
-
-    if (loadingNecessity || loadingMe) {
-      return <Loading />;
-    }
-
-    return (
-      <div className="container">
-        {dataMe.id === id && (
-          <InputNecessity
-            isSubmitting={isSubmitting}
-            handleSubmit={handleSubmit}
-          />
-        )}
-
-        {/* Delete necessity modal */}
-        {deleteNecessity && (
-          <DeleteNecessityModal
-            id={id}
-            idNecessity={idNecessity}
-            deleteNecessity={deleteNecessity}
-            handleAskDeleteNecessity={this.handleAskDeleteNecessity}
-          />
-        )}
-
-        {/* Update necessity modal */}
-        {updateNecessity && (
-          <UpdateNecessityModal
-            id={id}
-            dataNecessity={dataNecessity}
-            idNecessity={idNecessity}
-            updateNecessity={updateNecessity}
-            handleAskUpdateNecessity={this.handleAskUpdateNecessity}
-          />
-        )}
-
-        {dataNecessity && dataNecessity.response ? (
-          dataNecessity.response.map((neces, i) => (
-            <div style={{ marginTop: "0.5rem", padding: "0 0.75rem" }} key={i}>
-              <div className="card" style={{ borderRadius: 6 }}>
-                <header className="card-header" style={{ borderRadius: 6 }}>
-                  <div className="card-header-title">
-                    <div className="media">
-                      <div className="media-left">
-                        <div>
-                          {neces.finished ? (
-                            <i
-                              className="fas fa-2x fa-check is-medium"
-                              style={{ color: "lightgreen" }}
-                              aria-hidden="true"
-                            />
-                          ) : (
-                            <i
-                              className="fas fa-2x fa-clock is-medium"
-                              style={{ color: "gray" }}
-                              aria-hidden="true"
-                            />
-                          )}
-                        </div>
+      {dataNecessity && dataNecessity.response.length > 0 ? (
+        dataNecessity.response.map((neces, i) => (
+          <div style={{ marginTop: "0.5rem", padding: "0 0.75rem" }} key={i}>
+            <div className="card" style={{ borderRadius: 6 }}>
+              <header className="card-header" style={{ borderRadius: 6 }}>
+                <div className="card-header-title">
+                  <div className="media">
+                    <div className="media-left">
+                      <div>
+                        {neces.finished ? (
+                          <i
+                            className="fas fa-2x fa-check is-medium"
+                            style={{ color: "lightgreen" }}
+                            aria-hidden="true"
+                          />
+                        ) : (
+                          <i
+                            className="fas fa-2x fa-clock is-medium"
+                            style={{ color: "gray" }}
+                            aria-hidden="true"
+                          />
+                        )}
                       </div>
-                      <div className="media-content">
-                        <div className="content">
-                          <Linkify text={neces.comment} length={80} />
-                        </div>
+                    </div>
+                    <div className="media-content">
+                      <div className="content">
+                        <Linkify text={neces.comment} length={80} />
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  {dataMe.id === id && (
-                    <span className="card-header-icon">
-                      <div
-                        className="dropdown is-right"
-                        ref={dropdown => {
-                          this.dropdown[i] = dropdown;
-                        }}
-                        onClick={() => this.handleOpenDropdown(i)}
-                      >
-                        <div className="dropdown-trigger">
-                          <span className="icon is-medium">
-                            <i
-                              className="fas fa-ellipsis-v is-medium"
-                              style={{ color: "gray" }}
-                              aria-hidden="true"
-                            />
-                          </span>
-                        </div>
-
-                        <div className="dropdown-menu" role="menu">
-                          <div className="dropdown-content">
-                            <a
-                              className="dropdown-item"
-                              onClick={() =>
-                                this.handleAskUpdateNecessity(neces.id)
-                              }
-                            >
-                              Editar
-                            </a>
-                            <a
-                              className="dropdown-item"
-                              onClick={() =>
-                                this.handleAskDeleteNecessity(neces.id)
-                              }
-                            >
-                              Eliminar
-                            </a>
-                          </div>
-                        </div>
+                {dataMe.id === id && (
+                  <DropdownIcon i={i}>
+                    <div className="dropdown-menu" role="menu">
+                      <div className="dropdown-content">
+                        <a
+                          className="dropdown-item"
+                          onClick={() => handleAskUpdateNecessity(neces.id)}
+                        >
+                          Editar
+                        </a>
+                        <a
+                          className="dropdown-item"
+                          onClick={() => handleAskDeleteNecessity(neces.id)}
+                        >
+                          Eliminar
+                        </a>
                       </div>
-                    </span>
-                  )}
-                </header>
-              </div>
+                    </div>
+                  </DropdownIcon>
+                )}
+              </header>
             </div>
-          ))
-        ) : (
-          <h2
-            className="subtitle is-3"
-            style={{ textAlign: "center", padding: 20 }}
-          >
-            No se ha encontrado información al respecto.
-          </h2>
-        )}
-      </div>
-    );
-  }
-}
+          </div>
+        ))
+      ) : (
+        <h2
+          className="subtitle is-3"
+          style={{ textAlign: "center", padding: 20 }}
+        >
+          No se ha encontrado información al respecto.
+        </h2>
+      )}
+    </div>
+  );
+};
 
 export default compose(
   graphql(necessityQuery, {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
 import Link from "next/link";
@@ -56,142 +56,136 @@ const InputFeedback = ({
   </Form>
 );
 
-class index extends React.PureComponent {
-  state = {
+const index = ({
+  loadingFeedback,
+  loadingMe,
+  dataFeedback,
+  dataMe,
+  id,
+  values,
+  handleSubmit,
+  isSubmitting,
+  setFieldValue
+}) => {
+  const [state, setState] = useState({
     deleteFeedback: false,
     idFeedback: null
-  };
+  });
 
-  handleAskDeleteFeedback = (idFeedback = null) => {
-    const { deleteFeedback } = this.state;
-    this.setState({ deleteFeedback: !deleteFeedback, idFeedback });
-  };
+  function handleAskDeleteFeedback(idFeedback = null) {
+    setState({ deleteFeedback: !state.deleteFeedback, idFeedback });
+  }
 
-  render() {
-    const {
-      loadingFeedback,
-      loadingMe,
-      dataFeedback,
-      dataMe,
-      id,
-      values,
-      handleSubmit,
-      isSubmitting,
-      setFieldValue
-    } = this.props;
-    const { deleteFeedback, idFeedback } = this.state;
+  if (loadingFeedback || loadingMe) {
+    return <Loading />;
+  }
 
-    if (loadingFeedback || loadingMe) {
-      return <Loading />;
-    }
+  return (
+    <div className="container">
+      <div style={{ padding: ".75rem" }}>
+        {dataMe.id !== id && (
+          <InputFeedback
+            stars={values.stars}
+            handleSubmit={handleSubmit}
+            isSubmitting={isSubmitting}
+            setFieldValue={setFieldValue}
+          />
+        )}
 
-    return (
-      <div className="container">
-        <div style={{ padding: ".75rem" }}>
-          {dataMe.id !== id && (
-            <InputFeedback
-              stars={values.stars}
-              handleSubmit={handleSubmit}
-              isSubmitting={isSubmitting}
-              setFieldValue={setFieldValue}
-            />
-          )}
+        {state.deleteFeedback && (
+          <DeleteFeedbackModal
+            id={id}
+            idFeedback={state.idFeedback}
+            deleteFeedback={state.deleteFeedback}
+            handleAskDeleteFeedback={handleAskDeleteFeedback}
+          />
+        )}
 
-          {deleteFeedback && (
-            <DeleteFeedbackModal
-              id={id}
-              idFeedback={idFeedback}
-              deleteFeedback={deleteFeedback}
-              handleAskDeleteFeedback={this.handleAskDeleteFeedback}
-            />
-          )}
+        {dataMe.id === id && (
+          <div className="notification is-info">
+            {dataFeedback && dataFeedback.count > 0 ? (
+              <p className="subtitle" style={{ textAlign: "center" }}>
+                Tienes la cantidad de{" "}
+                {dataFeedback.count === 1
+                  ? `${dataFeedback.count} estrella`
+                  : `${dataFeedback.count} estrellas`}{" "}
+                <span role="img" aria-label="happy">
+                  🤗🥳🤩.
+                </span>
+              </p>
+            ) : (
+              <p className="subtitle" style={{ textAlign: "center" }}>
+                Tienes la cantidad de 0 estrellas{" "}
+                <span role="img" aria-label="sad">
+                  🥺🙁
+                </span>
+                . Busca personas para que te den Feedback y crezcas en Te vi
+                Colombia!
+              </p>
+            )}
+          </div>
+        )}
 
-          {dataMe.id === id && (
-            <div className="notification is-info">
-              {dataFeedback && dataFeedback.count > 0 ? (
-                <p className="subtitle" style={{ textAlign: "center" }}>
-                  Tienes la cantidad de{" "}
-                  {dataFeedback.count === 1
-                    ? `${dataFeedback.count} estrella`
-                    : `${dataFeedback.count} estrellas`}{" "}
-                  <span role="img" aria-label="happy">
-                    🤗🥳🤩.
-                  </span>
-                </p>
-              ) : (
-                <p className="subtitle" style={{ textAlign: "center" }}>
-                  Tienes la cantidad de 0 estrellas{" "}
-                  <span role="img" aria-label="sad">
-                    🥺🙁
-                  </span>
-                  . Busca personas para que te den Feedback y crezcas en Te vi
-                  Colombia!
-                </p>
-              )}
-            </div>
-          )}
+        {dataFeedback && dataFeedback.response.length > 0
+          ? dataFeedback.response.map(feed => (
+              <div style={{ marginTop: "1.1rem" }} key={feed.id}>
+                <div className="control has-icons-right">
+                  {dataMe.id === id && (
+                    <span
+                      className="icon is-medium is-right"
+                      onClick={() => handleAskDeleteFeedback(feed.id)}
+                    >
+                      <i className="delete is-medium" aria-hidden="true" />
+                    </span>
+                  )}
 
-          {dataFeedback && dataFeedback.response
-            ? dataFeedback.response.map(feed => (
-                <div style={{ marginTop: "1.1rem" }} key={feed.id}>
-                  <div className="control has-icons-right">
-                    {dataMe.id === id && (
-                      <span
-                        className="icon is-medium is-right"
-                        onClick={() => this.handleAskDeleteFeedback(feed.id)}
-                      >
-                        <i className="delete is-medium" aria-hidden="true" />
-                      </span>
-                    )}
-
-                    <div className="card" style={{ borderRadius: 6 }}>
-                      <div className="card-content" style={{ borderRadius: 6 }}>
-                        <div className="media">
-                          <div className="media-left">
-                            <SimpleImg
-                              applyAspectRatio={false}
-                              src={`${process.env.API_HOST}/${
-                                feed.from.routePhoto
-                              }`}
-                              height={44}
-                              width={48}
-                              alt="profile"
-                            />
-                          </div>
-
-                          <div className="media-content">
-                            <Link
-                              href={{
-                                pathname:
-                                  feed.from.type === "User"
-                                    ? "/profile/user"
-                                    : "/profile/business",
-                                query: { id: feed.from.id }
-                              }}
-                              prefetch
-                            >
-                              <a className="title is-4">
-                                {feed.from.name} {feed.from.lastname}
-                              </a>
-                            </Link>
-                            <StaticStars stars={feed.stars} />
-                          </div>
+                  <div className="card" style={{ borderRadius: 6 }}>
+                    <div className="card-content" style={{ borderRadius: 6 }}>
+                      <div className="media">
+                        <div className="media-left">
+                          <SimpleImg
+                            applyAspectRatio={false}
+                            src={`${process.env.API_HOST}/${
+                              feed.from.routePhoto
+                            }`}
+                            height={44}
+                            width={48}
+                            alt="profile"
+                          />
                         </div>
 
-                        <div className="content">
-                          <Linkify text={feed.comment} length={80} />
+                        <div className="media-content">
+                          <Link
+                            href={{
+                              pathname:
+                                feed.from.type === "User"
+                                  ? "/profile/user"
+                                  : "/profile/business",
+                              query: { id: feed.from.id }
+                            }}
+                            prefetch
+                          >
+                            <a className="title is-4">
+                              {feed.from.name} {feed.from.lastname}
+                            </a>
+                          </Link>
+                          <StaticStars stars={feed.stars} />
                         </div>
+                      </div>
+
+                      <div className="content">
+                        <Linkify text={feed.comment} length={80} />
                       </div>
                     </div>
                   </div>
                 </div>
-              ))
-            : null}
-        </div>
+              </div>
+            ))
+          : null}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default compose(
   graphql(feedbackQuery, {
