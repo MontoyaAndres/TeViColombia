@@ -36,14 +36,11 @@ const saveMultimedia = (multimedia: any) =>
 
 export const resolvers: ResolveMap = {
   Query: {
-    portfolio: createMiddleware(
-      middleware.auth,
-      (_, { id }: GQL.IPortfolioOnQueryArguments) =>
-        Portfolio.find({
-          where: { portfolioId: id },
-          order: { createdAt: "DESC" }
-        })
-    )
+    portfolio: (_, { id }: GQL.IPortfolioOnQueryArguments) =>
+      Portfolio.find({
+        where: { portfolioId: id },
+        order: { createdAt: "DESC" }
+      })
   },
   Mutation: {
     portfolio: createMiddleware(

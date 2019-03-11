@@ -17,7 +17,7 @@ export const resolvers: ResolveMap = {
   },
   Mutation: {
     generalInformationBusiness: createMiddleware(
-      middleware.auth,
+      middleware.business,
       async (
         _,
         { id, information }: GQL.IGeneralInformationBusinessOnMutationArguments
