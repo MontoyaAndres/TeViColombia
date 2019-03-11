@@ -57,121 +57,119 @@ const index = ({
 
   return (
     <div className="container">
-      {dataMe.id === id && (
-        <Form
-          method="POST"
-          onSubmit={handleSubmit}
-          style={{ padding: ".75rem" }}
-        >
-          <div className="box" style={{ marginTop: "0.5rem" }}>
-            <InputPortfolio
-              values={values}
-              setFieldValue={setFieldValue}
-              maxLength="200"
-            />
+      <div style={{ padding: ".75rem" }}>
+        {dataMe && dataMe.id === id && (
+          <Form method="POST" onSubmit={handleSubmit}>
+            <div className="box" style={{ marginTop: "0.5rem" }}>
+              <InputPortfolio
+                values={values}
+                setFieldValue={setFieldValue}
+                maxLength="200"
+              />
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className={`button is-block is-primary is-large ${
-                isSubmitting ? "is-loading" : ""
-              }`}
-            >
-              Enviar
-            </button>
-          </div>
-        </Form>
-      )}
-
-      {state.updatePortfolio && (
-        <UpdatePortfolioModal
-          id={id}
-          dataPortfolio={dataPortfolio}
-          idPortfolio={state.idPortfolio}
-          updatePortfolio={state.updatePortfolio}
-          handleAskUpdatePortfolio={handleAskUpdatePortfolio}
-        />
-      )}
-
-      {state.deletePortfolio && (
-        <DeletePortfolioModal
-          id={id}
-          idPortfolio={state.idPortfolio}
-          deletePortfolio={state.deletePortfolio}
-          handleAskDeletePortfolio={handleAskDeletePortfolio}
-        />
-      )}
-
-      {dataPortfolio && dataPortfolio.length > 0 ? (
-        <div className="columns is-multiline">
-          {dataPortfolio.map(portfolio => (
-            <div className="column is-6" key={portfolio.id}>
-              <div className="card">
-                <Carousel
-                  showThumbs={false}
-                  showStatus={false}
-                  stopOnHover={false}
-                  showIndicators={false}
-                  infiniteLoop
-                  emulateTouch
-                >
-                  {portfolio.multimedia.map((multimedia, i) => (
-                    <div className="card-image" key={i}>
-                      {multimedia.split(".").pop() !== "mp4" ? (
-                        <img
-                          src={`${process.env.API_HOST}/${multimedia}`}
-                          alt="uploaded"
-                        />
-                      ) : (
-                        <video controls>
-                          <source
-                            src={`${process.env.API_HOST}/${multimedia}`}
-                            type="video/mp4"
-                          />
-                        </video>
-                      )}
-                    </div>
-                  ))}
-                </Carousel>
-
-                <div className="card-content">
-                  <div className="content">
-                    <Linkify
-                      decoraction="subtitle"
-                      text={portfolio.description}
-                      length={80}
-                    />
-                  </div>
-                </div>
-
-                {dataMe.id === id && (
-                  <footer className="card-footer">
-                    <a
-                      className="card-footer-item"
-                      onClick={() => handleAskUpdatePortfolio(portfolio.id)}
-                    >
-                      Editar
-                    </a>
-                    <a
-                      className="card-footer-item"
-                      onClick={() => handleAskDeletePortfolio(portfolio.id)}
-                    >
-                      Eliminar
-                    </a>
-                  </footer>
-                )}
-              </div>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`button is-block is-primary is-large ${
+                  isSubmitting ? "is-loading" : ""
+                }`}
+              >
+                Enviar
+              </button>
             </div>
-          ))}
-        </div>
-      ) : (
-        <h2
-          className="subtitle is-3"
-          style={{ textAlign: "center", padding: 20 }}
-        >
-          No se ha encontrado información.
-        </h2>
-      )}
+          </Form>
+        )}
+
+        {state.updatePortfolio && (
+          <UpdatePortfolioModal
+            id={id}
+            dataPortfolio={dataPortfolio}
+            idPortfolio={state.idPortfolio}
+            updatePortfolio={state.updatePortfolio}
+            handleAskUpdatePortfolio={handleAskUpdatePortfolio}
+          />
+        )}
+
+        {state.deletePortfolio && (
+          <DeletePortfolioModal
+            id={id}
+            idPortfolio={state.idPortfolio}
+            deletePortfolio={state.deletePortfolio}
+            handleAskDeletePortfolio={handleAskDeletePortfolio}
+          />
+        )}
+
+        {dataPortfolio && dataPortfolio.length > 0 ? (
+          <div className="columns is-multiline">
+            {dataPortfolio.map(portfolio => (
+              <div className="column is-6" key={portfolio.id}>
+                <div className="card">
+                  <Carousel
+                    showThumbs={false}
+                    showStatus={false}
+                    stopOnHover={false}
+                    showIndicators={false}
+                    infiniteLoop
+                    emulateTouch
+                  >
+                    {portfolio.multimedia.map((multimedia, i) => (
+                      <div className="card-image" key={i}>
+                        {multimedia.split(".").pop() !== "mp4" ? (
+                          <img
+                            src={`${process.env.API_HOST}/${multimedia}`}
+                            alt="uploaded"
+                          />
+                        ) : (
+                          <video controls>
+                            <source
+                              src={`${process.env.API_HOST}/${multimedia}`}
+                              type="video/mp4"
+                            />
+                          </video>
+                        )}
+                      </div>
+                    ))}
+                  </Carousel>
+
+                  <div className="card-content">
+                    <div className="content">
+                      <Linkify
+                        decoraction="subtitle"
+                        text={portfolio.description}
+                        length={80}
+                      />
+                    </div>
+                  </div>
+
+                  {dataMe && dataMe.id === id && (
+                    <footer className="card-footer">
+                      <a
+                        className="card-footer-item"
+                        onClick={() => handleAskUpdatePortfolio(portfolio.id)}
+                      >
+                        Editar
+                      </a>
+                      <a
+                        className="card-footer-item"
+                        onClick={() => handleAskDeletePortfolio(portfolio.id)}
+                      >
+                        Eliminar
+                      </a>
+                    </footer>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <h2
+            className="subtitle is-3"
+            style={{ textAlign: "center", padding: 20 }}
+          >
+            No se ha encontrado información.
+          </h2>
+        )}
+      </div>
     </div>
   );
 };

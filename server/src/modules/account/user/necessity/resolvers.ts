@@ -8,7 +8,7 @@ import { User } from "../../../../entity/User";
 export const resolvers: ResolveMap = {
   Query: {
     necessity: createMiddleware(
-      middleware.auth,
+      middleware.user,
       async (_, { userId }: GQL.INecessityOnQueryArguments) => {
         const response = await Necessity.find({
           where: {
@@ -37,7 +37,7 @@ export const resolvers: ResolveMap = {
   },
   Mutation: {
     necessity: createMiddleware(
-      middleware.auth,
+      middleware.user,
       async (
         _,
         { finished, comment }: GQL.INecessityOnMutationArguments,
@@ -49,7 +49,7 @@ export const resolvers: ResolveMap = {
       }
     ),
     updateNecessity: createMiddleware(
-      middleware.auth,
+      middleware.user,
       async (
         _,
         { id, finished, comment }: GQL.IUpdateNecessityOnMutationArguments
@@ -59,7 +59,7 @@ export const resolvers: ResolveMap = {
       }
     ),
     deleteNecessity: createMiddleware(
-      middleware.auth,
+      middleware.user,
       async (_, { id }: GQL.IDeleteNecessityOnMutationArguments) => {
         await Necessity.delete({ id });
         return true;

@@ -35,22 +35,19 @@ export const resolvers: ResolveMap = {
     }
   },
   Query: {
-    feedback: createMiddleware(
-      middleware.auth,
-      async (_, { id }: GQL.IFeedbackOnQueryArguments) => {
-        const response = await FeedBack.find({
-          where: { toId: id },
-          order: { createdAt: "DESC" }
-        });
+    feedback: async (_, { id }: GQL.IFeedbackOnQueryArguments) => {
+      const response = await FeedBack.find({
+        where: { toId: id },
+        order: { createdAt: "DESC" }
+      });
 
-        const count = await FeedBack.query(
-          "SELECT SUM(stars) AS sum FROM feed_back WHERE toId = ?",
-          [id]
-        );
+      const count = await FeedBack.query(
+        "SELECT SUM(stars) AS sum FROM feed_back WHERE toId = ?",
+        [id]
+      );
 
-        return { response, count: count[0].sum };
-      }
-    )
+      return { response, count: count[0].sum };
+    }
   },
   Mutation: {
     feedback: createMiddleware(

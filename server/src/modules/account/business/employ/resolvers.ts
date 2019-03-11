@@ -18,7 +18,7 @@ export const resolvers: ResolveMap = {
   },
   Mutation: {
     employ: createMiddleware(
-      middleware.auth,
+      middleware.business,
       async (_, { id, employ }: GQL.IEmployOnMutationArguments) => {
         try {
           await EmployValidation.validate(
@@ -80,7 +80,7 @@ export const resolvers: ResolveMap = {
       }
     ),
     deleteEmploy: createMiddleware(
-      middleware.auth,
+      middleware.business,
       async (_, { employId }: GQL.IDeleteEmployOnMutationArguments) => {
         await Employ.delete({ id: employId });
 

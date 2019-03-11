@@ -37,7 +37,7 @@ const index = ({ loadingEmploys, loadingMe, dataEmploys, dataMe, id }) => {
 
   return (
     <div className="container">
-      {dataMe.id === id && (
+      {dataMe && dataMe.id === id && (
         <div className="buttons has-addons is-centered">
           <button
             type="button"
@@ -125,7 +125,7 @@ const index = ({ loadingEmploys, loadingMe, dataEmploys, dataMe, id }) => {
                   </div>
                 </div>
 
-                {dataMe.id === id && (
+                {dataMe && dataMe.id === id && (
                   <DropdownIcon i={i}>
                     <div className="dropdown-menu" role="menu">
                       <div className="dropdown-content">
