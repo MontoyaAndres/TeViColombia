@@ -1,16 +1,20 @@
 import React from "react";
-import Dropzone from "react-dropzone";
+import { useDropzone } from "react-dropzone";
 
 const editCV = ({
   field: { name },
   form: { setFieldValue, values },
   ...props
 }) => {
-  function onDrop(files) {
-    // This is to freeze the `file` array, and may concat it with the `values.cv` objects.
-    const assignFile = files.map(file => Object.assign(file));
-    setFieldValue(name, assignFile.concat(values.cv));
-  }
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: ".doc,.docx,.pdf",
+    onDrop: files => {
+      // This is to freeze the `file` array, and may concat it with the `values.cv` objects.
+      const assignFile = files.map(file => Object.assign(file));
+      setFieldValue(name, assignFile.concat(values.cv));
+    },
+    ...props
+  });
 
   function handleDeleteFile(index) {
     setFieldValue(name, [
@@ -27,34 +31,28 @@ const editCV = ({
 
       <div className="card-content">
         <div className="content">
-          <Dropzone accept=".doc,.docx,.pdf" onDrop={onDrop} {...props}>
-            {({ getRootProps, getInputProps, isDragActive }) => (
-              <div
-                {...getRootProps()}
-                style={{
-                  marginTop: 20,
-                  border: "4px dashed #00d1b2",
-                  position: "relative",
-                  backgroundColor: isDragActive
-                    ? "rgba(0, 209, 178, 0.2)"
-                    : "white"
-                }}
-              >
-                <div
-                  style={{
-                    fontWeight: 100,
-                    textTransform: "uppercase",
-                    color: "#00d1b2",
-                    padding: 60,
-                    textAlign: "center"
-                  }}
-                >
-                  <input {...getInputProps()} />
-                  <h3 className="h3">Subir Anexo en PDF o Word</h3>
-                </div>
-              </div>
-            )}
-          </Dropzone>
+          <div
+            {...getRootProps()}
+            style={{
+              marginTop: 20,
+              border: "4px dashed #00d1b2",
+              position: "relative",
+              backgroundColor: isDragActive ? "rgba(0, 209, 178, 0.2)" : "white"
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 100,
+                textTransform: "uppercase",
+                color: "#00d1b2",
+                padding: 60,
+                textAlign: "center"
+              }}
+            >
+              <input {...getInputProps()} />
+              <h3 className="h3">Subir Anexo en PDF o Word</h3>
+            </div>
+          </div>
 
           {values.cv && values.cv.length > 0 ? (
             <div className="columns is-multiline">

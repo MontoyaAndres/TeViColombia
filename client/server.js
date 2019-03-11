@@ -31,6 +31,9 @@ app
       .get("/profile/user/edit/:id", (req, res) =>
         app.render(req, res, "/profile/user/edit", { id: req.params.id })
       )
+      .get("/profile/business/edit/:id", (req, res) =>
+        app.render(req, res, "/profile/business/edit", { id: req.params.id })
+      )
       .get("/profile/business/employ/:id/:employId", (req, res) =>
         app.render(req, res, "/profile/business/employ", {
           id: req.params.id,
