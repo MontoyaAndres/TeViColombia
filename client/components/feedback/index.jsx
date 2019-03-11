@@ -174,7 +174,11 @@ const index = ({
                       </div>
 
                       <div className="content">
-                        <Linkify text={feed.comment} length={80} />
+                        <Linkify
+                          decoraction="subtitle"
+                          text={feed.comment}
+                          length={80}
+                        />
                       </div>
                     </div>
                   </div>
@@ -217,6 +221,7 @@ export default compose(
       if (data.feedback && data.feedback.length) {
         setSubmitting(false);
         setErrors(normalizeErrors(data.feedback));
+        document.querySelector(`[name="${data.feedback[0].path}"]`).focus();
       } else {
         setSubmitting(false);
         resetForm();

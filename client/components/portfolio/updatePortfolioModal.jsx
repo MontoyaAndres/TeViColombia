@@ -92,6 +92,9 @@ export default compose(
         if (data.updatePortfolio && data.updatePortfolio.length) {
           setSubmitting(false);
           setErrors(normalizeErrors(data.updatePortfolio));
+          document
+            .querySelector(`[name="${data.updatePortfolio[0].path}"]`)
+            .focus();
         } else {
           setSubmitting(false);
           handleAskUpdatePortfolio();

@@ -90,6 +90,9 @@ export default compose(
         setSubmitting(false);
         setFieldValue("sent", false, false);
         setErrors(normalizeErrors(data.sendForgotPasswordEmail));
+        document
+          .querySelector(`[name="${data.sendForgotPasswordEmail[0].path}"]`)
+          .focus();
       } else {
         setSubmitting(false);
         resetForm();

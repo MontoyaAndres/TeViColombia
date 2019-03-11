@@ -136,7 +136,11 @@ const index = ({
 
                 <div className="card-content">
                   <div className="content">
-                    <Linkify text={portfolio.description} length={80} />
+                    <Linkify
+                      decoraction="subtitle"
+                      text={portfolio.description}
+                      length={80}
+                    />
                   </div>
                 </div>
 
@@ -203,6 +207,7 @@ export default compose(
       if (data.portfolio && data.portfolio.length) {
         setSubmitting(false);
         setErrors(normalizeErrors(data.portfolio));
+        document.querySelector(`[name="${data.portfolio[0].path}"]`).focus();
       } else {
         setSubmitting(false);
         resetForm();

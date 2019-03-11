@@ -14,6 +14,12 @@ const DynamicGeneralInformation = dynamic(
     loading: () => <Loading />
   }
 );
+const DynamicEmploy = dynamic(
+  () => import("../../../components/business/employ"),
+  {
+    loading: () => <Loading />
+  }
+);
 const DynamicFeedback = dynamic(() => import("../../../components/feedback"), {
   loading: () => <Loading />
 });
@@ -85,7 +91,7 @@ const business = ({
           {value === 1 && (
             <DynamicGeneralInformation information={dataInformationBusiness} />
           )}
-          {value === 2 && <h1>2</h1>}
+          {value === 2 && <DynamicEmploy id={id} />}
           {value === 3 && <h1>3</h1>}
           {value === 4 && <DynamicFeedback id={id} />}
           {value === 5 && <DynamicPortfolio id={id} />}

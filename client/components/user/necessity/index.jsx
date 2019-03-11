@@ -122,7 +122,11 @@ const index = ({
                     </div>
                     <div className="media-content">
                       <div className="content">
-                        <Linkify text={neces.comment} length={80} />
+                        <Linkify
+                          decoraction="subtitle"
+                          text={neces.comment}
+                          length={80}
+                        />
                       </div>
                     </div>
                   </div>

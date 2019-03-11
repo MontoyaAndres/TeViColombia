@@ -14,12 +14,12 @@ const background = () => {
   return (
     <div className="hero-body">
       <div className="container is-widescreen has-text-centered">
-        <p className="animated pulse" id="title">
+        <p className="animated fadeIn" id="title">
           Tejidos virtuales para el emprendimiento, las prácticas profesionales
           y la empleabilidad
         </p>
         <div
-          className="field has-addons animated pulse"
+          className="field has-addons animated fadeIn"
           style={{ padding: "2em" }}
         >
           <div className="control is-expanded">

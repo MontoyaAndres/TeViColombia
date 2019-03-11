@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, withFormik, Field } from "formik";
 import { withRouter } from "next/router";
 import Error from "next/error";
@@ -36,111 +36,92 @@ const generalInformationMutation = gql`
   }
 `;
 
-class edit extends React.PureComponent {
-  UNSAFE_componentWillReceiveProps({ values }) {
-    // If the select `departament` changes of "Extranjero" and `town` is empty.
-    if (!values.town && values.departament !== "Extranjero") {
+const edit = ({
+  loading,
+  data,
+  setFieldValue,
+  values,
+  handleSubmit,
+  isSubmitting
+}) => {
+  useEffect(() => {
+    // When the `departament` value changes, reseting the `town` value.
+    if (values.departament !== "Extranjero") {
       values.town = Object.values(TownsByDepartament[values.departament])[0];
     }
+  }, [values.departament]);
 
-    // If the user is foreigner, he shouldn't has a town.
+  useEffect(() => {
+    // If the user is foreigner, he/she shouldn't has a town.
     if (
       values.nationality !== "Colombia" ||
       values.departament === "Extranjero"
     ) {
       values.town = "";
     }
+  }, [values.nationality, values.departament]);
+
+  if (loading) {
+    return <Loading />;
   }
 
-  render() {
-    const {
-      loading,
-      data,
-      setFieldValue,
-      values,
-      handleSubmit,
-      isSubmitting
-    } = this.props;
+  if (!data.information) {
+    return <Error statusCode={404} />;
+  }
 
-    if (loading) {
-      return <Loading />;
-    }
+  return (
+    <Form method="POST" onSubmit={handleSubmit}>
+      <Field name="routeCover" component={UploadRouteCover} />
+      <Field name="routePhoto" component={UploadRoutePhoto} />
 
-    if (!data.information) {
-      return <Error statusCode={404} />;
-    }
-
-    return (
-      <Form method="POST" onSubmit={handleSubmit}>
-        <Field name="routeCover" component={UploadRouteCover} />
-        <Field name="routePhoto" component={UploadRoutePhoto} />
-
-        <div id="edited" className="container">
-          {/* User updated successfully */}
-          {values.edited && (
-            <div className="animated bounceIn notification is-primary">
-              <button
-                type="button"
-                className="delete"
-                onClick={() => setFieldValue("edited", false, false)}
-              />
-              <p className="subtitle">
-                Los cambios se han realizado con exito.
-              </p>
-            </div>
-          )}
-
-          {/* Error updating user */}
-          {values.errorEdited && (
-            <div className="animated bounceIn notification is-danger">
-              <button
-                type="button"
-                className="delete"
-                onClick={() => setFieldValue("errorEdited", false, false)}
-              />
-              <p className="subtitle">
-                Se han encontrado errores, por favor revise nuevamente el
-                formulario.
-              </p>
-            </div>
-          )}
-
-          <EditGeneralInformation
-            departament={values.departament}
-            nationality={values.nationality}
-            skills={values.skills}
-            setFieldValue={setFieldValue}
-          />
-          <EditSocialNetwork
-            socialnetwork={values.socialnetwork}
-            setFieldValue={setFieldValue}
-          />
-          <EditLanguage language={values.language} />
-          <EditStudy study={values.study} />
-          <EditWork work={values.work} />
-          <EditPreferWork setFieldValue={setFieldValue} />
-          <Field name="cv" component={EditCV} />
-
-          <div
-            className="buttons has-addons is-centered"
-            style={{ padding: "30px 0" }}
-          >
+      <div id="edited" className="container">
+        {/* User updated successfully */}
+        {values.edited && (
+          <div className="animated bounceIn notification is-primary">
             <button
-              type="submit"
-              disabled={isSubmitting}
-              className={`button is-primary is-large ${
-                isSubmitting ? "is-loading" : ""
-              }`}
-              style={{ width: 200 }}
-            >
-              Enviar
-            </button>
+              type="button"
+              className="delete"
+              onClick={() => setFieldValue("edited", false, false)}
+            />
+            <p className="subtitle">Los cambios se han realizado con exito.</p>
           </div>
+        )}
+
+        <EditGeneralInformation
+          departament={values.departament}
+          nationality={values.nationality}
+          skills={values.skills}
+          setFieldValue={setFieldValue}
+        />
+        <EditSocialNetwork
+          socialnetwork={values.socialnetwork}
+          setFieldValue={setFieldValue}
+        />
+        <EditLanguage language={values.language} />
+        <EditStudy study={values.study} />
+        <EditWork work={values.work} />
+        <EditPreferWork setFieldValue={setFieldValue} />
+        <Field name="cv" component={EditCV} />
+
+        <div
+          className="buttons has-addons is-centered"
+          style={{ padding: "30px 0" }}
+        >
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className={`button is-primary is-large ${
+              isSubmitting ? "is-loading" : ""
+            }`}
+            style={{ width: 200 }}
+          >
+            Enviar
+          </button>
         </div>
-      </Form>
-    );
-  }
-}
+      </div>
+    </Form>
+  );
+};
 
 edit.getInitialProps = async context => {
   const { loggedInUser } = await checkLoggedIn(context.apolloClient);
@@ -149,9 +130,11 @@ edit.getInitialProps = async context => {
     redirect(context, "/login");
   }
 
-  // Users with differents ids cannot edit information.
-  if (loggedInUser.me.id !== context.req.params.id) {
-    redirect(context, "/");
+  if (context.req) {
+    // Users with differents ids cannot edit information.
+    if (loggedInUser.me.id !== context.req.params.id) {
+      redirect(context, "/");
+    }
   }
 
   return {};
@@ -184,6 +167,7 @@ export default compose(
       nationality: data.information.nationality || "Colombia",
       departament: data.information.departament || "Bogotá, D.C.",
       town: data.information.town || "",
+      birth: data.information.birth || "",
       civilStatus: data.information.civilStatus || "SOLTERO(A)",
       website: data.information.website || "",
       gender: data.information.gender || "HOMBRE",
@@ -233,7 +217,7 @@ export default compose(
         }
       });
 
-      // Omitting all about `edited`, `errorEdited`, `studyingOn`, `workingOn` because the database does not need to save them.
+      // Omitting all about `edited`, `studyingOn`, `workingOn` because the database does not need to save them.
       const valuesOmitted = await omit(
         {
           ...values,
@@ -242,7 +226,7 @@ export default compose(
           study: values.study.map(item => omit(item, ["studyingOn"])),
           work: values.work.map(item => omit(item, ["workingOn"]))
         },
-        ["edited", "errorEdited", "studyingOn", "workingOn"]
+        ["edited", "studyingOn", "workingOn"]
       );
 
       const { data } = await mutate({
@@ -260,18 +244,18 @@ export default compose(
       if (data.generalInformation && data.generalInformation.length) {
         setSubmitting(false);
         setFieldValue("edited", false, false);
-        setFieldValue("errorEdited", true, false);
         setErrors(normalizeErrors(data.generalInformation));
+        document
+          .querySelector(`[name="${data.generalInformation[0].path}"]`)
+          .focus();
       } else {
         setSubmitting(false);
         setFieldValue("edited", true, false);
-        setFieldValue("errorEdited", false, false);
+        window.scrollTo({
+          top: document.getElementById("edited").offsetTop - 100,
+          behavior: "smooth"
+        });
       }
-
-      window.scrollTo({
-        top: document.getElementById("edited").offsetTop - 100,
-        behavior: "smooth"
-      });
     }
   })
 )(edit);

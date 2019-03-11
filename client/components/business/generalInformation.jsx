@@ -53,7 +53,7 @@ const generalInformation = ({ information }) => (
               <strong>Dirección y localidad:</strong> {information.address}
             </p>
             <p className="subtitle">
-              <strong>sector:</strong> {information.sector}
+              <strong>Sector:</strong> {information.sector}
             </p>
             <p className="subtitle">
               <strong>Sitio web:</strong>{" "}
@@ -121,7 +121,9 @@ const generalInformation = ({ information }) => (
                             target="_blank"
                             href={socialnetwork.url}
                           >
-                            {socialnetwork.url.replace(/(https:\/\/.*\/)/, "")}
+                            {socialnetwork.url
+                              .replace(/https:\/\/.*?\//, "")
+                              .replace(/\/.*/, "")}
                           </a>
                         )}
                       </span>

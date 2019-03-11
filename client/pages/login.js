@@ -64,6 +64,9 @@ const login = () => {
                       if (data.login && data.login.length) {
                         setSubmitting(false);
                         setErrors(normalizeErrors(data.login));
+                        document
+                          .querySelector(`[name="${data.login[0].path}"]`)
+                          .focus();
                       } else {
                         setSubmitting(false);
                         Router.push("/");

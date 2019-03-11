@@ -9,22 +9,21 @@ import { formatYupError } from "../../../../utils/formatYupError";
 export const resolvers: ResolveMap = {
   Query: {
     employs: async (_, { businessId }: GQL.IEmploysOnQueryArguments) =>
-      Employ.find({ where: { business: { id: businessId } } }),
+      Employ.find({
+        where: { business: { id: businessId } },
+        order: { createdAt: "DESC" }
+      }),
     employ: async (_, { employId }: GQL.IEmployOnQueryArguments) =>
-      Employ.findOne({ where: { id: employId } })
+      Employ.findOne({ where: { id: employId }, order: { createdAt: "DESC" } })
   },
   Mutation: {
     employ: createMiddleware(
       middleware.auth,
-      async (
-        _,
-        { employInput }: GQL.IEmployOnMutationArguments,
-        { session }
-      ) => {
+      async (_, { id, employ }: GQL.IEmployOnMutationArguments) => {
         try {
           await EmployValidation.validate(
             {
-              minExperience: employInput.minExperience
+              minExperience: employ.minExperience
             },
             {
               abortEarly: false
@@ -35,10 +34,9 @@ export const resolvers: ResolveMap = {
         }
 
         if (
-          (employInput.country !== "Colombia" &&
-            employInput.departament !== "Extranjero") ||
-          (employInput.country === "Colombia" &&
-            employInput.departament === "Extranjero")
+          (employ.country !== "Colombia" &&
+            employ.departament !== "Extranjero") ||
+          (employ.country === "Colombia" && employ.departament === "Extranjero")
         ) {
           return [
             {
@@ -48,31 +46,33 @@ export const resolvers: ResolveMap = {
           ];
         }
 
-        if (employInput.id) {
+        if (employ.id) {
           await Employ.update(
-            { id: employInput.id },
+            { id: employ.id },
             {
-              position: employInput.position,
-              description: employInput.description,
-              minStudy: employInput.minStudy,
-              minExperience: employInput.minExperience,
-              language: employInput.language,
-              travel: employInput.travel,
-              residence: employInput.residence,
-              country: employInput.country,
-              departament: employInput.departament,
-              town: employInput.town,
-              time: employInput.time,
-              contract: employInput.contract,
-              minSalary: employInput.minSalary,
-              maxSalary: employInput.maxSalary,
-              currency: employInput.currency
+              position: employ.position,
+              description: employ.description,
+              area: employ.area,
+              skills: employ.skills,
+              minStudy: employ.minStudy,
+              minExperience: employ.minExperience,
+              language: employ.language,
+              travel: employ.travel,
+              residence: employ.residence,
+              country: employ.country,
+              departament: employ.departament,
+              town: employ.town,
+              time: employ.time,
+              contract: employ.contract,
+              minSalary: employ.minSalary,
+              maxSalary: employ.maxSalary,
+              currency: employ.currency
             }
           );
         } else {
           await Employ.create({
-            business: { id: session.userId },
-            ...employInput
+            business: { id },
+            ...employ
           }).save();
         }
 

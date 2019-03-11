@@ -1,6 +1,26 @@
 import React from "react";
-import { Field, ErrorMessage } from "formik";
+import { Field, ErrorMessage, connect } from "formik";
+
 import CountryJSON from "../../static/countries.json";
+
+const ErrorFocus = ({
+  name,
+  formik: { isSubmitting, isValidating, errors }
+}) => {
+  /* When are errors from any client-validation, scroll into the first. */
+  const keys = Object.keys(errors);
+  if (keys.length > 0 && isSubmitting && !isValidating) {
+    document.querySelector(`[name="${keys[0]}"]`).focus();
+  }
+
+  return (
+    <div className="error">
+      <ErrorMessage name={name} />
+    </div>
+  );
+};
+
+const ConnectErrorFocus = connect(ErrorFocus);
 
 const TextField = ({
   type,
@@ -23,9 +43,7 @@ const TextField = ({
       </div>
     </div>
 
-    <div className="error">
-      <ErrorMessage name={name} />
-    </div>
+    <ConnectErrorFocus name={name} />
   </>
 );
 
@@ -51,9 +69,7 @@ const SelectField = ({ name, arrayPlaceholder, isRequired, ...props }) => (
       </div>
     </div>
 
-    <div className="error">
-      <ErrorMessage name={name} />
-    </div>
+    <ConnectErrorFocus name={name} />
   </>
 );
 
@@ -94,9 +110,7 @@ const SelectMultipleField = ({
       </div>
     </div>
 
-    <div className="error">
-      <ErrorMessage name={name} />
-    </div>
+    <ConnectErrorFocus name={name} />
   </>
 );
 
@@ -126,9 +140,7 @@ const TextAreaField = ({
       </div>
     </div>
 
-    <div className="error">
-      <ErrorMessage name={name} />
-    </div>
+    <ConnectErrorFocus name={name} />
   </>
 );
 
@@ -187,9 +199,7 @@ const TextFieldAddonsCountry = ({
       </div>
     </div>
 
-    <div className="error">
-      <ErrorMessage name={name} />
-    </div>
+    <ConnectErrorFocus name={name} />
   </>
 );
 

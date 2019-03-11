@@ -2,11 +2,16 @@ import React, { PureComponent } from "react";
 import { withRouter } from "next/router";
 import { graphql } from "react-apollo";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
-import Background from "./background";
 import IsLoggedIn from "./auth/isLoggedIn";
 import IsNotLoggedIn from "./auth/isNotLoggedIn";
 import meQuery from "../../../graphql/queries/me";
+
+// Background uses `window` and it does not exists in ssr
+const DynamicBackground = dynamic(() => import("./background"), {
+  ssr: false
+});
 
 class menu extends PureComponent {
   constructor(props) {
@@ -142,7 +147,7 @@ class menu extends PureComponent {
           </nav>
         </div>
 
-        {pathname === "/" && <Background />}
+        {pathname === "/" && <DynamicBackground />}
       </section>
     );
   }
