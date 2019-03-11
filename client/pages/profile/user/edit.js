@@ -5,24 +5,44 @@ import Error from "next/error";
 import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
 import omit from "lodash.omit";
+import dynamic from "next/dynamic";
 
 import Loading from "../../../components/shared/loading";
 import checkLoggedIn from "../../../lib/checkLoggedIn";
 import redirect from "../../../lib/redirect";
 import { informationQuery } from "../../../graphql/queries/account";
 import meQuery from "../../../graphql/queries/me";
-import UploadRoutePhoto from "../../../components/user/edit/uploadRoutePhoto";
-import UploadRouteCover from "../../../components/user/edit/uploadRouteCover";
 import EditGeneralInformation from "../../../components/user/edit/editGeneralInformation";
 import EditLanguage from "../../../components/user/edit/editLanguage";
 import EditStudy from "../../../components/user/edit/editStudy";
 import EditWork from "../../../components/user/edit/editWork";
-import EditCV from "../../../components/user/edit/editCV";
 import EditSocialNetwork from "../../../components/user/edit/editSocialNetwork";
 import EditPreferWork from "../../../components/user/edit/editPreferWork";
 import TownsByDepartament from "../../../utils/townsByDepartament";
 import { GeneralInformationValidation } from "../../../utils/validation";
 import normalizeErrors from "../../../utils/normalizeErrors";
+
+const DynamicUploadRouteCover = dynamic(
+  () => import("../../../containers/edit/uploadRouteCover"),
+  {
+    loading: () => <Loading />,
+    ssr: false
+  }
+);
+const DynamicUploadRoutePhoto = dynamic(
+  () => import("../../../containers/edit/uploadRoutePhoto"),
+  {
+    loading: () => <Loading />,
+    ssr: false
+  }
+);
+const DynamicEditCV = dynamic(
+  () => import("../../../components/user/edit/editCV"),
+  {
+    loading: () => <Loading />,
+    ssr: false
+  }
+);
 
 const generalInformationMutation = gql`
   mutation GeneralInformationMutation(
@@ -71,8 +91,8 @@ const edit = ({
 
   return (
     <Form method="POST" onSubmit={handleSubmit}>
-      <Field name="routeCover" component={UploadRouteCover} />
-      <Field name="routePhoto" component={UploadRoutePhoto} />
+      <Field name="routeCover" component={DynamicUploadRouteCover} />
+      <Field name="routePhoto" component={DynamicUploadRoutePhoto} />
 
       <div id="edited" className="container">
         {/* User updated successfully */}
@@ -101,7 +121,7 @@ const edit = ({
         <EditStudy study={values.study} />
         <EditWork work={values.work} />
         <EditPreferWork setFieldValue={setFieldValue} />
-        <Field name="cv" component={EditCV} />
+        <Field name="cv" component={DynamicEditCV} />
 
         <div
           className="buttons has-addons is-centered"
