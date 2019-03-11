@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Linkify from "react-linkify";
 
-const linkify = ({ text }) => {
+const linkify = ({ text, decoraction }) => {
   const [expression, setExpression] = useState(false);
 
   return (
-    <p className="subtitle">
+    <p className={decoraction}>
       {text.length > 80 ? (
         expression ? (
           <>

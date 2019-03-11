@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 
-const registerContainer = ({
-  registered,
-  errorRegistered,
-  setFieldValue,
-  children
-}) => {
+const registerContainer = ({ registered, setFieldValue, children }) => {
   const [light, setLight] = useState(true);
 
   return (
@@ -26,23 +21,6 @@ const registerContainer = ({
               <p className="subtitle">
                 Por favor revise su correo electrónico para poder entrar a Te vi
                 Colombia.
-              </p>
-            </div>
-          )}
-
-          {errorRegistered && (
-            <div
-              id="registered"
-              className="animated bounceIn notification is-danger"
-            >
-              <button
-                type="button"
-                className="delete"
-                onClick={() => setFieldValue("errorRegistered", false, false)}
-              />
-              <p className="subtitle">
-                Se han encontrado errores, por favor revise nuevamente el
-                formulario.
               </p>
             </div>
           )}

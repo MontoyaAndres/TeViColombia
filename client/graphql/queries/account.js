@@ -145,10 +145,50 @@ const portfolioQuery = gql`
   }
 `;
 
+const employsQuery = gql`
+  query EmploysQuery($businessId: ID!) {
+    employs(businessId: $businessId) {
+      id
+      position
+      country
+      departament
+      town
+      contract
+    }
+  }
+`;
+
+const employQuery = gql`
+  query EmployQuery($employId: ID!) {
+    employ(employId: $employId) {
+      id
+      position
+      description
+      area
+      skills
+      minStudy
+      minExperience
+      language
+      travel
+      residence
+      country
+      departament
+      town
+      time
+      contract
+      minSalary
+      maxSalary
+      currency
+    }
+  }
+`;
+
 export {
   informationQuery,
   informationBusinessQuery,
   feedbackQuery,
   necessityQuery,
-  portfolioQuery
+  portfolioQuery,
+  employsQuery,
+  employQuery
 };

@@ -3,7 +3,8 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne
+  ManyToOne,
+  CreateDateColumn
 } from "typeorm";
 
 // Models
@@ -12,7 +13,8 @@ import {
   ENUMStudyLevel,
   ENUMCurrency,
   ENUMDepartament,
-  ENUMCountry
+  ENUMCountry,
+  ENUMArea
 } from "../utils/entityGlobalEnum";
 import EmptyStringToNull from "../utils/emptyStringToNull";
 
@@ -37,6 +39,15 @@ export class Employ extends BaseEntity {
 
   @Column("text")
   description: string;
+
+  @Column("enum", { enum: ENUMArea })
+  area: string;
+
+  @Column("simple-array", {
+    nullable: true,
+    transformer: new EmptyStringToNull()
+  })
+  skills: string[];
 
   @Column("enum", { enum: ENUMStudyLevel })
   minStudy: string;
@@ -77,12 +88,11 @@ export class Employ extends BaseEntity {
   @Column("bigint", { nullable: true, transformer: new EmptyStringToNull() })
   maxSalary: number;
 
-  @Column("enum", {
-    enum: ENUMCurrency,
-    nullable: true,
-    transformer: new EmptyStringToNull()
-  })
+  @Column("enum", { enum: ENUMCurrency })
   currency: string;
+
+  @CreateDateColumn({ type: "timestamp" })
+  createdAt: Date;
 
   @ManyToOne(_ => Business, business => business.employ)
   business: Business;

@@ -23,11 +23,19 @@ app
       .get("/profile/user/:id", (req, res) =>
         app.render(req, res, "/profile/user", { id: req.params.id })
       )
+      .get("/profile/business/:id", (req, res) =>
+        app.render(req, res, "/profile/business", {
+          id: req.params.id
+        })
+      )
       .get("/profile/user/edit/:id", (req, res) =>
         app.render(req, res, "/profile/user/edit", { id: req.params.id })
       )
-      .get("/profile/business/:id", (req, res) =>
-        app.render(req, res, "/profile/business", { id: req.params.id })
+      .get("/profile/business/employ/:id/:employId", (req, res) =>
+        app.render(req, res, "/profile/business/employ", {
+          id: req.params.id,
+          employId: req.params.employId
+        })
       )
       .get("/change-password/:key", (req, res) =>
         app.render(req, res, "/change-password", { key: req.params.key })

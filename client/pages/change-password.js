@@ -61,6 +61,11 @@ const changePassword = ({
                 ) {
                   setSubmitting(false);
                   setErrors(normalizeErrors(data.forgotPasswordChange));
+                  document
+                    .querySelector(
+                      `[name="${data.forgotPasswordChange[0].path}"]`
+                    )
+                    .focus();
                 } else {
                   setSubmitting(false);
                   Router.push("/login");

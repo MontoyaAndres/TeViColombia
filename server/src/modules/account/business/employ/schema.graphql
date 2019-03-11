@@ -2,6 +2,8 @@ input EmployInput {
   id: ID
   position: String!
   description: String!
+  area: String!
+  skills: [String]
   minStudy: String!
   minExperience: Int!
   language: [String]
@@ -21,6 +23,8 @@ type Employ {
   id: ID
   position: String!
   description: String!
+  area: String!
+  skills: [String]
   minStudy: String!
   minExperience: Int!
   language: [String]
@@ -42,6 +46,6 @@ type Query {
 }
 
 type Mutation {
-  employ(employInput: EmployInput): [Error!]
+  employ(id: ID!, employ: EmployInput): [Error!]
   deleteEmploy(employId: ID!): Boolean!
 }

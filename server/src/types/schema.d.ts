@@ -65,6 +65,8 @@ __typename: "Employ";
 id: string | null;
 position: string;
 description: string;
+area: string;
+skills: Array<string | null> | null;
 minStudy: string;
 minExperience: number;
 language: Array<string | null> | null;
@@ -267,7 +269,8 @@ settings: Array<IError> | null;
 }
 
 interface IEmployOnMutationArguments {
-employInput?: IEmployInput | null;
+id: string;
+employ?: IEmployInput | null;
 }
 
 interface IDeleteEmployOnMutationArguments {
@@ -373,6 +376,8 @@ interface IEmployInput {
 id?: string | null;
 position: string;
 description: string;
+area: string;
+skills?: Array<string | null> | null;
 minStudy: string;
 minExperience: number;
 language?: Array<string | null> | null;

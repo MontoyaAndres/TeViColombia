@@ -46,7 +46,6 @@ const registerMutation = gql`
 const register = ({ values, handleSubmit, isSubmitting, setFieldValue }) => (
   <RegisterContainer
     registered={values.registered}
-    errorRegistered={values.errorRegistered}
     setFieldValue={setFieldValue}
   >
     <Form method="POST" onSubmit={handleSubmit}>
@@ -153,7 +152,7 @@ export default compose(
       const { data } = await mutate({
         variables: omit(
           { ...values, telephoneCountry: Number(values.telephoneCountry) },
-          ["registered", "errorRegistered"]
+          ["registered"]
         )
       });
 
@@ -161,19 +160,17 @@ export default compose(
       if (data.register && data.register.length) {
         setSubmitting(false);
         setFieldValue("registered", false, false);
-        setFieldValue("errorRegistered", true, false);
         setErrors(normalizeErrors(data.register));
+        document.querySelector(`[name="${data.register[0].path}"]`).focus();
       } else {
         setSubmitting(false);
         resetForm();
         setFieldValue("registered", true, false);
-        setFieldValue("errorRegistered", false, false);
+        window.scrollTo({
+          top: document.getElementById("registered").offsetTop - 100,
+          behavior: "smooth"
+        });
       }
-
-      window.scrollTo({
-        top: document.getElementById("registered").offsetTop - 100,
-        behavior: "smooth"
-      });
     }
   })
 )(register);
