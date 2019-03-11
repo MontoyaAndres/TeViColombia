@@ -5,6 +5,7 @@ import { GQL } from "../../../../types/schema";
 import { Employ } from "../../../../entity/Employ";
 import { EmployValidation } from "../../../../utils/validation";
 import { formatYupError } from "../../../../utils/formatYupError";
+import { sendApplyEmployEmail } from "../../../../utils/sendEmail";
 
 export const resolvers: ResolveMap = {
   Query: {
@@ -77,6 +78,30 @@ export const resolvers: ResolveMap = {
         }
 
         return null;
+      }
+    ),
+    applyEmploy: createMiddleware(
+      middleware.user,
+      async (
+        _,
+        {
+          userId,
+          userName,
+          userLastname,
+          email,
+          position
+        }: GQL.IApplyEmployOnMutationArguments
+      ) => {
+        // Only users can get any employ.
+        sendApplyEmployEmail(
+          email,
+          `${process.env.FRONTEND_HOST}/profile/user/${userId}`,
+          userName,
+          userLastname,
+          position
+        );
+
+        return true;
       }
     ),
     deleteEmploy: createMiddleware(

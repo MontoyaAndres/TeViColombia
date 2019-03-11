@@ -16,7 +16,7 @@ import storeUpload from "../../../../utils/storeUpload";
 export const resolvers: ResolveMap = {
   Query: {
     information: createMiddleware(
-      middleware.user,
+      middleware.auth,
       async (
         _,
         { id }: GQL.IInformationOnQueryArguments,
