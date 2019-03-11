@@ -248,6 +248,7 @@ comment: string | null;
 interface IMutation {
 __typename: "Mutation";
 employ: Array<IError> | null;
+applyEmploy: boolean;
 deleteEmploy: boolean;
 generalInformationBusiness: Array<IError> | null;
 feedback: Array<IError> | null;
@@ -271,6 +272,14 @@ settings: Array<IError> | null;
 interface IEmployOnMutationArguments {
 id: string;
 employ?: IEmployInput | null;
+}
+
+interface IApplyEmployOnMutationArguments {
+userId: string;
+userName: string;
+userLastname: string;
+email: string;
+position: string;
 }
 
 interface IDeleteEmployOnMutationArguments {

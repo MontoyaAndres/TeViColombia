@@ -73,3 +73,22 @@ export const sendFeedbackEmail = async (
     html: sendEmailTemplate(`Observación de ${name}.`, message)
   });
 };
+
+export const sendApplyEmployEmail = async (
+  recipient: string,
+  url: string,
+  name: string,
+  lastname: string,
+  position: string
+) => {
+  transporter.sendMail({
+    to: recipient,
+    subject: `${name} ${lastname} esta interesado en la posición de ${position}`,
+    html: sendEmailTemplate(
+      `${name} ${lastname} esta interesado en la posición de ${position}`,
+      `Tu propuesta para ${position} le ha parecido muy interesante a ${name} ${lastname}, si quieres saber más de esta persona, visita su perfil dando clic en Ver perfil. Si recibio este correo por error, por favor eliminarlo.`,
+      url,
+      "Ver perfil"
+    )
+  });
+};

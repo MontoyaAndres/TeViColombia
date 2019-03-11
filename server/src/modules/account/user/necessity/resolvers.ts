@@ -8,7 +8,7 @@ import { User } from "../../../../entity/User";
 export const resolvers: ResolveMap = {
   Query: {
     necessity: createMiddleware(
-      middleware.user,
+      middleware.auth,
       async (_, { userId }: GQL.INecessityOnQueryArguments) => {
         const response = await Necessity.find({
           where: {

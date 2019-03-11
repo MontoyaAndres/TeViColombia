@@ -249,6 +249,10 @@ a span.tag {
   cursor: pointer;
 }
 
+.employ-media {
+  padding: 0 5%;
+}
+
 @keyframes growBubble {
   0% {
     transform: scale(1);
@@ -270,6 +274,10 @@ a span.tag {
   .background-cover img {
     height: 300px;
   }
+
+  .employ-media {
+    padding: 0;
+  }
 }
 
 @media screen and (min-width: 800px) {
@@ -283,5 +291,9 @@ a span.tag {
 
   .background-cover img {
     height: 450px;
+  }
+
+  .employ-media {
+    padding: 0 5%;
   }
 }

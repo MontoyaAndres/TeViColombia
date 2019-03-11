@@ -47,5 +47,12 @@ type Query {
 
 type Mutation {
   employ(id: ID!, employ: EmployInput): [Error!]
+  applyEmploy(
+    userId: ID!
+    userName: String!
+    userLastname: String!
+    email: String!
+    position: String!
+  ): Boolean!
   deleteEmploy(employId: ID!): Boolean!
 }

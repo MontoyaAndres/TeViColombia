@@ -71,7 +71,7 @@ export const resolvers: ResolveMap = {
 
         if (accountId) {
           const alreadyCommented = await FeedBack.findOne({
-            where: { fromId: accountId }
+            where: { fromId: accountId, toId }
           });
 
           if (alreadyCommented) {
