@@ -15,13 +15,13 @@ const arraySocialNetwork = [
 function urlSocialNetwork({ name, url }) {
   switch (name) {
     case "Twitter":
-      return { name, url: `https://twitter.com/${url}` };
+      return { name, url: `https://www.twitter.com/${url}` };
 
     case "GitHub":
-      return { name, url: `https://github.com/${url}` };
+      return { name, url: `https://www.github.com/${url}` };
 
     case "Facebook":
-      return { name, url: `https://facebook.com/${url}` };
+      return { name, url: `https://www.facebook.com/${url}` };
 
     case "Linkedin":
       return { name, url: `https://www.linkedin.com/in/${url}` };
@@ -78,12 +78,27 @@ const editSocialNetwork = ({ socialnetwork, setFieldValue }) => {
       <div className="card-content">
         <div className="notification is-warning">
           <p className="subtitle">
-            Por favor asignar el nombre de usuario en las plataformas de
-            Twitter, GitHub, Facebook, Linkedin, Instagram y Skype. En Whatsapp
-            debe de poner su número de telefóno con su respectivo indicativo de
-            país. En otros entornos como YouTube o Spotify, solo añada la URL de
-            su perfil.
+            Para que cualquier persona pueda comunicarse contigo a través de
+            algún medio de comunicación, siga estos pasos y seleccione que medio
+            de comunicación va a añadir.
           </p>
+          <div className="content">
+            <ul>
+              <li>
+                En Twitter, GitHub, Facebook, Linkedin o Instagram escriba el
+                nombre de usuario de la cuenta. Ejemplo en Twitter:
+                @NombreUsuario
+              </li>
+              <li>
+                En YouTube o Spotify pegue la URL de su perfil de usuario.
+              </li>
+              <li>
+                En Whatsapp debe de poner su número de telefóno con su
+                respectivo indicativo de país. Ejemplo: +573213334444
+              </li>
+              <li>En Skype escriba el nombre de usuario.</li>
+            </ul>
+          </div>
         </div>
 
         <div className="content">
@@ -187,7 +202,7 @@ const editSocialNetwork = ({ socialnetwork, setFieldValue }) => {
                       target="_blank"
                       href={sn.url}
                     >
-                      {sn.url.replace(/(https:\/\/.*\/)/, "")}
+                      {sn.url.replace(/[https:\\/\\/www].+\//, "")}
                     </a>
                   )}
 

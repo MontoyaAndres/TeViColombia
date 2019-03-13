@@ -150,9 +150,10 @@ const generalInformation = ({ information }) => (
                             target="_blank"
                             href={socialnetwork.url}
                           >
-                            {socialnetwork.url
-                              .replace(/https:\/\/.*?\//, "")
-                              .replace(/\/.*/, "")}
+                            {socialnetwork.url.replace(
+                              /[https:\\/\\/www].+\//,
+                              ""
+                            )}
                           </a>
                         )}
                       </span>
