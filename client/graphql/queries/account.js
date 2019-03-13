@@ -91,9 +91,9 @@ const informationBusinessQuery = gql`
       nationality
       sector
       website
-      googleMapsLocalization
       email
       optionalEmail
+      googleMapsLocalization
       socialnetwork {
         name
         url

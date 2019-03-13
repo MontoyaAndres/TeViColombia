@@ -16,7 +16,7 @@ import EditGeneralInformation from "../../../components/user/edit/editGeneralInf
 import EditLanguage from "../../../components/user/edit/editLanguage";
 import EditStudy from "../../../components/user/edit/editStudy";
 import EditWork from "../../../components/user/edit/editWork";
-import EditSocialNetwork from "../../../components/user/edit/editSocialNetwork";
+import EditSocialNetwork from "../../../containers/edit/editSocialNetwork";
 import EditPreferWork from "../../../components/user/edit/editPreferWork";
 import TownsByDepartament from "../../../utils/townsByDepartament";
 import { GeneralInformationValidation } from "../../../utils/validation";
