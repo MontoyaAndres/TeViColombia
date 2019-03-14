@@ -5,7 +5,9 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
-  BeforeInsert
+  BeforeInsert,
+  ManyToMany,
+  JoinTable
 } from "typeorm";
 
 // Models
@@ -16,6 +18,7 @@ import {
 } from "../utils/entityGlobalEnum";
 import { Employ } from "./Employ";
 import EmptyStringToNull from "../utils/emptyStringToNull";
+import { User } from "./User";
 
 @Entity()
 export class Business extends BaseEntity {
@@ -98,6 +101,10 @@ export class Business extends BaseEntity {
 
   @OneToMany(_ => Employ, employ => employ.business)
   employ: Employ[];
+
+  @ManyToMany(_ => User, { cascade: ["update"] })
+  @JoinTable({ name: "member" })
+  member: User[];
 
   @BeforeInsert()
   async hashPassword() {

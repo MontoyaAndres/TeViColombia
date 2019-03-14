@@ -4,5 +4,5 @@ type Customer {
   lastname: String
   email: String!
   routePhoto: String!
-  type: String!
+  type: String
 }

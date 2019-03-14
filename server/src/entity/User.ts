@@ -6,8 +6,6 @@ import {
   Column,
   BeforeInsert,
   OneToMany,
-  ManyToMany,
-  JoinTable,
   OneToOne,
   JoinColumn
 } from "typeorm";
@@ -18,7 +16,6 @@ import { Study } from "./Study";
 import { Work } from "./Work";
 import { CV } from "./CV";
 import { Language } from "./Language";
-import { Business } from "./Business";
 import { PreferWork } from "./PreferWork";
 import { ENUMCountry, ENUMDepartament } from "../utils/entityGlobalEnum";
 import EmptyStringToNull from "../utils/emptyStringToNull";
@@ -173,10 +170,6 @@ export class User extends BaseEntity {
 
   @OneToMany(_ => Necessity, necessity => necessity.user)
   necessity: Necessity[];
-
-  @ManyToMany(_ => Business)
-  @JoinTable({ name: "member" })
-  member: Business[];
 
   @BeforeInsert()
   async hashPassword() {

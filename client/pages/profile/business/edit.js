@@ -29,6 +29,13 @@ const DynamicUploadRoutePhoto = dynamic(
     ssr: false
   }
 );
+const DynamicEditGoogleMapsLocalization = dynamic(
+  () => import("../../../components/business/edit/editGoogleMapsLocalization"),
+  {
+    loading: () => <Loading />,
+    ssr: false
+  }
+);
 
 const edit = ({
   loading,
@@ -85,7 +92,10 @@ const edit = ({
           departament={values.departament}
           nationality={values.nationality}
         />
-        <EditGoogleMapsLocalization />
+        <Field
+          name="googleMapsLocalization"
+          component={DynamicEditGoogleMapsLocalization}
+        />
         <EditSocialNetwork
           socialnetwork={values.socialnetwork}
           setFieldValue={setFieldValue}

@@ -23,4 +23,5 @@ type BusinessInformation {
   email: String!
   googleMapsLocalization: String
   socialnetwork: [SocialNetworkBusiness]
+  member: [Customer]
 }

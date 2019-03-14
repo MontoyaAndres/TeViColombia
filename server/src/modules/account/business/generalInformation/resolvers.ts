@@ -1,3 +1,5 @@
+import { Like, getRepository } from "typeorm";
+
 import { ResolveMap } from "../../../../types/graphql-utils";
 import { createMiddleware } from "../../../../utils/createMiddleware";
 import { middleware } from "../../../shared/authMiddleware";
@@ -6,6 +8,7 @@ import { formatYupError } from "../../../../utils/formatYupError";
 import { GeneralInformationBusinessValidation } from "../../../../utils/validation";
 import storeUpload from "../../../../utils/storeUpload";
 import { Business } from "../../../../entity/Business";
+import { User } from "../../../../entity/User";
 
 export const resolvers: ResolveMap = {
   Query: {
@@ -13,7 +16,19 @@ export const resolvers: ResolveMap = {
       _,
       { id }: GQL.IInformationBusinessOnQueryArguments,
       { informationBusinessLoader }
-    ) => informationBusinessLoader.load(id)
+    ) => informationBusinessLoader.load(id),
+    memberUser: (
+      _,
+      { name, lastname, email }: GQL.IMemberUserOnQueryArguments
+    ) =>
+      User.find({
+        where: {
+          name: Like(`%${name}%`),
+          lastname: Like(`%${lastname}%`),
+          email: Like(`%${email}%`)
+        },
+        take: 10
+      })
   },
   Mutation: {
     generalInformationBusiness: createMiddleware(
@@ -120,27 +135,28 @@ export const resolvers: ResolveMap = {
           }
         }
 
+        // Members of a business
+        const users = await User.findByIds(information.memberUser || []);
+
         // Update business information
-        await Business.update(
-          { id },
-          {
-            name: information.name,
-            description: information.description,
-            address: information.address,
-            telephoneCountry: information.telephoneCountry,
-            telephone: information.telephone,
-            telephone2Country: information.telephone2Country,
-            telephone2: information.telephone2,
-            departament: information.departament,
-            town: information.town,
-            nationality: information.nationality,
-            sector: information.sector,
-            website: information.website,
-            googleMapsLocalization: information.googleMapsLocalization,
-            optionalEmail: information.optionalEmail,
-            socialnetwork: information.socialnetwork
-          }
-        );
+        const postdata = await getRepository(Business).findOne(id);
+        postdata.name = information.name;
+        postdata.description = information.description;
+        postdata.address = information.address;
+        postdata.telephoneCountry = information.telephoneCountry;
+        postdata.telephone = information.telephone;
+        postdata.telephone2Country = information.telephone2Country;
+        postdata.telephone2 = information.telephone2;
+        postdata.departament = information.departament;
+        postdata.town = information.town;
+        postdata.nationality = information.nationality;
+        postdata.sector = information.sector;
+        postdata.website = information.website;
+        postdata.googleMapsLocalization = information.googleMapsLocalization;
+        postdata.optionalEmail = information.optionalEmail;
+        postdata.socialnetwork = information.socialnetwork;
+        postdata.member = users || null;
+        await getRepository(Business).save(postdata);
 
         return null;
       }

@@ -25,6 +25,7 @@ __typename: "Query";
 employs: Array<IEmploy | null> | null;
 employ: IEmploy | null;
 informationBusiness: IBusinessInformation | null;
+memberUser: Array<ICustomer | null> | null;
 feedback: IFeedbackResponse | null;
 portfolio: Array<IPortfolio | null> | null;
 information: IUserInformation | null;
@@ -42,6 +43,12 @@ employId: string;
 
 interface IInformationBusinessOnQueryArguments {
 id: string;
+}
+
+interface IMemberUserOnQueryArguments {
+name?: string | null;
+lastname?: string | null;
+email?: string | null;
 }
 
 interface IFeedbackOnQueryArguments {
@@ -103,12 +110,23 @@ optionalEmail: string | null;
 email: string;
 googleMapsLocalization: string | null;
 socialnetwork: Array<ISocialNetworkBusiness | null> | null;
+member: Array<ICustomer | null> | null;
 }
 
 interface ISocialNetworkBusiness {
 __typename: "SocialNetworkBusiness";
 name: string;
 url: string;
+}
+
+interface ICustomer {
+__typename: "Customer";
+id: string;
+name: string;
+lastname: string | null;
+email: string;
+routePhoto: string;
+type: string | null;
 }
 
 interface IFeedbackResponse {
@@ -123,16 +141,6 @@ id: string | null;
 stars: number | null;
 comment: string | null;
 from: ICustomer | null;
-}
-
-interface ICustomer {
-__typename: "Customer";
-id: string;
-name: string;
-lastname: string | null;
-email: string;
-routePhoto: string;
-type: string;
 }
 
 interface IPortfolio {
@@ -426,6 +434,7 @@ website?: string | null;
 googleMapsLocalization?: string | null;
 optionalEmail?: string | null;
 socialnetwork?: Array<ISocialNetworkBusinessInput | null> | null;
+memberUser?: Array<string | null> | null;
 }
 
 interface ISocialNetworkBusinessInput {
