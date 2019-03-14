@@ -72,6 +72,7 @@ class MyDocument extends Document {
           <link rel="stylesheet" href="/static/css/stars.css" />
           <link rel="stylesheet" href="/static/css/styles.css" />
           <link rel="stylesheet" href="/static/css/loading.css" />
+          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC37_NG0uKs-_tGyHsHiwfhBlHh5-XjAQ0&libraries=geometry,drawing,places" />
         </Head>
         <body>
           <Main />

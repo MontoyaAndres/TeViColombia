@@ -21,4 +21,5 @@ input GeneralInformationBusinessInput {
   googleMapsLocalization: String
   optionalEmail: String
   socialnetwork: [SocialNetworkBusinessInput]
+  memberUser: [String]
 }

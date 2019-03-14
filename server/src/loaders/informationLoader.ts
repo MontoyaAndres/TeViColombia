@@ -24,7 +24,7 @@ const batchUserInformations: BatchUserInformation = async ids => {
 const batchBusinessInformation: BatchBusinessInformation = async ids => {
   const business = await Business.find({
     where: { id: In(ids) },
-    relations: ["employ"]
+    relations: ["employ", "member"]
   });
 
   const businessMap: { [key: string]: Business } = {};
