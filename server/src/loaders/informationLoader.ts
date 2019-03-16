@@ -7,10 +7,10 @@ import { Business } from "../entity/Business";
 type BatchUserInformation = (ids: string[]) => Promise<User[]>;
 type BatchBusinessInformation = (ids: string[]) => Promise<Business[]>;
 
-const batchUserInformations: BatchUserInformation = async ids => {
+const batchUserInformation: BatchUserInformation = async ids => {
   const user = await User.find({
     where: { id: In(ids) },
-    relations: ["language", "study", "work", "preferwork", "cv"]
+    relations: ["language", "study", "work", "preferwork", "cv", "member"]
   });
 
   const userMap: { [key: string]: User } = {};
@@ -36,7 +36,7 @@ const batchBusinessInformation: BatchBusinessInformation = async ids => {
 };
 
 export const informationUserLoader = () =>
-  new DataLoader<string, User>(batchUserInformations);
+  new DataLoader<string, User>(batchUserInformation);
 
 export const informationBusinessLoader = () =>
   new DataLoader<string, Business>(batchBusinessInformation);

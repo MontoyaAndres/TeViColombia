@@ -3,6 +3,10 @@ input SocialNetworkBusinessInput {
   url: String!
 }
 
+input MemberUserInput {
+  id: String!
+}
+
 input GeneralInformationBusinessInput {
   routePhoto: Upload
   routeCover: Upload
@@ -21,5 +25,5 @@ input GeneralInformationBusinessInput {
   googleMapsLocalization: String
   optionalEmail: String
   socialnetwork: [SocialNetworkBusinessInput]
-  memberUser: [String]
+  memberUser: [MemberUserInput]
 }

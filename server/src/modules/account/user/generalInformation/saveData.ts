@@ -1,5 +1,3 @@
-// This script only will delete, update or create data from any model that is only about the USER instance.
-
 interface ItemAllIdsPassingtoUserArray {
   id: string;
 }
@@ -41,7 +39,7 @@ async function UpdateCreate(
     return true;
   }
 
-  return true;
+  return false;
 }
 
 export default UpdateCreate;

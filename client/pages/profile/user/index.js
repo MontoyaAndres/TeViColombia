@@ -12,31 +12,15 @@ import {
   necessityQuery as countNecessityQuery
 } from "../../../graphql/queries/account";
 import ProfileContainer from "../../../containers/profile";
+import GeneralInformation from "../../../components/user/generalInformation";
+import TrainingEmployment from "../../../components/user/trainingEmployment";
+import Feedback from "../../../components/feedback";
+import Member from "../../../components/member";
+import Necessity from "../../../components/user/necessity";
 
-const DynamicGeneralInformation = dynamic(
-  () => import("../../../components/user/generalInformation"),
-  {
-    loading: () => <Loading />
-  }
-);
-const DynamicTrainingEmployment = dynamic(
-  () => import("../../../components/user/trainingEmployment"),
-  { loading: () => <Loading /> }
-);
-const DynamicFeedback = dynamic(() => import("../../../components/feedback"), {
-  loading: () => <Loading />
-});
-const DynameicCommercialEstablishment = dynamic(
-  () => import("../../../components/user/commercialEstablishment"),
-  { loading: () => <Loading /> }
-);
-const DynamicNecessity = dynamic(
-  () => import("../../../components/user/necessity"),
-  { loading: () => <Loading /> }
-);
 const DynamicPortfolio = dynamic(
   () => import("../../../components/portfolio"),
-  { loading: () => <Loading /> }
+  { loading: () => <Loading />, ssr: false }
 );
 
 const user = ({
@@ -89,13 +73,13 @@ const user = ({
                 className={value === 3 ? "is-active" : ""}
                 onClick={() => setValue(3)}
               >
-                <a>Feedback</a>
+                <a>Empresa</a>
               </li>
               <li
                 className={value === 4 ? "is-active" : ""}
                 onClick={() => setValue(4)}
               >
-                <a>Mi negocio</a>
+                <a>Feedback</a>
               </li>
               <li
                 className={value === 5 ? "is-active" : ""}
@@ -117,17 +101,11 @@ const user = ({
             </ul>
           </div>
 
-          {value === 1 && (
-            <DynamicGeneralInformation information={dataInformation} />
-          )}
-          {value === 2 && (
-            <DynamicTrainingEmployment information={dataInformation} />
-          )}
-          {value === 3 && <DynamicFeedback id={id} />}
-          {value === 4 && (
-            <DynameicCommercialEstablishment information={dataInformation} />
-          )}
-          {value === 5 && <DynamicNecessity id={id} />}
+          {value === 1 && <GeneralInformation information={dataInformation} />}
+          {value === 2 && <TrainingEmployment information={dataInformation} />}
+          {value === 3 && <Member information={dataInformation.member} />}
+          {value === 4 && <Feedback id={id} />}
+          {value === 5 && <Necessity id={id} />}
           {value === 6 && <DynamicPortfolio id={id} />}
         </>
       )}

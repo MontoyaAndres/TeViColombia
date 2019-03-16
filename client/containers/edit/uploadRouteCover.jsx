@@ -40,8 +40,8 @@ const uploadRouteCover = ({
         </div>
       ) : (
         <div
-          className="background-cover background-cover-edit"
-          style={{ height: 450, width: "100%" }}
+          className="background-cover-edit"
+          style={{ height: 400, width: "100%", backgroundColor: "#00ffd9" }}
         />
       )}
     </div>

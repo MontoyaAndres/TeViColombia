@@ -3,7 +3,7 @@ import React from "react";
 const generalInformation = ({ information }) => (
   <div className="container">
     <div className="columns is-multiline">
-      <div className="column is-6">
+      <div className={`column ${information.socialnetwork ? "is-6" : "is-12"}`}>
         <div className="box" style={{ marginTop: "0.5rem" }}>
           <div className="content">
             <p className="subtitle">
@@ -69,72 +69,70 @@ const generalInformation = ({ information }) => (
         </div>
       </div>
 
-      <div className="column is-6">
-        <div className="box" style={{ marginTop: "0.5rem" }}>
-          <div className="content">
-            <p className="subtitle">
-              <strong>googleMapsLocalization:</strong>{" "}
-              {information.googleMapsLocalization}
-            </p>
+      {information.socialnetwork && (
+        <div className="column is-6">
+          <div className="box" style={{ marginTop: "0.5rem" }}>
+            <div className="content">
+              {information.socialnetwork.length > 0 ? (
+                <>
+                  <p className="subtitle">
+                    <strong>Redes sociales:</strong>
+                  </p>
 
-            {information.socialnetwork &&
-            information.socialnetwork.length > 0 ? (
-              <>
-                <p className="subtitle">
-                  <strong>Redes sociales:</strong>
-                </p>
-
-                <ul>
-                  {information.socialnetwork.map((socialnetwork, i) => (
-                    <li key={i}>
-                      <span className="subtitle">
-                        <i
-                          className={`fab fa-${socialnetwork.name.toLowerCase()}`}
-                          aria-hidden="true"
-                        />{" "}
-                        {socialnetwork.name === "Skype" ? (
-                          <a href={`skype:${socialnetwork.url}?chat`}>
-                            {socialnetwork.url}
-                          </a>
-                        ) : socialnetwork.name === "Whatsapp" ? (
-                          <a
-                            rel="noopener noreferrer"
-                            target="_blank"
-                            href={`https://wa.me/${
-                              socialnetwork.url
-                            }?text=Hola,%20¿Cómo%20te%20va?`}
-                          >
-                            {socialnetwork.url}
-                          </a>
-                        ) : socialnetwork.name === "YouTube" ||
-                          socialnetwork.name === "Spotify" ? (
-                          <a
-                            rel="noopener noreferrer"
-                            target="_blank"
-                            href={socialnetwork.url}
-                          >
-                            {socialnetwork.name}
-                          </a>
-                        ) : (
-                          <a
-                            rel="noopener noreferrer"
-                            target="_blank"
-                            href={socialnetwork.url}
-                          >
-                            {socialnetwork.url
-                              .replace(/https:\/\/.*?\//, "")
-                              .replace(/\/.*/, "")}
-                          </a>
-                        )}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            ) : null}
+                  <ul>
+                    {information.socialnetwork.map((socialnetwork, i) => (
+                      <li key={i}>
+                        <span className="subtitle">
+                          <i
+                            className={`fab fa-${socialnetwork.name.toLowerCase()}`}
+                            aria-hidden="true"
+                          />{" "}
+                          {socialnetwork.name === "Skype" ? (
+                            <a href={`skype:${socialnetwork.url}?chat`}>
+                              {socialnetwork.url}
+                            </a>
+                          ) : socialnetwork.name === "Whatsapp" ? (
+                            <a
+                              rel="noopener noreferrer"
+                              target="_blank"
+                              href={`https://wa.me/${
+                                socialnetwork.url
+                              }?text=Hola,%20¿Cómo%20te%20va?`}
+                            >
+                              {socialnetwork.url}
+                            </a>
+                          ) : socialnetwork.name === "YouTube" ||
+                            socialnetwork.name === "Spotify" ? (
+                            <a
+                              rel="noopener noreferrer"
+                              target="_blank"
+                              href={socialnetwork.url}
+                            >
+                              {socialnetwork.name}
+                            </a>
+                          ) : (
+                            <a
+                              rel="noopener noreferrer"
+                              target="_blank"
+                              href={socialnetwork.url}
+                            >
+                              {/* Removing the url and only show the profile of the user */}
+                              {socialnetwork.url.replace(
+                                /[https:\\/\\/www].+\//,
+                                ""
+                              )}
+                            </a>
+                          )}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : null}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   </div>
 );

@@ -85,18 +85,17 @@ const editSocialNetwork = ({ socialnetwork, setFieldValue }) => {
           <div className="content">
             <ul>
               <li>
-                En Twitter, GitHub, Facebook, Linkedin o Instagram escriba el
-                nombre de usuario de la cuenta. Ejemplo en Twitter:
+                En Twitter, GitHub, Skype, Facebook, Linkedin o Instagram
+                escriba el nombre de usuario de la cuenta. Ejemplo en Twitter:
                 @NombreUsuario
-              </li>
-              <li>
-                En YouTube o Spotify pegue la URL de su perfil de usuario.
               </li>
               <li>
                 En Whatsapp debe de poner su número de telefóno con su
                 respectivo indicativo de país. Ejemplo: +573213334444
               </li>
-              <li>En Skype escriba el nombre de usuario.</li>
+              <li>
+                En YouTube o Spotify pegue la URL de su perfil de usuario.
+              </li>
             </ul>
           </div>
         </div>
@@ -202,6 +201,7 @@ const editSocialNetwork = ({ socialnetwork, setFieldValue }) => {
                       target="_blank"
                       href={sn.url}
                     >
+                      {/* Removing the url and only show the profile of the user */}
                       {sn.url.replace(/[https:\\/\\/www].+\//, "")}
                     </a>
                   )}

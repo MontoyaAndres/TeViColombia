@@ -17,18 +17,15 @@ export const resolvers: ResolveMap = {
       { id }: GQL.IInformationBusinessOnQueryArguments,
       { informationBusinessLoader }
     ) => informationBusinessLoader.load(id),
-    memberUser: (
-      _,
-      { name, lastname, email }: GQL.IMemberUserOnQueryArguments
-    ) =>
-      User.find({
-        where: {
-          name: Like(`%${name}%`),
-          lastname: Like(`%${lastname}%`),
-          email: Like(`%${email}%`)
-        },
-        take: 10
-      })
+    searchMember: createMiddleware(
+      middleware.business,
+      (_, { value }: GQL.ISearchMemberOnQueryArguments) =>
+        User.find({
+          where: { email: Like(`%${value}%`) },
+          take: 10,
+          cache: true
+        })
+    )
   },
   Mutation: {
     generalInformationBusiness: createMiddleware(

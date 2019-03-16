@@ -7,25 +7,14 @@ import dynamic from "next/dynamic";
 import { informationBusinessQuery } from "../../../graphql/queries/account";
 import ProfileContainer from "../../../containers/profile";
 import Loading from "../../../components/shared/loading";
+import GeneralInformation from "../../../components/business/generalInformation";
+import Member from "../../../components/member";
+import Employ from "../../../components/business/employ";
+import Feedback from "../../../components/feedback";
 
-const DynamicGeneralInformation = dynamic(
-  () => import("../../../components/business/generalInformation"),
-  {
-    loading: () => <Loading />
-  }
-);
-const DynamicEmploy = dynamic(
-  () => import("../../../components/business/employ"),
-  {
-    loading: () => <Loading />
-  }
-);
-const DynamicFeedback = dynamic(() => import("../../../components/feedback"), {
-  loading: () => <Loading />
-});
 const DynamicPortfolio = dynamic(
   () => import("../../../components/portfolio"),
-  { loading: () => <Loading /> }
+  { loading: () => <Loading />, ssr: false }
 );
 
 const business = ({
@@ -89,11 +78,13 @@ const business = ({
           </div>
 
           {value === 1 && (
-            <DynamicGeneralInformation information={dataInformationBusiness} />
+            <GeneralInformation information={dataInformationBusiness} />
           )}
-          {value === 2 && <DynamicEmploy id={id} />}
-          {value === 3 && <h1>3</h1>}
-          {value === 4 && <DynamicFeedback id={id} />}
+          {value === 2 && <Employ id={id} />}
+          {value === 3 && (
+            <Member information={dataInformationBusiness.member} />
+          )}
+          {value === 4 && <Feedback id={id} />}
           {value === 5 && <DynamicPortfolio id={id} />}
         </>
       )}
