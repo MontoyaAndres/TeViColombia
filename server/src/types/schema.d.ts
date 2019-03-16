@@ -25,7 +25,7 @@ __typename: "Query";
 employs: Array<IEmploy | null> | null;
 employ: IEmploy | null;
 informationBusiness: IBusinessInformation | null;
-memberUser: Array<ICustomer | null> | null;
+searchMember: Array<ICustomer | null> | null;
 feedback: IFeedbackResponse | null;
 portfolio: Array<IPortfolio | null> | null;
 information: IUserInformation | null;
@@ -45,10 +45,8 @@ interface IInformationBusinessOnQueryArguments {
 id: string;
 }
 
-interface IMemberUserOnQueryArguments {
-name?: string | null;
-lastname?: string | null;
-email?: string | null;
+interface ISearchMemberOnQueryArguments {
+value?: string | null;
 }
 
 interface IFeedbackOnQueryArguments {
@@ -181,6 +179,7 @@ language: Array<ILanguage | null> | null;
 study: Array<IStudy | null> | null;
 work: Array<IWork | null> | null;
 preferwork: IPreferWork | null;
+member: Array<ICustomer | null> | null;
 cv: Array<ICV | null> | null;
 }
 
@@ -434,12 +433,16 @@ website?: string | null;
 googleMapsLocalization?: string | null;
 optionalEmail?: string | null;
 socialnetwork?: Array<ISocialNetworkBusinessInput | null> | null;
-memberUser?: Array<string | null> | null;
+memberUser?: Array<IMemberUserInput | null> | null;
 }
 
 interface ISocialNetworkBusinessInput {
 name: string;
 url: string;
+}
+
+interface IMemberUserInput {
+id: string;
 }
 
 interface IGeneralInformationInput {

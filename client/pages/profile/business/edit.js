@@ -5,15 +5,18 @@ import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
 import { withRouter } from "next/router";
 import Error from "next/error";
+import omit from "lodash.omit";
 
 import Loading from "../../../components/shared/loading";
 import TownsByDepartament from "../../../utils/townsByDepartament";
 import { informationBusinessQuery } from "../../../graphql/queries/account";
+import meQuery from "../../../graphql/queries/me";
 import checkLoggedIn from "../../../lib/checkLoggedIn";
 import redirect from "../../../lib/redirect";
 import EditGeneralInformation from "../../../components/business/edit/editGeneralInformation";
 import EditSocialNetwork from "../../../containers/edit/editSocialNetwork";
-import EditGoogleMapsLocalization from "../../../components/business/edit/editGoogleMapsLocalization";
+import { GeneralInformationBusinessValidation } from "../../../utils/validation";
+import normalizeErrors from "../../../utils/normalizeErrors";
 
 const DynamicUploadRouteCover = dynamic(
   () => import("../../../containers/edit/uploadRouteCover"),
@@ -29,13 +32,25 @@ const DynamicUploadRoutePhoto = dynamic(
     ssr: false
   }
 );
-const DynamicEditGoogleMapsLocalization = dynamic(
-  () => import("../../../components/business/edit/editGoogleMapsLocalization"),
+const DynamicEditMember = dynamic(
+  () => import("../../../components/business/edit/editMember"),
   {
     loading: () => <Loading />,
     ssr: false
   }
 );
+
+const GeneralInformationBusinessMutation = gql`
+  mutation GeneralInformationBusiness(
+    $id: ID!
+    $information: GeneralInformationBusinessInput
+  ) {
+    generalInformationBusiness(id: $id, information: $information) {
+      path
+      message
+    }
+  }
+`;
 
 const edit = ({
   loading,
@@ -92,9 +107,10 @@ const edit = ({
           departament={values.departament}
           nationality={values.nationality}
         />
-        <Field
-          name="googleMapsLocalization"
-          component={DynamicEditGoogleMapsLocalization}
+        {/* TODO: Here should be the component editGoogleMapsLocalization. */}
+        <DynamicEditMember
+          values={values.memberUser}
+          setFieldValue={setFieldValue}
         />
         <EditSocialNetwork
           socialnetwork={values.socialnetwork}
@@ -146,6 +162,7 @@ export default compose(
       }
     }) => ({ variables: { id } })
   }),
+  graphql(GeneralInformationBusinessMutation),
   withFormik({
     mapPropsToValues: ({ data }) => ({
       routePhoto: data.informationBusiness.routePhoto || "",
@@ -165,11 +182,67 @@ export default compose(
       optionalEmail: data.informationBusiness.optionalEmail || "",
       googleMapsLocalization:
         data.informationBusiness.googleMapsLocalization || "",
-      socialnetwork: data.informationBusiness.socialnetwork || []
+      socialnetwork: data.informationBusiness.socialnetwork || [],
+      memberUser: data.informationBusiness.member || []
     }),
-    handleSubmit: async (values, { setSubmitting }) => {
-      setSubmitting(false);
-      console.log(values);
+    validationSchema: GeneralInformationBusinessValidation,
+    validateOnBlur: false,
+    validateOnChange: false,
+    handleSubmit: async (
+      values,
+      {
+        props: {
+          mutate,
+          router: {
+            query: { id }
+          }
+        },
+        setSubmitting,
+        setErrors,
+        setFieldValue
+      }
+    ) => {
+      // Omitting `edited` because the database does not need to save it.
+      // And the `memberUser` value does not need the values `name`, `lastname`, and `routePhoto`.
+      const valuesOmitted = await omit(
+        {
+          ...values,
+          telephoneCountry: Number(values.telephoneCountry),
+          telephone2Country: Number(values.telephone2Country),
+          memberUser: values.memberUser.map(item =>
+            omit(item, ["name", "lastname", "routePhoto"])
+          )
+        },
+        ["edited"]
+      );
+
+      const { data } = await mutate({
+        variables: {
+          id,
+          information: valuesOmitted
+        },
+        refetchQueries: [
+          { query: informationBusinessQuery, variables: { id } },
+          { query: meQuery }
+        ]
+      });
+
+      // if informationBusiness has data, it has the errors
+      if (data.informationBusiness && data.informationBusiness.length) {
+        setSubmitting(false);
+        setFieldValue("edited", false, false);
+        setErrors(normalizeErrors(data.informationBusiness));
+        document
+          .querySelector(`[name="${data.informationBusiness[0].path}"]`)
+          .focus();
+      } else {
+        setSubmitting(false);
+        setFieldValue("edited", true, false);
+        window.scrollTo({
+          top: document.getElementById("edited").offsetTop - 100,
+          behavior: "smooth"
+        });
+      }
     }
   })
 )(edit);

@@ -65,6 +65,13 @@ const informationQuery = gql`
         travel
         residence
       }
+      member {
+        id
+        name
+        lastname
+        email
+        routePhoto
+      }
       cv {
         id
         routeCV
@@ -97,6 +104,13 @@ const informationBusinessQuery = gql`
       socialnetwork {
         name
         url
+      }
+      member {
+        id
+        name
+        lastname
+        email
+        routePhoto
       }
     }
   }

@@ -134,7 +134,10 @@ export const GeneralInformationValidation = Yup.object().shape({
 
 export const GeneralInformationBusinessValidation = Yup.object().shape({
   name: Yup.string()
-    .matches(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/, "Ingrese un nombre correcto.")
+    .matches(
+      /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]*$/,
+      "El nombre de la compañia debe de tener números, letras o espacios."
+    )
     .typeError("Campo incorrecto")
     .required("El campo es obligatorio!"),
   description: Yup.string()

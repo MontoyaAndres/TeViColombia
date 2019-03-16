@@ -6,7 +6,7 @@ import { Study } from "../../../../entity/Study";
 import { Work } from "../../../../entity/Work";
 import { CV } from "../../../../entity/CV";
 import { PreferWork } from "../../../../entity/PreferWork";
-import UpdateCreate from "../UpdateCreate";
+import saveData from "./saveData";
 import { createMiddleware } from "../../../../utils/createMiddleware";
 import { middleware } from "../../../shared/authMiddleware";
 import { GeneralInformationValidation } from "../../../../utils/validation";
@@ -134,19 +134,6 @@ export const resolvers: ResolveMap = {
           }
         });
 
-        // Update preferWork information
-        if (information.preferWork.id) {
-          await PreferWork.update(
-            { id: information.preferWork.id },
-            information.preferWork
-          );
-        } else {
-          const preferwork = await PreferWork.create(
-            information.preferWork
-          ).save();
-          await User.update({ id }, { preferwork });
-        }
-
         // Update user information
         await User.update(
           { id },
@@ -205,11 +192,25 @@ export const resolvers: ResolveMap = {
           })
         );
 
+        // Update preferWork information
+        if (information.preferWork.id) {
+          await PreferWork.update(
+            { id: information.preferWork.id },
+            information.preferWork
+          );
+        } else {
+          const preferwork = await PreferWork.create(
+            information.preferWork
+          ).save();
+          await User.update({ id }, { preferwork });
+        }
+
+        // Update rest of info
         await Promise.all([
-          UpdateCreate(Language, id, information.language),
-          UpdateCreate(Study, id, information.study),
-          UpdateCreate(Work, id, information.work),
-          UpdateCreate(CV, id, saveCV)
+          saveData(Language, id, information.language),
+          saveData(Study, id, information.study),
+          saveData(Work, id, information.work),
+          saveData(CV, id, saveCV)
         ]);
 
         return null;

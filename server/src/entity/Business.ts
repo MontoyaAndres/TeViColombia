@@ -102,7 +102,7 @@ export class Business extends BaseEntity {
   @OneToMany(_ => Employ, employ => employ.business)
   employ: Employ[];
 
-  @ManyToMany(_ => User, { cascade: ["update"] })
+  @ManyToMany(_ => User, user => user.member, { cascade: ["update"] })
   @JoinTable({ name: "member" })
   member: User[];
 

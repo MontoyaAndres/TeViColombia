@@ -7,5 +7,5 @@ type Mutation {
 
 type Query {
   informationBusiness(id: ID!): BusinessInformation
-  memberUser(name: String, lastname: String, email: String): [Customer]
+  searchMember(value: String): [Customer]
 }

@@ -25,13 +25,12 @@ const profile = ({
   return (
     <>
       {routeCover ? (
-        <div className="background-cover">
+        <figure className="background-cover">
           <img src={`${process.env.API_HOST}/${routeCover}`} alt="user cover" />
-        </div>
+        </figure>
       ) : (
         <div
-          className="background-cover"
-          style={{ height: 400, width: "100%" }}
+          style={{ height: 400, width: "100%", backgroundColor: "#00ffd9" }}
         />
       )}
 

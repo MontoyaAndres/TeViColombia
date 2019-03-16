@@ -7,7 +7,8 @@ import {
   BeforeInsert,
   OneToMany,
   OneToOne,
-  JoinColumn
+  JoinColumn,
+  ManyToMany
 } from "typeorm";
 
 // Models
@@ -19,6 +20,7 @@ import { Language } from "./Language";
 import { PreferWork } from "./PreferWork";
 import { ENUMCountry, ENUMDepartament } from "../utils/entityGlobalEnum";
 import EmptyStringToNull from "../utils/emptyStringToNull";
+import { Business } from "./Business";
 
 enum ENUMIdentificationDocumentType {
   A1 = "CÉDULA DE CIUDADANÍA",
@@ -170,6 +172,9 @@ export class User extends BaseEntity {
 
   @OneToMany(_ => Necessity, necessity => necessity.user)
   necessity: Necessity[];
+
+  @ManyToMany(_ => Business, business => business.member)
+  member: Business[];
 
   @BeforeInsert()
   async hashPassword() {
