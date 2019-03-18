@@ -36,7 +36,7 @@ const index = ({ loadingEmploys, loadingMe, dataEmploys, dataMe, id }) => {
   }
 
   return (
-    <div className="container">
+    <div className="container" style={{ padding: "0.75rem" }}>
       {dataMe && dataMe.id === id && (
         <div className="buttons has-addons is-centered">
           <button
@@ -87,7 +87,7 @@ const index = ({ loadingEmploys, loadingMe, dataEmploys, dataMe, id }) => {
 
       {dataEmploys && dataEmploys.length > 0 ? (
         dataEmploys.map((employ, i) => (
-          <div style={{ marginTop: "0.5rem", padding: "0 0.75rem" }} key={i}>
+          <div style={{ marginBottom: "1.1rem" }} key={i}>
             <div className="card" style={{ borderRadius: 6 }}>
               <header className="card-header" style={{ borderRadius: 6 }}>
                 <div className="card-header-title">

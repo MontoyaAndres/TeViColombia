@@ -10,13 +10,18 @@ const logout = gql`
 `;
 
 const isLoggedIn = ({ me, client, clicked, menu, openMenu, closeMenu }) => {
-  function redirect(e) {
+  function redirectToPersonalize(e) {
     closeMenu(e);
     if (me.type === "User") {
       Router.push(`/profile/user/edit/${me.id}`);
     } else if (me.type === "Business") {
       Router.push(`/profile/business/edit/${me.id}`);
     }
+  }
+
+  function redirectToSettings(e) {
+    closeMenu(e);
+    Router.push(`/profile/settings`);
   }
 
   return (
@@ -40,11 +45,18 @@ const isLoggedIn = ({ me, client, clicked, menu, openMenu, closeMenu }) => {
           </a>
 
           <div className="navbar-dropdown is-right">
-            <a className="navbar-item" onClick={redirect}>
+            <a className="navbar-item" onClick={redirectToPersonalize}>
               <span className="icon">
                 <i className="fas fa-user" aria-hidden="true" />
               </span>
-              <span>Configuración de perfil</span>
+              <span>Personalizar perfil</span>
+            </a>
+
+            <a className="navbar-item" onClick={redirectToSettings}>
+              <span className="icon">
+                <i className="fas fa-cog" aria-hidden="true" />
+              </span>
+              <span>Ajustes</span>
             </a>
 
             <a className="navbar-item" onClick={mutate}>

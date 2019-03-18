@@ -31,7 +31,7 @@ const InputFeedback = ({
   setFieldValue
 }) => (
   <Form method="POST" onSubmit={handleSubmit}>
-    <div className="box" style={{ marginTop: "0.5rem" }}>
+    <div className="box" style={{ marginTop: "0.1rem" }}>
       <span className="label">
         Valoración general
         <ChangeStars stars={stars} setFieldValue={setFieldValue} />
@@ -81,119 +81,115 @@ const index = ({
   }
 
   return (
-    <div className="container">
-      <div style={{ padding: ".75rem" }}>
-        {dataMe && dataMe.id !== id && (
-          <InputFeedback
-            stars={values.stars}
-            handleSubmit={handleSubmit}
-            isSubmitting={isSubmitting}
-            setFieldValue={setFieldValue}
-          />
-        )}
+    <div className="container" style={{ padding: "0.75rem" }}>
+      {dataMe && dataMe.id !== id && (
+        <InputFeedback
+          stars={values.stars}
+          handleSubmit={handleSubmit}
+          isSubmitting={isSubmitting}
+          setFieldValue={setFieldValue}
+        />
+      )}
 
-        {state.deleteFeedback && (
-          <DeleteFeedbackModal
-            id={id}
-            idFeedback={state.idFeedback}
-            deleteFeedback={state.deleteFeedback}
-            handleAskDeleteFeedback={handleAskDeleteFeedback}
-          />
-        )}
+      {state.deleteFeedback && (
+        <DeleteFeedbackModal
+          id={id}
+          idFeedback={state.idFeedback}
+          deleteFeedback={state.deleteFeedback}
+          handleAskDeleteFeedback={handleAskDeleteFeedback}
+        />
+      )}
 
-        {dataMe && dataMe.id === id && (
-          <div className="notification is-info">
-            {dataFeedback && dataFeedback.count > 0 ? (
-              <p className="subtitle" style={{ textAlign: "center" }}>
-                Tienes la cantidad de{" "}
-                {dataFeedback.count === 1
-                  ? `${dataFeedback.count} estrella`
-                  : `${dataFeedback.count} estrellas`}{" "}
-                <span role="img" aria-label="happy">
-                  🤗🥳🤩.
+      {dataMe && dataMe.id === id && (
+        <div className="notification is-info">
+          {dataFeedback && dataFeedback.count > 0 ? (
+            <p className="subtitle" style={{ textAlign: "center" }}>
+              Tienes la cantidad de{" "}
+              {dataFeedback.count === 1
+                ? `${dataFeedback.count} estrella`
+                : `${dataFeedback.count} estrellas`}{" "}
+              <span role="img" aria-label="happy">
+                🤗🥳🤩.
+              </span>
+            </p>
+          ) : (
+            <p className="subtitle" style={{ textAlign: "center" }}>
+              No tienes estrellas{" "}
+              <span role="img" aria-label="sad">
+                🥺🙁
+              </span>
+              . Busca personas o empresas para que te den Feedback y crezcas en
+              Te vi Colombia!
+            </p>
+          )}
+        </div>
+      )}
+
+      {dataFeedback && dataFeedback.response.length > 0 ? (
+        dataFeedback.response.map(feed => (
+          <div style={{ margin: "1.1rem 0" }} key={feed.id}>
+            <div className="control has-icons-right">
+              {dataMe && dataMe.id === id && (
+                <span
+                  className="icon is-medium is-right"
+                  onClick={() => handleAskDeleteFeedback(feed.id)}
+                >
+                  <i className="delete is-medium" aria-hidden="true" />
                 </span>
-              </p>
-            ) : (
-              <p className="subtitle" style={{ textAlign: "center" }}>
-                No tienes estrellas{" "}
-                <span role="img" aria-label="sad">
-                  🥺🙁
-                </span>
-                . Busca personas o empresas para que te den Feedback y crezcas
-                en Te vi Colombia!
-              </p>
-            )}
-          </div>
-        )}
+              )}
 
-        {dataFeedback && dataFeedback.response.length > 0 ? (
-          dataFeedback.response.map(feed => (
-            <div style={{ marginTop: "1.1rem" }} key={feed.id}>
-              <div className="control has-icons-right">
-                {dataMe && dataMe.id === id && (
-                  <span
-                    className="icon is-medium is-right"
-                    onClick={() => handleAskDeleteFeedback(feed.id)}
-                  >
-                    <i className="delete is-medium" aria-hidden="true" />
-                  </span>
-                )}
-
-                <div className="card" style={{ borderRadius: 6 }}>
-                  <div className="card-content" style={{ borderRadius: 6 }}>
-                    <div className="media">
-                      <div className="media-left">
-                        <SimpleImg
-                          applyAspectRatio={false}
-                          src={`${process.env.API_HOST}/${
-                            feed.from.routePhoto
-                          }`}
-                          height={44}
-                          width={48}
-                          alt="profile"
-                        />
-                      </div>
-
-                      <div className="media-content">
-                        <Link
-                          href={{
-                            pathname:
-                              feed.from.type === "User"
-                                ? "/profile/user"
-                                : "/profile/business",
-                            query: { id: feed.from.id }
-                          }}
-                          prefetch
-                        >
-                          <a className="title is-4">
-                            {feed.from.name} {feed.from.lastname}
-                          </a>
-                        </Link>
-                        <StaticStars stars={feed.stars} />
-                      </div>
-                    </div>
-
-                    <div className="content">
-                      <Linkify
-                        decoraction="subtitle"
-                        text={feed.comment}
-                        length={80}
+              <div className="card" style={{ borderRadius: 6 }}>
+                <div className="card-content" style={{ borderRadius: 6 }}>
+                  <div className="media">
+                    <div className="media-left">
+                      <SimpleImg
+                        applyAspectRatio={false}
+                        src={`${process.env.API_HOST}/${feed.from.routePhoto}`}
+                        height={44}
+                        width={48}
+                        alt="profile"
                       />
                     </div>
+
+                    <div className="media-content">
+                      <Link
+                        href={{
+                          pathname:
+                            feed.from.type === "User"
+                              ? "/profile/user"
+                              : "/profile/business",
+                          query: { id: feed.from.id }
+                        }}
+                        prefetch
+                      >
+                        <a className="title is-4">
+                          {feed.from.name} {feed.from.lastname}
+                        </a>
+                      </Link>
+                      <StaticStars stars={feed.stars} />
+                    </div>
+                  </div>
+
+                  <div className="content">
+                    <Linkify
+                      decoraction="subtitle"
+                      text={feed.comment}
+                      length={80}
+                    />
                   </div>
                 </div>
               </div>
             </div>
-          ))
-        ) : (
-          <h2
-            className="subtitle is-3"
-            style={{ textAlign: "center", padding: 20 }}
-          >
-            No se ha encontrado información.
-          </h2>
-        )}
-      </div>
+          </div>
+        ))
+      ) : (
+        <h2
+          className="subtitle is-3"
+          style={{ textAlign: "center", padding: 20 }}
+        >
+          No se ha encontrado información.
+        </h2>
+      )}
     </div>
   );
 };

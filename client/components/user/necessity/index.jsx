@@ -20,21 +20,19 @@ const necessityMutation = gql`
 
 const InputNecessity = ({ isSubmitting, handleSubmit }) => (
   <Form method="POST" onSubmit={handleSubmit}>
-    <div style={{ padding: ".75rem" }}>
-      <div className="box" style={{ marginTop: "0.5rem" }}>
-        <label className="label">Escribe qué es lo que necesitas.</label>
-        <TextAreaField name="comment" placeholder="Comentario" isRequired />
+    <div className="box" style={{ marginTop: "0.1rem" }}>
+      <label className="label">Escribe qué es lo que necesitas.</label>
+      <TextAreaField name="comment" placeholder="Comentario" isRequired />
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className={`button is-block is-primary is-large ${
-            isSubmitting ? "is-loading" : ""
-          }`}
-        >
-          Enviar
-        </button>
-      </div>
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className={`button is-block is-primary is-large ${
+          isSubmitting ? "is-loading" : ""
+        }`}
+      >
+        Enviar
+      </button>
     </div>
   </Form>
 );
@@ -67,7 +65,7 @@ const index = ({
   }
 
   return (
-    <div className="container">
+    <div className="container" style={{ padding: "0.75rem" }}>
       {dataMe.id === id && (
         <InputNecessity
           isSubmitting={isSubmitting}
@@ -98,7 +96,7 @@ const index = ({
 
       {dataNecessity && dataNecessity.response.length > 0 ? (
         dataNecessity.response.map((neces, i) => (
-          <div style={{ marginTop: "0.5rem", padding: "0 0.75rem" }} key={i}>
+          <div style={{ marginBottom: "1.1rem 0" }} key={i}>
             <div className="card" style={{ borderRadius: 6 }}>
               <header className="card-header" style={{ borderRadius: 6 }}>
                 <div className="card-header-title">
