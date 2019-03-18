@@ -42,7 +42,7 @@ const business = ({
     >
       {({ value, setValue }) => (
         <>
-          <div className="tabs is-medium is-centered">
+          <div className="tabs is-medium is-centered is-boxed">
             <ul>
               <li
                 className={value === 1 ? "is-active" : ""}

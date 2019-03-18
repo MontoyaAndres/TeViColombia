@@ -4,7 +4,7 @@ const generalInformation = ({ information }) => (
   <div className="container">
     <div className="columns is-multiline">
       <div className={`column ${information.socialnetwork ? "is-6" : "is-12"}`}>
-        <div className="box" style={{ marginTop: "0.5rem" }}>
+        <div className="box" style={{ marginTop: "0.1rem" }}>
           <div className="content">
             <p className="subtitle">
               <strong>Correo electrónico:</strong>{" "}
@@ -71,7 +71,7 @@ const generalInformation = ({ information }) => (
 
       {information.socialnetwork && (
         <div className="column is-6">
-          <div className="box" style={{ marginTop: "0.5rem" }}>
+          <div className="box" style={{ marginTop: "0.1rem" }}>
             <div className="content">
               {information.socialnetwork.length > 0 ? (
                 <>

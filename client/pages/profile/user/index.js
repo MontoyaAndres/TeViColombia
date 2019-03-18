@@ -51,7 +51,7 @@ const user = ({
     >
       {({ value, setValue }) => (
         <>
-          <div className="tabs is-medium is-centered">
+          <div className="tabs is-medium is-centered is-boxed">
             <ul>
               <li
                 className={value === 1 ? "is-active" : ""}
@@ -87,7 +87,7 @@ const user = ({
               >
                 <a>
                   Necesidades
-                  <span className="tag is-primary">
+                  <span className="tag is-primary" style={{ fontSize: 15 }}>
                     {dataCountNecessity && dataCountNecessity.count}
                   </span>
                 </a>

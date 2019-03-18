@@ -67,10 +67,11 @@ class menu extends PureComponent {
               <Link href="/" prefetch>
                 <a className="navbar-item" onClick={this.closeMenu}>
                   <img
-                    src="https://bulma.io/images/bulma-logo.png"
+                    src="/static/img/logo.svg"
                     width="112"
-                    height="28"
+                    height="30"
                     alt="logo"
+                    style={{ maxHeight: "2.6rem" }}
                   />
                 </a>
               </Link>

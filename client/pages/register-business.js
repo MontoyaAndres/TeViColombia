@@ -89,7 +89,9 @@ const registerBusiness = ({
 
       <label className="checkbox" style={{ paddingBottom: "1em" }}>
         <input type="checkbox" required /> He leido los{" "}
-        <a href="#">terminos y condiciones</a>
+        <Link href="/terms">
+          <a>terminos y condiciones</a>
+        </Link>
       </label>
 
       <button

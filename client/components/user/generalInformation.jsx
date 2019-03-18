@@ -4,7 +4,7 @@ const generalInformation = ({ information }) => (
   <div className="container">
     <div className="columns is-multiline">
       <div className="column is-6">
-        <div className="box" style={{ marginTop: "0.5rem" }}>
+        <div className="box" style={{ marginTop: "0.1rem" }}>
           <div className="content">
             <p className="subtitle">
               <strong>Documento de identificación:</strong>{" "}
@@ -61,7 +61,7 @@ const generalInformation = ({ information }) => (
       </div>
 
       <div className="column is-6">
-        <div className="box" style={{ marginTop: "0.5rem" }}>
+        <div className="box" style={{ marginTop: "0.1rem" }}>
           <div className="content">
             <p className="subtitle">
               <strong>Estado civil:</strong> {information.civilStatus}
@@ -168,7 +168,7 @@ const generalInformation = ({ information }) => (
 
       {information.preferwork && information.preferwork.currentSituation ? (
         <div className="column is-6">
-          <div className="box" style={{ marginTop: "0.5rem" }}>
+          <div className="box" style={{ marginTop: "0.1rem" }}>
             <p className="title">Preferencias de empleo</p>
             <div className="content">
               <p className="subtitle">
@@ -233,7 +233,7 @@ const generalInformation = ({ information }) => (
 
       {information.skills && information.skills.length > 0 ? (
         <div className="column is-6">
-          <div className="box" style={{ marginTop: "0.5rem" }}>
+          <div className="box" style={{ marginTop: "0.1rem" }}>
             <p className="title">Habilidades</p>
             <div className="content">
               {information.skills.map((skill, i) => (

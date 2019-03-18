@@ -246,6 +246,18 @@ a span.tag {
   padding: 0 5%;
 }
 
+/* The same styles has `.tabs ul` but `.hero .tabs ul` by default bulma css remove them. */
+.hero .tabs ul {
+  border-bottom-color: #dbdbdb;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+
+.columns:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0.75rem;
+}
+
 @keyframes growBubble {
   0% {
     transform: scale(1);
