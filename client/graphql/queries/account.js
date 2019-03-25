@@ -101,6 +101,7 @@ const informationBusinessQuery = gql`
       email
       optionalEmail
       googleMapsLocalization
+      skills
       socialnetwork {
         name
         url

@@ -1,6 +1,6 @@
 import React from "react";
 
-import TagField from "../../shared/tagField";
+import TagField from "../../components/shared/tagField";
 
 const editSkills = ({ skills, setFieldValue }) => (
   <div className="column is-12">

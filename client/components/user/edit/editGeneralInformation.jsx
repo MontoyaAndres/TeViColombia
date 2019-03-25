@@ -8,7 +8,7 @@ import {
 } from "../../shared/globalField";
 import EntityGlobalEnum from "../../../utils/entityGlobalEnum";
 import TownsByDepartament from "../../../utils/townsByDepartament";
-import EditSkills from "./editSkills";
+import EditSkills from "../../../containers/edit/editSkills";
 
 const editGeneralInformation = ({
   departament,

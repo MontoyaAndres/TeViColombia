@@ -1,0 +1,54 @@
+"""
+Params for the customer
+"""
+input ParamsUserInput {
+  nationality: String!
+  departament: String!
+  town: String
+  necessity: Boolean
+}
+
+input ParamsBusinessInput {
+  nationality: String!
+  departament: String!
+  town: String
+  sector: String!
+  area: String
+  employ: Boolean
+}
+
+input ParamsInput {
+  user: ParamsUserInput
+  business: ParamsBusinessInput
+}
+
+enum TypeEnum {
+  User
+  Business
+}
+
+"""
+Response for the customer
+"""
+type UserSearchResponse {
+  id: ID!
+  name: String!
+  lastname: String!
+  email: String!
+  routePhoto: String!
+  necessity: [Necessity]
+}
+
+type BusinessSearchResponse {
+  id: ID!
+  name: String!
+  email: String!
+  routePhoto: String!
+  employ: [Employ]
+}
+
+union Response = UserSearchResponse | BusinessSearchResponse | Error
+
+type Query {
+  search(value: String!, type: TypeEnum, params: ParamsInput): [Response]
+}

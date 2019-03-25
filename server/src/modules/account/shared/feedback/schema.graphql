@@ -7,7 +7,7 @@ type Feedback {
 
 type FeedbackResponse {
   response: [Feedback]!
-  count: Int
+  count: String
 }
 
 type Query {
@@ -15,6 +15,6 @@ type Query {
 }
 
 type Mutation {
-  feedback(toId: ID!, stars: Int!, comment: String!): [Error!]
+  feedback(toId: ID!, stars: Int!, comment: String!, type: String!): [Error!]
   deleteFeedback(id: ID!): Boolean!
 }

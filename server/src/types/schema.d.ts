@@ -25,12 +25,14 @@ __typename: "Query";
 employs: Array<IEmploy | null> | null;
 employ: IEmploy | null;
 informationBusiness: IBusinessInformation | null;
-searchMember: Array<ICustomer | null> | null;
+searchMember: Array<ISearchMember | null> | null;
 feedback: IFeedbackResponse | null;
 portfolio: Array<IPortfolio | null> | null;
 information: IUserInformation | null;
 necessity: INecessityResponse | null;
+list: IList | null;
 me: ICustomer | null;
+search: Array<Response | null> | null;
 }
 
 interface IEmploysOnQueryArguments {
@@ -65,7 +67,16 @@ interface INecessityOnQueryArguments {
 userId: string;
 }
 
-interface IEmploy {
+interface ISearchOnQueryArguments {
+value: string;
+type?: TypeEnum | null;
+params?: IParamsInput | null;
+}
+
+/**
+ * The type `Employ` is used here and in the `search`
+ */
+  interface IEmploy {
 __typename: "Employ";
 id: string | null;
 position: string;
@@ -108,6 +119,7 @@ optionalEmail: string | null;
 email: string;
 googleMapsLocalization: string | null;
 socialnetwork: Array<ISocialNetworkBusiness | null> | null;
+skills: Array<string | null> | null;
 member: Array<ICustomer | null> | null;
 }
 
@@ -127,10 +139,16 @@ routePhoto: string;
 type: string | null;
 }
 
+interface ISearchMember {
+__typename: "SearchMember";
+id: string;
+email: string;
+}
+
 interface IFeedbackResponse {
 __typename: "FeedbackResponse";
 response: Array<IFeedback | null>;
-count: number | null;
+count: string | null;
 }
 
 interface IFeedback {
@@ -245,11 +263,90 @@ response: Array<INecessity | null>;
 count: number;
 }
 
-interface INecessity {
+/**
+ * The type `Necessity` is used here and in the `search`
+ */
+  interface INecessity {
 __typename: "Necessity";
 id: string | null;
 finished: boolean | null;
 comment: string | null;
+}
+
+interface IList {
+__typename: "List";
+user: Array<IListCustomer | null> | null;
+business: Array<IListCustomer | null> | null;
+}
+
+interface IListCustomer {
+__typename: "ListCustomer";
+id: string;
+name: string;
+lastname: string | null;
+routePhoto: string;
+stars: number;
+}
+
+const enum TypeEnum {
+User = 'User',
+Business = 'Business'
+}
+
+interface IParamsInput {
+user?: IParamsUserInput | null;
+business?: IParamsBusinessInput | null;
+}
+
+/**
+ * Params for the customer
+ */
+  interface IParamsUserInput {
+nationality: string;
+departament: string;
+town?: string | null;
+necessity?: boolean | null;
+}
+
+interface IParamsBusinessInput {
+nationality: string;
+departament: string;
+town?: string | null;
+sector: string;
+area?: string | null;
+employ?: boolean | null;
+}
+
+type Response = IUserSearchResponse | IBusinessSearchResponse | IError;
+
+
+
+/**
+ * Response for the customer
+ */
+  interface IUserSearchResponse {
+__typename: "UserSearchResponse";
+id: string;
+name: string;
+lastname: string;
+email: string;
+routePhoto: string;
+necessity: Array<INecessity | null> | null;
+}
+
+interface IBusinessSearchResponse {
+__typename: "BusinessSearchResponse";
+id: string;
+name: string;
+email: string;
+routePhoto: string;
+employ: Array<IEmploy | null> | null;
+}
+
+interface IError {
+__typename: "Error";
+path: string;
+message: string;
 }
 
 interface IMutation {
@@ -269,6 +366,7 @@ updateNecessity: boolean;
 deleteNecessity: boolean;
 sendForgotPasswordEmail: boolean | null;
 forgotPasswordChange: Array<IError> | null;
+helpEmail: Array<IError> | null;
 login: Array<IError> | null;
 logout: boolean | null;
 register: Array<IError> | null;
@@ -302,6 +400,7 @@ interface IFeedbackOnMutationArguments {
 toId: string;
 stars: number;
 comment: string;
+type: string;
 }
 
 interface IDeleteFeedbackOnMutationArguments {
@@ -354,6 +453,12 @@ interface IForgotPasswordChangeOnMutationArguments {
 newPassword: string;
 key: string;
 type: string;
+}
+
+interface IHelpEmailOnMutationArguments {
+name: string;
+email: string;
+message: string;
 }
 
 interface ILoginOnMutationArguments {
@@ -409,12 +514,6 @@ maxSalary?: any | null;
 currency?: string | null;
 }
 
-interface IError {
-__typename: "Error";
-path: string;
-message: string;
-}
-
 interface IGeneralInformationBusinessInput {
 routePhoto?: any | null;
 routeCover?: any | null;
@@ -432,6 +531,7 @@ sector: string;
 website?: string | null;
 googleMapsLocalization?: string | null;
 optionalEmail?: string | null;
+skills?: Array<string | null> | null;
 socialnetwork?: Array<ISocialNetworkBusinessInput | null> | null;
 memberUser?: Array<IMemberUserInput | null> | null;
 }

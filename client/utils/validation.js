@@ -168,3 +168,17 @@ export const EmployValidation = Yup.object().shape({
     .typeError("Campo incorrecto.")
     .required("El campo es obligatorio!")
 });
+
+export const HelpEmailValidation = Yup.object().shape({
+  name: Yup.string()
+    .matches(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/, "Ingrese un nombre correcto.")
+    .typeError("Campo incorrecto")
+    .required("El campo es obligatorio!"),
+  email: Yup.string()
+    .email("Correo incorrecto")
+    .typeError("Campo incorrecto")
+    .required("El campo es obligatorio!"),
+  message: Yup.string()
+    .typeError("Campo incorrecto")
+    .required("El campo es obligatorio!")
+});

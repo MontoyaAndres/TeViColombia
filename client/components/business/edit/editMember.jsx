@@ -8,8 +8,7 @@ const searchMemberQuery = gql`
   query SearchMemberQuery($value: String) {
     searchMember(value: $value) {
       id
-      name
-      lastname
+      email
     }
   }
 `;
@@ -53,8 +52,7 @@ const editMember = ({ values, setFieldValue }) => {
       <div className="card-content">
         <div className="notification is-warning">
           <p className="subtitle">
-            Ingrese el correo electrónico principal de los usuarios a añadir,
-            mientras lo escribe aparecerá el nombre y apellido del usuario.
+            Ingrese el correo electrónico principal de los usuarios a añadir.
           </p>
         </div>
 
@@ -62,7 +60,7 @@ const editMember = ({ values, setFieldValue }) => {
           <Downshift
             onStateChange={handleValueChange}
             onSelect={handleAddElement}
-            itemToString={x => (x ? `${x.name} ${x.lastname}` : "")}
+            itemToString={x => (x ? x.email : "")}
           >
             {({
               getInputProps,
@@ -119,7 +117,7 @@ const editMember = ({ values, setFieldValue }) => {
                             ) {
                               return (
                                 <div style={{ padding: 20, fontSize: 24 }}>
-                                  No hay resultados
+                                  No hay resultados.
                                 </div>
                               );
                             }
@@ -131,7 +129,7 @@ const editMember = ({ values, setFieldValue }) => {
                                     {...getItemProps({
                                       item,
                                       index,
-                                      key: `${item.name} ${item.lastname}`,
+                                      key: item.email,
                                       style: {
                                         backgroundColor:
                                           highlightedIndex === index
@@ -144,7 +142,9 @@ const editMember = ({ values, setFieldValue }) => {
                                         fontSize: 24
                                       }
                                     })}
-                                  >{`${item.name} ${item.lastname}`}</div>
+                                  >
+                                    {item.email}
+                                  </div>
                                 ))
                               : null;
                           }}
@@ -165,7 +165,7 @@ const editMember = ({ values, setFieldValue }) => {
                   className="tag is-info is-large"
                   style={{ margin: 5 }}
                 >
-                  {val.name} {val.lastname}
+                  {val.email}
                   <button
                     type="button"
                     className="delete"

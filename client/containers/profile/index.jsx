@@ -63,7 +63,7 @@ const profile = ({
 
       <h3 className="subtitle" style={{ textAlign: "center" }}>
         <p>
-          {data && data.count ? (
+          {data && data.count > 0 ? (
             <span className="stars_static_item stars_item_selected feedback_star">
               {data.count}
             </span>

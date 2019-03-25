@@ -96,7 +96,7 @@ const index = ({
 
       {dataNecessity && dataNecessity.response.length > 0 ? (
         dataNecessity.response.map((neces, i) => (
-          <div style={{ marginBottom: "1.1rem 0" }} key={i}>
+          <div style={{ margin: "1.1rem 0" }} key={i}>
             <div className="card" style={{ borderRadius: 6 }}>
               <header className="card-header" style={{ borderRadius: 6 }}>
                 <div className="card-header-title">
@@ -159,7 +159,7 @@ const index = ({
           className="subtitle is-3"
           style={{ textAlign: "center", padding: 20 }}
         >
-          No se ha encontrado información al respecto.
+          No se ha encontrado información.
         </h2>
       )}
     </div>

@@ -19,6 +19,9 @@ input EmployInput {
   currency: String
 }
 
+"""
+The type `Employ` is used here and in the `search`
+"""
 type Employ {
   id: ID
   position: String!

@@ -1,0 +1,3 @@
+type Mutation {
+  helpEmail(name: String!, email: String!, message: String!): [Error!]
+}

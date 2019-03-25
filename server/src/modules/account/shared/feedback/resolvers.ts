@@ -1,3 +1,5 @@
+import { getConnection } from "typeorm";
+
 import { ResolveMap } from "../../../../types/graphql-utils";
 import { GQL } from "../../../../types/schema";
 import { User } from "../../../../entity/User";
@@ -41,12 +43,17 @@ export const resolvers: ResolveMap = {
         order: { createdAt: "DESC" }
       });
 
-      const count = await FeedBack.query(
-        "SELECT SUM(stars) AS sum FROM feed_back WHERE toId = ?",
-        [id]
-      );
+      const { count } = await getConnection()
+        .getRepository(FeedBack)
+        .createQueryBuilder("feedback")
+        .select("SUM(feedback.stars)", "count")
+        .where("feedback.toId = :id", { id })
+        .getRawOne();
 
-      return { response, count: count[0].sum };
+      return {
+        response,
+        count
+      };
     }
   },
   Mutation: {
@@ -54,7 +61,7 @@ export const resolvers: ResolveMap = {
       middleware.auth,
       async (
         _,
-        { toId, stars, comment }: GQL.IFeedbackOnMutationArguments,
+        { toId, stars, comment, type }: GQL.IFeedbackOnMutationArguments,
         { session }
       ) => {
         const user = await User.findOne({
@@ -114,7 +121,7 @@ export const resolvers: ResolveMap = {
         await FeedBack.create({
           toId,
           fromId: session.userId,
-          feedbackType: user ? "User" : "Business",
+          feedbackType: type, // This value is important, because with this you can identify if the feedback is by an user or business
           stars,
           comment
         }).save();

@@ -152,6 +152,7 @@ export const resolvers: ResolveMap = {
         postdata.googleMapsLocalization = information.googleMapsLocalization;
         postdata.optionalEmail = information.optionalEmail;
         postdata.socialnetwork = information.socialnetwork;
+        postdata.skills = information.skills;
         postdata.member = users || null;
         await getRepository(Business).save(postdata);
 

@@ -7,7 +7,8 @@ import {
   OneToMany,
   BeforeInsert,
   ManyToMany,
-  JoinTable
+  JoinTable,
+  Index
 } from "typeorm";
 
 // Models
@@ -31,9 +32,11 @@ export class Business extends BaseEntity {
   @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   routeCover: string;
 
-  @Column("varchar", { unique: true })
+  @Index({ fulltext: true })
+  @Column("varchar")
   name: string;
 
+  @Index({ fulltext: true })
   @Column("text", { nullable: true, transformer: new EmptyStringToNull() })
   description: string;
 
@@ -89,6 +92,13 @@ export class Business extends BaseEntity {
 
   @Column("text")
   password: string;
+
+  @Index({ fulltext: true })
+  @Column("simple-array", {
+    nullable: true,
+    transformer: new EmptyStringToNull()
+  })
+  skills: string[];
 
   @Column("json", { nullable: true, transformer: new EmptyStringToNull() })
   socialnetwork: Array<{ name: string; url: string }>;

@@ -10,6 +10,7 @@ const registerContainer = ({ registered, setFieldValue, children }) => {
         <div
           id="registered"
           className="animated bounceIn notification is-primary"
+          style={{ margin: 10 }}
         >
           <button
             type="button"

@@ -154,7 +154,7 @@ const index = ({ loadingEmploys, loadingMe, dataEmploys, dataMe, id }) => {
           className="subtitle is-3"
           style={{ textAlign: "center", padding: 20 }}
         >
-          No se ha encontrado información al respecto.
+          No se ha encontrado información.
         </h2>
       )}
     </div>

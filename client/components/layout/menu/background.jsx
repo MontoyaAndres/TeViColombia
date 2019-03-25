@@ -20,20 +20,25 @@ const background = () => {
         </p>
         <div
           className="field has-addons animated fadeIn"
-          style={{ padding: "2em" }}
+          style={{ padding: "4em 0" }}
         >
           <div className="control is-expanded">
             <input
-              className={`input is-hovered ${width < 600 ? "" : "is-medium"}`}
+              className="input is-medium"
               type="search"
               placeholder="Busca lo que tú necesitas"
+              style={{ border: "none" }}
             />
           </div>
           <div className="control">
-            <a
-              className={`button is-primary ${width < 600 ? "" : "is-medium"}`}
-            >
-              Buscar
+            <a className="button is-primary is-medium">
+              {width < 600 ? (
+                <span className="icon">
+                  <i className="fas fa-search" aria-hidden="true" />
+                </span>
+              ) : (
+                "Buscar"
+              )}
             </a>
           </div>
         </div>
