@@ -1,3 +1,8 @@
+type SearchMember {
+  id: String!
+  email: String!
+}
+
 type Mutation {
   generalInformationBusiness(
     id: ID
@@ -7,5 +12,5 @@ type Mutation {
 
 type Query {
   informationBusiness(id: ID!): BusinessInformation
-  searchMember(value: String): [Customer]
+  searchMember(value: String): [SearchMember]
 }

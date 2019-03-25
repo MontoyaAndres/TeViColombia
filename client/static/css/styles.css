@@ -246,16 +246,13 @@ a span.tag {
   padding: 0 5%;
 }
 
-/* The same styles has `.tabs ul` but `.hero .tabs ul` by default bulma css remove them. */
-.hero .tabs ul {
-  border-bottom-color: #dbdbdb;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-}
-
 .columns:last-child {
   margin-bottom: 0;
   padding-bottom: 0.75rem;
+}
+
+.section {
+  padding: 2rem 1.5rem;
 }
 
 @keyframes growBubble {
@@ -269,7 +266,7 @@ a span.tag {
 
 @media screen and (max-width: 800px) {
   #title {
-    font-size: 20px;
+    font-size: 30px;
   }
 
   .background-cover img {
@@ -279,6 +276,14 @@ a span.tag {
 
   .employ-media {
     padding: 0;
+  }
+
+  .card-content {
+    padding: 1rem;
+  }
+
+  .section {
+    padding: 1rem 1.5rem;
   }
 }
 

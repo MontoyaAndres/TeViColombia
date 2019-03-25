@@ -106,6 +106,8 @@ const edit = ({
         <EditGeneralInformation
           departament={values.departament}
           nationality={values.nationality}
+          skills={values.skills}
+          setFieldValue={setFieldValue}
         />
         {/* TODO: Here should be the component editGoogleMapsLocalization. */}
         <DynamicEditMember
@@ -170,18 +172,19 @@ export default compose(
       name: data.informationBusiness.name,
       description: data.informationBusiness.description || "",
       address: data.informationBusiness.address || "",
-      telephoneCountry: data.informationBusiness.telephoneCountry,
+      telephoneCountry: data.informationBusiness.telephoneCountry || 57,
       telephone: data.informationBusiness.telephone,
       telephone2Country: data.informationBusiness.telephone2Country || 57,
       telephone2: data.informationBusiness.telephone2 || 0,
-      departament: data.informationBusiness.departament || "",
+      nationality: data.informationBusiness.nationality || "Colombia",
+      departament: data.informationBusiness.departament || "Bogotá, D.C.",
       town: data.informationBusiness.town || "",
-      nationality: data.informationBusiness.nationality || "",
       sector: data.informationBusiness.sector,
       website: data.informationBusiness.website || "",
       optionalEmail: data.informationBusiness.optionalEmail || "",
       googleMapsLocalization:
         data.informationBusiness.googleMapsLocalization || "",
+      skills: data.informationBusiness.skills || [],
       socialnetwork: data.informationBusiness.socialnetwork || [],
       memberUser: data.informationBusiness.member || []
     }),
@@ -203,14 +206,14 @@ export default compose(
       }
     ) => {
       // Omitting `edited` because the database does not need to save it.
-      // And the `memberUser` value does not need the values `name`, `lastname`, and `routePhoto`.
+      // And the `memberUser` value does not need the values `name`, `lastname`, `email` and `routePhoto`.
       const valuesOmitted = await omit(
         {
           ...values,
           telephoneCountry: Number(values.telephoneCountry),
           telephone2Country: Number(values.telephone2Country),
           memberUser: values.memberUser.map(item =>
-            omit(item, ["name", "lastname", "routePhoto"])
+            omit(item, ["name", "lastname", "email", "routePhoto"])
           )
         },
         ["edited"]
@@ -227,13 +230,16 @@ export default compose(
         ]
       });
 
-      // if informationBusiness has data, it has the errors
-      if (data.informationBusiness && data.informationBusiness.length) {
+      // if generalInformationBusiness has data, it has the errors
+      if (
+        data.generalInformationBusiness &&
+        data.generalInformationBusiness.length
+      ) {
         setSubmitting(false);
         setFieldValue("edited", false, false);
-        setErrors(normalizeErrors(data.informationBusiness));
+        setErrors(normalizeErrors(data.generalInformationBusiness));
         document
-          .querySelector(`[name="${data.informationBusiness[0].path}"]`)
+          .querySelector(`[name="${data.generalInformationBusiness[0].path}"]`)
           .focus();
       } else {
         setSubmitting(false);

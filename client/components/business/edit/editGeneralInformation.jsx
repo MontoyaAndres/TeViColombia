@@ -7,8 +7,14 @@ import {
 } from "../../shared/globalField";
 import EntityGlobalEnum from "../../../utils/entityGlobalEnum";
 import TownsByDepartament from "../../../utils/townsByDepartament";
+import EditSkills from "../../../containers/edit/editSkills";
 
-const editGeneralInformation = ({ departament, nationality }) => (
+const editGeneralInformation = ({
+  departament,
+  nationality,
+  skills,
+  setFieldValue
+}) => (
   <div className="card">
     <div className="card-header">
       <div className="card-header-title">Información general</div>
@@ -132,6 +138,8 @@ const editGeneralInformation = ({ departament, nationality }) => (
               isRequired={false}
             />
           </div>
+
+          <EditSkills skills={skills} setFieldValue={setFieldValue} />
         </div>
       </div>
     </div>

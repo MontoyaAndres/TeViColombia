@@ -90,7 +90,7 @@ const employ = ({
   }
 
   return (
-    <div className="hero">
+    <div className="hero is-fullheight-with-navbar">
       <div className="hero-body">
         <div className="employ-media">
           <div className="media">

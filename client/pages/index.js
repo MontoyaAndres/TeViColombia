@@ -1,11 +1,13 @@
 import React from "react";
-import Loading from "../components/shared/loading";
+
+import HelpEmail from "../components/home/helpEmail";
+import List from "../components/home/list"
 
 const index = () => (
-  <>
-    <Loading />
-    hola
-  </>
+  <div className="container">
+    <List />
+    <HelpEmail />
+  </div>
 );
 
 export default index;

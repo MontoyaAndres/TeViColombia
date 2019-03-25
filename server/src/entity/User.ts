@@ -8,7 +8,8 @@ import {
   OneToMany,
   OneToOne,
   JoinColumn,
-  ManyToMany
+  ManyToMany,
+  Index
 } from "typeorm";
 
 // Models
@@ -53,12 +54,15 @@ export class User extends BaseEntity {
   @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   routeCover: string;
 
+  @Index({ fulltext: true })
   @Column("varchar")
   name: string;
 
+  @Index({ fulltext: true })
   @Column("varchar")
   lastname: string;
 
+  @Index({ fulltext: true })
   @Column("varchar", {
     length: 100,
     nullable: true,
@@ -139,6 +143,7 @@ export class User extends BaseEntity {
   @Column("text")
   password: string;
 
+  @Index({ fulltext: true })
   @Column("simple-array", {
     nullable: true,
     transformer: new EmptyStringToNull()

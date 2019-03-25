@@ -16,8 +16,13 @@ import DeleteFeedbackModal from "./deleteFeedbackModal";
 import Linkify from "../shared/linkify";
 
 const feedbackMutation = gql`
-  mutation FeedbackMutation($toId: ID!, $stars: Int!, $comment: String!) {
-    feedback(toId: $toId, stars: $stars, comment: $comment) {
+  mutation FeedbackMutation(
+    $toId: ID!
+    $stars: Int!
+    $comment: String!
+    $type: String!
+  ) {
+    feedback(toId: $toId, stars: $stars, comment: $comment, type: $type) {
       path
       message
     }
@@ -102,10 +107,10 @@ const index = ({
 
       {dataMe && dataMe.id === id && (
         <div className="notification is-info">
-          {dataFeedback && dataFeedback.count > 0 ? (
+          {dataFeedback && Number(dataFeedback.count) > 0 ? (
             <p className="subtitle" style={{ textAlign: "center" }}>
               Tienes la cantidad de{" "}
-              {dataFeedback.count === 1
+              {Number(dataFeedback.count) === 1
                 ? `${dataFeedback.count} estrella`
                 : `${dataFeedback.count} estrellas`}{" "}
               <span role="img" aria-label="happy">
@@ -213,10 +218,15 @@ export default compose(
     mapPropsToValues: () => ({ stars: 1, comment: "" }),
     handleSubmit: async (
       values,
-      { props: { id, FEEDBACK_MUTATION }, setSubmitting, setErrors, resetForm }
+      {
+        props: { id, FEEDBACK_MUTATION, type },
+        setSubmitting,
+        setErrors,
+        resetForm
+      }
     ) => {
       const { data } = await FEEDBACK_MUTATION({
-        variables: { toId: id, ...values },
+        variables: { toId: id, type, ...values },
         refetchQueries: [{ query: feedbackQuery, variables: { id } }]
       });
 

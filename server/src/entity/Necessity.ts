@@ -5,7 +5,8 @@ import {
   Column,
   ManyToOne,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  Index
 } from "typeorm";
 
 // Models
@@ -19,6 +20,7 @@ export class Necessity extends BaseEntity {
   @Column({ default: false })
   finished: boolean;
 
+  @Index({ fulltext: true })
   @Column("text")
   comment: string;
 

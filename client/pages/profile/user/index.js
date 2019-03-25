@@ -104,7 +104,7 @@ const user = ({
           {value === 1 && <GeneralInformation information={dataInformation} />}
           {value === 2 && <TrainingEmployment information={dataInformation} />}
           {value === 3 && <Member information={dataInformation.member} />}
-          {value === 4 && <Feedback id={id} />}
+          {value === 4 && <Feedback id={id} type="User" />}
           {value === 5 && <Necessity id={id} />}
           {value === 6 && <DynamicPortfolio id={id} />}
         </>

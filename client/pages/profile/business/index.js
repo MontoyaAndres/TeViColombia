@@ -84,7 +84,7 @@ const business = ({
           {value === 3 && (
             <Member information={dataInformationBusiness.member} />
           )}
-          {value === 4 && <Feedback id={id} />}
+          {value === 4 && <Feedback id={id} type="Business" />}
           {value === 5 && <DynamicPortfolio id={id} />}
         </>
       )}

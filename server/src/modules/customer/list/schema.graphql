@@ -1,0 +1,16 @@
+type ListCustomer {
+  id: ID!
+  name: String!
+  lastname: String
+  routePhoto: String!
+  stars: Int!
+}
+
+type List {
+  user: [ListCustomer]
+  business: [ListCustomer]
+}
+
+type Query {
+  list: List
+}

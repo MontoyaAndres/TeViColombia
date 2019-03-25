@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "babel-eslint": "latest",
-    "eslint": "5.15.1",
+    "eslint": "5.15.3",
     "eslint-config-airbnb": "latest",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-import": "^2.16.0",
@@ -24,9 +24,10 @@
     "prettier": "^1.16.4"
   },
   "dependencies": {
+    "@zeit/next-css": "^1.0.1",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
-    "apollo-link-context": "1.0.15",
+    "apollo-link-context": "1.0.17",
     "apollo-upload-client": "^10.0.0",
     "cookie-parser": "1.4.4",
     "downshift": "^3.2.7",
@@ -43,12 +44,12 @@
     "react": "16.8.4",
     "react-apollo": "2.5.2",
     "react-dom": "16.8.4",
-    "react-dropzone": "^10.0.0",
+    "react-dropzone": "^10.0.4",
     "react-geosuggest": "^2.10.0",
     "react-google-maps": "^9.4.5",
     "react-linkify": "^0.2.2",
     "react-responsive-carousel": "^3.1.47",
     "react-simple-img": "^2.1.4",
-    "yup": "0.26.10"
+    "yup": "0.27.0"
   }
 }

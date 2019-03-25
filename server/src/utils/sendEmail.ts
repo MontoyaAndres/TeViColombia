@@ -92,3 +92,19 @@ export const sendApplyEmployEmail = async (
     )
   });
 };
+
+export const helpReceiveEmail = async (
+  name: string,
+  email: string,
+  message: string
+) => {
+  transporter.sendMail({
+    from: name,
+    to: process.env.EMAIL_USER,
+    subject: `Mensaje de ${name}`,
+    html: sendEmailTemplate(
+      `${name} con el correo electrónico ${email}, dice:`,
+      message
+    )
+  });
+};

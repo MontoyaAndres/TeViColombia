@@ -23,5 +23,6 @@ type BusinessInformation {
   email: String!
   googleMapsLocalization: String
   socialnetwork: [SocialNetworkBusiness]
+  skills: [String]
   member: [Customer]
 }

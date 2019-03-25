@@ -4,7 +4,8 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  CreateDateColumn
+  CreateDateColumn,
+  Index
 } from "typeorm";
 
 // Models
@@ -34,6 +35,7 @@ export class Employ extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  @Index({ fulltext: true })
   @Column("varchar")
   position: string;
 
@@ -43,6 +45,7 @@ export class Employ extends BaseEntity {
   @Column("enum", { enum: ENUMArea })
   area: string;
 
+  @Index({ fulltext: true })
   @Column("simple-array", {
     nullable: true,
     transformer: new EmptyStringToNull()
