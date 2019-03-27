@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import Linkify from "react-linkify";
 
-const linkify = ({ text, decoraction }) => {
+const linkify = ({ text, decoraction, length }) => {
   const [expression, setExpression] = useState(false);
 
   return (
     <p className={decoraction}>
-      {text.length > 80 ? (
+      {text.length > length ? (
         expression ? (
           <>
             <Linkify>{text}</Linkify>{" "}
@@ -14,7 +14,7 @@ const linkify = ({ text, decoraction }) => {
           </>
         ) : (
           <>
-            <Linkify>{text.slice(0, 80)}...</Linkify>{" "}
+            <Linkify>{text.slice(0, length)}...</Linkify>{" "}
             <a onClick={() => setExpression(!expression)}>Mostrar más</a>
           </>
         )

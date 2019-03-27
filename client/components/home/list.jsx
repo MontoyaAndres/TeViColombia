@@ -26,7 +26,7 @@ const listQuery = gql`
   }
 `;
 
-const CardList = ({ value }) => (
+const CardList = ({ value, type }) => (
   <div className="card">
     <div className="card-content">
       <div className="media">
@@ -53,7 +53,7 @@ const CardList = ({ value }) => (
       <div className="content" style={{ textAlign: "center" }}>
         <Link
           href={{
-            pathname: "/profile/user",
+            pathname: type === "user" ? "/profile/user" : "/profile/business",
             query: { id: value.id }
           }}
           prefetch
@@ -75,28 +75,24 @@ const list = () => (
       return data && data.list ? (
         <section className="section">
           <div className="content">
-            <h1 className="title">
-              ¡Los 5 usuarios de Te Vi Colombia más apoyados!
-            </h1>
+            <h1 className="title">¡Los 5 usuarios más apoyados!</h1>
           </div>
 
           <div className="columns is-multiline">
             {data.list.user.map((value, i) => (
               <div className="column is-6" key={i}>
-                <CardList value={value} />
+                <CardList value={value} type="user" />
               </div>
             ))}
           </div>
 
           <div className="content">
-            <h1 className="title">
-              ¡Las 5 empresas de Te Vi Colombia más apoyadas!
-            </h1>
+            <h1 className="title">¡Las 5 empresas más apoyadas!</h1>
           </div>
           <div className="columns is-multiline">
             {data.list.business.map((value, i) => (
               <div className="column is-6" key={i}>
-                <CardList value={value} />
+                <CardList value={value} type="business" />
               </div>
             ))}
           </div>

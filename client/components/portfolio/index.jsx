@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, withFormik } from "formik";
 import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
@@ -27,28 +27,87 @@ const portfolioMutation = gql`
 `;
 
 const index = ({
+  loadingPortfolio,
+  loadingMe,
+  dataPortfolio,
+  dataMe,
+  fetchPortfolio,
   id,
   handleSubmit,
   isSubmitting,
   values,
-  setFieldValue,
-  loadingPortfolio,
-  loadingMe,
-  dataPortfolio,
-  dataMe
+  setFieldValue
 }) => {
   const [state, setState] = useState({
     deletePortfolio: false,
     updatePortfolio: false,
-    idPortfolio: null
+    idPortfolio: null,
+    hasMoreItems: true
   });
 
+  useEffect(() => {
+    if (dataPortfolio && dataPortfolio.length < 10) {
+      setState({
+        deletePortfolio: state.deletePortfolio,
+        updatePortfolio: state.updatePortfolio,
+        idPortfolio: state.idPortfolio,
+        hasMoreItems: false
+      });
+    }
+
+    return () => {
+      if (dataPortfolio && dataPortfolio.length >= 10) {
+        setState({
+          deletePortfolio: state.deletePortfolio,
+          updatePortfolio: state.updatePortfolio,
+          idPortfolio: state.idPortfolio,
+          hasMoreItems: true
+        });
+      }
+    };
+  }, [dataPortfolio]);
+
   function handleAskDeletePortfolio(idPortfolio = null) {
-    setState({ deletePortfolio: !state.deletePortfolio, idPortfolio });
+    setState({
+      deletePortfolio: !state.deletePortfolio,
+      updatePortfolio: state.updatePortfolio,
+      idPortfolio,
+      hasMoreItems: state.hasMoreItems
+    });
   }
 
   function handleAskUpdatePortfolio(idPortfolio = null) {
-    setState({ updatePortfolio: !state.updatePortfolio, idPortfolio });
+    setState({
+      deletePortfolio: state.deletePortfolio,
+      updatePortfolio: !state.updatePortfolio,
+      idPortfolio,
+      hasMoreItems: state.hasMoreItems
+    });
+  }
+
+  function handleLoadMore() {
+    fetchPortfolio({
+      variables: {
+        id,
+        limit: dataPortfolio.length
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+
+        if (fetchMoreResult.portfolio.length < 10) {
+          setState({
+            deletePortfolio: state.deletePortfolio,
+            updatePortfolio: state.updatePortfolio,
+            idPortfolio: state.idPortfolio,
+            hasMoreItems: false
+          });
+        }
+
+        return Object.assign({}, prev, {
+          portfolio: [...prev.portfolio, ...fetchMoreResult.portfolio]
+        });
+      }
+    });
   }
 
   if (loadingMe || loadingPortfolio) {
@@ -108,7 +167,7 @@ const index = ({
                   showStatus={false}
                   stopOnHover={false}
                   showIndicators={false}
-                  infiniteLoop
+                  dynamicHeight
                   emulateTouch
                 >
                   {portfolio.multimedia.map((multimedia, i) => (
@@ -159,6 +218,20 @@ const index = ({
               </div>
             </div>
           ))}
+
+          {state.hasMoreItems && (
+            <div className="column is-12">
+              <div className="buttons has-addons is-centered">
+                <button
+                  type="button"
+                  className="button is-block is-primary is-large"
+                  onClick={handleLoadMore}
+                >
+                  Ver más
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <h2
@@ -174,10 +247,14 @@ const index = ({
 
 export default compose(
   graphql(portfolioQuery, {
-    options: ({ id }) => ({ variables: { id, type: "User" } }),
+    options: ({ id }) => ({
+      variables: { id },
+      fetchPolicy: "cache-and-network"
+    }),
     props: ({ data }) => ({
       loadingPortfolio: data.loading,
-      dataPortfolio: data.portfolio
+      dataPortfolio: data.portfolio,
+      fetchPortfolio: data.fetchMore
     })
   }),
   graphql(meQuery, {

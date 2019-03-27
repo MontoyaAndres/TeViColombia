@@ -9,10 +9,15 @@ import { TextField } from "../components/shared/globalField";
 import normalizeErrors from "../utils/normalizeErrors";
 import checkLoggedIn from "../lib/checkLoggedIn";
 import redirect from "../lib/redirect";
+import Linkify from "../components/shared/linkify";
 
 const forgotPasswordChangeMutation = gql`
-  mutation ForgotPasswordChangeMutation($newPassword: String!, $key: String!) {
-    forgotPasswordChange(newPassword: $newPassword, key: $key) {
+  mutation ForgotPasswordChangeMutation(
+    $newPassword: String!
+    $key: String!
+    $type: String!
+  ) {
+    forgotPasswordChange(newPassword: $newPassword, key: $key, type: $type) {
       path
       message
     }
@@ -21,25 +26,22 @@ const forgotPasswordChangeMutation = gql`
 
 const changePassword = ({
   router: {
-    query: { key }
+    query: { key, type }
   }
 }) => (
   <div className="hero is-fullheight-with-navbar">
     <div className="hero-body">
       <div className="container animated bounceInLeft">
         <div className="notification is-warning">
-          Si esta aquí, es porque usted desea cambiar la contraseña de su
-          cuenta. Recuerde que no puede ingresar a Te vi Colombia hasta que el
-          proceso de cambio de contraseña sea completado, si la llave de esta
-          sección esta caducada, intente ingresando nuevamente su correo en{" "}
-          <a
-            style={{ fontWeight: "bold", textDecoration: "none" }}
-            rel="noopener noreferrer"
-            target="_blank"
-            href="/password"
-          >
-            ¿Ha olvidado la contraseña?
-          </a>
+          <Linkify
+            decoraction="subtitle"
+            text="Para asignar los cambios, simplemete ingrese la contraseña nueva en el
+            campo 'Contraseña nueva'. Recuerde que no puede ingresar a Te Vi
+            Colombia hasta que el proceso de cambio de contraseña sea completado, si
+            la llave de esta sección esta caducada, intente ingresando nuevamente su
+            correo en la área de cambio de contraseña."
+            length={100}
+          />
         </div>
 
         <Mutation mutation={forgotPasswordChangeMutation}>
@@ -53,7 +55,7 @@ const changePassword = ({
               validateOnChange={false}
               onSubmit={async (values, { setSubmitting, setErrors }) => {
                 const { data } = await mutate({
-                  variables: { newPassword: values.newPassword, key }
+                  variables: { newPassword: values.newPassword, key, type }
                 });
 
                 // if forgotPasswordChange has data, it has the errors
@@ -105,8 +107,8 @@ const changePassword = ({
 changePassword.getInitialProps = async context => {
   const { loggedInUser } = await checkLoggedIn(context.apolloClient);
 
-  if (!loggedInUser.me) {
-    redirect(context, "/login");
+  if (loggedInUser.me) {
+    redirect(context, "/");
   }
 
   return {};

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { graphql, compose, Query } from "react-apollo";
 import Link from "next/link";
 
@@ -11,24 +11,96 @@ import CreateEmployModal from "./createEmployModal";
 import DeleteEmployModal from "./deleteEmployModal";
 import UpdateEmployModal from "./updateEmployModal";
 
-const index = ({ loadingEmploys, loadingMe, dataEmploys, dataMe, id }) => {
+const index = ({
+  loadingEmploys,
+  loadingMe,
+  dataEmploys,
+  dataMe,
+  fetchEmploys,
+  id
+}) => {
   const [state, setState] = useState({
     idEmploy: null,
     createEmploy: false,
     updateEmploy: false,
-    deleteEmploy: false
+    deleteEmploy: false,
+    hasMoreItems: true
   });
 
+  useEffect(() => {
+    if (dataEmploys && dataEmploys.length < 10) {
+      setState({
+        createEmploy: state.createEmploy,
+        updateEmploy: state.updateEmploy,
+        deleteEmploy: state.deleteEmploy,
+        idEmploy: state.idEmploy,
+        hasMoreItems: false
+      });
+    }
+
+    return () => {
+      if (dataEmploys && dataEmploys.length >= 10) {
+        setState({
+          createEmploy: state.createEmploy,
+          updateEmploy: state.updateEmploy,
+          deleteEmploy: state.deleteEmploy,
+          idEmploy: state.idEmploy,
+          hasMoreItems: true
+        });
+      }
+    };
+  }, [dataEmploys]);
+
   function handleAskCreateEmploy() {
-    setState({ createEmploy: !state.createEmploy });
+    setState({
+      createEmploy: !state.createEmploy,
+      updateEmploy: state.updateEmploy,
+      deleteEmploy: state.deleteEmploy
+    });
   }
 
   function handleAskUpdateEmploy(idEmploy = null) {
-    setState({ idEmploy, updateEmploy: !state.updateEmploy });
+    setState({
+      idEmploy,
+      createEmploy: state.createEmploy,
+      updateEmploy: !state.updateEmploy,
+      deleteEmploy: state.deleteEmploy
+    });
   }
 
   function handleAskDeleteEmploy(idEmploy = null) {
-    setState({ idEmploy, deleteEmploy: !state.deleteEmploy });
+    setState({
+      idEmploy,
+      createEmploy: state.createEmploy,
+      updateEmploy: state.updateEmploy,
+      deleteEmploy: !state.deleteEmploy
+    });
+  }
+
+  function handleLoadMore() {
+    fetchEmploys({
+      variables: {
+        id,
+        limit: dataEmploys.length
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+
+        if (fetchMoreResult.employs.length < 10) {
+          setState({
+            createEmploy: state.createEmploy,
+            updateEmploy: state.updateEmploy,
+            deleteEmploy: state.deleteEmploy,
+            idEmploy: state.idEmploy,
+            hasMoreItems: false
+          });
+        }
+
+        return Object.assign({}, prev, {
+          employs: [...prev.employs, ...fetchMoreResult.employs]
+        });
+      }
+    });
   }
 
   if (loadingEmploys || loadingMe) {
@@ -86,69 +158,86 @@ const index = ({ loadingEmploys, loadingMe, dataEmploys, dataMe, id }) => {
       )}
 
       {dataEmploys && dataEmploys.length > 0 ? (
-        dataEmploys.map((employ, i) => (
-          <div style={{ marginBottom: "1.1rem" }} key={i}>
-            <div className="card" style={{ borderRadius: 6 }}>
-              <header className="card-header" style={{ borderRadius: 6 }}>
-                <div className="card-header-title">
-                  <div className="media">
-                    <div className="media-content">
-                      <div className="content">
-                        <Link
-                          href={{
-                            pathname: "/profile/business/employ",
-                            query: { id, employId: employ.id }
-                          }}
-                        >
-                          <a>
-                            <Linkify
-                              decoraction="title"
-                              text={employ.position}
-                              length={80}
-                            />
-                          </a>
-                        </Link>
+        <>
+          {dataEmploys.map((employ, i) => (
+            <div style={{ marginBottom: "1.1rem" }} key={i}>
+              <div className="card" style={{ borderRadius: 6 }}>
+                <header className="card-header" style={{ borderRadius: 6 }}>
+                  <div className="card-header-title">
+                    <div className="media">
+                      <div className="media-content">
+                        <div className="content">
+                          <Link
+                            href={{
+                              pathname: "/profile/business/employ",
+                              query: { id, employId: employ.id }
+                            }}
+                          >
+                            <a>
+                              <span
+                                className="title"
+                                style={{ color: "#4a4a4a" }}
+                              >
+                                {employ.position}
+                              </span>
+                            </a>
+                          </Link>
 
-                        <p className="subtitle">
-                          {employ.country} - {employ.departament} -{" "}
-                          {employ.town && employ.town}
-                        </p>
+                          <p className="subtitle">
+                            {employ.country} - {employ.departament} -{" "}
+                            {employ.town && employ.town}
+                          </p>
 
-                        <p className="subtitle">
-                          <span style={{ fontWeight: "bold" }}>
-                            Tipo de contrato:{" "}
-                          </span>
-                          {employ.contract}
-                        </p>
+                          <p className="subtitle">
+                            <span style={{ fontWeight: "bold" }}>
+                              Tipo de contrato:{" "}
+                            </span>
+                            {employ.contract}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {dataMe && dataMe.id === id && (
-                  <DropdownIcon i={i}>
-                    <div className="dropdown-menu" role="menu">
-                      <div className="dropdown-content">
-                        <a
-                          className="dropdown-item"
-                          onClick={() => handleAskUpdateEmploy(employ.id)}
-                        >
-                          Editar
-                        </a>
-                        <a
-                          className="dropdown-item"
-                          onClick={() => handleAskDeleteEmploy(employ.id)}
-                        >
-                          Eliminar
-                        </a>
+                  {dataMe && dataMe.id === id && (
+                    <DropdownIcon i={i}>
+                      <div className="dropdown-menu" role="menu">
+                        <div className="dropdown-content">
+                          <a
+                            className="dropdown-item"
+                            onClick={() => handleAskUpdateEmploy(employ.id)}
+                          >
+                            Editar
+                          </a>
+                          <a
+                            className="dropdown-item"
+                            onClick={() => handleAskDeleteEmploy(employ.id)}
+                          >
+                            Eliminar
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                  </DropdownIcon>
-                )}
-              </header>
+                    </DropdownIcon>
+                  )}
+                </header>
+              </div>
             </div>
-          </div>
-        ))
+          ))}
+
+          {state.hasMoreItems && (
+            <div className="column is-12">
+              <div className="buttons has-addons is-centered">
+                <button
+                  type="button"
+                  className="button is-block is-primary is-large"
+                  onClick={handleLoadMore}
+                >
+                  Ver más
+                </button>
+              </div>
+            </div>
+          )}
+        </>
       ) : (
         <h2
           className="subtitle is-3"
@@ -163,10 +252,14 @@ const index = ({ loadingEmploys, loadingMe, dataEmploys, dataMe, id }) => {
 
 export default compose(
   graphql(employsQuery, {
-    options: ({ id }) => ({ variables: { businessId: id } }),
+    options: ({ id }) => ({
+      variables: { businessId: id },
+      fetchPolicy: "cache-and-network"
+    }),
     props: ({ data }) => ({
       loadingEmploys: data.loading,
-      dataEmploys: data.employs
+      dataEmploys: data.employs,
+      fetchEmploys: data.fetchMore
     })
   }),
   graphql(meQuery, {

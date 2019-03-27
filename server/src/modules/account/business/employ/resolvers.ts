@@ -9,10 +9,12 @@ import { sendApplyEmployEmail } from "../../../../utils/sendEmail";
 
 export const resolvers: ResolveMap = {
   Query: {
-    employs: async (_, { businessId }: GQL.IEmploysOnQueryArguments) =>
+    employs: async (_, { businessId, limit }: GQL.IEmploysOnQueryArguments) =>
       Employ.find({
         where: { business: { id: businessId } },
-        order: { createdAt: "DESC" }
+        order: { createdAt: "DESC" },
+        skip: limit,
+        take: 10
       }),
     employ: async (_, { employId }: GQL.IEmployOnQueryArguments) =>
       Employ.findOne({ where: { id: employId }, order: { createdAt: "DESC" } })

@@ -14,6 +14,7 @@ const InputPortfolio = ({ values, setFieldValue, ...rest }) => (
       {...rest}
     />
 
+    <label className="label">Tamaño máximo de archivo 15mb.</label>
     <div className="buttons are-medium" style={{ marginBottom: 0 }}>
       <Field
         name="multimedia"

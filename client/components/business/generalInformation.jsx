@@ -69,66 +69,62 @@ const generalInformation = ({ information }) => (
         </div>
       </div>
 
-      {information.socialnetwork && (
+      {information.socialnetwork && information.socialnetwork.length > 0 && (
         <div className="column is-6">
           <div className="box" style={{ marginTop: "0.1rem" }}>
             <div className="content">
-              {information.socialnetwork.length > 0 ? (
-                <>
-                  <p className="subtitle">
-                    <strong>Redes sociales:</strong>
-                  </p>
+              <p className="subtitle">
+                <strong>Redes sociales:</strong>
+              </p>
 
-                  <ul>
-                    {information.socialnetwork.map((socialnetwork, i) => (
-                      <li key={i}>
-                        <span className="subtitle">
-                          <i
-                            className={`fab fa-${socialnetwork.name.toLowerCase()}`}
-                            aria-hidden="true"
-                          />{" "}
-                          {socialnetwork.name === "Skype" ? (
-                            <a href={`skype:${socialnetwork.url}?chat`}>
-                              {socialnetwork.url}
-                            </a>
-                          ) : socialnetwork.name === "Whatsapp" ? (
-                            <a
-                              rel="noopener noreferrer"
-                              target="_blank"
-                              href={`https://wa.me/${
-                                socialnetwork.url
-                              }?text=Hola,%20¿Cómo%20te%20va?`}
-                            >
-                              {socialnetwork.url}
-                            </a>
-                          ) : socialnetwork.name === "YouTube" ||
-                            socialnetwork.name === "Spotify" ? (
-                            <a
-                              rel="noopener noreferrer"
-                              target="_blank"
-                              href={socialnetwork.url}
-                            >
-                              {socialnetwork.name}
-                            </a>
-                          ) : (
-                            <a
-                              rel="noopener noreferrer"
-                              target="_blank"
-                              href={socialnetwork.url}
-                            >
-                              {/* Removing the url and only show the profile of the user */}
-                              {socialnetwork.url.replace(
-                                /[https:\\/\\/www].+\//,
-                                ""
-                              )}
-                            </a>
+              <ul>
+                {information.socialnetwork.map((socialnetwork, i) => (
+                  <li key={i}>
+                    <span className="subtitle">
+                      <i
+                        className={`fab fa-${socialnetwork.name.toLowerCase()}`}
+                        aria-hidden="true"
+                      />{" "}
+                      {socialnetwork.name === "Skype" ? (
+                        <a href={`skype:${socialnetwork.url}?chat`}>
+                          {socialnetwork.url}
+                        </a>
+                      ) : socialnetwork.name === "Whatsapp" ? (
+                        <a
+                          rel="noopener noreferrer"
+                          target="_blank"
+                          href={`https://wa.me/${
+                            socialnetwork.url
+                          }?text=Hola,%20¿Cómo%20te%20va?`}
+                        >
+                          {socialnetwork.url}
+                        </a>
+                      ) : socialnetwork.name === "YouTube" ||
+                        socialnetwork.name === "Spotify" ? (
+                        <a
+                          rel="noopener noreferrer"
+                          target="_blank"
+                          href={socialnetwork.url}
+                        >
+                          {socialnetwork.name}
+                        </a>
+                      ) : (
+                        <a
+                          rel="noopener noreferrer"
+                          target="_blank"
+                          href={socialnetwork.url}
+                        >
+                          {/* Removing the url and only show the profile of the user */}
+                          {socialnetwork.url.replace(
+                            /[https:\\/\\/www].+\//,
+                            ""
                           )}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              ) : null}
+                        </a>
+                      )}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>

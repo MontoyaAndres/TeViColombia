@@ -16,7 +16,6 @@ import EditGeneralInformation from "../../../components/user/edit/editGeneralInf
 import EditLanguage from "../../../components/user/edit/editLanguage";
 import EditStudy from "../../../components/user/edit/editStudy";
 import EditWork from "../../../components/user/edit/editWork";
-import EditSocialNetwork from "../../../containers/edit/editSocialNetwork";
 import EditPreferWork from "../../../components/user/edit/editPreferWork";
 import TownsByDepartament from "../../../utils/townsByDepartament";
 import { GeneralInformationValidation } from "../../../utils/validation";
@@ -38,6 +37,13 @@ const DynamicUploadRoutePhoto = dynamic(
 );
 const DynamicEditCV = dynamic(
   () => import("../../../components/user/edit/editCV"),
+  {
+    loading: () => <Loading />,
+    ssr: false
+  }
+);
+const DynamicEditSocialNetwork = dynamic(
+  () => import("../../../containers/edit/editSocialNetwork"),
   {
     loading: () => <Loading />,
     ssr: false
@@ -94,10 +100,14 @@ const edit = ({
       <Field name="routeCover" component={DynamicUploadRouteCover} />
       <Field name="routePhoto" component={DynamicUploadRoutePhoto} />
 
-      <div id="edited" className="container">
+      <div className="container">
         {/* User updated successfully */}
         {values.edited && (
-          <div className="animated bounceIn notification is-primary">
+          <div
+            id="edited"
+            className="animated bounceIn notification is-primary"
+            style={{ margin: 10 }}
+          >
             <button
               type="button"
               className="delete"
@@ -113,7 +123,7 @@ const edit = ({
           skills={values.skills}
           setFieldValue={setFieldValue}
         />
-        <EditSocialNetwork
+        <DynamicEditSocialNetwork
           socialnetwork={values.socialnetwork}
           setFieldValue={setFieldValue}
         />

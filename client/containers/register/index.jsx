@@ -4,7 +4,7 @@ const registerContainer = ({ registered, setFieldValue, children }) => {
   const [light, setLight] = useState(true);
 
   return (
-    <div className="container has-text-centered">
+    <div className="container has-text-centered static-height">
       {/* Created successfully */}
       {registered && (
         <div
@@ -18,7 +18,7 @@ const registerContainer = ({ registered, setFieldValue, children }) => {
             onClick={() => setFieldValue("registered", false, false)}
           />
           <p className="subtitle">
-            Por favor revise su correo electrónico para poder entrar a Te vi
+            Por favor revise su correo electrónico para poder entrar a Te Vi
             Colombia.
           </p>
         </div>

@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
+
+import useResize from "../../components/shared/useResize";
 
 const arraySocialNetwork = [
   "Twitter",
@@ -46,8 +48,37 @@ function urlSocialNetwork({ name, url }) {
   }
 }
 
+// Responsive input for social network
+const styleInputResponsive = {
+  addonsDesktop: {
+    display: "flex"
+  },
+  addonsMobile: {
+    display: "block"
+  },
+  controlDesktop: {
+    paddingBottom: 0
+  },
+  controlMobile: {
+    paddingBottom: 10,
+    margin: "0 .75rem"
+  },
+  selectDesktop: {
+    width: "auto"
+  },
+  selectMobile: {
+    width: "100vw"
+  }
+};
+
 const editSocialNetwork = ({ socialnetwork, setFieldValue }) => {
-  const [state, setState] = useState({ name: "Twitter", url: "" });
+  const { width } = useResize();
+
+  const [state, setState] = useState({
+    name: "Twitter",
+    url: "",
+    readMore: false
+  });
 
   function handleAddElement(e) {
     e.preventDefault();
@@ -59,7 +90,7 @@ const editSocialNetwork = ({ socialnetwork, setFieldValue }) => {
       ]);
     }
 
-    setState({ name: state.name, url: "" });
+    setState({ name: state.name, url: "", readMore: state.readMore });
   }
 
   function handleDeleteElement(index) {
@@ -67,6 +98,10 @@ const editSocialNetwork = ({ socialnetwork, setFieldValue }) => {
       ...socialnetwork.slice(0, index),
       ...socialnetwork.slice(index + 1)
     ]);
+  }
+
+  function handleReadMore() {
+    setState({ name: state.name, url: state.url, readMore: !state.readMore });
   }
 
   return (
@@ -80,36 +115,65 @@ const editSocialNetwork = ({ socialnetwork, setFieldValue }) => {
           <p className="subtitle">
             Para que cualquier persona pueda comunicarse contigo a través de
             algún medio de comunicación, siga estos pasos y seleccione que medio
-            de comunicación va a añadir.
+            de comunicación va a añadir.{" "}
+            <a onClick={handleReadMore}>
+              {!state.readMore ? "Mostrar más" : ""}
+            </a>
           </p>
           <div className="content">
-            <ul>
-              <li>
-                En Twitter, GitHub, Skype, Facebook, Linkedin o Instagram
-                escriba el nombre de usuario de la cuenta. Ejemplo en Twitter:
-                @NombreUsuario
-              </li>
-              <li>
-                En Whatsapp debe de poner su número de telefóno con su
-                respectivo indicativo de país. Ejemplo: +573213334444
-              </li>
-              <li>
-                En YouTube o Spotify pegue la URL de su perfil de usuario.
-              </li>
-            </ul>
+            {state.readMore && (
+              <ul className="subtitle is-6">
+                <li>
+                  En Twitter, GitHub, Skype, Facebook, Linkedin o Instagram
+                  escriba el nombre de usuario de la cuenta. Ejemplo en Twitter:
+                  @NombreUsuario
+                </li>
+                <li>
+                  En Whatsapp debe de poner su número de telefóno con su
+                  respectivo indicativo de país. Ejemplo: +573213334444
+                </li>
+                <li>
+                  En YouTube o Spotify pegue la URL de su perfil de usuario.{" "}
+                  <a onClick={handleReadMore}>Mostrar menos</a>
+                </li>
+              </ul>
+            )}
           </div>
         </div>
 
         <div className="content">
-          <div className="field is-grouped">
-            <div className="control has-icons-left">
+          <div
+            className="field is-grouped"
+            style={
+              width < 600
+                ? { ...styleInputResponsive.addonsMobile }
+                : { ...styleInputResponsive.addonsDesktop }
+            }
+          >
+            <div
+              className="control has-icons-left"
+              style={
+                width < 600
+                  ? { ...styleInputResponsive.controlMobile }
+                  : { ...styleInputResponsive.controlDesktop }
+              }
+            >
               <div className="select is-medium">
                 <select
                   name="name"
                   required
                   className="is-hovered"
+                  style={
+                    width < 600
+                      ? { ...styleInputResponsive.selectMobile }
+                      : { ...styleInputResponsive.selectDesktop }
+                  }
                   onChange={e =>
-                    setState({ name: e.target.value, url: state.url })
+                    setState({
+                      name: e.target.value,
+                      url: state.url,
+                      readMore: state.readMore
+                    })
                   }
                 >
                   {arraySocialNetwork.map((sn, i) => (
@@ -128,13 +192,24 @@ const editSocialNetwork = ({ socialnetwork, setFieldValue }) => {
               </div>
             </div>
 
-            <div className="control is-expanded">
+            <div
+              className="control is-expanded"
+              style={
+                width < 600
+                  ? { ...styleInputResponsive.controlMobile }
+                  : { ...styleInputResponsive.controlDesktop }
+              }
+            >
               <input
                 className="input is-hovered is-medium"
                 type="text"
                 name="url"
                 onChange={e =>
-                  setState({ name: state.name, url: e.target.value })
+                  setState({
+                    name: state.name,
+                    url: e.target.value,
+                    readMore: state.readMore
+                  })
                 }
                 value={state.url}
                 onKeyPress={e => {
@@ -144,10 +219,14 @@ const editSocialNetwork = ({ socialnetwork, setFieldValue }) => {
               />
             </div>
 
-            <div className="control">
+            <div
+              className="control"
+              style={{ textAlign: width < 600 ? "center" : "left" }}
+            >
               <a
                 className="button is-info is-medium"
                 onClick={handleAddElement}
+                style={{ width: width < 600 ? 150 : "auto" }}
               >
                 <span className="icon">
                   <i className="fas fa-plus" aria-hidden="true" />

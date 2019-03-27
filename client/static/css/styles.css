@@ -13,6 +13,15 @@ body {
   color: white;
 }
 
+.static-height,
+.dynamic-height {
+  min-height: calc(100vh - 3.25rem);
+}
+
+.static-height {
+  padding: 20px 0;
+}
+
 .navbar,
 .navbar-brand,
 .navbar-menu {
@@ -118,13 +127,12 @@ textarea.textarea:-moz-placeholder {
 }
 
 .card-image > * {
-  width: 640px;
-  height: 480px;
+  width: 100%;
   background-color: rgba(214, 214, 214, 0.1);
 }
 
 .card-footer {
-  border-top: none;
+  border-top: auto;
   border-right: none;
 }
 
@@ -187,7 +195,8 @@ input[type="number"] {
 }
 
 .overlay-icon:hover,
-.background-cover-edit:hover {
+.background-cover-edit:hover,
+.backgroud-color-edit:hover {
   opacity: 0.8;
   cursor: pointer;
 }
@@ -195,6 +204,11 @@ input[type="number"] {
 .background-cover img {
   height: 100%;
   width: 100%;
+}
+
+.background-color {
+  width: 100%;
+  background-color: #00ffd9;
 }
 
 .update-finished:hover {
@@ -274,6 +288,15 @@ a span.tag {
     max-height: 300px;
   }
 
+  .background-color {
+    height: 200px;
+  }
+
+  .card-image > * {
+    min-height: 300px;
+    max-height: 350px;
+  }
+
   .employ-media {
     padding: 0;
   }
@@ -295,6 +318,15 @@ a span.tag {
   .background-cover img {
     min-height: 300px;
     max-height: 450px;
+  }
+
+  .background-color {
+    height: 300px;
+  }
+
+  .card-image > * {
+    min-height: 350px;
+    max-height: 400px;
   }
 
   .employ-media {

@@ -11,7 +11,7 @@ class MyDocument extends Document {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
           />
-          <meta name="theme-color" content="#ffffff" />
+          <meta name="theme-color" content="#00d1b2" />
           <meta
             name="description"
             content="Tejidos virtuales para el emprendimiento, las prácticas profesionales y la empleabilidad."
@@ -24,7 +24,7 @@ class MyDocument extends Document {
             content="black-translucent"
           />
           <meta name="format-detection" content="telephone=no" />
-          <meta name="apple-mobile-web-app-title" content="Te vi Colombia" />
+          <meta name="apple-mobile-web-app-title" content="Te Vi Colombia" />
           <link
             rel="apple-touch-icon"
             sizes="180x180"
@@ -33,9 +33,9 @@ class MyDocument extends Document {
           <link
             rel="mask-icon"
             href="/static/img/lightOn.png"
-            color="#ffffff"
+            color="#00d1b2"
           />
-          <meta name="msapplication-TileColor" content="#ffffff" />
+          <meta name="msapplication-TileColor" content="#00d1b2" />
           <meta
             name="msapplication-TileImage"
             content="/static/icons/icon-192x192.png"
@@ -47,7 +47,7 @@ class MyDocument extends Document {
           <meta property="og:locale" content="es_CO" />
           <meta property="og:type" content="website" />
           <meta property="og:image" content="icons/icon-128x128.png" />
-          <meta property="og:site_name" content="Te vi Colombia" />
+          <meta property="og:site_name" content="Te Vi Colombia" />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"

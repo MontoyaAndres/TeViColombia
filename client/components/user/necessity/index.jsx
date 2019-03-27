@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import gql from "graphql-tag";
 import { compose, graphql } from "react-apollo";
 import { withFormik, Form } from "formik";
@@ -42,6 +42,7 @@ const index = ({
   loadingMe,
   dataNecessity,
   dataMe,
+  fetchNecessity,
   id,
   isSubmitting,
   handleSubmit
@@ -49,15 +50,79 @@ const index = ({
   const [state, setState] = useState({
     deleteNecessity: false,
     updateNecessity: false,
-    idNecessity: null
+    idNecessity: null,
+    hasMoreItems: true
   });
 
+  useEffect(() => {
+    if (dataNecessity.response && dataNecessity.response.length < 10) {
+      setState({
+        deleteNecessity: state.deleteNecessity,
+        updateNecessity: state.updateNecessity,
+        idNecessity: state.idNecessity,
+        hasMoreItems: false
+      });
+    }
+
+    return () => {
+      if (dataNecessity.response && dataNecessity.response.length >= 10) {
+        setState({
+          deleteNecessity: state.deleteNecessity,
+          updateNecessity: state.updateNecessity,
+          idNecessity: state.idNecessity,
+          hasMoreItems: true
+        });
+      }
+    };
+  }, [dataNecessity.response]);
+
   function handleAskDeleteNecessity(idNecessity = null) {
-    setState({ deleteNecessity: !state.deleteNecessity, idNecessity });
+    setState({
+      deleteNecessity: !state.deleteNecessity,
+      updateNecessity: state.updateNecessity,
+      idNecessity,
+      hasMoreItems: state.hasMoreItems
+    });
   }
 
   function handleAskUpdateNecessity(idNecessity = null) {
-    setState({ updateNecessity: !state.updateNecessity, idNecessity });
+    setState({
+      deleteNecessity: state.deleteNecessity,
+      updateNecessity: !state.updateNecessity,
+      idNecessity,
+      hasMoreItems: state.hasMoreItems
+    });
+  }
+
+  function handleLoadMore() {
+    fetchNecessity({
+      variables: {
+        userId: id,
+        limit: dataNecessity.response.length
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+
+        if (fetchMoreResult.necessity.response.length < 10) {
+          setState({
+            deleteNecessity: state.deleteNecessity,
+            updateNecessity: state.updateNecessity,
+            idNecessity: state.idNecessity,
+            hasMoreItems: false
+          });
+        }
+
+        return Object.assign({}, prev, {
+          necessity: {
+            ...fetchMoreResult.necessity,
+            response: [
+              ...prev.necessity.response,
+              ...fetchMoreResult.necessity.response
+            ]
+          }
+        });
+      }
+    });
   }
 
   if (loadingNecessity || loadingMe) {
@@ -95,65 +160,79 @@ const index = ({
       )}
 
       {dataNecessity && dataNecessity.response.length > 0 ? (
-        dataNecessity.response.map((neces, i) => (
-          <div style={{ margin: "1.1rem 0" }} key={i}>
-            <div className="card" style={{ borderRadius: 6 }}>
-              <header className="card-header" style={{ borderRadius: 6 }}>
-                <div className="card-header-title">
-                  <div className="media">
-                    <div className="media-left">
-                      <div>
-                        {neces.finished ? (
-                          <i
-                            className="fas fa-2x fa-check is-medium"
-                            style={{ color: "lightgreen" }}
-                            aria-hidden="true"
-                          />
-                        ) : (
-                          <i
-                            className="fas fa-2x fa-clock is-medium"
-                            style={{ color: "gray" }}
-                            aria-hidden="true"
-                          />
-                        )}
+        <>
+          {dataNecessity.response.map((neces, i) => (
+            <div style={{ margin: "1.1rem 0" }} key={i}>
+              <div className="card" style={{ borderRadius: 6 }}>
+                <header className="card-header" style={{ borderRadius: 6 }}>
+                  <div className="card-header-title">
+                    <div className="media">
+                      <div className="media-left">
+                        <div>
+                          {neces.finished ? (
+                            <i
+                              className="fas fa-2x fa-check is-medium"
+                              style={{ color: "lightgreen" }}
+                              aria-hidden="true"
+                            />
+                          ) : (
+                            <i
+                              className="fas fa-2x fa-clock is-medium"
+                              style={{ color: "gray" }}
+                              aria-hidden="true"
+                            />
+                          )}
+                        </div>
                       </div>
-                    </div>
-                    <div className="media-content">
-                      <div className="content">
-                        <Linkify
-                          decoraction="subtitle"
-                          text={neces.comment}
-                          length={80}
-                        />
+                      <div className="media-content">
+                        <div className="content">
+                          <Linkify
+                            decoraction="subtitle"
+                            text={neces.comment}
+                            length={80}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {dataMe.id === id && (
-                  <DropdownIcon i={i}>
-                    <div className="dropdown-menu" role="menu">
-                      <div className="dropdown-content">
-                        <a
-                          className="dropdown-item"
-                          onClick={() => handleAskUpdateNecessity(neces.id)}
-                        >
-                          Editar
-                        </a>
-                        <a
-                          className="dropdown-item"
-                          onClick={() => handleAskDeleteNecessity(neces.id)}
-                        >
-                          Eliminar
-                        </a>
+                  {dataMe.id === id && (
+                    <DropdownIcon i={i}>
+                      <div className="dropdown-menu" role="menu">
+                        <div className="dropdown-content">
+                          <a
+                            className="dropdown-item"
+                            onClick={() => handleAskUpdateNecessity(neces.id)}
+                          >
+                            Editar
+                          </a>
+                          <a
+                            className="dropdown-item"
+                            onClick={() => handleAskDeleteNecessity(neces.id)}
+                          >
+                            Eliminar
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                  </DropdownIcon>
-                )}
-              </header>
+                    </DropdownIcon>
+                  )}
+                </header>
+              </div>
             </div>
-          </div>
-        ))
+          ))}
+
+          {state.hasMoreItems && (
+            <div className="buttons has-addons is-centered">
+              <button
+                type="button"
+                className="button is-block is-primary is-large"
+                onClick={handleLoadMore}
+              >
+                Ver más
+              </button>
+            </div>
+          )}
+        </>
       ) : (
         <h2
           className="subtitle is-3"
@@ -168,10 +247,14 @@ const index = ({
 
 export default compose(
   graphql(necessityQuery, {
-    options: ({ id }) => ({ variables: { userId: id } }),
+    options: ({ id }) => ({
+      variables: { userId: id },
+      fetchPolicy: "cache-and-network"
+    }),
     props: ({ data }) => ({
       loadingNecessity: data.loading,
-      dataNecessity: data.necessity
+      dataNecessity: data.necessity,
+      fetchNecessity: data.fetchMore
     })
   }),
   graphql(meQuery, {

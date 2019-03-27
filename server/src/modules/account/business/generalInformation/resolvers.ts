@@ -22,8 +22,7 @@ export const resolvers: ResolveMap = {
       (_, { value }: GQL.ISearchMemberOnQueryArguments) =>
         User.find({
           where: { email: Like(`%${value}%`) },
-          take: 10,
-          cache: true
+          take: 10
         })
     )
   },
