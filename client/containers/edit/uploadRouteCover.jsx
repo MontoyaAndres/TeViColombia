@@ -39,10 +39,7 @@ const uploadRouteCover = ({
           <img src={cover} alt="user cover" />
         </div>
       ) : (
-        <div
-          className="background-cover-edit"
-          style={{ height: 400, width: "100%", backgroundColor: "#00ffd9" }}
-        />
+        <div className="background-color background-color-edit" />
       )}
     </div>
   );

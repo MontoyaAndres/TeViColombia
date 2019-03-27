@@ -6,7 +6,7 @@ const prod = process.env.NODE_ENV === "production";
 module.exports = withOffline(
   withCSS({
     env: {
-      API_HOST: prod ? "https://api.example.com" : "http://localhost:4000"
+      API_HOST: prod ? "https://api.tevicolombia.com" : "http://localhost:4000"
     },
     crossOrigin: "anonymous"
   })

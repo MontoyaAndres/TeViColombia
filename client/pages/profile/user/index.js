@@ -33,7 +33,11 @@ const user = ({
   dataCountNecessity
 }) => {
   if (loadingCountNecessity || loadingInformation) {
-    return <Loading />;
+    return (
+      <div className="dynamic-height">
+        <Loading />
+      </div>
+    );
   }
 
   if (!dataInformation) {

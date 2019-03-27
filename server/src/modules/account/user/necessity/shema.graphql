@@ -13,7 +13,7 @@ type NecessityResponse {
 }
 
 type Query {
-  necessity(userId: ID!): NecessityResponse
+  necessity(userId: ID!, limit: Int = 0): NecessityResponse
 }
 
 type Mutation {

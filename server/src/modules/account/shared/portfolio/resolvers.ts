@@ -36,10 +36,12 @@ const saveMultimedia = (multimedia: any) =>
 
 export const resolvers: ResolveMap = {
   Query: {
-    portfolio: (_, { id }: GQL.IPortfolioOnQueryArguments) =>
+    portfolio: (_, { id, limit }: GQL.IPortfolioOnQueryArguments) =>
       Portfolio.find({
         where: { portfolioId: id },
-        order: { createdAt: "DESC" }
+        order: { createdAt: "DESC" },
+        skip: limit,
+        take: 10
       })
   },
   Mutation: {
@@ -75,7 +77,7 @@ export const resolvers: ResolveMap = {
         } else {
           return [
             {
-              path: "multimedia",
+              path: "description",
               message: "Por favor suba una imagen o vídeo."
             }
           ];
@@ -124,7 +126,7 @@ export const resolvers: ResolveMap = {
         } else {
           return [
             {
-              path: "multimedia",
+              path: "description",
               message: "Por favor suba una imagen o vídeo."
             }
           ];

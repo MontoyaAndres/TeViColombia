@@ -5,7 +5,7 @@ type Portfolio {
 }
 
 type Query {
-  portfolio(id: ID!): [Portfolio]
+  portfolio(id: ID!, limit: Int = 0): [Portfolio]
 }
 
 type Mutation {

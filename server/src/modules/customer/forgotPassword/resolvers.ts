@@ -41,7 +41,7 @@ export const resolvers: ResolveMap = {
       );
 
       sendForgotPasswordEmailLink(email, url);
-      return true;
+      return null;
     },
     forgotPasswordChange: async (
       _,

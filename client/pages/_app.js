@@ -29,7 +29,7 @@ class MyApp extends App {
     return (
       <Container>
         <Head>
-          <title>Te vi Colombia</title>
+          <title>Te Vi Colombia</title>
         </Head>
         <ApolloProvider client={apolloClient}>
           <Layout>

@@ -23,15 +23,13 @@ const profile = ({
   }
 
   return (
-    <>
+    <div className="dynamic-height">
       {routeCover ? (
         <figure className="background-cover">
           <img src={`${process.env.API_HOST}/${routeCover}`} alt="user cover" />
         </figure>
       ) : (
-        <div
-          style={{ height: 400, width: "100%", backgroundColor: "#00ffd9" }}
-        />
+        <div className="background-color" />
       )}
 
       <div
@@ -53,8 +51,8 @@ const profile = ({
       </div>
 
       <h3 className="title" style={{ textAlign: "center" }}>
-        {/* For business lastname is null */}
-        {name} {lastname && lastname}
+        {/* For business `lastname` is null */}
+        {name} {lastname}
       </h3>
 
       <h3 className="subtitle" style={{ textAlign: "center" }}>
@@ -76,7 +74,7 @@ const profile = ({
       </h3>
 
       {children({ value, setValue })}
-    </>
+    </div>
   );
 };
 

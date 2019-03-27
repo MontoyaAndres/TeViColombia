@@ -7,7 +7,7 @@ const footer = () => (
   >
     <div className="content has-text-centered">
       <p className="subtitle">
-        <strong>Te vi Colombia 2019</strong>
+        <strong>Te Vi Colombia 2019</strong>
       </p>
       <div>
         Icono hecho por{" "}

@@ -10,7 +10,7 @@ const terms = () => (
         Los datos personales suministrados por el Titular serán utilizados por
         UNIMINUTO para identificar, recopilar y registrar a los prospectos de
         cualquier persona interesada en los servicios que ofrece la plataforma
-        Te vi Colombia, con el fin de poder prestar sus servicios de generar
+        Te Vi Colombia, con el fin de poder prestar sus servicios de generar
         conexiones de ayuda y alternativas para poder emprender.
       </p>
 
@@ -81,7 +81,7 @@ const terms = () => (
 
       <p className="subtitle">
         Los datos personales suministrados por el Titular serán utilizados por
-        Te vi Colombia con el fin de canalizar oportunidades de cooperación y/o
+        Te Vi Colombia con el fin de canalizar oportunidades de cooperación y/o
         donaciones, trabajos conjuntos, proyectos, emprendimiento, etc. De igual
         manera, se utiliza esta formación para conocer los aliados de UNIMINUTO.
       </p>

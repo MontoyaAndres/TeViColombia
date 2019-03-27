@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
 import Link from "next/link";
@@ -66,6 +66,7 @@ const index = ({
   loadingMe,
   dataFeedback,
   dataMe,
+  fetchFeedback,
   id,
   values,
   handleSubmit,
@@ -74,11 +75,66 @@ const index = ({
 }) => {
   const [state, setState] = useState({
     deleteFeedback: false,
-    idFeedback: null
+    idFeedback: null,
+    hasMoreItems: true
   });
 
+  useEffect(() => {
+    if (dataFeedback.response && dataFeedback.response.length < 10) {
+      setState({
+        deleteFeedback: state.deleteFeedback,
+        idFeedback: state.idFeedback,
+        hasMoreItems: false
+      });
+    }
+
+    return () => {
+      if (dataFeedback.response && dataFeedback.response.length >= 10) {
+        setState({
+          deleteFeedback: state.deleteFeedback,
+          idFeedback: state.idFeedback,
+          hasMoreItems: true
+        });
+      }
+    };
+  }, [dataFeedback.response]);
+
   function handleAskDeleteFeedback(idFeedback = null) {
-    setState({ deleteFeedback: !state.deleteFeedback, idFeedback });
+    setState({
+      deleteFeedback: !state.deleteFeedback,
+      idFeedback,
+      hasMoreItems: state.hasMoreItems
+    });
+  }
+
+  function handleLoadMore() {
+    fetchFeedback({
+      variables: {
+        id,
+        limit: dataFeedback.response.length
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+
+        if (fetchMoreResult.feedback.response.length < 10) {
+          setState({
+            deleteFeedback: state.deleteFeedback,
+            idFeedback: state.idFeedback,
+            hasMoreItems: false
+          });
+        }
+
+        return Object.assign({}, prev, {
+          feedback: {
+            ...fetchMoreResult.feedback,
+            response: [
+              ...prev.feedback.response,
+              ...fetchMoreResult.feedback.response
+            ]
+          }
+        });
+      }
+    });
   }
 
   if (loadingFeedback || loadingMe) {
@@ -124,69 +180,87 @@ const index = ({
                 🥺🙁
               </span>
               . Busca personas o empresas para que te den Feedback y crezcas en
-              Te vi Colombia!
+              Te Vi Colombia!
             </p>
           )}
         </div>
       )}
 
       {dataFeedback && dataFeedback.response.length > 0 ? (
-        dataFeedback.response.map(feed => (
-          <div style={{ margin: "1.1rem 0" }} key={feed.id}>
-            <div className="control has-icons-right">
-              {dataMe && dataMe.id === id && (
-                <span
-                  className="icon is-medium is-right"
-                  onClick={() => handleAskDeleteFeedback(feed.id)}
-                >
-                  <i className="delete is-medium" aria-hidden="true" />
-                </span>
-              )}
+        <>
+          {dataFeedback.response.map(feed => (
+            <div style={{ margin: "1.1rem 0" }} key={feed.id}>
+              <div className="control has-icons-right">
+                {dataMe && dataMe.id === id && (
+                  <span
+                    className="icon is-medium is-right"
+                    onClick={() => handleAskDeleteFeedback(feed.id)}
+                  >
+                    <i className="delete is-medium" aria-hidden="true" />
+                  </span>
+                )}
 
-              <div className="card" style={{ borderRadius: 6 }}>
-                <div className="card-content" style={{ borderRadius: 6 }}>
-                  <div className="media">
-                    <div className="media-left">
-                      <SimpleImg
-                        applyAspectRatio={false}
-                        src={`${process.env.API_HOST}/${feed.from.routePhoto}`}
-                        height={44}
-                        width={48}
-                        alt="profile"
+                <div className="card" style={{ borderRadius: 6 }}>
+                  <div className="card-content" style={{ borderRadius: 6 }}>
+                    <div className="media">
+                      <div className="media-left">
+                        <SimpleImg
+                          applyAspectRatio={false}
+                          src={`${process.env.API_HOST}/${
+                            feed.from.routePhoto
+                          }`}
+                          height={44}
+                          width={48}
+                          alt="profile"
+                        />
+                      </div>
+
+                      <div className="media-content">
+                        <Link
+                          href={{
+                            pathname:
+                              feed.from.type === "User"
+                                ? "/profile/user"
+                                : "/profile/business",
+                            query: { id: feed.from.id }
+                          }}
+                          prefetch
+                        >
+                          <a className="title is-4">
+                            {feed.from.name} {feed.from.lastname}
+                          </a>
+                        </Link>
+                        <StaticStars stars={feed.stars} />
+                      </div>
+                    </div>
+
+                    <div className="content">
+                      <Linkify
+                        decoraction="subtitle"
+                        text={feed.comment}
+                        length={80}
                       />
                     </div>
-
-                    <div className="media-content">
-                      <Link
-                        href={{
-                          pathname:
-                            feed.from.type === "User"
-                              ? "/profile/user"
-                              : "/profile/business",
-                          query: { id: feed.from.id }
-                        }}
-                        prefetch
-                      >
-                        <a className="title is-4">
-                          {feed.from.name} {feed.from.lastname}
-                        </a>
-                      </Link>
-                      <StaticStars stars={feed.stars} />
-                    </div>
-                  </div>
-
-                  <div className="content">
-                    <Linkify
-                      decoraction="subtitle"
-                      text={feed.comment}
-                      length={80}
-                    />
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))
+          ))}
+
+          {state.hasMoreItems && (
+            <div className="column is-12">
+              <div className="buttons has-addons is-centered">
+                <button
+                  type="button"
+                  className="button is-block is-primary is-large"
+                  onClick={handleLoadMore}
+                >
+                  Ver más
+                </button>
+              </div>
+            </div>
+          )}
+        </>
       ) : (
         <h2
           className="subtitle is-3"
@@ -201,10 +275,14 @@ const index = ({
 
 export default compose(
   graphql(feedbackQuery, {
-    options: ({ id }) => ({ variables: { id } }),
+    options: ({ id }) => ({
+      variables: { id },
+      fetchPolicy: "cache-and-network"
+    }),
     props: ({ data }) => ({
       loadingFeedback: data.loading,
-      dataFeedback: data.feedback
+      dataFeedback: data.feedback,
+      fetchFeedback: data.fetchMore
     })
   }),
   graphql(meQuery, {

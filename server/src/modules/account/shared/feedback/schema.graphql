@@ -11,7 +11,7 @@ type FeedbackResponse {
 }
 
 type Query {
-  feedback(id: ID!): FeedbackResponse
+  feedback(id: ID!, limit: Int = 0): FeedbackResponse
 }
 
 type Mutation {

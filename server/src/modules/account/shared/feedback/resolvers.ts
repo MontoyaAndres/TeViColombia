@@ -37,10 +37,12 @@ export const resolvers: ResolveMap = {
     }
   },
   Query: {
-    feedback: async (_, { id }: GQL.IFeedbackOnQueryArguments) => {
+    feedback: async (_, { id, limit }: GQL.IFeedbackOnQueryArguments) => {
       const response = await FeedBack.find({
         where: { toId: id },
-        order: { createdAt: "DESC" }
+        order: { createdAt: "DESC" },
+        skip: limit,
+        take: 10
       });
 
       const { count } = await getConnection()

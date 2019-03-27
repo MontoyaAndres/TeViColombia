@@ -10,6 +10,7 @@ const uploadFile = ({
 }) => {
   const { getRootProps, getInputProps } = useDropzone({
     accept,
+    maxSize: 1.5e7, // 15 mb
     onDrop: files => {
       // This is to freeze the `file` array, and may concat it with the `values.multimedia` objects.
       const assignFile = files.map(file =>

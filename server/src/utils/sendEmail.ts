@@ -36,10 +36,10 @@ const sendEmailTemplate = (
 export const sendConfirmEmailLink = async (recipient: string, url: string) => {
   transporter.sendMail({
     to: recipient,
-    subject: "Confirmación Te vi Colombia",
+    subject: "Confirmación Te Vi Colombia",
     html: sendEmailTemplate(
-      "Confirmación Te vi Colombia.",
-      "Para confirmar que el correo electrónico que ha ingresado en Te vi Colombia es correcto y poder ingresar con normalidad, de clic en Confirmar correo. Si recibio este correo por error, por favor eliminarlo.",
+      "Confirmación Te Vi Colombia.",
+      "Para confirmar que el correo electrónico que ha ingresado en Te Vi Colombia es correcto y poder ingresar con normalidad, de clic en Confirmar correo. Si recibio este correo por error, por favor eliminarlo.",
       url,
       "Confirmar correo"
     )
@@ -52,10 +52,10 @@ export const sendForgotPasswordEmailLink = async (
 ) => {
   transporter.sendMail({
     to: recipient,
-    subject: "Cambio de contraseña Te vi Colombia",
+    subject: "Cambio de contraseña Te Vi Colombia",
     html: sendEmailTemplate(
-      "Cambio de contraseña Te vi Colombia",
-      "Para confirmar que el correo electrónico que ha ingresado es correcto y el cambio de contraseña sea efectuado en la plataforma Te vi Colombia con normalidad, de clic en Cambiar contraseña. Si recibio este correo por error, por favor eliminarlo.",
+      "Cambio de contraseña Te Vi Colombia",
+      "Para confirmar que el correo electrónico que ha ingresado es correcto y el cambio de contraseña sea efectuado en la plataforma Te Vi Colombia con normalidad, de clic en Cambiar contraseña. Si recibio este correo por error, por favor eliminarlo.",
       url,
       "Cambiar contraseña"
     )

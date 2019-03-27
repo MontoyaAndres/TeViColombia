@@ -4,14 +4,18 @@ import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
 import omit from "lodash.omit";
 
-import { TextField } from "../components/shared/globalField";
+import { TextField, RadioField } from "../components/shared/globalField";
 import normalizeErrors from "../utils/normalizeErrors";
 import checkLoggedIn from "../lib/checkLoggedIn";
 import redirect from "../lib/redirect";
+import Linkify from "../components/shared/linkify";
 
 const sendForgotPasswordEmailMutation = gql`
-  mutation SendForgotPasswordEmailMutation($email: String!) {
-    sendForgotPasswordEmail(email: $email)
+  mutation SendForgotPasswordEmailMutation($email: String!, $type: String!) {
+    sendForgotPasswordEmail(email: $email, type: $type) {
+      path
+      message
+    }
   }
 `;
 
@@ -23,25 +27,27 @@ const password = ({ values, handleSubmit, isSubmitting }) => (
           <div className="notification is-primary">
             <p className="subtitle">
               Por favor revise su correo electrónico para poder cambiar la
-              contraseña en Te vi Colombia.
+              contraseña en Te Vi Colombia.
             </p>
           </div>
         ) : (
           <div className="notification is-warning">
-            Este campo es exclusivo para cambiar la contraseña de el correo
-            electrónico que va a ingresar en el campo{" "}
-            <span style={{ fontWeight: "bold" }}>Correo electrónico</span>. Una
-            vez dado clic en <span style={{ fontWeight: "bold" }}>Enviar</span>,
-            se va a enviar un mensaje que trae consigo una URL de Te vi Colombia
-            con una llave, esto para verificar que el correo electrónico
-            ingresado es valido y así mismo cumplir con el proceso de asignar
-            una nueva contraseña. Esta URL puede estar activa únicamente por 20
-            minutos, si caduca debe de repetir este proceso nuevamente. Si este
-            mensaje no llega a ser aceptado por el dueño del correo electrónico,
-            la cuenta se mantendra bloqueada hasta que se cumpla su respectiva
-            confirmación. Todas las secciones establecidas en teléfonos, laptops
-            y computadoras hechas por el correo electrónico serán eliminadas
-            para evitar posibles inconvenientes.
+            <Linkify
+              decoraction="subtitle"
+              text="Para asignar los cambios, ingrese el correo electrónico en el campo
+              'Correo electrónico' y elija que tipo de cuenta es la que tiene. Una vez
+              dado clic en 'Enviar', se va a enviar un mensaje que trae consigo una
+              URL de Te Vi Colombia con una llave, esto es para verificar que el
+              correo electrónico ingresado es valido y así mismo cumplir con el
+              proceso de asignar una nueva contraseña. Esta URL puede estar activa
+              únicamente por 20 minutos, si caduca debe de repetir este proceso
+              nuevamente. Si este mensaje no llega a ser aceptado por el propietario
+              del correo electrónico, la cuenta se mantendra bloqueada hasta que se
+              cumpla su respectiva confirmación. Todas las secciones establecidas en
+              teléfonos, laptops y computadoras hechas por el correo electrónico serán
+              eliminadas para evitar posibles inconvenientes."
+              length={150}
+            />
           </div>
         )}
 
@@ -57,6 +63,15 @@ const password = ({ values, handleSubmit, isSubmitting }) => (
             placeholder="Correo electrónico"
             isRequired
           />
+
+          <label className="label">Tipo de cuenta</label>
+          <div className="field">
+            <RadioField
+              name="type"
+              arrayRadio={["Usuario", "Empresa"]}
+              isRequired
+            />
+          </div>
 
           <button
             type="submit"
@@ -76,8 +91,8 @@ const password = ({ values, handleSubmit, isSubmitting }) => (
 password.getInitialProps = async context => {
   const { loggedInUser } = await checkLoggedIn(context.apolloClient);
 
-  if (!loggedInUser.me) {
-    redirect(context, "/login");
+  if (loggedInUser.me) {
+    redirect(context, "/");
   }
 
   return {};
@@ -87,14 +102,21 @@ export default compose(
   graphql(sendForgotPasswordEmailMutation),
   withFormik({
     mapPropsToValues: () => ({
-      email: ""
+      email: "",
+      type: "Usuario"
     }),
     handleSubmit: async (
       values,
       { props: { mutate }, setSubmitting, setErrors, setFieldValue, resetForm }
     ) => {
       const { data } = await mutate({
-        variables: omit(values, ["sent"])
+        variables: omit(
+          {
+            email: values.email,
+            type: values.type === "Usuario" ? "User" : "Business"
+          },
+          ["sent"]
+        )
       });
 
       // if sendForgotPasswordEmail has data, it has the errors

@@ -118,8 +118,8 @@ const informationBusinessQuery = gql`
 `;
 
 const feedbackQuery = gql`
-  query FeedbackQuery($id: ID!) {
-    feedback(id: $id) {
+  query FeedbackQuery($id: ID!, $limit: Int) {
+    feedback(id: $id, limit: $limit) {
       response {
         id
         stars
@@ -138,8 +138,8 @@ const feedbackQuery = gql`
 `;
 
 const necessityQuery = gql`
-  query NecessityQuery($userId: ID!) {
-    necessity(userId: $userId) {
+  query NecessityQuery($userId: ID!, $limit: Int) {
+    necessity(userId: $userId, limit: $limit) {
       response {
         id
         finished
@@ -151,8 +151,8 @@ const necessityQuery = gql`
 `;
 
 const portfolioQuery = gql`
-  query PortfolioQuery($id: ID!) {
-    portfolio(id: $id) {
+  query PortfolioQuery($id: ID!, $limit: Int) {
+    portfolio(id: $id, limit: $limit) {
       id
       multimedia
       description
@@ -161,8 +161,8 @@ const portfolioQuery = gql`
 `;
 
 const employsQuery = gql`
-  query EmploysQuery($businessId: ID!) {
-    employs(businessId: $businessId) {
+  query EmploysQuery($businessId: ID!, $limit: Int) {
+    employs(businessId: $businessId, limit: $limit) {
       id
       position
       country

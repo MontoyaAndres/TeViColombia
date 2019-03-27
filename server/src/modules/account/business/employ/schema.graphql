@@ -44,7 +44,7 @@ type Employ {
 }
 
 type Query {
-  employs(businessId: ID!): [Employ]
+  employs(businessId: ID!, limit: Int = 0): [Employ]
   employ(employId: ID!): Employ
 }
 

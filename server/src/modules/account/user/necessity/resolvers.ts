@@ -9,14 +9,16 @@ export const resolvers: ResolveMap = {
   Query: {
     necessity: createMiddleware(
       middleware.auth,
-      async (_, { userId }: GQL.INecessityOnQueryArguments) => {
+      async (_, { userId, limit }: GQL.INecessityOnQueryArguments) => {
         const response = await Necessity.find({
           where: {
             user: {
               id: userId
             }
           },
-          order: { updatedAt: "DESC" }
+          order: { updatedAt: "DESC" },
+          skip: limit,
+          take: 10
         });
 
         const count = await Necessity.count({

@@ -14,7 +14,6 @@ import meQuery from "../../../graphql/queries/me";
 import checkLoggedIn from "../../../lib/checkLoggedIn";
 import redirect from "../../../lib/redirect";
 import EditGeneralInformation from "../../../components/business/edit/editGeneralInformation";
-import EditSocialNetwork from "../../../containers/edit/editSocialNetwork";
 import { GeneralInformationBusinessValidation } from "../../../utils/validation";
 import normalizeErrors from "../../../utils/normalizeErrors";
 
@@ -34,6 +33,13 @@ const DynamicUploadRoutePhoto = dynamic(
 );
 const DynamicEditMember = dynamic(
   () => import("../../../components/business/edit/editMember"),
+  {
+    loading: () => <Loading />,
+    ssr: false
+  }
+);
+const DynamicEditSocialNetwork = dynamic(
+  () => import("../../../containers/edit/editSocialNetwork"),
   {
     loading: () => <Loading />,
     ssr: false
@@ -90,10 +96,14 @@ const edit = ({
       <Field name="routeCover" component={DynamicUploadRouteCover} />
       <Field name="routePhoto" component={DynamicUploadRoutePhoto} />
 
-      <div id="edited" className="container">
+      <div className="container">
         {/* Business updated successfully */}
         {values.edited && (
-          <div className="animated bounceIn notification is-primary">
+          <div
+            id="edited"
+            className="animated bounceIn notification is-primary"
+            style={{ margin: 10 }}
+          >
             <button
               type="button"
               className="delete"
@@ -114,7 +124,7 @@ const edit = ({
           values={values.memberUser}
           setFieldValue={setFieldValue}
         />
-        <EditSocialNetwork
+        <DynamicEditSocialNetwork
           socialnetwork={values.socialnetwork}
           setFieldValue={setFieldValue}
         />

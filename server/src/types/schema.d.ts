@@ -37,6 +37,11 @@ search: Array<Response | null> | null;
 
 interface IEmploysOnQueryArguments {
 businessId: string;
+
+  /**
+   * @default 0
+   */
+limit?: number | null;
 }
 
 interface IEmployOnQueryArguments {
@@ -53,10 +58,20 @@ value?: string | null;
 
 interface IFeedbackOnQueryArguments {
 id: string;
+
+  /**
+   * @default 0
+   */
+limit?: number | null;
 }
 
 interface IPortfolioOnQueryArguments {
 id: string;
+
+  /**
+   * @default 0
+   */
+limit?: number | null;
 }
 
 interface IInformationOnQueryArguments {
@@ -65,6 +80,11 @@ id: string;
 
 interface INecessityOnQueryArguments {
 userId: string;
+
+  /**
+   * @default 0
+   */
+limit?: number | null;
 }
 
 interface ISearchOnQueryArguments {
@@ -364,7 +384,7 @@ generalInformation: Array<IError> | null;
 necessity: boolean;
 updateNecessity: boolean;
 deleteNecessity: boolean;
-sendForgotPasswordEmail: boolean | null;
+sendForgotPasswordEmail: Array<IError> | null;
 forgotPasswordChange: Array<IError> | null;
 helpEmail: Array<IError> | null;
 login: Array<IError> | null;

@@ -25,7 +25,11 @@ const business = ({
   dataInformationBusiness
 }) => {
   if (loadingInformationBusiness) {
-    return <Loading />;
+    return (
+      <div className="dynamic-height">
+        <Loading />
+      </div>
+    );
   }
 
   if (!dataInformationBusiness) {
