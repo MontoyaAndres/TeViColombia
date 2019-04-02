@@ -91,6 +91,11 @@ interface ISearchOnQueryArguments {
 value: string;
 type?: TypeEnum | null;
 params?: IParamsInput | null;
+
+  /**
+   * @default 0
+   */
+limit?: number | null;
 }
 
 /**
@@ -337,7 +342,7 @@ area?: string | null;
 employ?: boolean | null;
 }
 
-type Response = IUserSearchResponse | IBusinessSearchResponse | IError;
+type Response = IUserSearchResponse | IBusinessSearchResponse;
 
 
 
@@ -361,12 +366,6 @@ name: string;
 email: string;
 routePhoto: string;
 employ: Array<IEmploy | null> | null;
-}
-
-interface IError {
-__typename: "Error";
-path: string;
-message: string;
 }
 
 interface IMutation {
@@ -532,6 +531,12 @@ contract: string;
 minSalary?: any | null;
 maxSalary?: any | null;
 currency?: string | null;
+}
+
+interface IError {
+__typename: "Error";
+path: string;
+message: string;
 }
 
 interface IGeneralInformationBusinessInput {

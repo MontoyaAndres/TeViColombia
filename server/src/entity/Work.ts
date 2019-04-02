@@ -7,11 +7,6 @@ import {
 } from "typeorm";
 
 import { User } from "./User";
-import {
-  ENUMDepartament,
-  ENUMSector,
-  ENUMArea
-} from "../utils/entityGlobalEnum";
 import EmptyStringToNull from "../utils/emptyStringToNull";
 
 @Entity()
@@ -25,13 +20,13 @@ export class Work extends BaseEntity {
   @Column("varchar")
   job: string;
 
-  @Column("enum", { enum: ENUMDepartament })
+  @Column("varchar")
   departament: string;
 
-  @Column("enum", { enum: ENUMSector })
+  @Column("varchar")
   sector: string;
 
-  @Column("enum", { enum: ENUMArea })
+  @Column("varchar")
   area: string;
 
   @Column("text", { nullable: true, transformer: new EmptyStringToNull() })

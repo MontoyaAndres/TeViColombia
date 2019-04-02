@@ -47,8 +47,13 @@ type BusinessSearchResponse {
   employ: [Employ]
 }
 
-union Response = UserSearchResponse | BusinessSearchResponse | Error
+union Response = UserSearchResponse | BusinessSearchResponse
 
 type Query {
-  search(value: String!, type: TypeEnum, params: ParamsInput): [Response]
+  search(
+    value: String!
+    type: TypeEnum
+    params: ParamsInput
+    limit: Int = 0
+  ): [Response]
 }

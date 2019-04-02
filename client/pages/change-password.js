@@ -29,7 +29,7 @@ const changePassword = ({
     query: { key, type }
   }
 }) => (
-  <div className="hero is-fullheight-with-navbar">
+  <div className="hero">
     <div className="hero-body">
       <div className="container animated bounceInLeft">
         <div className="notification is-warning">

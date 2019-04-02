@@ -7,7 +7,6 @@ import {
 } from "typeorm";
 
 import { User } from "./User";
-import { ENUMStudyLevel } from "../utils/entityGlobalEnum";
 import EmptyStringToNull from "../utils/emptyStringToNull";
 
 @Entity()
@@ -18,7 +17,7 @@ export class Study extends BaseEntity {
   @Column("varchar")
   place: string;
 
-  @Column("enum", { enum: ENUMStudyLevel })
+  @Column("varchar")
   level: string;
 
   // This is only for university careers

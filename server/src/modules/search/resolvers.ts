@@ -13,17 +13,13 @@ export const resolvers: ResolveMap = {
   Response: {
     __resolveType: obj => {
       // Only Users have the value `lastname`.
-      if (!obj.path && !obj.message && obj.lastname) {
+      if (obj.lastname) {
         return "UserSearchResponse";
       }
 
       // Only Businesses does not have the value `lastname`.
-      if (!obj.path && !obj.message && !obj.lastname) {
+      if (!obj.lastname) {
         return "BusinessSearchResponse";
-      }
-
-      if (obj.path && obj.message) {
-        return "Error";
       }
 
       return null;
@@ -32,43 +28,21 @@ export const resolvers: ResolveMap = {
   Query: {
     search: async (
       _,
-      { value, type, params: { user, business } }: GQL.ISearchOnQueryArguments
+      {
+        value,
+        type,
+        params: { user, business },
+        limit
+      }: GQL.ISearchOnQueryArguments
     ) => {
       let response: Array<User | Business> = [];
-      const departamentError = [
-        {
-          path: "departament",
-          message: "Departamento invalido."
-        }
-      ];
-
-      if (user) {
-        if (
-          (user.nationality !== "Colombia" &&
-            user.departament !== "Extranjero") ||
-          (user.nationality === "Colombia" && user.departament === "Extranjero")
-        ) {
-          return departamentError;
-        }
-      }
-
-      if (business) {
-        if (
-          (business.nationality !== "Colombia" &&
-            business.departament !== "Extranjero") ||
-          (business.nationality === "Colombia" &&
-            business.departament === "Extranjero")
-        ) {
-          return departamentError;
-        }
-      }
 
       if (type === "User") {
-        response = await FetchUserData(value, user);
+        response = await FetchUserData(value, user, limit);
       }
 
       if (type === "Business") {
-        response = await FetchBusinessData(value, business);
+        response = await FetchBusinessData(value, business, limit);
       }
 
       // Getting ids from `User` or `Business`.

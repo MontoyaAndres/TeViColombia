@@ -8,14 +8,21 @@ import {
 
 // Models
 import { User } from "./User";
-import { ENUMLanguage, ENUMLanguageLevel } from "../utils/entityGlobalEnum";
+
+export enum ENUMLanguageLevel {
+  A1 = "Muy básico",
+  A2 = "Básico",
+  A3 = "Intermedio",
+  A4 = "Avanzado",
+  A5 = "Nativo"
+}
 
 @Entity()
 export class Language extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("enum", { enum: ENUMLanguage })
+  @Column("varchar")
   language: string;
 
   @Column("enum", { enum: ENUMLanguageLevel })

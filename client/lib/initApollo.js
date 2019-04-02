@@ -1,5 +1,8 @@
 import { ApolloClient } from "apollo-client";
-import { InMemoryCache } from "apollo-cache-inmemory";
+import {
+  InMemoryCache,
+  IntrospectionFragmentMatcher
+} from "apollo-cache-inmemory";
 import { createUploadLink } from "apollo-upload-client";
 import { setContext } from "apollo-link-context";
 import fetch from "isomorphic-unfetch";
@@ -10,6 +13,14 @@ const isBrowser = typeof window !== "undefined";
 if (!isBrowser) {
   global.fetch = fetch;
 }
+
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData: {
+    __schema: {
+      types: ["UserSearchResponse", "BusinessSearchResponse"] // This types are for `search`
+    }
+  }
+});
 
 function create(initialState, { getToken }) {
   const httpLink = createUploadLink({
@@ -31,7 +42,9 @@ function create(initialState, { getToken }) {
     connectToDevTools: isBrowser,
     ssrMode: !isBrowser,
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache({ addTypename: false }).restore(initialState || {})
+    cache: new InMemoryCache({ addTypename: false, fragmentMatcher }).restore(
+      initialState || {}
+    )
   });
 }
 
