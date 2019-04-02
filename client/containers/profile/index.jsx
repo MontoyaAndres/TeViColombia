@@ -23,7 +23,7 @@ const profile = ({
   }
 
   return (
-    <div className="dynamic-height">
+    <>
       {routeCover ? (
         <figure className="background-cover">
           <img src={`${process.env.API_HOST}/${routeCover}`} alt="user cover" />
@@ -74,7 +74,7 @@ const profile = ({
       </h3>
 
       {children({ value, setValue })}
-    </div>
+    </>
   );
 };
 

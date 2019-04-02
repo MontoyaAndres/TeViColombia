@@ -7,7 +7,7 @@ const ErrorFocus = ({
   name,
   formik: { isSubmitting, isValidating, errors }
 }) => {
-  /* When are errors from any client-validation, scroll into the first. */
+  /* When are errors from any client-validation, focus into the first. */
   const keys = Object.keys(errors);
   if (keys.length > 0 && isSubmitting && !isValidating) {
     document.querySelector(`[name="${keys[0]}"]`).focus();

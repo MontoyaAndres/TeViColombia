@@ -11,12 +11,6 @@ import {
   Index
 } from "typeorm";
 
-// Models
-import {
-  ENUMCountry,
-  ENUMDepartament,
-  ENUMSector
-} from "../utils/entityGlobalEnum";
 import { Employ } from "./Employ";
 import EmptyStringToNull from "../utils/emptyStringToNull";
 import { User } from "./User";
@@ -58,9 +52,8 @@ export class Business extends BaseEntity {
   })
   telephone2: number;
 
-  @Column("enum", {
+  @Column("varchar", {
     nullable: true,
-    enum: ENUMDepartament,
     transformer: new EmptyStringToNull()
   })
   departament: string;
@@ -68,14 +61,13 @@ export class Business extends BaseEntity {
   @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   town: string;
 
-  @Column("enum", {
-    enum: ENUMCountry,
+  @Column("varchar", {
     nullable: true,
     transformer: new EmptyStringToNull()
   })
   nationality: string;
 
-  @Column("enum", { enum: ENUMSector })
+  @Column("varchar")
   sector: string;
 
   @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })

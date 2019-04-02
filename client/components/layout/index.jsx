@@ -6,7 +6,7 @@ import Footer from "./footer";
 const index = ({ children }) => (
   <>
     <Menu />
-    {children}
+    <div className="static-height">{children}</div>
     <Footer />
   </>
 );

@@ -20,14 +20,14 @@ services:
       MYSQL_ROOT_PASSWORD: root
   server:
     build:
-      context: ../../
-      dockerfile: docker/dev/Dockerfile
+      context: ../
+      dockerfile: docker/Dockerfile
     container_name: server-tevi
     volumes:
-      - ../../server:/tevi-dev
+      - ../server:/tevi-dev
       - /tevi-dev/node_modules
     env_file:
-      - ../../server/server.env
+      - ../server/server.env
     environment:
       REDIS: redis
     ports:

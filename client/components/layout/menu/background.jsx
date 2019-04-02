@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import Router from "next/router";
 
 import useResize from "../../shared/useResize";
 
 const background = () => {
   const { width } = useResize();
+  const [value, setValue] = useState("");
+
+  function handleChange(e) {
+    setValue(e.target.value);
+  }
+
+  function redirectSearch() {
+    Router.push(`/search?value=${value}`, `/search/${value}`, {
+      shallow: true
+    });
+  }
 
   return (
     <div className="hero-body">
@@ -20,7 +32,8 @@ const background = () => {
             <input
               className="input is-medium"
               type="search"
-              placeholder="Busca lo que tú necesitas"
+              placeholder="Busca lo que tú necesitas!"
+              onChange={handleChange}
             />
           </div>
           <div className="control">
@@ -30,6 +43,7 @@ const background = () => {
                 WebkitBoxShadow: "0 0 0 1px rgba(10, 10, 10, 0.5)",
                 boxShadow: "0 0 0 1px rgba(10, 10, 10, 0.5)"
               }}
+              onClick={redirectSearch}
             >
               {width < 600 ? (
                 <span className="icon">

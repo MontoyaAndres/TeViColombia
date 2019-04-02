@@ -19,7 +19,6 @@ import { Work } from "./Work";
 import { CV } from "./CV";
 import { Language } from "./Language";
 import { PreferWork } from "./PreferWork";
-import { ENUMCountry, ENUMDepartament } from "../utils/entityGlobalEnum";
 import EmptyStringToNull from "../utils/emptyStringToNull";
 import { Business } from "./Business";
 
@@ -94,8 +93,7 @@ export class User extends BaseEntity {
   })
   telephone2: number;
 
-  @Column("enum", {
-    enum: ENUMDepartament,
+  @Column("varchar", {
     nullable: true,
     transformer: new EmptyStringToNull()
   })
@@ -104,8 +102,7 @@ export class User extends BaseEntity {
   @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   town: string;
 
-  @Column("enum", {
-    enum: ENUMCountry,
+  @Column("varchar", {
     nullable: true,
     transformer: new EmptyStringToNull()
   })

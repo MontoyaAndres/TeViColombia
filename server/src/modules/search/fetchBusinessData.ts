@@ -5,7 +5,8 @@ import { Business } from "../../entity/Business";
 
 export default function fetchBusinessData(
   value: string,
-  business: GQL.IParamsBusinessInput
+  business: GQL.IParamsBusinessInput,
+  limit: number
 ): Promise<Business[]> {
   let result = null;
 
@@ -13,20 +14,47 @@ export default function fetchBusinessData(
     result = getRepository(Business)
       .createQueryBuilder("business")
       .select()
-      .where(`MATCH(business.name) AGAINST (:value IN BOOLEAN MODE)`, {
-        value
-      })
-      .orWhere(`MATCH(business.description) AGAINST (:value IN BOOLEAN MODE)`, {
-        value
-      })
-      .orWhere(`MATCH(business.skills) AGAINST (:value IN BOOLEAN MODE)`, {
-        value
-      });
+      .leftJoin("business.employ", "employ")
+      .orWhere(
+        new Brackets(qb => {
+          qb.where(`MATCH(business.name) AGAINST (:value IN BOOLEAN MODE)`, {
+            value
+          })
+            .orWhere(
+              `MATCH(business.description) AGAINST (:value IN BOOLEAN MODE)`,
+              {
+                value
+              }
+            )
+            .orWhere(
+              `MATCH(business.skills) AGAINST (:value IN BOOLEAN MODE)`,
+              {
+                value
+              }
+            );
+        })
+      )
+      .andWhere(
+        new Brackets(qb => {
+          qb.where("business.nationality = :nationality", {
+            nationality: business.nationality
+          }).andWhere("business.departament = :departament", {
+            departament: business.departament
+          });
+        })
+      )
+      .andWhere(
+        new Brackets(qb => {
+          qb.where("business.sector = :sector", {
+            sector: business.sector
+          });
+        })
+      );
 
     // If the customer is looking for employ.
     if (business.employ) {
       result
-        .leftJoinAndSelect("business.employ", "employ")
+        .addSelect("employ")
         .where("employ.area = :area", { area: business.area })
         .andWhere(
           new Brackets(qb => {
@@ -42,29 +70,16 @@ export default function fetchBusinessData(
         );
     }
 
-    if (business.nationality) {
-      result.andWhere("business.nationality = :nationality", {
-        nationality: business.nationality
-      });
-    }
-
-    if (business.departament) {
-      result.andWhere("business.departament = :departament", {
-        departament: business.departament
-      });
-    }
-
     // If the business is not foreigner.
     if (business.town) {
       result.andWhere("business.town = :town", { town: business.town });
     }
 
-    if (business.sector) {
-      result.andWhere("business.sector = :sector", {
-        sector: business.sector
-      });
-    }
-
-    resolve(result.getMany());
+    resolve(
+      result
+        .skip(limit)
+        .take(10)
+        .getMany()
+    );
   });
 }

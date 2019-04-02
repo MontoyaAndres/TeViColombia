@@ -1,6 +1,8 @@
 const express = require("express");
 const next = require("next");
 const cookieParser = require("cookie-parser");
+const { join } = require("path");
+const { parse } = require("url");
 
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
@@ -12,6 +14,12 @@ app
   .then(() => {
     server
       .use(cookieParser())
+      .get("/service-worker.js", (req, res) => {
+        const parsedUrl = parse(req.url, true);
+        const { pathname } = parsedUrl;
+        const filePath = join(__dirname, ".next", pathname);
+        app.serveStatic(req, res, filePath);
+      })
       .get("/profile/user/:id", (req, res) =>
         app.render(req, res, "/profile/user", { id: req.params.id })
       )
@@ -37,6 +45,9 @@ app
           key: req.params.key,
           type: req.params.type
         })
+      )
+      .get("/search/:value?", (req, res) =>
+        app.render(req, res, "/search", { value: req.params.value })
       )
       .get("*", (req, res) => handler(req, res))
       .listen(3000);

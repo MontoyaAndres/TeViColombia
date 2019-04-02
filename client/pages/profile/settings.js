@@ -34,116 +34,118 @@ const settingsMutation = gql`
 `;
 
 const settings = ({ client }) => (
-  <div className="static-height">
-    <div className="container">
-      <div
-        className="notification is-warning animated bounceInLeft"
-        style={{ margin: 10 }}
-      >
-        <Linkify
-          decoraction="subtitle"
-          text="El correo electrónico principal y la contraseña son muy importantes para Te Vi Colombia, por ello se tiene una sección especial para hacer cualquier cambio. Si el correo electrónico o contraseña es cambiado, todas las secciones en teléfonos y computadoras hechas en Te Vi Colombia van a ser eliminadas."
-          length={100}
-        />
-      </div>
+  <div className="hero">
+    <div className="hero-body">
+      <div className="container">
+        <div
+          className="notification is-warning animated bounceInLeft"
+          style={{ margin: 10 }}
+        >
+          <Linkify
+            decoraction="subtitle"
+            text="El correo electrónico principal y la contraseña son muy importantes para Te Vi Colombia, por ello se tiene una sección especial para hacer cualquier cambio. Si el correo electrónico o contraseña es cambiado, todas las secciones en teléfonos y computadoras hechas en Te Vi Colombia van a ser eliminadas."
+            length={100}
+          />
+        </div>
 
-      <Query query={meQuery}>
-        {({ loading, data }) => {
-          if (loading) {
-            return <Loading />;
-          }
+        <Query query={meQuery}>
+          {({ loading, data }) => {
+            if (loading) {
+              return <Loading />;
+            }
 
-          if (!data.me) {
-            return <Error statusCode={404} />;
-          }
+            if (!data.me) {
+              return <Error statusCode={404} />;
+            }
 
-          return (
-            <Mutation
-              mutation={settingsMutation}
-              onCompleted={e => {
-                client.cache.reset().then(() => {
-                  Router.push("/login");
-                });
-              }}
-            >
-              {mutate => (
-                <Formik
-                  initialValues={{
-                    email: data.me.email,
-                    password: "",
-                    newPassword: "",
-                    type: data.me.type
-                  }}
-                  validationSchema={UserConfigurationValidation}
-                  validateOnBlur={false}
-                  validateOnChange={false}
-                  onSubmit={async (values, { setSubmitting, setErrors }) => {
-                    const response = await mutate({
-                      variables: {
-                        email: values.email,
-                        password: values.password,
-                        newPassword: values.newPassword,
-                        type: values.type
+            return (
+              <Mutation
+                mutation={settingsMutation}
+                onCompleted={e => {
+                  client.cache.reset().then(() => {
+                    Router.push("/login");
+                  });
+                }}
+              >
+                {mutate => (
+                  <Formik
+                    initialValues={{
+                      email: data.me.email,
+                      password: "",
+                      newPassword: "",
+                      type: data.me.type
+                    }}
+                    validationSchema={UserConfigurationValidation}
+                    validateOnBlur={false}
+                    validateOnChange={false}
+                    onSubmit={async (values, { setSubmitting, setErrors }) => {
+                      const response = await mutate({
+                        variables: {
+                          email: values.email,
+                          password: values.password,
+                          newPassword: values.newPassword,
+                          type: values.type
+                        }
+                      });
+
+                      // if settings has data, it has the errors
+                      if (
+                        response.data.settings &&
+                        response.data.settings.length
+                      ) {
+                        setSubmitting(false);
+                        setErrors(normalizeErrors(response.data.settings));
+                        document
+                          .querySelector(
+                            `[name="${response.data.settings[0].path}"]`
+                          )
+                          .focus();
                       }
-                    });
+                    }}
+                    render={({ isSubmitting }) => (
+                      <Form method="POST" style={{ padding: "0 10vw" }}>
+                        <label className="label">Correo electrónico</label>
+                        <TextField
+                          type="email"
+                          name="email"
+                          placeholder="Correo electrónico"
+                          isRequired
+                        />
 
-                    // if settings has data, it has the errors
-                    if (
-                      response.data.settings &&
-                      response.data.settings.length
-                    ) {
-                      setSubmitting(false);
-                      setErrors(normalizeErrors(response.data.settings));
-                      document
-                        .querySelector(
-                          `[name="${response.data.settings[0].path}"]`
-                        )
-                        .focus();
-                    }
-                  }}
-                  render={({ isSubmitting }) => (
-                    <Form method="POST" style={{ padding: "0 10vw" }}>
-                      <label className="label">Correo electrónico</label>
-                      <TextField
-                        type="email"
-                        name="email"
-                        placeholder="Correo electrónico"
-                        isRequired
-                      />
+                        <label className="label">Contraseña</label>
+                        <TextField
+                          type="password"
+                          name="password"
+                          placeholder="Contraseña"
+                          isRequired
+                        />
 
-                      <label className="label">Contraseña</label>
-                      <TextField
-                        type="password"
-                        name="password"
-                        placeholder="Contraseña"
-                        isRequired
-                      />
+                        <label className="label">Contraseña nueva</label>
+                        <TextField
+                          type="password"
+                          name="newPassword"
+                          placeholder="Contraseña nueva"
+                          isRequired
+                        />
 
-                      <label className="label">Contraseña nueva</label>
-                      <TextField
-                        type="password"
-                        name="newPassword"
-                        placeholder="Contraseña nueva"
-                        isRequired
-                      />
-
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className={`button is-block is-primary is-large ${
-                          isSubmitting ? "is-loading" : ""
-                        }`}
-                      >
-                        Enviar
-                      </button>
-                    </Form>
-                  )}
-                />
-              )}
-            </Mutation>
-          );
-        }}
-      </Query>
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
+                          className={`button is-block is-primary is-large ${
+                            isSubmitting ? "is-loading" : ""
+                          }`}
+                        >
+                          Enviar
+                        </button>
+                      </Form>
+                    )}
+                  />
+                )}
+              </Mutation>
+            );
+          }}
+        </Query>
+      </div>
     </div>
   </div>
 );

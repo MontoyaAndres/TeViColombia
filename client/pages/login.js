@@ -25,7 +25,7 @@ const login = () => {
   const [light, setLight] = useState(true);
 
   return (
-    <div className="container has-text-centered static-height">
+    <div className="container has-text-centered">
       <div className="column is-4 is-offset-4">
         <h3 className="title has-text-grey">Entrar a Te Vi Colombia</h3>
         <div className="box animated bounceInLeft">

@@ -10,14 +10,8 @@ import {
 
 // Models
 import { Business } from "./Business";
-import {
-  ENUMStudyLevel,
-  ENUMCurrency,
-  ENUMDepartament,
-  ENUMCountry,
-  ENUMArea
-} from "../utils/entityGlobalEnum";
 import EmptyStringToNull from "../utils/emptyStringToNull";
+import { ENUMCurrency } from "../utils/entityGlobalEnum";
 
 enum ENUMTime {
   A1 = "Jornada completa",
@@ -42,7 +36,7 @@ export class Employ extends BaseEntity {
   @Column("text")
   description: string;
 
-  @Column("enum", { enum: ENUMArea })
+  @Column("varchar")
   area: string;
 
   @Index({ fulltext: true })
@@ -52,7 +46,7 @@ export class Employ extends BaseEntity {
   })
   skills: string[];
 
-  @Column("enum", { enum: ENUMStudyLevel })
+  @Column("varchar")
   minStudy: string;
 
   @Column("integer")
@@ -70,10 +64,10 @@ export class Employ extends BaseEntity {
   @Column("varchar", { length: 2, default: "No" })
   residence: string;
 
-  @Column("enum", { enum: ENUMCountry })
+  @Column("varchar")
   country: string;
 
-  @Column("enum", { enum: ENUMDepartament })
+  @Column("varchar")
   departament: string;
 
   @Column("varchar")
