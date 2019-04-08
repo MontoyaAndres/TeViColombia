@@ -6,6 +6,7 @@ import gql from "graphql-tag";
 import { withRouter } from "next/router";
 import Error from "next/error";
 import omit from "lodash.omit";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import Loading from "../../../components/shared/loading";
 import TownsByDepartament from "../../../utils/townsByDepartament";
@@ -254,10 +255,8 @@ export default compose(
       } else {
         setSubmitting(false);
         setFieldValue("edited", true, false);
-        window.scrollTo({
-          top: document.getElementById("edited").offsetTop - 100,
-          behavior: "smooth"
-        });
+        const node = document.getElementById("edited");
+        scrollIntoView(node);
       }
     }
   })

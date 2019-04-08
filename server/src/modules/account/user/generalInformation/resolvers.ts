@@ -11,7 +11,7 @@ import { createMiddleware } from "../../../../utils/createMiddleware";
 import { middleware } from "../../../shared/authMiddleware";
 import { GeneralInformationValidation } from "../../../../utils/validation";
 import { formatYupError } from "../../../../utils/formatYupError";
-import storeUpload from "../../../../utils/storeUpload";
+import { storeUpload, storeDelete } from "../../../../utils/storeUploadDelete";
 
 export const resolvers: ResolveMap = {
   Query: {
@@ -71,6 +71,11 @@ export const resolvers: ResolveMap = {
           ];
         }
 
+        const currentFiles = await User.findOne({
+          where: { id },
+          select: ["routePhoto", "routeCover"]
+        });
+
         if (information.routePhoto instanceof Object) {
           const { createReadStream, mimetype } = await information.routePhoto;
           const extension = mimetype.split("/")[1];
@@ -86,6 +91,10 @@ export const resolvers: ResolveMap = {
               mimetype,
               `public/userPhoto`
             );
+
+            // Delete unnecessary files
+            await storeDelete([currentFiles.routePhoto], fileId);
+
             await User.update({ id }, { routePhoto: `userPhoto/${fileId}` });
           } else {
             return [
@@ -112,6 +121,10 @@ export const resolvers: ResolveMap = {
               mimetype,
               `public/userCover`
             );
+
+            // Delete unnecessary files
+            await storeDelete([currentFiles.routeCover], fileId);
+
             await User.update({ id }, { routeCover: `userCover/${fileId}` });
           } else {
             return [
@@ -191,6 +204,17 @@ export const resolvers: ResolveMap = {
             return cv;
           })
         );
+
+        const currentCVFiles = await CV.find({
+          where: { user: { id } },
+          select: ["routeCV"]
+        });
+
+        const saveFiles = saveCV.map(cv => cv.routeCV);
+        const cvFiles = currentCVFiles.map(cv => cv.routeCV);
+
+        // Delete unnecessary files
+        await storeDelete(cvFiles, saveFiles);
 
         // Update preferWork information
         if (information.preferWork.id) {

@@ -260,29 +260,35 @@ const employ = ({
                 </p>
               </div>
             ) : (
-              <div className="notification is-info" style={{ margin: "1rem" }}>
-                <p className="subtitle" style={{ textAlign: "center" }}>
-                  Dando clic en{" "}
-                  <span style={{ fontWeight: "bold" }}>Aplicar</span>, se
-                  enviará un correo a{" "}
-                  <span style={{ fontWeight: "bold" }}>
-                    {dataInformationBusiness.email}
-                  </span>{" "}
-                  con la URL de tu perfil.
-                </p>
-              </div>
+              <>
+                <div
+                  className="notification is-info"
+                  style={{ margin: "1rem" }}
+                >
+                  <p className="subtitle" style={{ textAlign: "center" }}>
+                    Dando clic en{" "}
+                    <span style={{ fontWeight: "bold" }}>Aplicar</span>, se
+                    enviará un correo a{" "}
+                    <span style={{ fontWeight: "bold" }}>
+                      {dataInformationBusiness.email}
+                    </span>{" "}
+                    con la URL de tu perfil.
+                  </p>
+                </div>
+
+                <div className="buttons has-addons is-centered">
+                  <button
+                    type="button"
+                    className="button is-block is-primary is-large"
+                    style={{ width: 200 }}
+                    onClick={handleApplyEmployMutation}
+                  >
+                    Aplicar
+                  </button>
+                </div>
+              </>
             )
           ) : null}
-          <div className="buttons has-addons is-centered">
-            <button
-              type="button"
-              className="button is-block is-primary is-large"
-              style={{ width: 200 }}
-              onClick={handleApplyEmployMutation}
-            >
-              Aplicar
-            </button>
-          </div>
         </div>
       </div>
     </div>

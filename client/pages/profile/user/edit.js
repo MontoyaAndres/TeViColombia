@@ -6,6 +6,7 @@ import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
 import omit from "lodash.omit";
 import dynamic from "next/dynamic";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import Loading from "../../../components/shared/loading";
 import checkLoggedIn from "../../../lib/checkLoggedIn";
@@ -281,10 +282,8 @@ export default compose(
       } else {
         setSubmitting(false);
         setFieldValue("edited", true, false);
-        window.scrollTo({
-          top: document.getElementById("edited").offsetTop - 100,
-          behavior: "smooth"
-        });
+        const node = document.getElementById("edited");
+        scrollIntoView(node);
       }
     }
   })

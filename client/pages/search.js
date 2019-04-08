@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect, Fragment, useState } from "react";
 import dynamic from "next/dynamic";
 import { withRouter } from "next/router";
 import gql from "graphql-tag";
@@ -38,8 +38,6 @@ const searchQuery = gql`
         email
         routePhoto
         necessity {
-          id
-          finished
           comment
         }
       }
@@ -58,7 +56,31 @@ const searchQuery = gql`
   }
 `;
 
-const search = ({ values, loading, data, fetchMore }) => {
+const search = ({ values, loading, data }) => {
+  // this is the typical state that the query always has.
+  const state = {
+    value: values.value,
+    type: values.type === "Empresa" ? "Business" : "User",
+    params: {
+      user: {
+        nationality: values.nationality,
+        departament: values.departament,
+        town: values.town,
+        necessity: values.necessity === "Sí"
+      },
+      business: {
+        nationality: values.nationality,
+        departament: values.departament,
+        town: values.town,
+        sector: values.sector,
+        area: values.area,
+        employ: values.employ === "Sí"
+      }
+    }
+  };
+
+  const [hasMoreItems, setHasMoreItems] = useState(true);
+
   useEffect(() => {
     // When the `departament` value changes, reseting the `town` value.
     if (values.departament !== "Extranjero") {
@@ -80,6 +102,35 @@ const search = ({ values, loading, data, fetchMore }) => {
     }
   }, [values.nationality, values.departament]);
 
+  useEffect(() => {
+    if (data.search && data.search.length < 10) {
+      setHasMoreItems(false);
+    }
+
+    return () => {
+      if (data.search && data.search.length >= 10) {
+        setHasMoreItems(true);
+      }
+    };
+  }, [data.search]);
+
+  function handleLoadMore() {
+    data.fetchMore({
+      variables: { ...state, limit: data.search.length },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+
+        if (fetchMoreResult.search.length < 10) {
+          setHasMoreItems(false);
+        }
+
+        return Object.assign({}, prev, {
+          search: [...prev.search, ...fetchMoreResult.search]
+        });
+      }
+    });
+  }
+
   if (loading) {
     return <Loading />;
   }
@@ -94,28 +145,7 @@ const search = ({ values, loading, data, fetchMore }) => {
           <DynamicSearch
             name="value"
             placeholder="Ingresa cualquier valor"
-            handleSubmit={() =>
-              data.refetch({
-                value: values.value,
-                type: values.type === "Empresa" ? "Business" : "User",
-                params: {
-                  user: {
-                    nationality: values.nationality,
-                    departament: values.departament,
-                    town: values.town,
-                    necessity: values.necessity === "Sí"
-                  },
-                  business: {
-                    nationality: values.nationality,
-                    departament: values.departament,
-                    town: values.town,
-                    sector: values.sector,
-                    area: values.area,
-                    employ: values.employ === "Sí"
-                  }
-                }
-              })
-            }
+            handleSubmit={() => data.refetch(state)}
           />
 
           {data.networkStatus === 2 || data.networkStatus === 3 ? (
@@ -129,12 +159,15 @@ const search = ({ values, loading, data, fetchMore }) => {
             </h2>
           ) : (
             data.search.map((value, i) => (
-              <Fragment key={i}>
+              <div key={i} style={{ marginBottom: "1.1rem" }}>
                 <SearchList
                   value={value}
                   type={values.type === "Empresa" ? "Business" : "User"}
+                  hasMoreItems={hasMoreItems}
+                  setHasMoreItems={setHasMoreItems}
+                  handleLoadMore={handleLoadMore}
                 />
-              </Fragment>
+              </div>
             ))
           )}
         </div>
