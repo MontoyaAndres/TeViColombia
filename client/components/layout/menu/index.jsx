@@ -57,7 +57,7 @@ class menu extends PureComponent {
         id={pathname === "/" ? "fullpage" : ""}
         className={pathname === "/" ? "hero is-fullheight" : ""}
       >
-        <div className="animated fadeIn hero-head">
+        <div className="hero-head">
           <nav
             className="navbar"
             role="navigation"
