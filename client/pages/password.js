@@ -3,6 +3,7 @@ import { Form, withFormik } from "formik";
 import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
 import omit from "lodash.omit";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import { TextField, RadioField } from "../components/shared/globalField";
 import normalizeErrors from "../utils/normalizeErrors";
@@ -131,10 +132,8 @@ export default compose(
         setSubmitting(false);
         resetForm();
         setFieldValue("sent", true, false);
-        window.scrollTo({
-          top: document.getElementById("sent").offsetTop - 100,
-          behavior: "smooth"
-        });
+        const node = document.getElementById("sent");
+        scrollIntoView(node);
       }
     }
   })

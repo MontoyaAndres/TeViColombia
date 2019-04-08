@@ -6,7 +6,7 @@ import { middleware } from "../../../shared/authMiddleware";
 import { GQL } from "../../../../types/schema";
 import { formatYupError } from "../../../../utils/formatYupError";
 import { GeneralInformationBusinessValidation } from "../../../../utils/validation";
-import storeUpload from "../../../../utils/storeUpload";
+import { storeUpload, storeDelete } from "../../../../utils/storeUploadDelete";
 import { Business } from "../../../../entity/Business";
 import { User } from "../../../../entity/User";
 
@@ -73,6 +73,11 @@ export const resolvers: ResolveMap = {
           ];
         }
 
+        const currentFiles = await Business.findOne({
+          where: { id },
+          select: ["routePhoto", "routeCover"]
+        });
+
         if (information.routePhoto instanceof Object) {
           const { createReadStream, mimetype } = await information.routePhoto;
           const extension = mimetype.split("/")[1];
@@ -88,6 +93,10 @@ export const resolvers: ResolveMap = {
               mimetype,
               `public/businessPhoto`
             );
+
+            // Delete unnecessary files
+            await storeDelete([currentFiles.routePhoto], fileId);
+
             await Business.update(
               { id },
               { routePhoto: `businessPhoto/${fileId}` }
@@ -117,6 +126,10 @@ export const resolvers: ResolveMap = {
               mimetype,
               `public/businessCover`
             );
+
+            // Delete unnecessary files
+            await storeDelete([currentFiles.routeCover], fileId);
+
             await Business.update(
               { id },
               { routeCover: `businessCover/${fileId}` }

@@ -72,17 +72,6 @@ const DesktopParams = ({ values, width }) => (
 
       {values.type === "Empresa" && (
         <>
-          <label className="label">Área</label>
-          <SelectField
-            name="area"
-            arrayPlaceholder={EntityGlobalEnum.ENUMArea}
-            isRequired
-          />
-        </>
-      )}
-
-      {values.type === "Empresa" && (
-        <>
           <label className="label">¿Filtrar por empleo?</label>
           <SelectField
             name="employ"
@@ -91,6 +80,17 @@ const DesktopParams = ({ values, width }) => (
           />
         </>
       )}
+
+      {values.type === "Empresa" && values.employ === "Sí" ? (
+        <>
+          <label className="label">Área</label>
+          <SelectField
+            name="area"
+            arrayPlaceholder={EntityGlobalEnum.ENUMArea}
+            isRequired
+          />
+        </>
+      ) : null}
     </div>
   </div>
 );

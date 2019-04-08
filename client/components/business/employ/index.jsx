@@ -5,7 +5,6 @@ import Link from "next/link";
 import { employsQuery, employQuery } from "../../../graphql/queries/account";
 import meQuery from "../../../graphql/queries/me";
 import Loading from "../../shared/loading";
-import Linkify from "../../shared/linkify";
 import DropdownIcon from "../../shared/dropdrownIcon";
 import CreateEmployModal from "./createEmployModal";
 import DeleteEmployModal from "./deleteEmployModal";

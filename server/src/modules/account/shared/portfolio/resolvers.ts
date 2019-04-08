@@ -1,8 +1,10 @@
+import * as fs from "fs";
+
 import { ResolveMap } from "../../../../types/graphql-utils";
 import { createMiddleware } from "../../../../utils/createMiddleware";
 import { middleware } from "../../../shared/authMiddleware";
 import { GQL } from "../../../../types/schema";
-import storeUpload from "../../../../utils/storeUpload";
+import { storeUpload, storeDelete } from "../../../../utils/storeUploadDelete";
 import { Portfolio } from "../../../../entity/Portfolio";
 import { User } from "../../../../entity/User";
 
@@ -114,6 +116,17 @@ export const resolvers: ResolveMap = {
         if (multimedia.length > 0) {
           const filesSaved = (await saveMultimedia(multimedia)) as any;
 
+          const currentFiles = await Portfolio.findOne({
+            where: { portfolioId: id },
+            select: ["multimedia"]
+          });
+
+          const saveFiles = filesSaved.map((portfolio: any) => portfolio);
+          const files = currentFiles.multimedia;
+
+          // Delete unnecessary files
+          await storeDelete(files, saveFiles);
+
           await Portfolio.update(
             { id: idPortfolio },
             {
@@ -138,6 +151,18 @@ export const resolvers: ResolveMap = {
     deletePortfolio: createMiddleware(
       middleware.auth,
       async (_, { idPortfolio }: GQL.IDeletePortfolioOnMutationArguments) => {
+        const currentFiles = await Portfolio.findOne({
+          where: { id: idPortfolio },
+          select: ["multimedia"]
+        });
+
+        // Delete unnecessary files
+        if (currentFiles.multimedia.length > 0) {
+          currentFiles.multimedia.map(file =>
+            fs.unlinkSync(`${__dirname}/../../../../../public/${file}`)
+          );
+        }
+
         await Portfolio.delete({ id: idPortfolio });
 
         return true;

@@ -4,6 +4,7 @@ import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
 import omit from "lodash.omit";
 import Link from "next/link";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import {
   TextField,
@@ -168,10 +169,8 @@ export default compose(
         setSubmitting(false);
         resetForm();
         setFieldValue("registered", true, false);
-        window.scrollTo({
-          top: document.getElementById("registered").offsetTop - 100,
-          behavior: "smooth"
-        });
+        const node = document.getElementById("registered");
+        scrollIntoView(node);
       }
     }
   })

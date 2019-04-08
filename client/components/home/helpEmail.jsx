@@ -3,6 +3,7 @@ import { Form, withFormik } from "formik";
 import gql from "graphql-tag";
 import { compose, graphql } from "react-apollo";
 import omit from "lodash.omit";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import { TextField, TextAreaField } from "../shared/globalField";
 import { HelpEmailValidation } from "../../utils/validation";
@@ -22,7 +23,7 @@ const helpEmailMutation = gql`
 `;
 
 const helpEmail = ({ values, setFieldValue, isSubmitting, handleSubmit }) => (
-  <div className="section">
+  <section className="section">
     <div className="content">
       {/* Sent successfully */}
       {values.sent && (
@@ -85,7 +86,7 @@ const helpEmail = ({ values, setFieldValue, isSubmitting, handleSubmit }) => (
         </div>
       </Form>
     </div>
-  </div>
+  </section>
 );
 
 export default compose(
@@ -117,6 +118,8 @@ export default compose(
         setSubmitting(false);
         resetForm();
         setFieldValue("sent", true, false);
+        const node = document.getElementById("sent");
+        scrollIntoView(node);
       }
     }
   })

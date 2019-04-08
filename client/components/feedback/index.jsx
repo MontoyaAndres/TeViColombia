@@ -189,7 +189,13 @@ const index = ({
       {dataFeedback && dataFeedback.response.length > 0 ? (
         <>
           {dataFeedback.response.map(feed => (
-            <div style={{ margin: "1.1rem 0" }} key={feed.id}>
+            <div
+              style={{
+                marginBottom: "1.1rem",
+                marginTop: dataMe && dataMe.id !== id ? "1.1rem" : 0
+              }}
+              key={feed.id}
+            >
               <div className="control has-icons-right">
                 {dataMe && dataMe.id === id && (
                   <span
