@@ -1,6 +1,11 @@
+type CloudinaryPortfolio {
+  public_id: String
+  secure_url: String
+}
+
 type Portfolio {
   id: ID
-  multimedia: [String]
+  multimedia: [CloudinaryPortfolio]
   description: String
 }
 

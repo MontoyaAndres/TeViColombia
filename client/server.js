@@ -17,8 +17,10 @@ app
       .get("/service-worker.js", (req, res) => {
         const parsedUrl = parse(req.url, true);
         const { pathname } = parsedUrl;
-        const filePath = join(__dirname, ".next", pathname);
-        app.serveStatic(req, res, filePath);
+        if (pathname === "/service-worker.js") {
+          const filePath = join(__dirname, ".next", pathname);
+          app.serveStatic(req, res, filePath);
+        }
       })
       .get("/profile/user/:id", (req, res) =>
         app.render(req, res, "/profile/user", { id: req.params.id })
@@ -28,17 +30,17 @@ app
           id: req.params.id
         })
       )
-      .get("/profile/user/edit/:id", (req, res) =>
-        app.render(req, res, "/profile/user/edit", { id: req.params.id })
-      )
-      .get("/profile/business/edit/:id", (req, res) =>
-        app.render(req, res, "/profile/business/edit", { id: req.params.id })
-      )
       .get("/profile/business/employ/:id/:employId", (req, res) =>
         app.render(req, res, "/profile/business/employ", {
           id: req.params.id,
           employId: req.params.employId
         })
+      )
+      .get("/profile/business/edit/:id", (req, res) =>
+        app.render(req, res, "/profile/business/edit", { id: req.params.id })
+      )
+      .get("/profile/user/edit/:id", (req, res) =>
+        app.render(req, res, "/profile/user/edit", { id: req.params.id })
       )
       .get("/change-password/:key/:type", (req, res) =>
         app.render(req, res, "/change-password", {

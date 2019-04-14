@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { Formik, Form } from "formik";
 import { Mutation, withApollo } from "react-apollo";
 import gql from "graphql-tag";
@@ -95,7 +95,7 @@ const login = () => {
                     </button>
 
                     <div style={{ padding: 10 }}>
-                      <Link href="/password" prefetch>
+                      <Link href="/password">
                         <a>¿Ha olvidado la contraseña?</a>
                       </Link>
                     </div>
@@ -120,4 +120,4 @@ login.getInitialProps = async context => {
   return {};
 };
 
-export default withApollo(login);
+export default withApollo(memo(login));

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import Linkify from "react-linkify";
 
 const linkify = ({ text, decoraction, length }) => {
@@ -25,4 +25,4 @@ const linkify = ({ text, decoraction, length }) => {
   );
 };
 
-export default linkify;
+export default memo(linkify);

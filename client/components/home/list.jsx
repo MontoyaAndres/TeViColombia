@@ -34,7 +34,7 @@ const CardList = ({ value, type }) => (
           <figure className="image is-48x48">
             <SimpleImg
               applyAspectRatio={false}
-              src={`${process.env.API_HOST}/${value.routePhoto}`}
+              src={value.routePhoto}
               height={48}
               width={48}
               alt={value.name}
@@ -56,7 +56,6 @@ const CardList = ({ value, type }) => (
             pathname: type === "user" ? "/profile/user" : "/profile/business",
             query: { id: value.id }
           }}
-          prefetch
         >
           <a className="button is-primary is-rounded">Ver perfil</a>
         </Link>

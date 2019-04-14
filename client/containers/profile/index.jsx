@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { graphql } from "react-apollo";
 
 import { feedbackQuery } from "../../graphql/queries/account";
@@ -26,7 +26,7 @@ const profile = ({
     <>
       {routeCover ? (
         <figure className="background-cover">
-          <img src={`${process.env.API_HOST}/${routeCover}`} alt="user cover" />
+          <img src={routeCover} alt="user cover" />
         </figure>
       ) : (
         <div className="background-color" />
@@ -44,7 +44,7 @@ const profile = ({
         <figure className="avatar-profile">
           <img
             style={{ width: 200, height: 200 }}
-            src={`${process.env.API_HOST}/${routePhoto}`}
+            src={routePhoto}
             alt="profile"
           />
         </figure>
@@ -84,4 +84,4 @@ export default graphql(feedbackQuery, {
     loading: data.loading,
     data: data.feedback
   })
-})(profile);
+})(memo(profile));

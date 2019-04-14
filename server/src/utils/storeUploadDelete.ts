@@ -1,60 +1,63 @@
-import { createWriteStream, existsSync, mkdirSync, unlinkSync } from "fs";
-import { v4 } from "uuid";
+import * as cloudinary from "cloudinary";
+import { Stream } from "stream";
 
-const storeUpload = (
-  stream: any,
-  mimetype: string,
-  path: string
-): Promise<any> => {
-  const extension = () => {
-    if (
-      mimetype ===
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-      mimetype === "application/msword"
-    ) {
-      if (mimetype === "application/msword") {
-        return "doc";
-      }
-      return "docx";
-    } else {
-      return mimetype.split("/")[1];
-    }
-  };
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
-  const fileId = `${v4()}-${Date.now()}.${extension()}`;
-
-  if (!existsSync(path)) {
-    mkdirSync(path);
-  }
-
-  return new Promise((resolve, reject) =>
-    stream
-      .pipe(createWriteStream(`${path}/${fileId}`))
-      .on("finish", () => resolve({ fileId }))
-      .on("error", reject)
-  );
-};
-
-const storeDelete = (currentFiles: string[], newFiles: string[] | string) => {
-  return new Promise(resolve => {
-    // Code by https://bit.ly/2VjG6BA
-    const oldFiles = currentFiles.filter(
-      value => newFiles.indexOf(value) === -1
-    );
-
-    if (oldFiles.length > 0) {
-      oldFiles.forEach(file => {
-        if (
-          file !== "default/default-home.png" &&
-          file !== "default/default-photo.png"
-        ) {
-          try {
-            unlinkSync(`${__dirname}/../../public/${file}`);
-          } catch (e) {
-            // If the file that tries to delete does not exists, only ignore that error
-            return;
+const cloudinaryUpload = async (stream: Stream, path: string) => {
+  try {
+    return await new Promise((resolve, reject) => {
+      const streamLoad = cloudinary.v2.uploader.upload_stream(
+        {
+          folder: path,
+          resource_type: "auto" // Being able to upload pdf files
+        },
+        (error: any, result: any) => {
+          if (result) {
+            resolve(result);
+          } else {
+            reject(error);
           }
         }
+      );
+
+      stream.pipe(streamLoad);
+    });
+  } catch (err) {
+    throw new Error(`Failed to upload file. Err:${err.message}`);
+  }
+};
+
+async function storeUpload(
+  stream: any,
+  path: string
+): Promise<{ public_id: string; secure_url: string }> {
+  const { public_id, secure_url } = (await cloudinaryUpload(
+    stream,
+    path
+  )) as any;
+
+  return { public_id, secure_url };
+}
+
+const storeDelete = (
+  currentPublicIds: string[],
+  newPublicIds: string[] | string
+): Promise<boolean> => {
+  return new Promise(resolve => {
+    // Code by https://bit.ly/2VjG6BA
+    const oldPublicIds = currentPublicIds.filter(
+      id => newPublicIds.indexOf(id) === -1
+    );
+
+    console.log(oldPublicIds, "old");
+
+    if (oldPublicIds.length > 0) {
+      oldPublicIds.forEach(async publicId => {
+        await cloudinary.v2.uploader.destroy(publicId);
       });
     }
 
@@ -62,4 +65,4 @@ const storeDelete = (currentFiles: string[], newFiles: string[] | string) => {
   });
 };
 
-export { storeUpload, storeDelete };
+export { storeDelete, storeUpload };

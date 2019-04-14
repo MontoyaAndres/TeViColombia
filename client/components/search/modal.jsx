@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 
 import useResize from "../shared/useResize";
 import { SelectField, RadioField } from "../shared/globalField";
@@ -132,4 +132,4 @@ const ModalParams = ({ values }) => {
   );
 };
 
-export default ModalParams;
+export default memo(ModalParams);

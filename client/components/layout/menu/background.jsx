@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import Router from "next/router";
 
 import useResize from "../../shared/useResize";
@@ -60,4 +60,4 @@ const background = () => {
   );
 };
 
-export default background;
+export default memo(background);

@@ -41,6 +41,7 @@ type CV {
   id: ID
   filename: String
   routeCV: String
+  cloudinaryPublicIdRouteCV: String
 }
 
 type SocialNetwork {

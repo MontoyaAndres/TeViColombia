@@ -7,18 +7,14 @@ import {
   Column,
   CreateDateColumn
 } from "typeorm";
-import EmptyStringToNull from "../utils/emptyStringToNull";
 
 @Entity()
 export class Portfolio extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("simple-array", {
-    nullable: true,
-    transformer: new EmptyStringToNull()
-  })
-  multimedia: string[];
+  @Column("simple-json")
+  multimedia: Array<{ public_id: string; secure_url: string }>;
 
   @Column("varchar", { length: 200 })
   description: string;

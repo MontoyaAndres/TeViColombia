@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import dynamic from "next/dynamic";
 import { withRouter } from "next/router";
 import gql from "graphql-tag";
@@ -210,4 +210,4 @@ export default compose(
       employ: "No"
     })
   })
-)(search);
+)(memo(search));

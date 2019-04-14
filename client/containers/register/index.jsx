@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 
 const registerContainer = ({ registered, setFieldValue, children }) => {
   const [light, setLight] = useState(true);
@@ -44,4 +44,4 @@ const registerContainer = ({ registered, setFieldValue, children }) => {
   );
 };
 
-export default registerContainer;
+export default memo(registerContainer);

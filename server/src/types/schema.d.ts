@@ -187,8 +187,14 @@ from: ICustomer | null;
 interface IPortfolio {
 __typename: "Portfolio";
 id: string | null;
-multimedia: Array<string | null> | null;
+multimedia: Array<ICloudinaryPortfolio | null> | null;
 description: string | null;
+}
+
+interface ICloudinaryPortfolio {
+__typename: "CloudinaryPortfolio";
+public_id: string | null;
+secure_url: string | null;
 }
 
 interface IUserInformation {
@@ -280,6 +286,7 @@ __typename: "CV";
 id: string | null;
 filename: string | null;
 routeCV: string | null;
+cloudinaryPublicIdRouteCV: string | null;
 }
 
 interface INecessityResponse {

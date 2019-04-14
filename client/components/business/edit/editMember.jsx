@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import debounce from "lodash.debounce";
 import Downshift from "downshift";
 import { Query } from "react-apollo";
@@ -181,4 +181,4 @@ const editMember = ({ values, setFieldValue }) => {
   );
 };
 
-export default editMember;
+export default memo(editMember);

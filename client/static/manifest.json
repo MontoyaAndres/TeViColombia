@@ -48,6 +48,8 @@
   "start_url": "/?utm_source=web_app_manifest",
   "description": "Tejidos virtuales para el emprendimiento, las prácticas profesionales y la empleabilidad.",
   "lang": "es_CO",
-  "background_color": "#00d1b2",
-  "theme_color": "#00d1b2"
+  "background_color": "#505050",
+  "theme_color": "#505050",
+  "related_applications": [],
+  "prefer_related_applications": false
 }

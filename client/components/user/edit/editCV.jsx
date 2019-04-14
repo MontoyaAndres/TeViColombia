@@ -7,7 +7,7 @@ const editCV = ({
   ...props
 }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: ".doc,.docx,.pdf",
+    accept: ".pdf",
     onDrop: files => {
       // This is to freeze the `file` array, and may concat it with the `values.cv` objects.
       const assignFile = files.map(file => Object.assign(file));
@@ -50,7 +50,7 @@ const editCV = ({
               }}
             >
               <input {...getInputProps()} />
-              <h3 className="h3">Subir Anexo en PDF o Word</h3>
+              <h3 className="h3">Subir Anexos en PDF</h3>
             </div>
           </div>
 

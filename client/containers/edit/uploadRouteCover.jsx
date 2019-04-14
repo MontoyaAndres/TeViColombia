@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import { useDropzone } from "react-dropzone";
 
 const uploadRouteCover = ({
@@ -8,7 +8,7 @@ const uploadRouteCover = ({
 }) => {
   const cover =
     (value ? value.preview : null) ||
-    (values.routeCover ? `${process.env.API_HOST}/${values.routeCover}` : null);
+    (values.routeCover ? values.routeCover : null);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/png,image/gif,image/jpeg",
@@ -45,4 +45,4 @@ const uploadRouteCover = ({
   );
 };
 
-export default uploadRouteCover;
+export default memo(uploadRouteCover);

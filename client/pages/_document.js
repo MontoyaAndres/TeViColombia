@@ -11,7 +11,7 @@ class MyDocument extends Document {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
           />
-          <meta name="theme-color" content="#00d1b2" />
+          <meta name="theme-color" content="#505050" />
           <meta
             name="description"
             content="Tejidos virtuales para el emprendimiento, las prácticas profesionales y la empleabilidad."
@@ -33,9 +33,9 @@ class MyDocument extends Document {
           <link
             rel="mask-icon"
             href="/static/img/lightOn.png"
-            color="#00d1b2"
+            color="#505050"
           />
-          <meta name="msapplication-TileColor" content="#00d1b2" />
+          <meta name="msapplication-TileColor" content="#505050" />
           <meta
             name="msapplication-TileImage"
             content="/static/icons/icon-192x192.png"
