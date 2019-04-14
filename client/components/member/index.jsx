@@ -13,7 +13,7 @@ const member = ({ information }) => (
                 <div className="media-left">
                   <SimpleImg
                     applyAspectRatio={false}
-                    src={`${process.env.API_HOST}/${mbr.routePhoto}`}
+                    src={mbr.routePhoto}
                     height={44}
                     width={48}
                     alt="profile"
@@ -28,7 +28,6 @@ const member = ({ information }) => (
                         : "/profile/business",
                       query: { id: mbr.id }
                     }}
-                    prefetch
                   >
                     <a className="title is-4">
                       {mbr.name} {mbr.lastname && mbr.lastname}

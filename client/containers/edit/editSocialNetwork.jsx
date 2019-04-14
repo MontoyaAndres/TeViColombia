@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, memo } from "react";
 
 import useResize from "../../components/shared/useResize";
 
@@ -299,4 +299,4 @@ const editSocialNetwork = ({ socialnetwork, setFieldValue }) => {
   );
 };
 
-export default editSocialNetwork;
+export default memo(editSocialNetwork);

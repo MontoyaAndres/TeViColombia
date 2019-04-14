@@ -73,11 +73,6 @@ export const resolvers: ResolveMap = {
           ];
         }
 
-        const currentFiles = await Business.findOne({
-          where: { id },
-          select: ["routePhoto", "routeCover"]
-        });
-
         if (information.routePhoto instanceof Object) {
           const { createReadStream, mimetype } = await information.routePhoto;
           const extension = mimetype.split("/")[1];
@@ -87,19 +82,31 @@ export const resolvers: ResolveMap = {
             extension === "jpeg" ||
             extension === "gif"
           ) {
+            // Upload file
             const stream = createReadStream();
-            const { fileId } = await storeUpload(
+            const { public_id, secure_url } = await storeUpload(
               stream,
-              mimetype,
-              `public/businessPhoto`
+              `businessPhoto`
             );
 
-            // Delete unnecessary files
-            await storeDelete([currentFiles.routePhoto], fileId);
+            // Delete file
+            const currentPublicId = await Business.findOne({
+              where: { id },
+              select: ["cloudinaryPublicIdRoutePhoto"]
+            });
+            if (currentPublicId) {
+              await storeDelete(
+                [currentPublicId.cloudinaryPublicIdRoutePhoto],
+                public_id
+              );
+            }
 
             await Business.update(
               { id },
-              { routePhoto: `businessPhoto/${fileId}` }
+              {
+                cloudinaryPublicIdRoutePhoto: public_id,
+                routePhoto: secure_url
+              }
             );
           } else {
             return [
@@ -120,19 +127,31 @@ export const resolvers: ResolveMap = {
             extension === "jpeg" ||
             extension === "gif"
           ) {
+            // Upload file
             const stream = createReadStream();
-            const { fileId } = await storeUpload(
+            const { public_id, secure_url } = await storeUpload(
               stream,
-              mimetype,
-              `public/businessCover`
+              `businessCover`
             );
 
-            // Delete unnecessary files
-            await storeDelete([currentFiles.routeCover], fileId);
+            // Delete file
+            const currentPublicId = await Business.findOne({
+              where: { id },
+              select: ["cloudinaryPublicIdRouteCover"]
+            });
+            if (currentPublicId) {
+              await storeDelete(
+                [currentPublicId.cloudinaryPublicIdRouteCover],
+                public_id
+              );
+            }
 
             await Business.update(
               { id },
-              { routeCover: `businessCover/${fileId}` }
+              {
+                cloudinaryPublicIdRouteCover: public_id,
+                routeCover: secure_url
+              }
             );
           } else {
             return [

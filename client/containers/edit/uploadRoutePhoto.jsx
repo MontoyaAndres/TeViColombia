@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import { useDropzone } from "react-dropzone";
 
 const uploadRoutePhoto = ({
@@ -6,9 +6,7 @@ const uploadRoutePhoto = ({
   form: { values, setFieldValue },
   ...props
 }) => {
-  const photo =
-    (value ? value.preview : null) ||
-    `${process.env.API_HOST}/${values.routePhoto}`;
+  const photo = (value ? value.preview : null) || values.routePhoto;
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/png,image/gif,image/jpeg",
@@ -62,4 +60,4 @@ const uploadRoutePhoto = ({
   );
 };
 
-export default uploadRoutePhoto;
+export default memo(uploadRoutePhoto);

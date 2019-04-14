@@ -1,5 +1,3 @@
-import * as fs from "fs";
-
 import { ResolveMap } from "../../../../types/graphql-utils";
 import { createMiddleware } from "../../../../utils/createMiddleware";
 import { middleware } from "../../../shared/authMiddleware";
@@ -8,32 +6,34 @@ import { storeUpload, storeDelete } from "../../../../utils/storeUploadDelete";
 import { Portfolio } from "../../../../entity/Portfolio";
 import { User } from "../../../../entity/User";
 
-const saveMultimedia = (multimedia: any) =>
+const saveMultimedia = (multimedia: any): any =>
   Promise.all(
-    multimedia.map(async (file: any) => {
-      const { createReadStream, mimetype } = await file;
-      if (mimetype) {
-        const extension = mimetype.split("/")[1];
+    multimedia.map(
+      async (file: any): Promise<{ public_id: string; secure_url: string }> => {
+        const { createReadStream, mimetype } = await file;
+        // If `mimetype` exists means that the use is going to upload a new file
+        if (mimetype) {
+          const extension = mimetype.split("/")[1];
 
-        if (
-          extension === "png" ||
-          extension === "jpeg" ||
-          extension === "gif" ||
-          extension === "mp4"
-        ) {
-          const stream = createReadStream();
-          const { fileId } = await storeUpload(
-            stream,
-            mimetype,
-            `public/portfolio`
-          );
+          if (
+            extension === "png" ||
+            extension === "jpeg" ||
+            extension === "gif" ||
+            extension === "mp4"
+          ) {
+            const stream = createReadStream();
+            const { public_id, secure_url } = await storeUpload(
+              stream,
+              `portfolio`
+            );
 
-          return `portfolio/${fileId}`;
+            return { public_id, secure_url };
+          }
         }
-      }
 
-      return file;
-    })
+        return file;
+      }
+    )
   );
 
 export const resolvers: ResolveMap = {
@@ -68,7 +68,10 @@ export const resolvers: ResolveMap = {
         });
 
         if (multimedia.length > 0) {
-          const fileSaved = (await saveMultimedia(multimedia)) as any;
+          const fileSaved = (await saveMultimedia(multimedia)) as Array<{
+            public_id: string;
+            secure_url: string;
+          }>;
 
           await Portfolio.create({
             portfolioId: id,
@@ -114,25 +117,32 @@ export const resolvers: ResolveMap = {
         });
 
         if (multimedia.length > 0) {
-          const filesSaved = (await saveMultimedia(multimedia)) as any;
+          // Upload file
+          const fileSaved = (await saveMultimedia(multimedia)) as Array<{
+            public_id: string;
+            secure_url: string;
+          }>;
 
+          // What `multimedia` is uploaded now
           const currentFiles = await Portfolio.findOne({
-            where: { portfolioId: id },
+            where: { id: idPortfolio },
             select: ["multimedia"]
           });
 
-          const saveFiles = filesSaved.map((portfolio: any) => portfolio);
-          const files = currentFiles.multimedia;
+          const currentPublicIds = currentFiles.multimedia.map(
+            value => value.public_id
+          );
+          const newPublicIds = fileSaved.map(file => file.public_id);
 
-          // Delete unnecessary files
-          await storeDelete(files, saveFiles);
+          // Delete file
+          await storeDelete(currentPublicIds, newPublicIds);
 
           await Portfolio.update(
             { id: idPortfolio },
             {
               portfolioId: id,
               portfolioType: user ? "User" : "Business", // If there's values on user
-              multimedia: filesSaved,
+              multimedia: fileSaved,
               description
             }
           );
@@ -156,12 +166,13 @@ export const resolvers: ResolveMap = {
           select: ["multimedia"]
         });
 
-        // Delete unnecessary files
-        if (currentFiles.multimedia.length > 0) {
-          currentFiles.multimedia.map(file =>
-            fs.unlinkSync(`${__dirname}/../../../../../public/${file}`)
-          );
-        }
+        const currentPublicIds = currentFiles.multimedia.map(
+          value => value.public_id
+        );
+
+        // Delete file
+        // This function has an empty array because we don't want to compare anything, just delete everything from `currentPublicIds`
+        await storeDelete(currentPublicIds, []);
 
         await Portfolio.delete({ id: idPortfolio });
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
 import Link from "next/link";
@@ -212,9 +212,7 @@ const index = ({
                       <div className="media-left">
                         <SimpleImg
                           applyAspectRatio={false}
-                          src={`${process.env.API_HOST}/${
-                            feed.from.routePhoto
-                          }`}
+                          src={feed.from.routePhoto}
                           height={44}
                           width={48}
                           alt="profile"
@@ -230,7 +228,6 @@ const index = ({
                                 : "/profile/business",
                             query: { id: feed.from.id }
                           }}
-                          prefetch
                         >
                           <a className="title is-4">
                             {feed.from.name} {feed.from.lastname}
@@ -325,4 +322,4 @@ export default compose(
       }
     }
   })
-)(index);
+)(memo(index));

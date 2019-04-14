@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import { Form, withFormik, Field } from "formik";
 import dynamic from "next/dynamic";
 import { compose, graphql } from "react-apollo";
@@ -260,4 +260,4 @@ export default compose(
       }
     }
   })
-)(edit);
+)(memo(edit));

@@ -62,14 +62,11 @@ const InputPortfolio = ({ values, setFieldValue, ...rest }) => (
                   <source src={file.preview} type="video/mp4" />
                 </video>
               )
-            ) : file.split(".").pop() !== "mp4" ? (
-              <img src={`${process.env.API_HOST}/${file}`} alt="uploaded" />
+            ) : file.secure_url.split(".").pop() !== "mp4" ? (
+              <img src={file.secure_url} alt="uploaded" />
             ) : (
               <video>
-                <source
-                  src={`${process.env.API_HOST}/${file}`}
-                  type="video/mp4"
-                />
+                <source src={file.secure_url} type="video/mp4" />
               </video>
             )}
           </div>

@@ -47,11 +47,26 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("varchar", { default: "default/default-photo.png" })
+  @Column("varchar", {
+    default:
+      "https://res.cloudinary.com/djkpgohr3/image/upload/v1554930614/default/default-photo.png" // default image from cloudinary
+  })
   routePhoto: string;
+
+  @Column("varchar", {
+    nullable: true,
+    transformer: new EmptyStringToNull()
+  })
+  cloudinaryPublicIdRoutePhoto: string;
 
   @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   routeCover: string;
+
+  @Column("varchar", {
+    nullable: true,
+    transformer: new EmptyStringToNull()
+  })
+  cloudinaryPublicIdRouteCover: string;
 
   @Index({ fulltext: true })
   @Column("varchar")

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { graphql, compose } from "react-apollo";
 import Router, { withRouter } from "next/router";
 import gql from "graphql-tag";
@@ -97,9 +97,7 @@ const employ = ({
             <div className="media-left">
               <SimpleImg
                 applyAspectRatio={false}
-                src={`${process.env.API_HOST}/${
-                  dataInformationBusiness.routePhoto
-                }`}
+                src={dataInformationBusiness.routePhoto}
                 height={54}
                 width={58}
                 alt="profile"
@@ -326,4 +324,4 @@ export default compose(
     })
   }),
   graphql(applyEmployMutation, { name: "APPLY_EMPLOY_MUTATION" })
-)(employ);
+)(memo(employ));

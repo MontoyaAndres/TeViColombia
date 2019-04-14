@@ -12,7 +12,7 @@ const searchList = ({ value, type, hasMoreItems, handleLoadMore }) => (
           <div className="media-left">
             <SimpleImg
               applyAspectRatio={false}
-              src={`${process.env.API_HOST}/${value.routePhoto}`}
+              src={value.routePhoto}
               height={48}
               width={48}
               alt={value.name}

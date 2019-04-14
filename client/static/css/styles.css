@@ -66,8 +66,8 @@ a.navbar-item:hover,
 }
 
 #fullpage {
-  background: url(/static/img/background.jpg) no-repeat center center fixed;
-  background-color: rgba(214, 214, 214, 0.1);
+  background: url(https://res.cloudinary.com/djkpgohr3/image/upload/v1555206597/background.jpg)
+    no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -76,6 +76,9 @@ a.navbar-item:hover,
 
 #title {
   color: white;
+  text-shadow: 0 0 2px #505050;
+  -moz-text-shadow: 0 0 2px #505050;
+  -webkit-text-shadow: 0 0 2px #505050;
   font-weight: bold;
 }
 

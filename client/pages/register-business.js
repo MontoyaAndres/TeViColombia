@@ -106,7 +106,7 @@ const registerBusiness = ({
       </button>
 
       <label className="checkbox" style={{ padding: "1em" }}>
-        <Link href="/register" prefetch>
+        <Link href="/register">
           <a>Registrar nueva cuenta para usuarios</a>
         </Link>
       </label>

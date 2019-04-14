@@ -71,11 +71,6 @@ export const resolvers: ResolveMap = {
           ];
         }
 
-        const currentFiles = await User.findOne({
-          where: { id },
-          select: ["routePhoto", "routeCover"]
-        });
-
         if (information.routePhoto instanceof Object) {
           const { createReadStream, mimetype } = await information.routePhoto;
           const extension = mimetype.split("/")[1];
@@ -85,17 +80,32 @@ export const resolvers: ResolveMap = {
             extension === "jpeg" ||
             extension === "gif"
           ) {
+            // Upload file
             const stream = createReadStream();
-            const { fileId } = await storeUpload(
+            const { public_id, secure_url } = await storeUpload(
               stream,
-              mimetype,
-              `public/userPhoto`
+              `userPhoto`
             );
 
-            // Delete unnecessary files
-            await storeDelete([currentFiles.routePhoto], fileId);
+            // Delete file
+            const currentPublicId = await User.findOne({
+              where: { id },
+              select: ["cloudinaryPublicIdRoutePhoto"]
+            });
+            if (currentPublicId) {
+              await storeDelete(
+                [currentPublicId.cloudinaryPublicIdRoutePhoto],
+                public_id
+              );
+            }
 
-            await User.update({ id }, { routePhoto: `userPhoto/${fileId}` });
+            await User.update(
+              { id },
+              {
+                routePhoto: secure_url,
+                cloudinaryPublicIdRoutePhoto: public_id
+              }
+            );
           } else {
             return [
               {
@@ -115,17 +125,32 @@ export const resolvers: ResolveMap = {
             extension === "jpeg" ||
             extension === "gif"
           ) {
+            // Upload file
             const stream = createReadStream();
-            const { fileId } = await storeUpload(
+            const { public_id, secure_url } = await storeUpload(
               stream,
-              mimetype,
-              `public/userCover`
+              `userCover`
             );
 
-            // Delete unnecessary files
-            await storeDelete([currentFiles.routeCover], fileId);
+            // Delete file
+            const currentPublicId = await User.findOne({
+              where: { id },
+              select: ["cloudinaryPublicIdRouteCover"]
+            });
+            if (currentPublicId) {
+              await storeDelete(
+                [currentPublicId.cloudinaryPublicIdRouteCover],
+                public_id
+              );
+            }
 
-            await User.update({ id }, { routeCover: `userCover/${fileId}` });
+            await User.update(
+              { id },
+              {
+                routeCover: secure_url,
+                cloudinaryPublicIdRouteCover: public_id
+              }
+            );
           } else {
             return [
               {
@@ -179,21 +204,13 @@ export const resolvers: ResolveMap = {
           information.cv.map(async cv => {
             const { createReadStream, mimetype, filename } = await cv;
 
-            if (
-              mimetype === "application/pdf" ||
-              mimetype ===
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-              mimetype === "application/msword"
-            ) {
+            if (mimetype === "application/pdf") {
               const stream = createReadStream();
-              const { fileId } = await storeUpload(
-                stream,
-                mimetype,
-                `public/cv`
-              );
+              const { public_id, secure_url } = await storeUpload(stream, `cv`);
 
               const cvUploaded = await CV.create({
-                routeCV: `cv/${fileId}`,
+                cloudinaryPublicIdRouteCV: public_id,
+                routeCV: secure_url,
                 filename,
                 user: { id }
               }).save();
@@ -205,16 +222,20 @@ export const resolvers: ResolveMap = {
           })
         );
 
-        const currentCVFiles = await CV.find({
+        const currentCV = await CV.find({
           where: { user: { id } },
-          select: ["routeCV"]
+          select: ["cloudinaryPublicIdRouteCV"]
         });
 
-        const saveFiles = saveCV.map(cv => cv.routeCV);
-        const cvFiles = currentCVFiles.map(cv => cv.routeCV);
+        const currentPublicIds = currentCV.map(
+          cv => cv.cloudinaryPublicIdRouteCV
+        );
+        const newPublicIds = saveCV.map(cv => cv.cloudinaryPublicIdRouteCV);
 
-        // Delete unnecessary files
-        await storeDelete(cvFiles, saveFiles);
+        console.log(currentPublicIds, newPublicIds);
+
+        // Delete files
+        await storeDelete(currentPublicIds, newPublicIds);
 
         // Update preferWork information
         if (information.preferWork.id) {

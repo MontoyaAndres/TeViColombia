@@ -100,10 +100,7 @@ const trainingEmployment = ({ information }) => (
                   <div className="card-content">
                     <div className="media">
                       <div className="media-left">
-                        <a
-                          href={`${process.env.API_HOST}/${cv.routeCV}`}
-                          download
-                        >
+                        <a href={cv.routeCV} download>
                           <i
                             className="fas fa-2x fa-file-download"
                             aria-hidden="true"

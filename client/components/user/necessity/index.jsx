@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import gql from "graphql-tag";
 import { compose, graphql } from "react-apollo";
 import { withFormik, Form } from "formik";
@@ -279,4 +279,4 @@ export default compose(
       resetForm();
     }
   })
-)(index);
+)(memo(index));

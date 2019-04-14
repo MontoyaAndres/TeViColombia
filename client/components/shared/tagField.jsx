@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 
 const tagField = ({ name, placeholder, values, setFieldValue }) => {
   const [value, setValue] = useState("");
@@ -71,4 +71,4 @@ const tagField = ({ name, placeholder, values, setFieldValue }) => {
   );
 };
 
-export default tagField;
+export default memo(tagField);

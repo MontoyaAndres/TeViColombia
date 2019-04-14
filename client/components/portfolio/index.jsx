@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { Form, withFormik } from "formik";
 import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
@@ -172,15 +172,12 @@ const index = ({
                 >
                   {portfolio.multimedia.map((multimedia, i) => (
                     <div className="card-image" key={i}>
-                      {multimedia.split(".").pop() !== "mp4" ? (
-                        <img
-                          src={`${process.env.API_HOST}/${multimedia}`}
-                          alt="uploaded"
-                        />
+                      {multimedia.secure_url.split(".").pop() !== "mp4" ? (
+                        <img src={multimedia.secure_url} alt="uploaded" />
                       ) : (
                         <video controls>
                           <source
-                            src={`${process.env.API_HOST}/${multimedia}`}
+                            src={multimedia.secure_url}
                             type="video/mp4"
                           />
                         </video>
@@ -287,4 +284,4 @@ export default compose(
       }
     }
   })
-)(index);
+)(memo(index));

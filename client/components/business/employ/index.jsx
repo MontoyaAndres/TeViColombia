@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { graphql, compose, Query } from "react-apollo";
 import Link from "next/link";
 
@@ -267,4 +267,4 @@ export default compose(
       dataMe: data.me
     })
   })
-)(index);
+)(memo(index));

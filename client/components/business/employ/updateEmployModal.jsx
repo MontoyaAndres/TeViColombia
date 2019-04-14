@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import gql from "graphql-tag";
 import { compose, graphql } from "react-apollo";
 import { withFormik } from "formik";
@@ -263,4 +263,4 @@ export default compose(
       }
     }
   })
-)(updateEmployModal);
+)(memo(updateEmployModal));

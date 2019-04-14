@@ -114,7 +114,7 @@ const register = ({ values, handleSubmit, isSubmitting, setFieldValue }) => (
       </button>
 
       <label className="checkbox" style={{ padding: "1em" }}>
-        <Link href="/register-business" prefetch>
+        <Link href="/register-business">
           <a>Registrar nueva cuenta para empresas</a>
         </Link>
       </label>

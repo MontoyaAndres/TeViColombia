@@ -74,8 +74,9 @@ const informationQuery = gql`
       }
       cv {
         id
-        routeCV
         filename
+        routeCV
+        cloudinaryPublicIdRouteCV
       }
     }
   }
@@ -154,7 +155,10 @@ const portfolioQuery = gql`
   query PortfolioQuery($id: ID!, $limit: Int) {
     portfolio(id: $id, limit: $limit) {
       id
-      multimedia
+      multimedia {
+        public_id
+        secure_url
+      }
       description
     }
   }
