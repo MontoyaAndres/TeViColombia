@@ -15,7 +15,24 @@ export default function fetchUserData(
       .createQueryBuilder("user")
       .select()
       .leftJoin("user.necessity", "necessity")
-      .orWhere(
+      .where(
+        new Brackets(qb => {
+          qb.where("user.nationality = :nationality", {
+            nationality: user.nationality
+          }).andWhere("user.departament = :departament", {
+            departament: user.departament
+          });
+        })
+      );
+
+    // If the user is not foreigner.
+    if (user.town) {
+      result.andWhere("user.town = :town", { town: user.town });
+    }
+
+    // If the customer is not looking for necessities.
+    if (!user.necessity) {
+      result.andWhere(
         new Brackets(qb => {
           qb.where(`MATCH(user.name) AGAINST (:value IN BOOLEAN MODE)`, {
             value
@@ -33,20 +50,12 @@ export default function fetchUserData(
               value
             });
         })
-      )
-      .andWhere(
-        new Brackets(qb => {
-          qb.where("user.nationality = :nationality", {
-            nationality: user.nationality
-          }).andWhere("user.departament = :departament", {
-            departament: user.departament
-          });
-        })
       );
+    }
 
     // If the customer is looking for necessities.
     if (user.necessity) {
-      result.addSelect("necessity").where(
+      result.addSelect("necessity").andWhere(
         new Brackets(qb => {
           qb.where(
             `MATCH(necessity.comment) AGAINST (:value IN BOOLEAN MODE)`,
@@ -58,11 +67,6 @@ export default function fetchUserData(
           });
         })
       );
-    }
-
-    // If the user is not foreigner.
-    if (user.town) {
-      result.andWhere("user.town = :town", { town: user.town });
     }
 
     resolve(

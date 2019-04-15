@@ -6,6 +6,7 @@ import { withFormik, Form } from "formik";
 import AskModal from "../../shared/askModal";
 import { TextAreaField } from "../../shared/globalField";
 import { necessityQuery } from "../../../graphql/queries/account";
+import normalizeErrors from "../../../utils/normalizeErrors";
 
 const updateNecessityMutation = gql`
   mutation UpdateNecessityMutation(
@@ -13,7 +14,10 @@ const updateNecessityMutation = gql`
     $finished: Boolean!
     $comment: String!
   ) {
-    updateNecessity(id: $id, finished: $finished, comment: $comment)
+    updateNecessity(id: $id, finished: $finished, comment: $comment) {
+      path
+      message
+    }
   }
 `;
 
@@ -37,11 +41,9 @@ const updateNecessityModal = ({
         <div className="media-left">
           <div
             className="update-finished"
-            onClick={() =>
-              setFieldValue("updateFinished", !values.updateFinished)
-            }
+            onClick={() => setFieldValue("finished", !values.finished)}
           >
-            {values.updateFinished ? (
+            {values.finished ? (
               <i
                 className="fas fa-2x fa-check is-medium"
                 style={{ color: "lightgreen" }}
@@ -57,11 +59,7 @@ const updateNecessityModal = ({
           </div>
         </div>
         <div className="media-content">
-          <TextAreaField
-            name="updateComment"
-            placeholder="Comentario"
-            isRequired
-          />
+          <TextAreaField name="comment" placeholder="Comentario" isRequired />
         </div>
       </div>
     </Form>
@@ -76,10 +74,7 @@ export default compose(
         necessity => necessity.id === idNecessity
       );
 
-      return {
-        updateFinished: updateValues.finished,
-        updateComment: updateValues.comment
-      };
+      return updateValues;
     },
     handleSubmit: async (
       values,
@@ -90,22 +85,32 @@ export default compose(
           handleAskUpdateNecessity,
           UPDATE_NECESSITY_MUTATION
         },
+        setErrors,
         setSubmitting
       }
     ) => {
       if (idNecessity) {
-        await UPDATE_NECESSITY_MUTATION({
+        const { data } = await UPDATE_NECESSITY_MUTATION({
           variables: {
             id: idNecessity,
-            finished: values.updateFinished,
-            comment: values.updateComment
+            finished: values.finished,
+            comment: values.comment
           },
           refetchQueries: [{ query: necessityQuery, variables: { userId: id } }]
         });
-      }
 
-      setSubmitting(false);
-      handleAskUpdateNecessity();
+        // if updateNecessity has data, it has the errors
+        if (data.updateNecessity && data.updateNecessity.length) {
+          setSubmitting(false);
+          setErrors(normalizeErrors(data.updateNecessity));
+          document
+            .querySelector(`[name="${data.updateNecessity[0].path}"]`)
+            .focus();
+        } else {
+          setSubmitting(false);
+          handleAskUpdateNecessity();
+        }
+      }
     }
   })
 )(updateNecessityModal);

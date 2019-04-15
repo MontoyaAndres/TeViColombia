@@ -11,10 +11,14 @@ import UpdateNecessityModal from "./updateNecessityModal";
 import DeleteNecessityModal from "./deleteNecessityModal";
 import Linkify from "../../shared/linkify";
 import DropdownIcon from "../../shared/dropdrownIcon";
+import normalizeErrors from "../../../utils/normalizeErrors";
 
 const necessityMutation = gql`
   mutation NecessityMutation($finished: Boolean!, $comment: String!) {
-    necessity(finished: $finished, comment: $comment)
+    necessity(finished: $finished, comment: $comment) {
+      path
+      message
+    }
   }
 `;
 
@@ -43,6 +47,7 @@ const index = ({
   dataNecessity,
   dataMe,
   fetchNecessity,
+  networkStatusNecessity,
   id,
   isSubmitting,
   handleSubmit
@@ -268,15 +273,22 @@ export default compose(
     mapPropsToValues: () => ({ finished: false, comment: "" }),
     handleSubmit: async (
       values,
-      { props: { id, NECESSITY_MUTATION }, setSubmitting, resetForm }
+      { props: { id, NECESSITY_MUTATION }, setErrors, setSubmitting, resetForm }
     ) => {
-      await NECESSITY_MUTATION({
+      const { data } = await NECESSITY_MUTATION({
         variables: values,
         refetchQueries: [{ query: necessityQuery, variables: { userId: id } }]
       });
 
-      setSubmitting(false);
-      resetForm();
+      // if necessity has data, it has the errors
+      if (data.necessity && data.necessity.length) {
+        setSubmitting(false);
+        setErrors(normalizeErrors(data.necessity));
+        document.querySelector(`[name="${data.necessity[0].path}"]`).focus();
+      } else {
+        setSubmitting(false);
+        resetForm();
+      }
     }
   })
 )(memo(index));

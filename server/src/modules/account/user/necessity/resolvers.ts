@@ -45,9 +45,18 @@ export const resolvers: ResolveMap = {
         { finished, comment }: GQL.INecessityOnMutationArguments,
         { session }
       ) => {
+        if (comment.length < 3) {
+          return [
+            {
+              path: "comment",
+              message: "Debe de añadir un comentario más largo"
+            }
+          ];
+        }
+
         const user = await User.findOne({ where: { id: session.userId } });
         await Necessity.create({ finished, comment, user }).save();
-        return true;
+        return null;
       }
     ),
     updateNecessity: createMiddleware(
@@ -56,8 +65,17 @@ export const resolvers: ResolveMap = {
         _,
         { id, finished, comment }: GQL.IUpdateNecessityOnMutationArguments
       ) => {
+        if (comment.length < 3) {
+          return [
+            {
+              path: "comment",
+              message: "Debe de añadir un comentario más largo"
+            }
+          ];
+        }
+
         await Necessity.update({ id }, { finished, comment });
-        return true;
+        return null;
       }
     ),
     deleteNecessity: createMiddleware(
