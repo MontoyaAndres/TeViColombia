@@ -142,11 +142,13 @@ const search = ({ values, loading, data }) => {
           <DynamicModal values={values} />
         </div>
         <div className="column is-8">
-          <DynamicSearch
-            name="value"
-            placeholder="Ingresa cualquier valor"
-            handleSubmit={() => data.refetch(state)}
-          />
+          <form>
+            <DynamicSearch
+              name="value"
+              placeholder="Ingresa cualquier valor"
+              handleSubmit={() => data.refetch(state)}
+            />
+          </form>
 
           {data.networkStatus === 2 || data.networkStatus === 3 ? (
             <Loading />

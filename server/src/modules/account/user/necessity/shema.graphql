@@ -17,7 +17,7 @@ type Query {
 }
 
 type Mutation {
-  necessity(finished: Boolean!, comment: String!): Boolean!
-  updateNecessity(id: ID!, finished: Boolean!, comment: String!): Boolean!
+  necessity(finished: Boolean!, comment: String!): [Error!]
+  updateNecessity(id: ID!, finished: Boolean!, comment: String!): [Error!]
   deleteNecessity(id: ID!): Boolean!
 }

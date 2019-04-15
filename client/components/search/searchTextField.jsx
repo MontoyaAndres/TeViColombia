@@ -17,6 +17,8 @@ const searchTextField = ({ name, placeholder, handleSubmit, ...props }) => {
             className="input is-hovered is-medium"
             name={name}
             placeholder={placeholder}
+            maxLength={84}
+            minLength={3}
             required
           />
         </div>

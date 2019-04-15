@@ -15,7 +15,31 @@ export default function fetchBusinessData(
       .createQueryBuilder("business")
       .select()
       .leftJoin("business.employ", "employ")
-      .orWhere(
+      .where(
+        new Brackets(qb => {
+          qb.where("business.nationality = :nationality", {
+            nationality: business.nationality
+          }).andWhere("business.departament = :departament", {
+            departament: business.departament
+          });
+        })
+      )
+      .andWhere(
+        new Brackets(qb => {
+          qb.where("business.sector = :sector", {
+            sector: business.sector
+          });
+        })
+      );
+
+    // If the business is not foreigner.
+    if (business.town) {
+      result.andWhere("business.town = :town", { town: business.town });
+    }
+
+    // If the customer is not looking for employ.
+    if (!business.employ) {
+      result.andWhere(
         new Brackets(qb => {
           qb.where(`MATCH(business.name) AGAINST (:value IN BOOLEAN MODE)`, {
             value
@@ -33,29 +57,14 @@ export default function fetchBusinessData(
               }
             );
         })
-      )
-      .andWhere(
-        new Brackets(qb => {
-          qb.where("business.nationality = :nationality", {
-            nationality: business.nationality
-          }).andWhere("business.departament = :departament", {
-            departament: business.departament
-          });
-        })
-      )
-      .andWhere(
-        new Brackets(qb => {
-          qb.where("business.sector = :sector", {
-            sector: business.sector
-          });
-        })
       );
+    }
 
     // If the customer is looking for employ.
     if (business.employ) {
       result
         .addSelect("employ")
-        .where("employ.area = :area", { area: business.area })
+        .andWhere("employ.area = :area", { area: business.area })
         .andWhere(
           new Brackets(qb => {
             qb.where(
@@ -68,11 +77,6 @@ export default function fetchBusinessData(
             });
           })
         );
-    }
-
-    // If the business is not foreigner.
-    if (business.town) {
-      result.andWhere("business.town = :town", { town: business.town });
     }
 
     resolve(
