@@ -6,13 +6,11 @@ ENV NODE_ENV development
 
 RUN apk add --no-cache bash
 
-WORKDIR /tevi-dev
+WORKDIR /app
 
-COPY server/package.json .
+ADD server .
 
 RUN yarn install
-
-COPY server .
 
 EXPOSE 4000
 

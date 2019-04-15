@@ -1,13 +1,3 @@
-# App
-server.env
-DatabaseModel.mwb.bak
-server/public/userPhoto/
-server/public/userCover/
-server/public/cv/
-server/public/portfolio/
-server/public/businessPhoto/
-server/public/businessCover/
-
 # Logs
 logs
 *.log
