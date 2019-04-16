@@ -2,6 +2,7 @@ import React from "react";
 import gql from "graphql-tag";
 import { compose, graphql } from "react-apollo";
 import { withFormik } from "formik";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import AskModal from "../shared/askModal";
 import { portfolioQuery } from "../../graphql/queries/account";
@@ -92,9 +93,10 @@ export default compose(
         if (data.updatePortfolio && data.updatePortfolio.length) {
           setSubmitting(false);
           setErrors(normalizeErrors(data.updatePortfolio));
-          document
-            .querySelector(`[name="${data.updatePortfolio[0].path}"]`)
-            .focus();
+          const node = document.querySelector(
+            `[name="${data.updatePortfolio[0].path}"]`
+          );
+          scrollIntoView(node);
         } else {
           setSubmitting(false);
           handleAskUpdatePortfolio();

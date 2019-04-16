@@ -11,24 +11,33 @@ const DesktopParams = ({ values, width }) => (
       <h4 className="title is-5">Parametros de busqueda</h4>
 
       <div className="field">
-        <label className="label">Tipo de cuentas a buscar</label>
+        <label htmlFor="type" className="label">
+          Tipo de cuentas a buscar
+        </label>
         <RadioField
           name="type"
+          id="type"
           arrayRadio={["Usuario", "Empresa"]}
           isRequired
         />
       </div>
 
-      <label className="label">País</label>
+      <label htmlFor="nationality" className="label">
+        País
+      </label>
       <SelectField
         name="nationality"
+        id="nationality"
         arrayPlaceholder={EntityGlobalEnum.ENUMCountry}
         isRequired
       />
 
-      <label className="label">Departamento</label>
+      <label htmlFor="departament" className="label">
+        Departamento
+      </label>
       <SelectField
         name="departament"
+        id="departament"
         arrayPlaceholder={EntityGlobalEnum.ENUMDepartament}
         isRequired
       />
@@ -36,12 +45,15 @@ const DesktopParams = ({ values, width }) => (
       {values.departament !== "Extranjero" &&
       values.nationality === "Colombia" ? (
         <>
-          <label className="label">Municipio</label>
+          <label htmlFor="town" className="label">
+            Municipio
+          </label>
           <SelectField
+            name="town"
+            id="town"
             arrayPlaceholder={Object.values(
               TownsByDepartament[values.departament]
             )}
-            name="town"
             placeholder="Municipio"
             isRequired
           />
@@ -50,9 +62,12 @@ const DesktopParams = ({ values, width }) => (
 
       {values.type === "Usuario" && (
         <>
-          <label className="label">¿Filtrar por necesidad?</label>
+          <label htmlFor="necessity" className="label">
+            ¿Filtrar por necesidad?
+          </label>
           <SelectField
             name="necessity"
+            id="necessity"
             arrayPlaceholder={["Sí", "No"]}
             isRequired
           />
@@ -61,9 +76,12 @@ const DesktopParams = ({ values, width }) => (
 
       {values.type === "Empresa" && (
         <>
-          <label className="label">Sector de la empresa</label>
+          <label htmlFor="sector" className="label">
+            Sector de la empresa
+          </label>
           <SelectField
             name="sector"
+            id="sector"
             arrayPlaceholder={EntityGlobalEnum.ENUMSector}
             isRequired
           />
@@ -72,9 +90,12 @@ const DesktopParams = ({ values, width }) => (
 
       {values.type === "Empresa" && (
         <>
-          <label className="label">¿Filtrar por empleo?</label>
+          <label htmlFor="employ" className="label">
+            ¿Filtrar por empleo?
+          </label>
           <SelectField
             name="employ"
+            id="employ"
             arrayPlaceholder={["Sí", "No"]}
             isRequired
           />
@@ -83,9 +104,12 @@ const DesktopParams = ({ values, width }) => (
 
       {values.type === "Empresa" && values.employ === "Sí" ? (
         <>
-          <label className="label">Área</label>
+          <label htmlFor="area" className="label">
+            Área
+          </label>
           <SelectField
             name="area"
+            id="area"
             arrayPlaceholder={EntityGlobalEnum.ENUMArea}
             isRequired
           />
@@ -100,22 +124,37 @@ const MobileParams = ({ values }) => {
 
   function HiddenModalParams() {
     return (
-      <div className={hidden ? "modal is-active" : ""}>
-        <DesktopParams values={values} />
-        <span
-          className="modal-close icon is-medium"
-          onClick={() => setHidden(false)}
-        >
-          <i className="delete is-medium" aria-hidden="true" />
-        </span>
-      </div>
+      <>
+        {/* remove scroll from body. https://stackoverflow.com/a/24727206 */}
+        <style global jsx>{`
+          html,
+          body {
+            overflow: hidden;
+            position: fixed;
+          }
+        `}</style>
+
+        <div className={hidden ? "modal is-active" : ""}>
+          <DesktopParams values={values} />
+          <span
+            className="modal-close icon is-medium"
+            onClick={() => setHidden(false)}
+          >
+            <i className="delete is-medium" aria-hidden="true" />
+          </span>
+        </div>
+      </>
     );
   }
 
   return (
     <>
       {hidden && <HiddenModalParams />}
-      <a className="params-button" onClick={() => setHidden(true)}>
+      <a
+        type="button"
+        className="params-button"
+        onClick={() => setHidden(true)}
+      >
         <i className="fa fa-ellipsis-v" />
       </a>
     </>

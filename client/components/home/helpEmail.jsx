@@ -45,9 +45,12 @@ const helpEmail = ({ values, setFieldValue, isSubmitting, handleSubmit }) => (
       <Form method="POST" onSubmit={handleSubmit}>
         <div className="columns is-multiline">
           <div className="column is-6">
-            <label className="label">Nombres y apellidos</label>
+            <label htmlFor="name" className="label">
+              Nombres y apellidos
+            </label>
             <TextField
               type="text"
+              id="name"
               name="name"
               placeholder="Nombres y apellidos"
               isRequired
@@ -55,9 +58,12 @@ const helpEmail = ({ values, setFieldValue, isSubmitting, handleSubmit }) => (
           </div>
 
           <div className="column is-6">
-            <label className="label">Correo electrónico</label>
+            <label htmlFor="email" className="label">
+              Correo electrónico
+            </label>
             <TextField
               type="email"
+              id="email"
               name="email"
               placeholder="Correo electrónico"
               isRequired
@@ -65,8 +71,15 @@ const helpEmail = ({ values, setFieldValue, isSubmitting, handleSubmit }) => (
           </div>
 
           <div className="column is-12">
-            <label className="label">Mensaje a enviar</label>
-            <TextAreaField name="message" placeholder="Mensaje" isRequired />
+            <label htmlFor="message" className="label">
+              Mensaje a enviar
+            </label>
+            <TextAreaField
+              name="message"
+              id="message"
+              placeholder="Mensaje"
+              isRequired
+            />
           </div>
 
           <div className="column is-12">
@@ -113,7 +126,10 @@ export default compose(
         setSubmitting(false);
         setFieldValue("sent", false, false);
         setErrors(normalizeErrors(data.helpEmail));
-        document.querySelector(`[name="${data.helpEmail[0].path}"]`).focus();
+        const node = document.querySelector(
+          `[name="${data.helpEmail[0].path}"]`
+        );
+        scrollIntoView(node);
       } else {
         setSubmitting(false);
         resetForm();

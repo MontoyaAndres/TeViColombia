@@ -3,6 +3,7 @@ import { Form, withFormik } from "formik";
 import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
 import { Carousel } from "react-responsive-carousel";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import meQuery from "../../graphql/queries/me";
 import Loading from "../shared/loading";
@@ -277,7 +278,10 @@ export default compose(
       if (data.portfolio && data.portfolio.length) {
         setSubmitting(false);
         setErrors(normalizeErrors(data.portfolio));
-        document.querySelector(`[name="${data.portfolio[0].path}"]`).focus();
+        const node = document.querySelector(
+          `[name="${data.portfolio[0].path}"]`
+        );
+        scrollIntoView(node);
       } else {
         setSubmitting(false);
         resetForm();

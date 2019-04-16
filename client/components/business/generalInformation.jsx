@@ -3,7 +3,7 @@ import React from "react";
 const generalInformation = ({ information }) => (
   <div className="container">
     <div className="columns is-multiline">
-      <div className={`column ${information.socialnetwork.length > 0 ? "is-6" : "is-12"}`}>
+      <div className="column is-6">
         <div className="box" style={{ marginTop: "0.1rem" }}>
           <div className="content">
             <p className="subtitle">

@@ -95,6 +95,7 @@ const editMember = ({ values, setFieldValue }) => {
 
                     <div className="control">
                       <a
+                        type="button"
                         className="button is-info is-medium"
                         onClick={() => handleAddElement(selectedItem)}
                       >

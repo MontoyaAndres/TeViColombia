@@ -4,6 +4,7 @@ import { Mutation, withApollo } from "react-apollo";
 import gql from "graphql-tag";
 import Router from "next/router";
 import Link from "next/link";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import { TextField } from "../components/shared/globalField";
 import { LoginValidation } from "../utils/validation";
@@ -60,9 +61,10 @@ const login = () => {
                   if (data.login && data.login.length) {
                     setSubmitting(false);
                     setErrors(normalizeErrors(data.login));
-                    document
-                      .querySelector(`[name="${data.login[0].path}"]`)
-                      .focus();
+                    const node = document.querySelector(
+                      `[name="${data.login[0].path}"]`
+                    );
+                    scrollIntoView(node);
                   } else {
                     setSubmitting(false);
                     Router.push("/");

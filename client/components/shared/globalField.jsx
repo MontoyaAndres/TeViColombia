@@ -1,5 +1,6 @@
 import React from "react";
 import { Field, ErrorMessage, connect } from "formik";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import CountryJSON from "../../static/countries.json";
 
@@ -10,7 +11,8 @@ const ErrorFocus = ({
   /* When are errors from any client-validation, focus into the first. */
   const keys = Object.keys(errors);
   if (keys.length > 0 && isSubmitting && !isValidating) {
-    document.querySelector(`[name="${keys[0]}"]`).focus();
+    const node = document.querySelector(`[name="${keys[0]}"]`);
+    scrollIntoView(node);
   }
 
   return (
@@ -125,10 +127,10 @@ const TextAreaField = ({
     <div className="field">
       <div className="control">
         <Field
-          {...props}
           name={name}
           render={({ field }) => (
             <textarea
+              {...props}
               {...field}
               maxLength={maxLength}
               placeholder={placeholder}
@@ -145,9 +147,10 @@ const TextAreaField = ({
 );
 
 const CheckboxField = ({ name, isRequired = true, message, ...props }) => (
-  <label className="checkbox">
+  <label htmlFor={name} className="checkbox">
     <Field
       {...props}
+      id={name}
       name={name}
       required={isRequired}
       render={({ field }) => (
@@ -206,9 +209,10 @@ const TextFieldAddonsCountry = ({
 const RadioField = ({ name, arrayRadio, isRequired = true, ...props }) => (
   <div className="control">
     {arrayRadio.map(radio => (
-      <label className="radio" key={radio}>
+      <label htmlFor={name} className="radio" key={radio}>
         <Field
           {...props}
+          id={name}
           name={name}
           required={isRequired}
           render={({ field }) => (

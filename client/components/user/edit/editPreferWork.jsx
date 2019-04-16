@@ -18,18 +18,24 @@ const editPreferWork = ({ setFieldValue }) => (
       <div className="content">
         <div className="columns is-multiline">
           <div className="column is-6">
-            <label className="label">Situación actual</label>
+            <label htmlFor="preferWork.currentSituation" className="label">
+              Situación actual
+            </label>
             <SelectField
               name="preferWork.currentSituation"
+              id="preferWork.currentSituation"
               arrayPlaceholder={EntityGlobalEnum.ENUMCurrentSituation}
               isRequired
             />
           </div>
 
           <div className="column is-6">
-            <label className="label">Puesto de trabajo deseado</label>
+            <label htmlFor="preferWork.job" className="label">
+              Puesto de trabajo deseado
+            </label>
             <TextField
               type="text"
+              id="preferWork.job"
               name="preferWork.job"
               placeholder="Puesto de trabajo deseado"
               isRequired
@@ -37,19 +43,25 @@ const editPreferWork = ({ setFieldValue }) => (
           </div>
 
           <div className="column is-6">
-            <label className="label">Salario mínimo aceptado</label>
+            <label htmlFor="preferWork.salary" className="label">
+              Salario mínimo aceptado
+            </label>
             <TextField
               type="number"
-              pattern="\d*"
+              id="preferWork.salary"
               name="preferWork.salary"
+              pattern="\d*"
               placeholder="Salario mínimo aceptado"
               isRequired
             />
           </div>
 
           <div className="column is-6">
-            <label className="label">Moneda</label>
+            <label htmlFor="preferWork.currency" className="label">
+              Moneda
+            </label>
             <SelectField
+              id="preferWork.currency"
               name="preferWork.currency"
               arrayPlaceholder={["Modena local", "US Dólar"]}
               isRequired
@@ -57,8 +69,11 @@ const editPreferWork = ({ setFieldValue }) => (
           </div>
 
           <div className="column is-6">
-            <label className="label">Área</label>
+            <label htmlFor="preferWork.area" className="label">
+              Área
+            </label>
             <SelectMultipleField
+              id="preferWork.area"
               name="preferWork.area"
               arrayPlaceholder={EntityGlobalEnum.ENUMArea}
               setFieldValue={setFieldValue}
@@ -67,8 +82,11 @@ const editPreferWork = ({ setFieldValue }) => (
           </div>
 
           <div className="column is-6">
-            <label className="label">Departamento</label>
+            <label htmlFor="preferWork.departament" className="label">
+              Departamento
+            </label>
             <SelectMultipleField
+              id="preferWork.departament"
               name="preferWork.departament"
               arrayPlaceholder={EntityGlobalEnum.ENUMDepartament}
               setFieldValue={setFieldValue}
@@ -77,8 +95,11 @@ const editPreferWork = ({ setFieldValue }) => (
           </div>
 
           <div className="column is-6">
-            <label className="label">Disponibilidad para viajar</label>
+            <label htmlFor="preferWork.travel" className="label">
+              Disponibilidad para viajar
+            </label>
             <RadioField
+              id="preferWork.travel"
               name="preferWork.travel"
               arrayRadio={["Sí", "No"]}
               isRequired
@@ -86,10 +107,11 @@ const editPreferWork = ({ setFieldValue }) => (
           </div>
 
           <div className="column is-6">
-            <label className="label">
+            <label htmlFor="preferWork.residence" className="label">
               Disponibilidad para cambiar de residencia
             </label>
             <RadioField
+              id="preferWork.residence"
               name="preferWork.residence"
               arrayRadio={["Sí", "No"]}
               isRequired

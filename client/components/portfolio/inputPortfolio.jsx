@@ -6,9 +6,12 @@ import UploadFile from "./uploadFile";
 
 const InputPortfolio = ({ values, setFieldValue, ...rest }) => (
   <>
-    <label className="label">Descripción.</label>
+    <label htmlFor="description" className="label">
+      Descripción.
+    </label>
     <TextAreaField
       name="description"
+      id="description"
       placeholder="Describe de qué trata tu proyecto."
       isRequired
       {...rest}

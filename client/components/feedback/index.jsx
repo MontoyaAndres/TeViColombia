@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import Link from "next/link";
 import { withFormik, Form, ErrorMessage } from "formik";
 import { SimpleImg } from "react-simple-img";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import { feedbackQuery } from "../../graphql/queries/account";
 import meQuery from "../../graphql/queries/me";
@@ -45,8 +46,15 @@ const InputFeedback = ({
         <ErrorMessage name="stars" />
       </div>
 
-      <label className="label">Comentario</label>
-      <TextAreaField name="comment" placeholder="Comentario" isRequired />
+      <label htmlFor="comment" className="label">
+        Comentario
+      </label>
+      <TextAreaField
+        name="comment"
+        id="comment"
+        placeholder="Comentario"
+        isRequired
+      />
 
       <button
         type="submit"
@@ -315,7 +323,10 @@ export default compose(
       if (data.feedback && data.feedback.length) {
         setSubmitting(false);
         setErrors(normalizeErrors(data.feedback));
-        document.querySelector(`[name="${data.feedback[0].path}"]`).focus();
+        const node = document.querySelector(
+          `[name="${data.feedback[0].path}"]`
+        );
+        scrollIntoView(node);
       } else {
         setSubmitting(false);
         resetForm();

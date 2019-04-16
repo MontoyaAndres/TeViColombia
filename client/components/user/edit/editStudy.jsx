@@ -24,9 +24,12 @@ const editStudy = ({ study }) => (
                 {study.map((stdy, index) => (
                   <div className="columns is-multiline" key={index}>
                     <div className="column is-6">
-                      <label className="label">Centro educativo</label>
+                      <label htmlFor={`study.${index}.place`} className="label">
+                        Centro educativo
+                      </label>
                       <TextField
                         type="text"
+                        id={`study.${index}.place`}
                         name={`study.${index}.place`}
                         placeholder="Lugar de estudio"
                         isRequired
@@ -34,8 +37,11 @@ const editStudy = ({ study }) => (
                     </div>
 
                     <div className="column is-6">
-                      <label className="label">Nivel de estudios</label>
+                      <label htmlFor={`study.${index}.level`} className="label">
+                        Nivel de estudios
+                      </label>
                       <SelectField
+                        id={`study.${index}.level`}
                         name={`study.${index}.level`}
                         arrayPlaceholder={EntityGlobalEnum.ENUMStudyLevel}
                         isRequired
@@ -46,9 +52,15 @@ const editStudy = ({ study }) => (
                     stdy.level !== "EDUCACIÓN BÁSICA SECUNDARIA" &&
                     stdy.level !== "BACHILLERATO / EDUCACIÓN MEDIA" ? (
                       <div className="column is-6">
-                        <label className="label">Área de estudio</label>
+                        <label
+                          htmlFor={`study.${index}.area`}
+                          className="label"
+                        >
+                          Área de estudio
+                        </label>
                         <TextField
                           type="text"
+                          id={`study.${index}.area`}
                           name={`study.${index}.area`}
                           placeholder="Lugar de estudio"
                           isRequired
@@ -57,9 +69,15 @@ const editStudy = ({ study }) => (
                     ) : null}
 
                     <div className="column is-6">
-                      <label className="label">Fecha de inicio</label>
+                      <label
+                        htmlFor={`study.${index}.startedOn`}
+                        className="label"
+                      >
+                        Fecha de inicio
+                      </label>
                       <TextField
                         type="date"
+                        id={`study.${index}.startedOn`}
                         name={`study.${index}.startedOn`}
                         placeholder="Fecha de inicio"
                         isRequired
@@ -73,9 +91,15 @@ const editStudy = ({ study }) => (
                     </div>
 
                     <div className="column is-6">
-                      <label className="label">Fecha de finalización</label>
+                      <label
+                        htmlFor={`study.${index}.finishIn`}
+                        className="label"
+                      >
+                        Fecha de finalización
+                      </label>
                       <TextField
                         type="date"
+                        id={`study.${index}.finishIn`}
                         name={`study.${index}.finishIn`}
                         placeholder="Fecha de finalización"
                         disabled={stdy.studyingOn}

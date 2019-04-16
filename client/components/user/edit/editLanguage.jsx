@@ -19,15 +19,27 @@ const editLanguage = ({ language }) => (
               <div className="columns is-multiline">
                 {language.map((_, index) => (
                   <div className="column is-6" key={index}>
-                    <label className="label">Nivel de idioma</label>
+                    <label
+                      htmlFor={`language.${index}.level`}
+                      className="label"
+                    >
+                      Nivel de idioma
+                    </label>
                     <SelectField
+                      id={`language.${index}.level`}
                       name={`language.${index}.level`}
                       arrayPlaceholder={EntityGlobalEnum.ENUMLanguageLevel}
                       isRequired
                     />
 
-                    <label className="label">Idioma</label>
+                    <label
+                      htmlFor={`language.${index}.language`}
+                      className="label"
+                    >
+                      Idioma
+                    </label>
                     <SelectField
+                      id={`language.${index}.language`}
                       name={`language.${index}.language`}
                       arrayPlaceholder={EntityGlobalEnum.ENUMLanguage}
                       isRequired

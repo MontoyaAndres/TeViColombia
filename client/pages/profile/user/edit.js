@@ -276,9 +276,10 @@ export default compose(
         setSubmitting(false);
         setFieldValue("edited", false, false);
         setErrors(normalizeErrors(data.generalInformation));
-        document
-          .querySelector(`[name="${data.generalInformation[0].path}"]`)
-          .focus();
+        const node = document.querySelector(
+          `[name="${data.generalInformation[0].path}"]`
+        );
+        scrollIntoView(node);
       } else {
         setSubmitting(false);
         setFieldValue("edited", true, false);

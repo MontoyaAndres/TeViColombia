@@ -57,9 +57,12 @@ const password = ({ values, handleSubmit, isSubmitting }) => (
           onSubmit={handleSubmit}
           style={{ padding: "0 10vw" }}
         >
-          <label className="label">Correo electrónico</label>
+          <label htmlFor="email" className="label">
+            Correo electrónico
+          </label>
           <TextField
             type="email"
+            id="email"
             name="email"
             placeholder="Correo electrónico"
             isRequired
@@ -68,6 +71,7 @@ const password = ({ values, handleSubmit, isSubmitting }) => (
           <label className="label">Tipo de cuenta</label>
           <div className="field">
             <RadioField
+              id="type"
               name="type"
               arrayRadio={["Usuario", "Empresa"]}
               isRequired
@@ -125,9 +129,10 @@ export default compose(
         setSubmitting(false);
         setFieldValue("sent", false, false);
         setErrors(normalizeErrors(data.sendForgotPasswordEmail));
-        document
-          .querySelector(`[name="${data.sendForgotPasswordEmail[0].path}"]`)
-          .focus();
+        const node = document.querySelector(
+          `[name="${data.sendForgotPasswordEmail[0].path}"]`
+        );
+        scrollIntoView(node);
       } else {
         setSubmitting(false);
         resetForm();

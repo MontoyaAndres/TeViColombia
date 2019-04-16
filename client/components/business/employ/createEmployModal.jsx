@@ -2,6 +2,7 @@ import React, { useEffect, memo } from "react";
 import gql from "graphql-tag";
 import { compose, graphql } from "react-apollo";
 import { withFormik, Form } from "formik";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import AskModal from "../../shared/askModal";
 import {
@@ -57,77 +58,118 @@ const createEmployModal = ({
       isSubmitting={isSubmitting}
     >
       <Form method="POST">
-        <label className="label">Posición de trabajo</label>
+        <label htmlFor="position" className="label">
+          Posición de trabajo
+        </label>
         <TextField
           type="text"
+          id="position"
           name="position"
           placeholder="Posición de trabajo"
           isRequired
         />
 
-        <label className="label">Descripción de trabajo</label>
+        <label htmlFor="description" className="label">
+          Descripción de trabajo
+        </label>
         <TextAreaField
           type="text"
+          id="description"
           name="description"
           placeholder="Descripción de trabajo"
           isRequired
         />
 
-        <label className="label">Area</label>
+        <label htmlFor="area" className="label">
+          Area
+        </label>
         <SelectField
+          id="area"
           name="area"
           arrayPlaceholder={EntityGlobalEnum.ENUMArea}
           isRequired
         />
 
-        <label className="label">Habilidades</label>
+        <label htmlFor="skills" className="label">
+          Habilidades
+        </label>
         <TagField
+          id="skills"
           name="skills"
           placeholder="Habilidades"
           setFieldValue={setFieldValue}
           values={values.skills}
         />
 
-        <label className="label">Educación mínima</label>
+        <label htmlFor="minStudy" className="label">
+          Educación mínima
+        </label>
         <SelectField
+          id="minStudy"
           name="minStudy"
           arrayPlaceholder={EntityGlobalEnum.ENUMStudyLevel}
           isRequired
         />
 
-        <label className="label">Años de experiencia</label>
+        <label htmlFor="minExperience" className="label">
+          Años de experiencia
+        </label>
         <TextField
           type="number"
+          id="minExperience"
           pattern="\d*"
           name="minExperience"
           placeholder="Años de experiencia"
           isRequired
         />
 
-        <label className="label">Idiomas</label>
+        <label htmlFor="language" className="label">
+          Idiomas
+        </label>
         <TagField
           name="language"
+          id="language"
           placeholder="Idiomas"
           setFieldValue={setFieldValue}
           values={values.language}
         />
 
-        <label className="label">Disponibilidad para viajar</label>
-        <RadioField name="travel" arrayRadio={["Sí", "No"]} isRequired />
+        <label htmlFor="travel" className="label">
+          Disponibilidad para viajar
+        </label>
+        <RadioField
+          name="travel"
+          id="travel"
+          arrayRadio={["Sí", "No"]}
+          isRequired
+        />
 
-        <label className="label">Disponibilidad de cambio de residencia</label>
-        <RadioField name="residence" arrayRadio={["Sí", "No"]} isRequired />
+        <label htmlFor="residence" className="label">
+          Disponibilidad de cambio de residencia
+        </label>
+        <RadioField
+          name="residence"
+          id="residence"
+          arrayRadio={["Sí", "No"]}
+          isRequired
+        />
 
-        <label className="label">País</label>
+        <label htmlFor="country" className="label">
+          País
+        </label>
         <SelectField
           name="country"
+          id="country"
           arrayPlaceholder={EntityGlobalEnum.ENUMCountry}
           isRequired
         />
 
-        <label className="label">Departamento</label>
+        <label htmlFor="departament" className="label">
+          Departamento
+        </label>
         <SelectField
           name="departament"
+          id="departament"
           arrayPlaceholder={EntityGlobalEnum.ENUMDepartament}
           isRequired
         />
@@ -135,21 +177,27 @@ const createEmployModal = ({
         {values.departament !== "Extranjero" &&
         values.country === "Colombia" ? (
           <>
-            <label className="label">Municipio</label>
+            <label htmlFor="town" className="label">
+              Municipio
+            </label>
             <SelectField
+              name="town"
+              id="town"
               arrayPlaceholder={Object.values(
                 TownsByDepartament[values.departament]
               )}
-              name="town"
               placeholder="Municipio"
               isRequired
             />
           </>
         ) : null}
 
-        <label className="label">Jornada</label>
+        <label htmlFor="time" className="label">
+          Jornada
+        </label>
         <SelectField
           name="time"
+          id="time"
           arrayPlaceholder={[
             "Jornada completa",
             "Desde casa",
@@ -163,9 +211,12 @@ const createEmployModal = ({
           isRequired
         />
 
-        <label className="label">Tipo de contrato</label>
+        <label htmlFor="contract" className="label">
+          Tipo de contrato
+        </label>
         <SelectField
           name="contract"
+          id="contract"
           arrayPlaceholder={[
             "Contrato a plazo fijo",
             "Contrato eventual",
@@ -177,27 +228,36 @@ const createEmployModal = ({
           isRequired
         />
 
-        <label className="label">Moneda</label>
+        <label htmlFor="currency" className="label">
+          Moneda
+        </label>
         <SelectField
           name="currency"
+          id="currency"
           arrayPlaceholder={EntityGlobalEnum.ENUMCurrency}
           isRequired
         />
 
-        <label className="label">Salario mínimo</label>
+        <label htmlFor="minSalary" className="label">
+          Salario mínimo
+        </label>
         <TextField
           type="number"
-          pattern="\d*"
+          id="minSalary"
           name="minSalary"
+          pattern="\d*"
           placeholder="Salario mínimo"
           isRequired
         />
 
-        <label className="label">Salario maximo</label>
+        <label htmlFor="maxSalary" className="label">
+          Salario maximo
+        </label>
         <TextField
           type="number"
-          pattern="\d*"
+          id="maxSalary"
           name="maxSalary"
+          pattern="\d*"
           placeholder="Salario maximo"
           isRequired
         />
@@ -249,7 +309,8 @@ export default compose(
       if (data.employ && data.employ.length) {
         setSubmitting(false);
         setErrors(normalizeErrors(data.employ));
-        document.querySelector(`[name="${data.employ[0].path}"]`).focus();
+        const node = document.querySelector(`[name="${data.employ[0].path}"]`);
+        scrollIntoView(node);
       } else {
         setSubmitting(false);
         resetForm();

@@ -249,9 +249,10 @@ export default compose(
         setSubmitting(false);
         setFieldValue("edited", false, false);
         setErrors(normalizeErrors(data.generalInformationBusiness));
-        document
-          .querySelector(`[name="${data.generalInformationBusiness[0].path}"]`)
-          .focus();
+        const node = document.querySelector(
+          `[name="${data.generalInformationBusiness[0].path}"]`
+        );
+        scrollIntoView(node);
       } else {
         setSubmitting(false);
         setFieldValue("edited", true, false);

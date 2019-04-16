@@ -3,6 +3,7 @@ import Router, { withRouter } from "next/router";
 import { Form, Formik } from "formik";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import { ForgotPasswordValidation } from "../utils/validation";
 import { TextField } from "../components/shared/globalField";
@@ -65,11 +66,10 @@ const changePassword = ({
                 ) {
                   setSubmitting(false);
                   setErrors(normalizeErrors(data.forgotPasswordChange));
-                  document
-                    .querySelector(
-                      `[name="${data.forgotPasswordChange[0].path}"]`
-                    )
-                    .focus();
+                  const node = document.querySelector(
+                    `[name="${data.forgotPasswordChange[0].path}"]`
+                  );
+                  scrollIntoView(node);
                 } else {
                   setSubmitting(false);
                   Router.push("/login");
@@ -77,9 +77,12 @@ const changePassword = ({
               }}
               render={({ isSubmitting }) => (
                 <Form method="POST" style={{ padding: "0 10vw" }}>
-                  <label className="label">Contraseña nueva</label>
+                  <label htmlFor="newPassword" className="label">
+                    Contraseña nueva
+                  </label>
                   <TextField
                     type="password"
+                    id="newPassword"
                     name="newPassword"
                     placeholder="Contraseña nueva"
                     isRequired
