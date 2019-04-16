@@ -24,9 +24,12 @@ const editGeneralInformation = ({
       <div className="content">
         <div className="columns is-multiline">
           <div className="column is-12">
-            <label className="label">Descripción de perfil profesional</label>
+            <label htmlFor="description" className="label">
+              Descripción de perfil profesional
+            </label>
             <TextField
               type="text"
+              id="description"
               name="description"
               placeholder="Descripción de perfil profesional"
               isRequired={false}
@@ -35,9 +38,12 @@ const editGeneralInformation = ({
           </div>
 
           <div className="column is-6">
-            <label className="label">Nombre de la compañia</label>
+            <label htmlFor="name" className="label">
+              Nombre de la compañia
+            </label>
             <TextField
               type="text"
+              id="name"
               name="name"
               placeholder="Nombre de la compañia"
               isRequired
@@ -45,9 +51,12 @@ const editGeneralInformation = ({
           </div>
 
           <div className="column is-6">
-            <label className="label">Dirección, complemento y localidad</label>
+            <label htmlFor="address" className="label">
+              Dirección, complemento y localidad
+            </label>
             <TextField
               type="text"
+              id="address"
               name="address"
               placeholder="Dirección"
               isRequired={false}
@@ -55,9 +64,12 @@ const editGeneralInformation = ({
           </div>
 
           <div className="column is-6">
-            <label className="label">Teléfono celular/fijo</label>
+            <label htmlFor="telephone" className="label">
+              Teléfono celular/fijo
+            </label>
             <TextFieldAddonsCountry
               type="number"
+              id="telephone"
               pattern="\d*"
               name="telephone"
               selectName="telephoneCountry"
@@ -67,9 +79,12 @@ const editGeneralInformation = ({
           </div>
 
           <div className="column is-6">
-            <label className="label">Teléfono secundario celular/fijo</label>
+            <label htmlFor="telephone2" className="label">
+              Teléfono secundario celular/fijo
+            </label>
             <TextFieldAddonsCountry
               type="number"
+              id="telephone2"
               pattern="\d*"
               name="telephone2"
               selectName="telephone2Country"
@@ -79,9 +94,12 @@ const editGeneralInformation = ({
           </div>
 
           <div className="column is-6">
-            <label className="label">Correo electrónico secundario</label>
+            <label htmlFor="optionalEmail" className="label">
+              Correo electrónico secundario
+            </label>
             <TextField
               type="email"
+              id="optionalEmail"
               name="optionalEmail"
               placeholder="Correo electrónico secundario"
               isRequired={false}
@@ -89,31 +107,40 @@ const editGeneralInformation = ({
           </div>
 
           <div className="column is-6">
-            <label className="label">Nacionalidad</label>
+            <label htmlFor="nationality" className="label">
+              Nacionalidad
+            </label>
             <SelectField
-              arrayPlaceholder={EntityGlobalEnum.ENUMCountry}
               name="nationality"
+              id="nationality"
+              arrayPlaceholder={EntityGlobalEnum.ENUMCountry}
               isRequired
             />
           </div>
 
           <div className="column is-6">
-            <label className="label">Departamento</label>
+            <label htmlFor="departament" className="label">
+              Departamento
+            </label>
             <SelectField
-              arrayPlaceholder={EntityGlobalEnum.ENUMDepartament}
               name="departament"
+              id="departament"
+              arrayPlaceholder={EntityGlobalEnum.ENUMDepartament}
               isRequired
             />
           </div>
 
           {departament !== "Extranjero" && nationality === "Colombia" ? (
             <div className="column is-6">
-              <label className="label">Municipio</label>
+              <label htmlFor="town" className="label">
+                Municipio
+              </label>
               <SelectField
+                name="town"
+                id="town"
                 arrayPlaceholder={Object.values(
                   TownsByDepartament[departament]
                 )}
-                name="town"
                 placeholder="Municipio"
                 isRequired
               />
@@ -121,18 +148,24 @@ const editGeneralInformation = ({
           ) : null}
 
           <div className="column is-6">
-            <label className="label">Sector</label>
+            <label htmlFor="sector" className="label">
+              Sector
+            </label>
             <SelectField
-              arrayPlaceholder={EntityGlobalEnum.ENUMSector}
               name="sector"
+              id="sector"
+              arrayPlaceholder={EntityGlobalEnum.ENUMSector}
               isRequired
             />
           </div>
 
           <div className="column is-6">
-            <label className="label">Sitio web</label>
+            <label htmlFor="website" className="label">
+              Sitio web
+            </label>
             <TextField
               type="url"
+              id="website"
               name="website"
               placeholder="Sitio web"
               isRequired={false}

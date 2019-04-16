@@ -96,8 +96,12 @@ const register = ({ values, handleSubmit, isSubmitting, setFieldValue }) => (
         isRequired
       />
 
-      <label className="checkbox" style={{ paddingBottom: "1em" }}>
-        <input type="checkbox" required /> He leido los{" "}
+      <label
+        htmlFor="terms"
+        className="checkbox"
+        style={{ paddingBottom: "1em" }}
+      >
+        <input type="checkbox" id="terms" required /> He leido los{" "}
         <Link href="/terms">
           <a>terminos y condiciones</a>
         </Link>
@@ -164,7 +168,10 @@ export default compose(
         setSubmitting(false);
         setFieldValue("registered", false, false);
         setErrors(normalizeErrors(data.register));
-        document.querySelector(`[name="${data.register[0].path}"]`).focus();
+        const node = document.querySelector(
+          `[name="${data.register[0].path}"]`
+        );
+        scrollIntoView(node);
       } else {
         setSubmitting(false);
         resetForm();

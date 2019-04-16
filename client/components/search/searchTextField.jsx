@@ -8,14 +8,17 @@ const searchTextField = ({ name, placeholder, handleSubmit, ...props }) => {
 
   return (
     <>
-      <label className="label">Busca lo que tú necesitas!</label>
+      <label htmlFor={name} className="label">
+        Busca lo que tú necesitas!
+      </label>
       <div className="field has-addons animated fadeIn">
         <div className="control is-expanded">
           <Field
             {...props}
             type="search"
-            className="input is-hovered is-medium"
+            id={name}
             name={name}
+            className="input is-hovered is-medium"
             placeholder={placeholder}
             maxLength={84}
             minLength={3}

@@ -4,6 +4,7 @@ import Router from "next/router";
 import { Mutation, Query, withApollo } from "react-apollo";
 import gql from "graphql-tag";
 import Error from "next/error";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import { UserConfigurationValidation } from "../../utils/validation";
 import { TextField } from "../../components/shared/globalField";
@@ -95,34 +96,42 @@ const settings = ({ client }) => (
                       ) {
                         setSubmitting(false);
                         setErrors(normalizeErrors(response.data.settings));
-                        document
-                          .querySelector(
-                            `[name="${response.data.settings[0].path}"]`
-                          )
-                          .focus();
+                        const node = document.querySelector(
+                          `[name="${response.data.settings[0].path}"]`
+                        );
+                        scrollIntoView(node);
                       }
                     }}
                     render={({ isSubmitting }) => (
                       <Form method="POST" style={{ padding: "0 10vw" }}>
-                        <label className="label">Correo electrónico</label>
+                        <label htmlFor="email" className="label">
+                          Correo electrónico
+                        </label>
                         <TextField
                           type="email"
+                          id="email"
                           name="email"
                           placeholder="Correo electrónico"
                           isRequired
                         />
 
-                        <label className="label">Contraseña</label>
+                        <label htmlFor="password" className="label">
+                          Contraseña
+                        </label>
                         <TextField
                           type="password"
+                          id="password"
                           name="password"
                           placeholder="Contraseña"
                           isRequired
                         />
 
-                        <label className="label">Contraseña nueva</label>
+                        <label htmlFor="newPassword" className="label">
+                          Contraseña nueva
+                        </label>
                         <TextField
                           type="password"
+                          id="newPassword"
                           name="newPassword"
                           placeholder="Contraseña nueva"
                           isRequired

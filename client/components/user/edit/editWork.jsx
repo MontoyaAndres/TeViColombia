@@ -25,9 +25,15 @@ const editWork = ({ work }) => (
                 {work.map((wrk, index) => (
                   <div className="columns is-multiline" key={index}>
                     <div className="column is-6">
-                      <label className="label">Empresa</label>
+                      <label
+                        htmlFor={`work.${index}.company`}
+                        className="label"
+                      >
+                        Empresa
+                      </label>
                       <TextField
                         type="text"
+                        id={`work.${index}.company`}
                         name={`work.${index}.company`}
                         placeholder="Empresa"
                         isRequired
@@ -35,8 +41,14 @@ const editWork = ({ work }) => (
                     </div>
 
                     <div className="column is-6">
-                      <label className="label">Departamento</label>
+                      <label
+                        htmlFor={`work.${index}.departament`}
+                        className="label"
+                      >
+                        Departamento
+                      </label>
                       <SelectField
+                        id={`work.${index}.departament`}
                         name={`work.${index}.departament`}
                         arrayPlaceholder={EntityGlobalEnum.ENUMDepartament}
                         isRequired
@@ -44,8 +56,11 @@ const editWork = ({ work }) => (
                     </div>
 
                     <div className="column is-6">
-                      <label className="label">Sector de la empresa</label>
+                      <label htmlFor={`work.${index}.sector`} className="label">
+                        Sector de la empresa
+                      </label>
                       <SelectField
+                        id={`work.${index}.sector`}
                         name={`work.${index}.sector`}
                         arrayPlaceholder={EntityGlobalEnum.ENUMSector}
                         isRequired
@@ -53,9 +68,12 @@ const editWork = ({ work }) => (
                     </div>
 
                     <div className="column is-6">
-                      <label className="label">Cargo</label>
+                      <label htmlFor={`work.${index}.job`} className="label">
+                        Cargo
+                      </label>
                       <TextField
                         type="text"
+                        id={`work.${index}.job`}
                         name={`work.${index}.job`}
                         placeholder="Cargo"
                         isRequired
@@ -63,8 +81,11 @@ const editWork = ({ work }) => (
                     </div>
 
                     <div className="column is-6">
-                      <label className="label">Área</label>
+                      <label htmlFor={`work.${index}.area`} className="label">
+                        Área
+                      </label>
                       <SelectField
+                        id={`work.${index}.area`}
                         name={`work.${index}.area`}
                         arrayPlaceholder={EntityGlobalEnum.ENUMArea}
                         isRequired
@@ -72,9 +93,15 @@ const editWork = ({ work }) => (
                     </div>
 
                     <div className="column is-6">
-                      <label className="label">Fecha de inicio</label>
+                      <label
+                        htmlFor={`work.${index}.startedOn`}
+                        className="label"
+                      >
+                        Fecha de inicio
+                      </label>
                       <TextField
                         type="date"
+                        id={`work.${index}.startedOn`}
                         name={`work.${index}.startedOn`}
                         placeholder="Fecha de inicio"
                         isRequired
@@ -88,9 +115,15 @@ const editWork = ({ work }) => (
                     </div>
 
                     <div className="column is-6">
-                      <label className="label">Fecha de finalización</label>
+                      <label
+                        htmlFor={`work.${index}.finishIn`}
+                        className="label"
+                      >
+                        Fecha de finalización
+                      </label>
                       <TextField
                         type="date"
+                        id={`work.${index}.finishIn`}
                         name={`work.${index}.finishIn`}
                         placeholder="Fecha de finalización"
                         disabled={wrk.workingOn}

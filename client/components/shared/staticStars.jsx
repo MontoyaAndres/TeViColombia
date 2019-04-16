@@ -7,9 +7,15 @@ const range = (min, max) =>
 
 const RatingItem = ({ colored, value }) => (
   <label
+    htmlFor="stars_static_input"
     className={`stars_static_item ${colored ? "stars_item_selected" : ""}`}
   >
-    <input className="stars_static_input" type="radio" value={value} />
+    <input
+      id="stars_static_input"
+      className="stars_static_input"
+      type="radio"
+      value={value}
+    />
   </label>
 );
 

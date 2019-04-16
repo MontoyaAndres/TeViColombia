@@ -2,6 +2,7 @@ import React from "react";
 import gql from "graphql-tag";
 import { compose, graphql } from "react-apollo";
 import { withFormik, Form } from "formik";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import AskModal from "../../shared/askModal";
 import { TextAreaField } from "../../shared/globalField";
@@ -103,9 +104,10 @@ export default compose(
         if (data.updateNecessity && data.updateNecessity.length) {
           setSubmitting(false);
           setErrors(normalizeErrors(data.updateNecessity));
-          document
-            .querySelector(`[name="${data.updateNecessity[0].path}"]`)
-            .focus();
+          const node = document.querySelector(
+            `[name="${data.updateNecessity[0].path}"]`
+          );
+          scrollIntoView(node);
         } else {
           setSubmitting(false);
           handleAskUpdateNecessity();

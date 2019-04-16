@@ -2,6 +2,7 @@ import React, { useState, useEffect, memo } from "react";
 import gql from "graphql-tag";
 import { compose, graphql } from "react-apollo";
 import { withFormik, Form } from "formik";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import { necessityQuery } from "../../../graphql/queries/account";
 import Loading from "../../shared/loading";
@@ -25,8 +26,15 @@ const necessityMutation = gql`
 const InputNecessity = ({ isSubmitting, handleSubmit }) => (
   <Form method="POST" onSubmit={handleSubmit}>
     <div className="box" style={{ marginTop: "0.1rem" }}>
-      <label className="label">Escribe qué es lo que necesitas.</label>
-      <TextAreaField name="comment" placeholder="Comentario" isRequired />
+      <label htmlFor="comment" className="label">
+        Escribe qué es lo que necesitas.
+      </label>
+      <TextAreaField
+        name="comment"
+        id="comment"
+        placeholder="Comentario"
+        isRequired
+      />
 
       <button
         type="submit"
@@ -47,7 +55,6 @@ const index = ({
   dataNecessity,
   dataMe,
   fetchNecessity,
-  networkStatusNecessity,
   id,
   isSubmitting,
   handleSubmit
@@ -284,7 +291,10 @@ export default compose(
       if (data.necessity && data.necessity.length) {
         setSubmitting(false);
         setErrors(normalizeErrors(data.necessity));
-        document.querySelector(`[name="${data.necessity[0].path}"]`).focus();
+        const node = document.querySelector(
+          `[name="${data.necessity[0].path}"]`
+        );
+        scrollIntoView(node);
       } else {
         setSubmitting(false);
         resetForm();

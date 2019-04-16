@@ -1,6 +1,6 @@
 import React, { useState, memo } from "react";
 
-const tagField = ({ name, placeholder, values, setFieldValue }) => {
+const tagField = ({ name, placeholder, values, setFieldValue, ...props }) => {
   const [value, setValue] = useState("");
 
   function handleChange(e) {
@@ -30,15 +30,16 @@ const tagField = ({ name, placeholder, values, setFieldValue }) => {
       <div className="field is-grouped">
         <div className="control is-expanded">
           <input
+            {...props}
             type="text"
+            name={name}
+            placeholder={placeholder}
+            className="input is-hovered is-medium"
             value={value}
+            onChange={handleChange}
             onKeyPress={e => {
               if (e.key === "Enter") e.preventDefault();
             }}
-            onChange={handleChange}
-            className="input is-hovered is-medium"
-            name={name}
-            placeholder={placeholder}
           />
         </div>
 
