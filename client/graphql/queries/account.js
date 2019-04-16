@@ -42,6 +42,7 @@ const informationQuery = gql`
         area
         startedOn
         finishIn
+        studyingOn
       }
       work {
         id
@@ -53,6 +54,7 @@ const informationQuery = gql`
         goals
         startedOn
         finishIn
+        workingOn
       }
       preferwork {
         id

@@ -248,16 +248,14 @@ export default compose(
         }
       });
 
-      // Omitting all about `edited`, `studyingOn`, `workingOn` because the database does not need to save them.
+      // Omitting `edited` because the database does not need to save it.
       const valuesOmitted = await omit(
         {
           ...values,
           telephoneCountry: Number(values.telephoneCountry),
-          telephone2Country: Number(values.telephone2Country),
-          study: values.study.map(item => omit(item, ["studyingOn"])),
-          work: values.work.map(item => omit(item, ["workingOn"]))
+          telephone2Country: Number(values.telephone2Country)
         },
-        ["edited", "studyingOn", "workingOn"]
+        ["edited"]
       );
 
       const { data } = await mutate({

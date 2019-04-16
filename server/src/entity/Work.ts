@@ -38,6 +38,9 @@ export class Work extends BaseEntity {
   @Column("date", { nullable: true, transformer: new EmptyStringToNull() })
   finishIn: Date;
 
+  @Column({ default: false })
+  workingOn: boolean;
+
   @ManyToOne(_ => User, user => user.work)
   user: User;
 }

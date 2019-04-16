@@ -149,6 +149,37 @@ const MobileParams = ({ values }) => {
 
   return (
     <>
+      <style jsx>{`
+        .params-button {
+          position: fixed;
+          width: 60px;
+          height: 60px;
+          bottom: 20px;
+          right: 20px;
+          background: #00d1b2;
+          color: white;
+          border-radius: 50px;
+          text-align: center;
+          -webkit-box-shadow: 0 0 0 1px rgba(10, 10, 10, 0.5);
+          box-shadow: 0 0 0 1px rgba(10, 10, 10, 0.5);
+          cursor: pointer;
+          transition: 0.2s;
+          will-change: transform;
+        }
+
+        .params-button:hover {
+          color: white;
+        }
+
+        .params-button:active {
+          transform: scale(0.9);
+        }
+
+        .params-button i {
+          margin-top: 22px;
+        }
+      `}</style>
+
       {hidden && <HiddenModalParams />}
       <a
         type="button"

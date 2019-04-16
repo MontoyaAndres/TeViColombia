@@ -253,6 +253,7 @@ level: string | null;
 area: string | null;
 startedOn: any | null;
 finishIn: any | null;
+studyingOn: boolean | null;
 }
 
 interface IWork {
@@ -266,6 +267,7 @@ area: string | null;
 goals: string | null;
 startedOn: any | null;
 finishIn: any | null;
+workingOn: boolean | null;
 }
 
 interface IPreferWork {
@@ -626,6 +628,7 @@ level: string;
 area?: string | null;
 startedOn: any;
 finishIn?: any | null;
+studyingOn: boolean;
 }
 
 interface IWorkInput {
@@ -638,6 +641,7 @@ area: string;
 goals?: string | null;
 startedOn: any;
 finishIn?: any | null;
+workingOn: boolean;
 }
 
 interface IPreferWorkInput {

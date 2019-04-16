@@ -11,6 +11,7 @@ type Study {
   area: String
   startedOn: Date
   finishIn: Date
+  studyingOn: Boolean
 }
 
 type Work {
@@ -23,6 +24,7 @@ type Work {
   goals: String
   startedOn: Date
   finishIn: Date
+  workingOn: Boolean
 }
 
 type PreferWork {
