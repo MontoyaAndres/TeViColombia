@@ -232,8 +232,6 @@ export const resolvers: ResolveMap = {
         );
         const newPublicIds = saveCV.map(cv => cv.cloudinaryPublicIdRouteCV);
 
-        console.log(currentPublicIds, newPublicIds);
-
         // Delete files
         await storeDelete(currentPublicIds, newPublicIds);
 

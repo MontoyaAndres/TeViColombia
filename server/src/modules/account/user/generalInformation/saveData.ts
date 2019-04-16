@@ -6,7 +6,7 @@ async function UpdateCreate(
   Model: any,
   id: string,
   information: Array<any | null>
-): Promise<boolean> {
+): Promise<any> {
   if (information) {
     const getAllIdsFromUser = await Model.find({
       where: { user: { id } },
@@ -27,19 +27,21 @@ async function UpdateCreate(
     );
 
     // Removing all ids the user is not using.
-    await IdsUnused.map((idsUnused: string) => Model.delete({ id: idsUnused }));
+    const removeIds = IdsUnused.map((idsUnused: string) =>
+      Model.delete({ id: idsUnused })
+    );
 
     // If id exists update data, if not create data.
-    await information.map(data =>
+    const saveOrUpdateInfomation = information.map(data =>
       data.id
         ? Model.update({ id: data.id }, { ...data })
         : Model.create({ ...data, user: { id } }).save()
     );
 
-    return true;
+    return Promise.all([removeIds, saveOrUpdateInfomation]);
   }
 
-  return false;
+  return null;
 }
 
 export default UpdateCreate;

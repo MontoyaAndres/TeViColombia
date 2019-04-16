@@ -1,5 +1,7 @@
 import React from "react";
 
+import Divider from "../shared/divider";
+
 const trainingEmployment = ({ information }) => (
   <div className="container" style={{ padding: ".75rem" }}>
     {information.study && information.study.length > 0 ? (
@@ -27,12 +29,10 @@ const trainingEmployment = ({ information }) => (
 
             <p className="subtitle">
               <strong>Finalizo en:</strong>{" "}
-              {study.finishIn ? study.finishIn : "Actualmente cursando"}
+              {study.studyingOn ? "Actualmente cursando" : study.finishIn}
             </p>
 
-            {information.study.length - 1 !== i && (
-              <div className="is-divider" style={{ width: "100%" }} />
-            )}
+            {information.study.length - 1 !== i && <Divider />}
           </div>
         ))}
       </div>
@@ -69,7 +69,7 @@ const trainingEmployment = ({ information }) => (
 
             <p className="subtitle">
               <strong>Finalizo en:</strong>{" "}
-              {work.finishIn ? work.finishIn : "Actualmente trabajando"}
+              {work.workingOn ? "Actualmente trabajando" : work.finishIn}
             </p>
 
             <>
@@ -81,9 +81,7 @@ const trainingEmployment = ({ information }) => (
               </ul>
             </>
 
-            {information.work.length - 1 !== i && (
-              <div className="is-divider" style={{ width: "100%" }} />
-            )}
+            {information.work.length - 1 !== i && <Divider />}
           </div>
         ))}
       </div>

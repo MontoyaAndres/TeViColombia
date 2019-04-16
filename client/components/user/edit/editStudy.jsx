@@ -7,6 +7,7 @@ import {
   CheckboxField
 } from "../../shared/globalField";
 import EntityGlobalEnum from "../../../utils/entityGlobalEnum";
+import Divider from "../../shared/divider";
 
 const editStudy = ({ study }) => (
   <div className="card">
@@ -118,9 +119,7 @@ const editStudy = ({ study }) => (
                         </button>
                       </div>
 
-                      {study.length - 1 !== index && (
-                        <div className="is-divider" style={{ width: "100%" }} />
-                      )}
+                      {study.length - 1 !== index && <Divider />}
                     </div>
                   </div>
                 ))}
