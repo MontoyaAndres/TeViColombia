@@ -8,7 +8,7 @@ import TownsByDepartament from "../../utils/townsByDepartament";
 const DesktopParams = ({ values, width }) => (
   <div className={width > 769 ? "box" : "box-mobile"} style={{ marginTop: 0 }}>
     <div className="content">
-      <h4 className="title is-5">Parametros de busqueda</h4>
+      <h4 className="title is-5">Parámetros de búsqueda</h4>
 
       <div className="field">
         <label htmlFor="type" className="label">

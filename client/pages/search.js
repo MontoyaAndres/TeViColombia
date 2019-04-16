@@ -163,7 +163,7 @@ const search = ({ values, loading, data }) => {
             </h2>
           ) : (
             data.search.map((value, i) => (
-              <div key={i} style={{ marginBottom: "1.1rem" }}>
+              <div key={i} style={{ margin: "1.1rem 0" }}>
                 <SearchList
                   value={value}
                   type={values.type === "Empresa" ? "Business" : "User"}

@@ -1,6 +1,6 @@
-import React, { useState, memo } from "react";
+import React, { useState } from "react";
 import { Formik, Form } from "formik";
-import { Mutation, withApollo } from "react-apollo";
+import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import Router from "next/router";
 import Link from "next/link";
@@ -122,4 +122,4 @@ login.getInitialProps = async context => {
   return {};
 };
 
-export default withApollo(memo(login));
+export default login;
