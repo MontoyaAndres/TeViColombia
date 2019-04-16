@@ -1,4 +1,4 @@
-import React, { useEffect, memo } from "react";
+import React, { useEffect } from "react";
 import { Form, withFormik, Field } from "formik";
 import { withRouter } from "next/router";
 import Error from "next/error";
@@ -288,4 +288,4 @@ export default compose(
       }
     }
   })
-)(memo(edit));
+)(edit);
