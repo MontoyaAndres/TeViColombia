@@ -3,7 +3,7 @@ import { Field } from "formik";
 
 import useResize from "../shared/useResize";
 
-const searchTextField = ({ name, placeholder, handleSubmit, ...props }) => {
+const searchTextField = ({ name, placeholder, ...props }) => {
   const { width } = useResize();
 
   return (
@@ -28,7 +28,6 @@ const searchTextField = ({ name, placeholder, handleSubmit, ...props }) => {
         <div className="control">
           <button
             type="submit"
-            onClick={() => handleSubmit()}
             className="button is-primary is-medium"
             style={{
               WebkitBoxShadow: "0 0 0 1px rgba(10, 10, 10, 0.5)",

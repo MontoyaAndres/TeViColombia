@@ -2,7 +2,7 @@ import React, { useEffect, useState, memo } from "react";
 import dynamic from "next/dynamic";
 import { withRouter } from "next/router";
 import gql from "graphql-tag";
-import { withFormik } from "formik";
+import { Form, withFormik } from "formik";
 import { compose, graphql } from "react-apollo";
 
 import Loading from "../components/shared/loading";
@@ -142,13 +142,15 @@ const search = ({ values, loading, data }) => {
           <DynamicModal values={values} />
         </div>
         <div className="column is-8">
-          <form>
-            <DynamicSearch
-              name="value"
-              placeholder="Ingresa cualquier valor"
-              handleSubmit={() => data.refetch(state)}
-            />
-          </form>
+          <Form
+            method="POST"
+            onSubmit={e => {
+              e.preventDefault();
+              data.refetch(state);
+            }}
+          >
+            <DynamicSearch name="value" placeholder="Ingresa cualquier valor" />
+          </Form>
 
           {data.networkStatus === 2 || data.networkStatus === 3 ? (
             <Loading />
