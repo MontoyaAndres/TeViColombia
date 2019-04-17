@@ -28,7 +28,7 @@ const isLoggedIn = ({ me, client, clicked, menu, openMenu, closeMenu }) => {
     <Mutation
       mutation={logout}
       onCompleted={e => {
-        client.cache.reset().then(() => {
+        client.resetStore().then(() => {
           closeMenu(e);
           Router.push("/");
         });

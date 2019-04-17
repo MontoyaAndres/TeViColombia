@@ -6,13 +6,9 @@ const range = (min, max) =>
     .map((_, i) => min + i);
 
 const RatingItem = ({ checked, colored, onChange, value }) => (
-  <label
-    htmlFor="stars_input"
-    className={`stars_item ${colored ? "stars_item_selected" : ""}`}
-  >
+  <label className={`stars_item ${colored ? "stars_item_selected" : ""}`}>
     <input
       checked={checked}
-      id="stars_input"
       className="stars_input"
       onChange={e => onChange(value)}
       type="radio"

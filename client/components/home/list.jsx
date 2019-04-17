@@ -65,7 +65,7 @@ const CardList = ({ value, type }) => (
 );
 
 const list = () => (
-  <Query query={listQuery}>
+  <Query query={listQuery} fetchPolicy="cache-and-network">
     {({ loading, data }) => {
       if (loading) {
         return <Loading />;
