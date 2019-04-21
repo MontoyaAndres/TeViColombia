@@ -83,6 +83,7 @@ const login = () => {
                       type="password"
                       name="password"
                       placeholder="Contraseña"
+                      autoComplete="off"
                       isRequired
                     />
 
