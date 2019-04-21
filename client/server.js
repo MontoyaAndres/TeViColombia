@@ -52,7 +52,7 @@ app
         app.render(req, res, "/search", { value: req.params.value })
       )
       .get("*", (req, res) => handler(req, res))
-      .listen(3000);
+      .listen(process.env.PORT || 3000);
   })
   .catch(err => {
     console.log(err);

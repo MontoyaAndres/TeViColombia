@@ -49,7 +49,9 @@
     "@types/nodemailer": "4.6.6",
     "@types/uuid": "3.4.4",
     "@types/yup": "0.26.9",
+    "copyfiles": "^2.1.0",
     "nodemon": "1.18.10",
+    "rimraf": "^2.6.3",
     "ts-node": "8.0.2",
     "tslint": "5.12.1",
     "tslint-config-prettier": "1.18.0",
@@ -58,6 +60,7 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon --exec ts-node src/index.ts",
     "types": "ts-node src/scripts/createTypes.ts",
-    "prod": "node dist/index.js"
+    "prod": "NODE_ENV=production node dist/index.js",
+    "build": "rimraf ./dist && tsc --skipLibCheck && copyfiles -u 1 src/**/*.graphql dist"
   }
 }

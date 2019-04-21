@@ -67,7 +67,7 @@ export async function startServer() {
 
   const app = await server.start({
     cors: { credentials: true, origin: process.env.FRONTEND_HOST },
-    port: 4000
+    port: process.env.PORT || 4000
   });
 
   return app;
