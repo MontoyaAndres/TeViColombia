@@ -53,8 +53,6 @@ const storeDelete = (
       id => newPublicIds.indexOf(id) === -1
     );
 
-    console.log(oldPublicIds, "old");
-
     if (oldPublicIds.length > 0) {
       oldPublicIds.forEach(async publicId => {
         await cloudinary.v2.uploader.destroy(publicId);

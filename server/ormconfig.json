@@ -16,10 +16,10 @@
   {
     "name": "development",
     "type": "mysql",
-    "host": "db",
+    "host": "localhost",
     "port": 3306,
     "username": "root",
-    "password": "root",
+    "password": "fcbarcelona123",
     "database": "tevi_test",
     "synchronize": true,
     "logging": true,
