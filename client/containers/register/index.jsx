@@ -4,7 +4,7 @@ const registerContainer = ({ registered, setFieldValue, children }) => {
   const [light, setLight] = useState(true);
 
   return (
-    <div className="container has-text-centered static-height">
+    <div className="container has-text-centered">
       {/* Created successfully */}
       {registered && (
         <div

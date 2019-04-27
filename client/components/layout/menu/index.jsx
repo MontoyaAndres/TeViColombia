@@ -64,7 +64,7 @@ class menu extends PureComponent {
             aria-label="main navigation"
           >
             <div className="navbar-brand">
-              <Link href="/" prefetch>
+              <Link href="/">
                 <a className="navbar-item" onClick={this.closeMenu}>
                   <img
                     src="/static/img/logo.svg"
@@ -96,7 +96,7 @@ class menu extends PureComponent {
               className={`navbar-menu ${clicked ? "is-active" : ""}`}
             >
               <div className="navbar-start">
-                <Link href="/" prefetch>
+                <Link href="/">
                   <a className="navbar-item" onClick={this.closeMenu}>
                     Inicio
                   </a>
@@ -111,7 +111,6 @@ class menu extends PureComponent {
                             : "/profile/business",
                         query: { id: me.id }
                       }}
-                      prefetch
                     >
                       <a className="navbar-item" onClick={this.closeMenu}>
                         Mi perfil
@@ -119,12 +118,12 @@ class menu extends PureComponent {
                     </Link>
                   </>
                 )}
-                <Link href="/documentation" prefetch>
+                <Link href="/documentation">
                   <a className="navbar-item" onClick={this.closeMenu}>
                     Documentación
                   </a>
                 </Link>
-                <Link href="/about" prefetch>
+                <Link href="/about">
                   <a className="navbar-item" onClick={this.closeMenu}>
                     Acerca de nosotros
                   </a>
