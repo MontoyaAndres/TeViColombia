@@ -11,7 +11,7 @@ input StudyInput {
   area: String
   startedOn: Date!
   finishIn: Date
-  studyingOn: Boolean!
+  studyingOn: Boolean! = false
 }
 
 input WorkInput {

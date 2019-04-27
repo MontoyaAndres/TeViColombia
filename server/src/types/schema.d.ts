@@ -628,6 +628,10 @@ level: string;
 area?: string | null;
 startedOn: any;
 finishIn?: any | null;
+
+/**
+ * @default false
+ */
 studyingOn: boolean;
 }
 
