@@ -6,12 +6,27 @@ import Footer from "./footer";
 const index = ({ children }) => (
   <>
     <style global jsx>{`
+      html,
+      body {
+        font-family: "Roboto", sans-serif;
+      }
+
+      ::-moz-selection {
+        background-color: #00d1b2;
+        color: white;
+      }
+
+      ::selection {
+        background-color: #00d1b2;
+        color: white;
+      }
+
       #nprogress {
         pointer-events: none;
       }
 
       #nprogress .bar {
-        background-color: white;
+        background-color: #69f0ae;
 
         position: fixed;
         z-index: 1131;
@@ -20,6 +35,10 @@ const index = ({ children }) => (
 
         width: 100%;
         height: 5px;
+      }
+
+      .static-height {
+        min-height: calc(100vh - 3.25rem);
       }
     `}</style>
     <Menu />

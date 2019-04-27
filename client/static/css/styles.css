@@ -1,22 +1,3 @@
-html,
-body {
-  font-family: "Roboto", sans-serif;
-}
-
-::-moz-selection {
-  background-color: #00d1b2;
-  color: white;
-}
-
-::selection {
-  background-color: #00d1b2;
-  color: white;
-}
-
-.static-height {
-  min-height: calc(100vh - 3.25rem);
-}
-
 .navbar,
 .navbar-brand,
 .navbar-menu {
@@ -66,7 +47,7 @@ a.navbar-item:hover,
 }
 
 #fullpage {
-  background: url(https://res.cloudinary.com/djkpgohr3/image/upload/v1555206597/background.jpg)
+  background: url("https://res.cloudinary.com/djkpgohr3/image/upload/v1555206597/background.jpg")
     no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
