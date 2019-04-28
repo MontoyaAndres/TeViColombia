@@ -45,3 +45,5 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Contrase
 ```
 
 - El archivo [.env](server/.env) es donde se definen las variables de entorno en development (desarrollo).
+
+- Cada vez que modifique o cree un archivo con extensión `.graphql` debe de ejecutar `npm run types` o `yarn types`.
