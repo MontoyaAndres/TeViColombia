@@ -26,10 +26,22 @@ Para finalizar, simplemente corra `npm run dev` o `yarn dev` dentro de [server](
 
 Para iniciar la S.P.A de Te Vi Colombia en desarrollo, simplemente ingrese a la carpeta [client](client) y en el [package.json](client/package.json) encontrará que comandos son utilizados, instale las dependencias con `npm install` o `yarn install` y luego ingresar `npm run dev` o `yarn dev` para iniciar la aplicación.
 
-## Errores
+## Te Vi Colombia Production (Producción)
 
-Si estas trabajando en desarrollo, y te sale este error: `ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server`, la solución es:
+### Servidor (GraphQL A.P.I)
+
+Para pasar el código de TypeScript a JavaScript, simplemente ejecute `npm run build` o `yarn build`, después de esto, de genera una carpeta llamada `dist` con el código dentro. Ahora, con simplemente ejecutar Now, se subirá a la plataforma. Recuerde que la configuración de el servidor está en [now.json](server/now.json).
+
+### Cliente (Aplicación web)
+
+Simplemente ejecute [Now](). Recuerde que la configuración de este, está en [now.json](cliente/now.json).
+
+## Tips
+
+- Si estas trabajando en desarrollo, y te sale este error: `ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server`, la solución es:
 
 ```
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Contraseña de root';
 ```
+
+- El archivo [.env](server/.env) es donde se definen las variables de entorno en development (desarrollo).
