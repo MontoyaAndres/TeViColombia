@@ -30,11 +30,11 @@ Para iniciar la S.P.A de Te Vi Colombia en desarrollo, simplemente ingrese a la 
 
 ### Servidor (GraphQL A.P.I)
 
-Para pasar el código de TypeScript a JavaScript, simplemente ejecute `npm run build` o `yarn build`, después de esto, de genera una carpeta llamada `dist` con el código dentro. Ahora, con simplemente ejecutar Now, se subirá a la plataforma. Recuerde que la configuración de el servidor está en [now.json](server/now.json).
+Para pasar el código de TypeScript a JavaScript, simplemente ejecute `npm run build` o `yarn build`, después de esto, se genera una carpeta llamada `dist` con el código dentro. Ahora, con simplemente ejecutar [Now](https://zeit.co/docs) se subirá a la plataforma. Recuerde que la configuración de el servidor está en [now.json](server/now.json).
 
 ### Cliente (Aplicación web)
 
-Simplemente ejecute [Now](). Recuerde que la configuración de este, está en [now.json](cliente/now.json).
+Simplemente ejecute [Now](https://zeit.co/docs). Recuerde que la configuración de este, está en [now.json](client/now.json).
 
 ## Tips
 
