@@ -5,19 +5,28 @@ const prod = process.env.NODE_ENV === "production";
 
 module.exports = withOffline(
   withCSS({
+    target: "serverless",
     workboxOpts: {
-      globPatterns: ["static/**/*"],
-      globDirectory: ".",
+      swDest: "static/service-worker.js",
       runtimeCaching: [
         {
-          urlPattern: prod
-            ? /^https?:\/\/api.tevicolombia.com\/.*/
-            : /^http:\/\/localhost:4000\/.*/,
+          urlPattern: /^https?:\/\/api.tevicolombia.com\/.*/,
           handler: "staleWhileRevalidate"
         },
         {
-          urlPattern: /^http(s)?.*/,
-          handler: "networkFirst"
+          urlPattern: /^https?.*/,
+          handler: "networkFirst",
+          options: {
+            cacheName: "https-calls",
+            networkTimeoutSeconds: 15,
+            expiration: {
+              maxEntries: 150,
+              maxAgeSeconds: 30 * 24 * 60 * 60 // 1 month
+            },
+            cacheableResponse: {
+              statuses: [0, 200]
+            }
+          }
         }
       ]
     },
