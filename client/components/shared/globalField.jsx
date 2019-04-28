@@ -2,7 +2,7 @@ import React from "react";
 import { Field, ErrorMessage, connect } from "formik";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
-import CountryJSON from "../../static/countries.json";
+import CountryJSON from "../../utils/countries.json";
 
 const ErrorFocus = ({
   name,
