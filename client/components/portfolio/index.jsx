@@ -1,8 +1,7 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, memo, Fragment } from "react";
 import { Form, withFormik } from "formik";
 import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
-import { Carousel } from "react-responsive-carousel";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
 import meQuery from "../../graphql/queries/me";
@@ -13,6 +12,7 @@ import Linkify from "../shared/linkify";
 import UpdatePortfolioModal from "./updatePortfolioModal";
 import DeletePortfolioModal from "./deletePortfolioModal";
 import normalizeErrors from "../../utils/normalizeErrors";
+import Carousel from "../shared/carousel";
 
 const portfolioMutation = gql`
   mutation PortfolioMutation(
@@ -163,30 +163,33 @@ const index = ({
           {dataPortfolio.map(portfolio => (
             <div className="column is-6" key={portfolio.id}>
               <div className="card">
-                <Carousel
-                  showThumbs={false}
-                  showStatus={false}
-                  stopOnHover={false}
-                  showIndicators={false}
-                  dynamicHeight
-                  emulateTouch
-                >
+                <style jsx>{`
+                  .card-file {
+                    width: 100%;
+                    height: 500px;
+                  }
+                `}</style>
+
+                <Carousel cellSelector=".card-file">
                   {portfolio.multimedia.map((multimedia, i) => (
-                    <div className="card-image" key={i}>
+                    <Fragment key={i}>
                       {multimedia.secure_url.split(".").pop() !== "mp4" ? (
-                        <img src={multimedia.secure_url} alt="uploaded" />
+                        <img
+                          className="card-file"
+                          src={multimedia.secure_url}
+                          alt="uploaded"
+                        />
                       ) : (
-                        <video controls>
+                        <video controls className="card-file">
                           <source
                             src={multimedia.secure_url}
                             type="video/mp4"
                           />
                         </video>
                       )}
-                    </div>
+                    </Fragment>
                   ))}
                 </Carousel>
-
                 <div className="card-content">
                   <div className="content">
                     <Linkify
@@ -196,7 +199,6 @@ const index = ({
                     />
                   </div>
                 </div>
-
                 {dataMe && dataMe.id === id && (
                   <footer className="card-footer">
                     <a

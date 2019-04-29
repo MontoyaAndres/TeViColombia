@@ -1,10 +1,15 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import { SimpleImg } from "react-simple-img";
 import Link from "next/link";
 
 import Loading from "../shared/loading";
+
+const DynamicCarousel = dynamic(() => import("../shared/carousel"), {
+  ssr: false
+});
 
 const listQuery = gql`
   query ListQuery {
@@ -73,28 +78,37 @@ const list = () => (
 
       return data && data.list ? (
         <section className="section">
-          <div className="content">
-            <h1 className="title">¡Los 5 usuarios más apoyados!</h1>
-          </div>
+          <style jsx>{`
+            .card-file {
+              width: 500px;
+              padding: 0 20px;
+            }
+          `}</style>
 
-          <div className="columns is-multiline">
+          <div className="content">
+            <h1 className="title">¡Los 10 usuarios más apoyados!</h1>
+          </div>
+          <DynamicCarousel cellSelector=".card-file">
             {data.list.user.map((value, i) => (
-              <div className="column is-6" key={i}>
+              <div className="card-file" key={i}>
                 <CardList value={value} type="user" />
               </div>
             ))}
-          </div>
+          </DynamicCarousel>
+
+          <br />
+          <br />
 
           <div className="content">
-            <h1 className="title">¡Las 5 empresas más apoyadas!</h1>
+            <h1 className="title">¡Las 10 empresas más apoyadas!</h1>
           </div>
-          <div className="columns is-multiline">
+          <DynamicCarousel cellSelector=".card-file">
             {data.list.business.map((value, i) => (
-              <div className="column is-6" key={i}>
+              <div className="card-file" key={i}>
                 <CardList value={value} type="business" />
               </div>
             ))}
-          </div>
+          </DynamicCarousel>
         </section>
       ) : null;
     }}

@@ -13,14 +13,14 @@ interface Stars {
 export const resolvers: ResolveMap = {
   Query: {
     list: async () => {
-      // Getting the count of stars from 5 users.
+      // Getting the count of stars from 10 users.
       const userStars: Stars[] = await getConnection().query(
-        "SELECT DISTINCT(toId) AS id, SUM(stars) AS stars FROM feed_back WHERE feedbackType = 'User' GROUP BY toId ORDER BY stars DESC LIMIT 5"
+        "SELECT DISTINCT(toId) AS id, SUM(stars) AS stars FROM feed_back WHERE feedbackType = 'User' GROUP BY toId ORDER BY stars DESC LIMIT 10"
       );
 
-      // Getting the count of stars from 5 businesses.
+      // Getting the count of stars from 10 businesses.
       const businessStars: Stars[] = await getConnection().query(
-        "SELECT DISTINCT(toId) AS id, SUM(stars) AS stars FROM feed_back WHERE feedbackType = 'Business' GROUP BY toId ORDER BY stars DESC LIMIT 5"
+        "SELECT DISTINCT(toId) AS id, SUM(stars) AS stars FROM feed_back WHERE feedbackType = 'Business' GROUP BY toId ORDER BY stars DESC LIMIT 10"
       );
 
       // Getting ids
