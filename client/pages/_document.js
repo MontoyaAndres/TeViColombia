@@ -92,7 +92,12 @@ class MyDocument extends Document {
             integrity="sha256-HtCCUh9Hkh//8U1OwcbD8epVEUdBvuI8wj1KtqMhNkI="
             crossOrigin="anonymous"
           />
-          <link rel="stylesheet" href="/static/css/carousel.min.css" />
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.0/flickity.min.css"
+            integrity="sha256-NiLTshHonNrb81atWhv97RLkxRdpqChcx+ocD3VDyEQ="
+            crossOrigin="anonymous"
+          />
           <link rel="stylesheet" href="/static/css/stars.css" />
           <link rel="stylesheet" href="/static/css/styles.css" />
           <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC37_NG0uKs-_tGyHsHiwfhBlHh5-XjAQ0&libraries=geometry,drawing,places" />

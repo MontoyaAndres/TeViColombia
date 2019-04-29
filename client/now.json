@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "name": "tevicolombia-client",
+  "alias": ["tevicolombia.com", "www.tevicolombia.com"],
   "routes": [
     {
       "src": "^/service-worker.js$",
