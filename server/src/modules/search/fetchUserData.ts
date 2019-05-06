@@ -69,6 +69,13 @@ export default function fetchUserData(
       );
     }
 
+    // If the customer is looking for students and graduates from UNIMINUTO.
+    if (user.isStudent) {
+      result.andWhere("user.universityCareer = :universityCareer", {
+        universityCareer: user.universityCareer
+      });
+    }
+
     resolve(
       result
         .skip(limit)

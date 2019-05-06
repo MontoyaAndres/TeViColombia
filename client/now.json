@@ -2,6 +2,7 @@
   "version": 2,
   "name": "tevicolombia-client",
   "alias": ["tevicolombia.com", "www.tevicolombia.com"],
+  "regions": ["chs1", "iad1"],
   "routes": [
     {
       "src": "^/service-worker.js$",

@@ -18,6 +18,9 @@ export class CV extends BaseEntity {
   @Column("varchar")
   cloudinaryPublicIdRouteCV: string;
 
+  @Column("varchar")
+  resourceType: string;
+
   @Column("text")
   filename: string;
 

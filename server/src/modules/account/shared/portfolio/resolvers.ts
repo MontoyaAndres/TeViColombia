@@ -9,7 +9,13 @@ import { User } from "../../../../entity/User";
 const saveMultimedia = (multimedia: any): any =>
   Promise.all(
     multimedia.map(
-      async (file: any): Promise<{ public_id: string; secure_url: string }> => {
+      async (
+        file: any
+      ): Promise<{
+        public_id: string;
+        secure_url: string;
+        resource_type: string;
+      }> => {
         const { createReadStream, mimetype } = await file;
         // If `mimetype` exists means that the use is going to upload a new file
         if (mimetype) {
@@ -22,12 +28,12 @@ const saveMultimedia = (multimedia: any): any =>
             extension === "mp4"
           ) {
             const stream = createReadStream();
-            const { public_id, secure_url } = await storeUpload(
+            const { public_id, secure_url, resource_type } = await storeUpload(
               stream,
               `portfolio`
             );
 
-            return { public_id, secure_url };
+            return { public_id, secure_url, resource_type };
           }
         }
 
@@ -71,6 +77,7 @@ export const resolvers: ResolveMap = {
           const fileSaved = (await saveMultimedia(multimedia)) as Array<{
             public_id: string;
             secure_url: string;
+            resource_type: string;
           }>;
 
           await Portfolio.create({
@@ -117,35 +124,32 @@ export const resolvers: ResolveMap = {
         });
 
         if (multimedia.length > 0) {
-          // Upload file
-          const fileSaved = (await saveMultimedia(multimedia)) as Array<{
-            public_id: string;
-            secure_url: string;
-          }>;
-
           // What `multimedia` is uploaded now
-          const currentFiles = await Portfolio.findOne({
+          const currentMultimedia = await Portfolio.findOne({
             where: { id: idPortfolio },
             select: ["multimedia"]
           });
 
-          const currentPublicIds = currentFiles.multimedia.map(
-            value => value.public_id
-          );
-          const newPublicIds = fileSaved.map(file => file.public_id);
+          // Upload new file
+          const fileSaved = (await saveMultimedia(multimedia)) as Array<{
+            public_id: string;
+            secure_url: string;
+            resource_type: string;
+          }>;
 
-          // Delete file
-          await storeDelete(currentPublicIds, newPublicIds);
-
-          await Portfolio.update(
-            { id: idPortfolio },
-            {
-              portfolioId: id,
-              portfolioType: user ? "User" : "Business", // If there's values on user
-              multimedia: fileSaved,
-              description
-            }
-          );
+          // Update information and deleting old files
+          await Promise.all([
+            Portfolio.update(
+              { id: idPortfolio },
+              {
+                portfolioId: id,
+                portfolioType: user ? "User" : "Business", // If there's values on user
+                multimedia: fileSaved,
+                description
+              }
+            ),
+            storeDelete(currentMultimedia.multimedia, fileSaved)
+          ]);
         } else {
           return [
             {
@@ -166,15 +170,12 @@ export const resolvers: ResolveMap = {
           select: ["multimedia"]
         });
 
-        const currentPublicIds = currentFiles.multimedia.map(
-          value => value.public_id
-        );
-
-        // Delete file
-        // This function has an empty array because we don't want to compare anything, just delete everything from `currentPublicIds`
-        await storeDelete(currentPublicIds, []);
-
-        await Portfolio.delete({ id: idPortfolio });
+        // Delete files
+        await Promise.all([
+          // This function has a [] empty because we want to remove all, not compare anything
+          storeDelete(currentFiles.multimedia, []),
+          Portfolio.delete({ id: idPortfolio })
+        ]);
 
         return true;
       }

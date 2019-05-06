@@ -80,6 +80,17 @@ const generalInformation = ({ information }) => (
               </a>
             </p>
             <p className="subtitle">
+              <strong>Estado:</strong>{" "}
+              {information.isStudent ? (
+                <>
+                  Es estudiante, egresado o graduado de UNIMINUTO en{" "}
+                  {information.universityCareer}
+                </>
+              ) : (
+                <>No es estudiante, egresado o graduado en UNIMINUTO</>
+              )}
+            </p>
+            <p className="subtitle">
               <strong>Sitio web:</strong>{" "}
               <a
                 rel="noopener noreferrer"

@@ -195,6 +195,7 @@ interface ICloudinaryPortfolio {
 __typename: "CloudinaryPortfolio";
 public_id: string | null;
 secure_url: string | null;
+resource_type: string | null;
 }
 
 interface IUserInformation {
@@ -222,6 +223,8 @@ gender: string | null;
 disability: string | null;
 optionalEmail: string | null;
 email: string;
+isStudent: boolean;
+universityCareer: string | null;
 skills: Array<string | null> | null;
 socialnetwork: Array<ISocialNetwork | null> | null;
 language: Array<ILanguage | null> | null;
@@ -289,6 +292,7 @@ id: string | null;
 filename: string | null;
 routeCV: string | null;
 cloudinaryPublicIdRouteCV: string | null;
+resourceType: string | null;
 }
 
 interface INecessityResponse {
@@ -340,6 +344,8 @@ nationality: string;
 departament: string;
 town?: string | null;
 necessity?: boolean | null;
+isStudent: boolean;
+universityCareer?: string | null;
 }
 
 interface IParamsBusinessInput {
@@ -501,6 +507,8 @@ telephoneCountry: number;
 telephone: any;
 identificationDocumentType: string;
 identificationDocument: any;
+isStudent: boolean;
+universityCareer?: string | null;
 email: string;
 password: string;
 }
@@ -601,6 +609,12 @@ website?: string | null;
 gender: string;
 disability?: string | null;
 optionalEmail?: string | null;
+
+/**
+ * @default false
+ */
+isStudent: boolean;
+universityCareer?: string | null;
 skills?: Array<string | null> | null;
 socialnetwork?: Array<ISocialNetworkInput | null> | null;
 language?: Array<ILanguageInput | null> | null;

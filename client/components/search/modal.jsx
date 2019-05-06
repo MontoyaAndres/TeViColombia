@@ -115,6 +115,34 @@ const DesktopParams = ({ values, width }) => (
           />
         </>
       ) : null}
+
+      {values.type === "Usuario" && (
+        <>
+          <label htmlFor="isStudent" className="label">
+            ¿Filtrar por estudiante, egresado o graduado de UNIMINUTO?
+          </label>
+          <SelectField
+            name="isStudent"
+            id="isStudent"
+            arrayPlaceholder={["Sí", "No"]}
+            isRequired
+          />
+        </>
+      )}
+
+      {values.type === "Usuario" && values.isStudent === "Sí" ? (
+        <>
+          <label htmlFor="universityCareer" className="label">
+            Carrera universitaria UNIMINUTO
+          </label>
+          <SelectField
+            name="universityCareer"
+            id="universityCareer"
+            arrayPlaceholder={EntityGlobalEnum.ENUMUniversityCareerUNIMINUTO}
+            isRequired
+          />
+        </>
+      ) : null}
     </div>
   </div>
 );

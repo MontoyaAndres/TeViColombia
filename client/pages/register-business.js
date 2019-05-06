@@ -47,75 +47,103 @@ const registerBusiness = ({
   isSubmitting,
   setFieldValue
 }) => (
-  <RegisterContainer
-    registered={values.registered}
-    setFieldValue={setFieldValue}
-  >
-    <Form method="POST" onSubmit={handleSubmit}>
-      <TextField
-        type="text"
-        name="name"
-        placeholder="Nombre de la compañia"
-        isRequired
-      />
+  <>
+    <style jsx>{`
+      label {
+        text-align: initial;
+      }
+    `}</style>
 
-      <TextFieldAddonsCountry
-        type="number"
-        pattern="\d*"
-        selectName="telephoneCountry"
-        name="telephone"
-        placeholder="Teléfono celular/fijo"
-        isRequired
-      />
+    <RegisterContainer
+      registered={values.registered}
+      setFieldValue={setFieldValue}
+    >
+      <Form method="POST" onSubmit={handleSubmit}>
+        <label className="label title is-5" htmlFor="name">
+          Nombres de la compañia
+        </label>
+        <TextField
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Nombre de la compañia"
+          isRequired
+        />
 
-      <SelectField
-        name="sector"
-        arrayPlaceholder={EntityGlobalEnum.ENUMSector}
-        isRequired
-      />
+        <label className="label title is-5" htmlFor="telephone">
+          Teléfono celular/fijo
+        </label>
+        <TextFieldAddonsCountry
+          type="number"
+          id="telephone"
+          pattern="\d*"
+          selectName="telephoneCountry"
+          name="telephone"
+          placeholder="Teléfono celular/fijo"
+          isRequired
+        />
 
-      <TextField
-        type="email"
-        name="email"
-        placeholder="Correo electrónico"
-        isRequired
-      />
+        <label className="label title is-5" htmlFor="sector">
+          Sector de la empresa
+        </label>
+        <SelectField
+          name="sector"
+          id="sector"
+          arrayPlaceholder={EntityGlobalEnum.ENUMSector}
+          isRequired
+        />
 
-      <TextField
-        type="password"
-        name="password"
-        placeholder="Contraseña"
-        isRequired
-      />
+        <label className="label title is-5" htmlFor="email">
+          Correo electrónico
+        </label>
+        <TextField
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Correo electrónico"
+          isRequired
+        />
 
-      <label
-        htmlFor="terms"
-        className="checkbox"
-        style={{ paddingBottom: "1em" }}
-      >
-        <input id="terms" type="checkbox" required /> He leido los{" "}
-        <Link href="/terms">
-          <a>terminos y condiciones</a>
-        </Link>
-      </label>
+        <label className="label title is-5" htmlFor="password">
+          Contraseña
+        </label>
+        <TextField
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Contraseña"
+          isRequired
+        />
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className={`button is-block is-primary is-large is-fullwidth ${
-          isSubmitting ? "is-loading" : ""
-        }`}
-      >
-        Entrar
-      </button>
+        <label
+          htmlFor="terms"
+          className="checkbox"
+          style={{ paddingBottom: "1em" }}
+        >
+          <input id="terms" type="checkbox" required /> He leido los{" "}
+          <Link href="/terms">
+            <a>terminos y condiciones</a>
+          </Link>
+        </label>
 
-      <label className="checkbox" style={{ padding: "1em" }}>
-        <Link href="/register">
-          <a>Registrar nueva cuenta para usuarios</a>
-        </Link>
-      </label>
-    </Form>
-  </RegisterContainer>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className={`button is-block is-primary is-large is-fullwidth ${
+            isSubmitting ? "is-loading" : ""
+          }`}
+        >
+          Entrar
+        </button>
+
+        <label className="checkbox" style={{ padding: "1em" }}>
+          <Link href="/register">
+            <a>Registrar nueva cuenta para usuarios</a>
+          </Link>
+        </label>
+      </Form>
+    </RegisterContainer>
+  </>
 );
 
 registerBusiness.getInitialProps = async context => {

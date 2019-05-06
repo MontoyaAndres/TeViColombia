@@ -6,6 +6,8 @@ type Mutation {
     telephone: BigInt!
     identificationDocumentType: String!
     identificationDocument: BigInt!
+    isStudent: Boolean!
+    universityCareer: String
     email: String!
     password: String!
   ): [Error!]

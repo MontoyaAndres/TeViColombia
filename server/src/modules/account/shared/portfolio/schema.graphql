@@ -1,6 +1,7 @@
 type CloudinaryPortfolio {
   public_id: String
   secure_url: String
+  resource_type: String
 }
 
 type Portfolio {

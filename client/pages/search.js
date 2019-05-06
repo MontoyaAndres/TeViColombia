@@ -66,7 +66,9 @@ const search = ({ values, loading, data }) => {
         nationality: values.nationality,
         departament: values.departament,
         town: values.town,
-        necessity: values.necessity === "Sí"
+        necessity: values.necessity === "Sí",
+        isStudent: values.isStudent === "Sí",
+        universityCareer: values.universityCareer
       },
       business: {
         nationality: values.nationality,
@@ -211,7 +213,9 @@ export default compose(
       necessity: "No",
       sector: "Agricultura / Pesca / Ganadería",
       area: "Administración / Oficina",
-      employ: "No"
+      employ: "No",
+      isStudent: "No",
+      universityCareer: "ADFU"
     })
   })
 )(memo(search));

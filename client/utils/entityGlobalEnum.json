@@ -546,5 +546,27 @@
     "No busco trabajo pero estoy dispuesto a escuchar ofertas",
     "No tengo ningún interés en un nuevo empleo"
   ],
-  "ENUMCurrency": ["Modena local", "US Dólar"]
+  "ENUMCurrency": ["Modena local", "US Dólar"],
+  "ENUMIdentificationDocumentType": [
+    "CÉDULA DE CIUDADANÍA",
+    "CÉDULA DE EXTRANJERÍA",
+    "TARJETA DE IDENTIDAD",
+    "PASAPORTE",
+    "NÚMERO DE IDENTIFICACIÓN"
+  ],
+  "ENUMUniversityCareerUNIMINUTO": [
+    "ADFU",
+    "ADM",
+    "ICIV",
+    "ASOD",
+    "COPD",
+    "TRSO",
+    "PSI",
+    "ISUM",
+    "LPID",
+    "CSOC",
+    "TAIN",
+    "GPROY",
+    "TINF"
+  ]
 }

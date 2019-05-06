@@ -14,6 +14,7 @@ const editGeneralInformation = ({
   departament,
   nationality,
   skills,
+  isStudent,
   setFieldValue
 }) => (
   <div className="card">
@@ -71,13 +72,7 @@ const editGeneralInformation = ({
             <SelectField
               name="identificationDocumentType"
               id="identificationDocumentType"
-              arrayPlaceholder={[
-                "CÉDULA DE CIUDADANÍA",
-                "CÉDULA DE EXTRANJERÍA",
-                "TARJETA DE IDENTIDAD",
-                "PASAPORTE",
-                "NÚMERO DE IDENTIFICACIÓN"
-              ]}
+              arrayPlaceholder={EntityGlobalEnum.ENUMIdentificationDocumentType}
               isRequired
             />
           </div>
@@ -259,6 +254,34 @@ const editGeneralInformation = ({
               isRequired={false}
             />
           </div>
+
+          <div className="column is-6">
+            <label htmlFor="isStudent" className="label">
+              ¿Eres estudiante, egresado o graduado en UNIMINUTO?
+            </label>
+            <RadioField
+              name="isStudent"
+              id="isStudent"
+              arrayRadio={["Sí", "No"]}
+              isRequired
+            />
+          </div>
+
+          {isStudent === "Sí" && (
+            <div className="column is-6">
+              <label htmlFor="universityCareer" className="label">
+                Carrera universitaria UNIMINUTO
+              </label>
+              <SelectField
+                name="universityCareer"
+                id="universityCareer"
+                arrayPlaceholder={
+                  EntityGlobalEnum.ENUMUniversityCareerUNIMINUTO
+                }
+                isRequired={false}
+              />
+            </div>
+          )}
 
           <EditSkills skills={skills} setFieldValue={setFieldValue} />
         </div>
