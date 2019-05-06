@@ -122,6 +122,7 @@ const edit = ({
           departament={values.departament}
           nationality={values.nationality}
           skills={values.skills}
+          isStudent={values.isStudent}
           setFieldValue={setFieldValue}
         />
         <DynamicEditSocialNetwork
@@ -188,7 +189,8 @@ export default compose(
       name: data.information.name,
       lastname: data.information.lastname,
       description: data.information.description || "",
-      identificationDocumentType: data.information.identificationDocumentType,
+      identificationDocumentType:
+        data.information.identificationDocumentType || "CÉDULA DE CIUDADANÍA",
       identificationDocument: data.information.identificationDocument,
       address: data.information.address || "",
       telephoneCountry: data.information.telephoneCountry || 57,
@@ -204,6 +206,8 @@ export default compose(
       gender: data.information.gender || "HOMBRE",
       disability: data.information.disability || "No",
       optionalEmail: data.information.optionalEmail || "",
+      isStudent: data.information.isStudent ? "Sí" : "No",
+      universityCareer: data.information.universityCareer || "ADFU",
       skills: data.information.skills || [],
       socialnetwork: data.information.socialnetwork || [],
       language: data.information.language || [],
@@ -238,22 +242,14 @@ export default compose(
         setFieldValue
       }
     ) => {
-      await values.study.forEach(study => {
-        if (
-          study.level === "EDUCACIÓN BÁSICA PRIMARIA" ||
-          study.level === "EDUCACIÓN BÁSICA SECUNDARIA" ||
-          study.level === "BACHILLERATO / EDUCACIÓN MEDIA"
-        ) {
-          study.area = null;
-        }
-      });
-
+      // `isStudent` is a boolean, it cannot save text.
       // Omitting `edited` because the database does not need to save it.
-      const valuesOmitted = await omit(
+      const valuesOmitted = omit(
         {
           ...values,
           telephoneCountry: Number(values.telephoneCountry),
-          telephone2Country: Number(values.telephone2Country)
+          telephone2Country: Number(values.telephone2Country),
+          isStudent: values.isStudent === "Sí"
         },
         ["edited"]
       );

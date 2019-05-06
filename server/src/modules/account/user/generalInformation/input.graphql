@@ -66,6 +66,8 @@ input GeneralInformationInput {
   gender: String!
   disability: String
   optionalEmail: String
+  isStudent: Boolean! = false
+  universityCareer: String
   skills: [String]
   socialnetwork: [SocialNetworkInput]
   language: [LanguageInput]

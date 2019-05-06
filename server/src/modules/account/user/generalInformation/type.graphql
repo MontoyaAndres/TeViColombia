@@ -44,6 +44,7 @@ type CV {
   filename: String
   routeCV: String
   cloudinaryPublicIdRouteCV: String
+  resourceType: String
 }
 
 type SocialNetwork {
@@ -75,6 +76,8 @@ type UserInformation {
   disability: String
   optionalEmail: String
   email: String!
+  isStudent: Boolean!
+  universityCareer: String
   skills: [String]
   socialnetwork: [SocialNetwork]
   language: [Language]

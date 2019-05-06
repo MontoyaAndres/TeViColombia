@@ -80,22 +80,27 @@ export const resolvers: ResolveMap = {
             extension === "jpeg" ||
             extension === "gif"
           ) {
-            // Upload file
+            // Upload new file
             const stream = createReadStream();
-            const { public_id, secure_url } = await storeUpload(
+            const { public_id, secure_url, resource_type } = await storeUpload(
               stream,
               `userPhoto`
             );
 
-            // Delete file
+            // Delete old file
             const currentPublicId = await User.findOne({
               where: { id },
               select: ["cloudinaryPublicIdRoutePhoto"]
             });
             if (currentPublicId) {
               await storeDelete(
-                [currentPublicId.cloudinaryPublicIdRoutePhoto],
-                public_id
+                [
+                  {
+                    public_id: currentPublicId.cloudinaryPublicIdRoutePhoto,
+                    resource_type: "image"
+                  }
+                ],
+                [{ public_id, resource_type }]
               );
             }
 
@@ -125,22 +130,27 @@ export const resolvers: ResolveMap = {
             extension === "jpeg" ||
             extension === "gif"
           ) {
-            // Upload file
+            // Upload new file
             const stream = createReadStream();
-            const { public_id, secure_url } = await storeUpload(
+            const { public_id, secure_url, resource_type } = await storeUpload(
               stream,
               `userCover`
             );
 
-            // Delete file
+            // Delete old file
             const currentPublicId = await User.findOne({
               where: { id },
               select: ["cloudinaryPublicIdRouteCover"]
             });
             if (currentPublicId) {
               await storeDelete(
-                [currentPublicId.cloudinaryPublicIdRouteCover],
-                public_id
+                [
+                  {
+                    public_id: currentPublicId.cloudinaryPublicIdRouteCover,
+                    resource_type: "image"
+                  }
+                ],
+                [{ public_id, resource_type }]
               );
             }
 
@@ -161,8 +171,13 @@ export const resolvers: ResolveMap = {
           }
         }
 
+        // If `isStudent` is false, it means the `universityCareer` should be empty, because is not an student or graduate from UNIMINUTO
+        if (!information.isStudent && information.universityCareer) {
+          information.universityCareer = null;
+        }
+
         // `area` is only for university careers
-        await information.study.forEach(study => {
+        information.study.forEach(study => {
           if (
             study.level === "EDUCACIÓN BÁSICA PRIMARIA" ||
             study.level === "EDUCACIÓN BÁSICA SECUNDARIA" ||
@@ -195,22 +210,30 @@ export const resolvers: ResolveMap = {
             gender: information.gender,
             disability: information.disability,
             optionalEmail: information.optionalEmail,
+            isStudent: information.isStudent,
+            universityCareer: information.universityCareer,
             skills: information.skills,
             socialnetwork: information.socialnetwork
           }
         );
 
+        // Uploading all the `CV` files
         const saveCV = await Promise.all(
           information.cv.map(async cv => {
             const { createReadStream, mimetype, filename } = await cv;
 
             if (mimetype === "application/pdf") {
               const stream = createReadStream();
-              const { public_id, secure_url } = await storeUpload(stream, `cv`);
+              const {
+                public_id,
+                secure_url,
+                resource_type
+              } = await storeUpload(stream, `cv`);
 
               const cvUploaded = await CV.create({
                 cloudinaryPublicIdRouteCV: public_id,
                 routeCV: secure_url,
+                resourceType: resource_type,
                 filename,
                 user: { id }
               }).save();
@@ -222,18 +245,23 @@ export const resolvers: ResolveMap = {
           })
         );
 
+        // What `cv` is uploaded now
         const currentCV = await CV.find({
           where: { user: { id } },
-          select: ["cloudinaryPublicIdRouteCV"]
+          select: ["cloudinaryPublicIdRouteCV", "resourceType"]
         });
+        const currentFiles = currentCV.map(cv => ({
+          public_id: cv.cloudinaryPublicIdRouteCV,
+          resource_type: cv.resourceType
+        }));
 
-        const currentPublicIds = currentCV.map(
-          cv => cv.cloudinaryPublicIdRouteCV
-        );
-        const newPublicIds = saveCV.map(cv => cv.cloudinaryPublicIdRouteCV);
+        const newFiles = saveCV.map(cv => ({
+          public_id: cv.cloudinaryPublicIdRouteCV,
+          resource_type: cv.resourceType
+        }));
 
-        // Delete files
-        await storeDelete(currentPublicIds, newPublicIds);
+        // Delete old `CV` files
+        await storeDelete(currentFiles, newFiles);
 
         // Update preferWork information
         if (information.preferWork.id) {

@@ -14,7 +14,11 @@ export class Portfolio extends BaseEntity {
   id: string;
 
   @Column("simple-json")
-  multimedia: Array<{ public_id: string; secure_url: string }>;
+  multimedia: Array<{
+    public_id: string;
+    secure_url: string;
+    resource_type: string;
+  }>;
 
   @Column("varchar", { length: 200 })
   description: string;

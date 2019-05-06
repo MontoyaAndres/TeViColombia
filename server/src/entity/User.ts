@@ -162,6 +162,14 @@ export class User extends BaseEntity {
   })
   skills: string[];
 
+  // Checking if the user is an UNIMINUTO student or graduate
+  @Column({ default: false })
+  isStudent: boolean;
+
+  // If `isStudent` is true, this user needs to put a career
+  @Column("varchar", { nullable: true })
+  universityCareer: string;
+
   @Column("json", { nullable: true, transformer: new EmptyStringToNull() })
   socialnetwork: Array<{ name: string; url: string }>;
 

@@ -26,13 +26,16 @@ export const resolvers: ResolveMap = {
       const {
         name,
         lastname,
-        email,
         telephoneCountry,
         telephone,
         identificationDocumentType,
         identificationDocument,
+        isStudent,
+        email,
         password
       } = args;
+      // This arg is a `let` because is the only value that changes
+      let { universityCareer } = args;
 
       const emailAlreadyExists = await User.findOne({
         where: { email },
@@ -76,14 +79,21 @@ export const resolvers: ResolveMap = {
         ];
       }
 
+      // If `isStudent` is false, it means the `universityCareer` should be empty, because is not an student or graduate from UNIMINUTO
+      if (!isStudent && universityCareer) {
+        universityCareer = null;
+      }
+
       const user = User.create({
         name,
         lastname,
-        email,
         telephoneCountry,
         telephone,
         identificationDocumentType,
         identificationDocument,
+        isStudent,
+        universityCareer,
+        email,
         password
       });
 

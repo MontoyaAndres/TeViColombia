@@ -72,15 +72,29 @@ const login = () => {
                 }}
                 render={({ isSubmitting }) => (
                   <Form method="POST">
+                    <style jsx>{`
+                      label {
+                        text-align: initial;
+                      }
+                    `}</style>
+
+                    <label className="label title is-5" htmlFor="email">
+                      Correo electrónico
+                    </label>
                     <TextField
                       type="email"
+                      id="email"
                       name="email"
                       placeholder="Correo electrónico"
                       isRequired
                     />
 
+                    <label className="label title is-5" htmlFor="password">
+                      Contraseña
+                    </label>
                     <TextField
                       type="password"
+                      id="password"
                       name="password"
                       placeholder="Contraseña"
                       autoComplete="off"

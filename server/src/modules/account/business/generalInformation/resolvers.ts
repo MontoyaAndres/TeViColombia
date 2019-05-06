@@ -82,22 +82,27 @@ export const resolvers: ResolveMap = {
             extension === "jpeg" ||
             extension === "gif"
           ) {
-            // Upload file
+            // Upload new file
             const stream = createReadStream();
-            const { public_id, secure_url } = await storeUpload(
+            const { public_id, secure_url, resource_type } = await storeUpload(
               stream,
               `businessPhoto`
             );
 
-            // Delete file
+            // Delete old file
             const currentPublicId = await Business.findOne({
               where: { id },
               select: ["cloudinaryPublicIdRoutePhoto"]
             });
             if (currentPublicId) {
               await storeDelete(
-                [currentPublicId.cloudinaryPublicIdRoutePhoto],
-                public_id
+                [
+                  {
+                    public_id: currentPublicId.cloudinaryPublicIdRoutePhoto,
+                    resource_type: "image"
+                  }
+                ],
+                [{ public_id, resource_type }]
               );
             }
 
@@ -127,22 +132,27 @@ export const resolvers: ResolveMap = {
             extension === "jpeg" ||
             extension === "gif"
           ) {
-            // Upload file
+            // Upload new file
             const stream = createReadStream();
-            const { public_id, secure_url } = await storeUpload(
+            const { public_id, secure_url, resource_type } = await storeUpload(
               stream,
               `businessCover`
             );
 
-            // Delete file
+            // Delete old file
             const currentPublicId = await Business.findOne({
               where: { id },
               select: ["cloudinaryPublicIdRouteCover"]
             });
             if (currentPublicId) {
               await storeDelete(
-                [currentPublicId.cloudinaryPublicIdRouteCover],
-                public_id
+                [
+                  {
+                    public_id: currentPublicId.cloudinaryPublicIdRouteCover,
+                    resource_type: "image"
+                  }
+                ],
+                [{ public_id, resource_type }]
               );
             }
 

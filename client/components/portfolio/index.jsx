@@ -170,10 +170,10 @@ const index = ({
                   }
                 `}</style>
 
-                <Carousel cellSelector=".card-file">
+                <Carousel>
                   {portfolio.multimedia.map((multimedia, i) => (
                     <Fragment key={i}>
-                      {multimedia.secure_url.split(".").pop() !== "mp4" ? (
+                      {multimedia.resource_type === "image" ? (
                         <img
                           className="card-file"
                           src={multimedia.secure_url}

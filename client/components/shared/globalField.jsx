@@ -175,7 +175,6 @@ const TextFieldAddonsCountry = ({
       <div className="control">
         <span className="select">
           <Field
-            {...props}
             component="select"
             name={selectName}
             required={isRequired}

@@ -88,7 +88,7 @@ const list = () => (
           <div className="content">
             <h1 className="title">¡Los 10 usuarios más apoyados!</h1>
           </div>
-          <DynamicCarousel cellSelector=".card-file">
+          <DynamicCarousel>
             {data.list.user.map((value, i) => (
               <div className="card-file" key={i}>
                 <CardList value={value} type="user" />
@@ -102,7 +102,7 @@ const list = () => (
           <div className="content">
             <h1 className="title">¡Las 10 empresas más apoyadas!</h1>
           </div>
-          <DynamicCarousel cellSelector=".card-file">
+          <DynamicCarousel>
             {data.list.business.map((value, i) => (
               <div className="card-file" key={i}>
                 <CardList value={value} type="business" />

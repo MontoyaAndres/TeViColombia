@@ -6,6 +6,8 @@ input ParamsUserInput {
   departament: String!
   town: String
   necessity: Boolean
+  isStudent: Boolean!
+  universityCareer: String
 }
 
 input ParamsBusinessInput {

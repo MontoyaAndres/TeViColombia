@@ -9,13 +9,15 @@ import scrollIntoView from "smooth-scroll-into-view-if-needed";
 import {
   TextField,
   SelectField,
-  TextFieldAddonsCountry
+  TextFieldAddonsCountry,
+  RadioField
 } from "../components/shared/globalField";
 import { RegisterValidation } from "../utils/validation";
 import normalizeErrors from "../utils/normalizeErrors";
 import checkLoggedIn from "../lib/checkLoggedIn";
 import redirect from "../lib/redirect";
 import RegisterContainer from "../containers/register";
+import EntityGlobalEnum from "../utils/entityGlobalEnum";
 
 const registerMutation = gql`
   mutation RegisterMutation(
@@ -25,6 +27,8 @@ const registerMutation = gql`
     $telephone: BigInt!
     $identificationDocumentType: String!
     $identificationDocument: BigInt!
+    $isStudent: Boolean!
+    $universityCareer: String
     $email: String!
     $password: String!
   ) {
@@ -35,6 +39,8 @@ const registerMutation = gql`
       telephone: $telephone
       identificationDocumentType: $identificationDocumentType
       identificationDocument: $identificationDocument
+      isStudent: $isStudent
+      universityCareer: $universityCareer
       email: $email
       password: $password
     ) {
@@ -45,85 +51,160 @@ const registerMutation = gql`
 `;
 
 const register = ({ values, handleSubmit, isSubmitting, setFieldValue }) => (
-  <RegisterContainer
-    registered={values.registered}
-    setFieldValue={setFieldValue}
-  >
-    <Form method="POST" onSubmit={handleSubmit}>
-      <TextField type="text" name="name" placeholder="Nombres" isRequired />
+  <>
+    <style jsx>{`
+      label {
+        text-align: initial;
+      }
 
-      <TextField
-        type="text"
-        name="lastname"
-        placeholder="Apellidos"
-        isRequired
-      />
+      div {
+        padding-top: 3px;
+        padding-bottom: 9px;
+      }
+    `}</style>
 
-      <TextFieldAddonsCountry
-        type="number"
-        pattern="\d*"
-        selectName="telephoneCountry"
-        name="telephone"
-        placeholder="Teléfono celular/fijo"
-        isRequired
-      />
+    <RegisterContainer
+      registered={values.registered}
+      setFieldValue={setFieldValue}
+    >
+      <Form method="POST" onSubmit={handleSubmit}>
+        <label className="label title is-5" htmlFor="name">
+          Nombres
+        </label>
+        <TextField
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Nombres"
+          isRequired
+        />
 
-      <SelectField
-        name="identificationDocumentType"
-        arrayPlaceholder={["Tarjeta de identidad", "Cédula de ciudadania"]}
-        isRequired
-      />
+        <label className="label title is-5" htmlFor="lastname">
+          Apellidos
+        </label>
+        <TextField
+          type="text"
+          id="lastname"
+          name="lastname"
+          placeholder="Apellidos"
+          isRequired
+        />
 
-      <TextField
-        type="number"
-        pattern="\d*"
-        name="identificationDocument"
-        placeholder="Número de documento"
-        isRequired
-      />
+        <label className="label title is-5" htmlFor="telephone">
+          Teléfono celular/fijo
+        </label>
+        <TextFieldAddonsCountry
+          type="number"
+          id="telephone"
+          pattern="\d*"
+          selectName="telephoneCountry"
+          name="telephone"
+          placeholder="Teléfono celular/fijo"
+          isRequired
+        />
 
-      <TextField
-        type="email"
-        name="email"
-        placeholder="Correo electrónico"
-        isRequired
-      />
+        <label
+          className="label title is-5"
+          htmlFor="identificationDocumentType"
+        >
+          Tipo de documento
+        </label>
+        <SelectField
+          name="identificationDocumentType"
+          id="identificationDocumentType"
+          arrayPlaceholder={EntityGlobalEnum.ENUMIdentificationDocumentType}
+          isRequired
+        />
 
-      <TextField
-        type="password"
-        name="password"
-        placeholder="Contraseña"
-        isRequired
-      />
+        <label className="label title is-5" htmlFor="identificationDocument">
+          Número de documento
+        </label>
+        <TextField
+          type="number"
+          id="identificationDocument"
+          pattern="\d*"
+          name="identificationDocument"
+          placeholder="Número de documento"
+          isRequired
+        />
 
-      <label
-        htmlFor="terms"
-        className="checkbox"
-        style={{ paddingBottom: "1em" }}
-      >
-        <input type="checkbox" id="terms" required /> He leido los{" "}
-        <Link href="/terms">
-          <a>terminos y condiciones</a>
-        </Link>
-      </label>
+        <div>
+          <label className="label title is-5" htmlFor="isStudent">
+            ¿Eres estudiante, egresado o graduado en UNIMINUTO?
+          </label>
+          <RadioField
+            name="isStudent"
+            id="isStudent"
+            arrayRadio={["Sí", "No"]}
+            isRequired
+          />
+        </div>
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className={`button is-block is-primary is-large is-fullwidth ${
-          isSubmitting ? "is-loading" : ""
-        }`}
-      >
-        Entrar
-      </button>
+        {values.isStudent === "Sí" && (
+          <>
+            <label className="label title is-5" htmlFor="universityCareer">
+              Carrera universitaria UNIMINUTO
+            </label>
+            <SelectField
+              name="universityCareer"
+              id="universityCareer"
+              arrayPlaceholder={EntityGlobalEnum.ENUMUniversityCareerUNIMINUTO}
+              isRequired={false}
+            />
+          </>
+        )}
 
-      <label className="checkbox" style={{ padding: "1em" }}>
-        <Link href="/register-business">
-          <a>Registrar nueva cuenta para empresas</a>
-        </Link>
-      </label>
-    </Form>
-  </RegisterContainer>
+        <label className="label title is-5" htmlFor="email">
+          Correo electrónico
+        </label>
+        <TextField
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Correo electrónico"
+          isRequired
+        />
+
+        <label className="label title is-5" htmlFor="password">
+          Contraseña
+        </label>
+        <TextField
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Contraseña"
+          isRequired
+        />
+
+        <label
+          htmlFor="terms"
+          className="checkbox"
+          style={{ paddingBottom: "1em" }}
+        >
+          <input type="checkbox" id="terms" required /> He leido los{" "}
+          <Link href="/terms">
+            <a>terminos y condiciones</a>
+          </Link>
+        </label>
+
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className={`button is-block is-primary is-large is-fullwidth ${
+            isSubmitting ? "is-loading" : ""
+          }`}
+        >
+          Entrar
+        </button>
+
+        <label className="checkbox" style={{ padding: "1em" }}>
+          <Link href="/register-business">
+            <a>Registrar nueva cuenta para empresas</a>
+          </Link>
+        </label>
+      </Form>
+    </RegisterContainer>
+  </>
 );
 
 register.getInitialProps = async context => {
@@ -144,8 +225,10 @@ export default compose(
       lastname: "",
       telephoneCountry: 57,
       telephone: "",
-      identificationDocumentType: "Tarjeta de identidad",
+      identificationDocumentType: "CÉDULA DE CIUDADANÍA",
       identificationDocument: "",
+      isStudent: "No",
+      universityCareer: "ADFU",
       email: "",
       password: ""
     }),
@@ -156,9 +239,14 @@ export default compose(
       values,
       { props: { mutate }, setSubmitting, setErrors, resetForm, setFieldValue }
     ) => {
+      // `isStudent` is a boolean, it cannot save text. Also `registered` is not required to save it
       const { data } = await mutate({
         variables: omit(
-          { ...values, telephoneCountry: Number(values.telephoneCountry) },
+          {
+            ...values,
+            telephoneCountry: Number(values.telephoneCountry),
+            isStudent: values.isStudent === "Sí"
+          },
           ["registered"]
         )
       });

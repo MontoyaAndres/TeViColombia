@@ -24,6 +24,8 @@ const informationQuery = gql`
       gender
       disability
       optionalEmail
+      isStudent
+      universityCareer
       email
       skills
       socialnetwork {
@@ -79,6 +81,7 @@ const informationQuery = gql`
         filename
         routeCV
         cloudinaryPublicIdRouteCV
+        resourceType
       }
     }
   }
@@ -160,6 +163,7 @@ const portfolioQuery = gql`
       multimedia {
         public_id
         secure_url
+        resource_type
       }
       description
     }

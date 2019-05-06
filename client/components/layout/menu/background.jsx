@@ -12,9 +12,11 @@ const background = () => {
   }
 
   function redirectSearch() {
-    Router.push(`/search?value=${value}`, `/search/${value}`, {
-      shallow: true
-    });
+    if (value !== "") {
+      Router.push(`/search?value=${value}`, `/search/${value}`, {
+        shallow: true
+      });
+    }
   }
 
   return (
@@ -34,6 +36,11 @@ const background = () => {
               type="search"
               placeholder="Busca lo que tú necesitas!"
               onChange={handleChange}
+              onKeyPress={e => {
+                if (e.key === "Enter") {
+                  redirectSearch();
+                }
+              }}
             />
           </div>
           <div className="control">
