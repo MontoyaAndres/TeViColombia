@@ -63,7 +63,13 @@ export const resolvers: ResolveMap = {
 
         const idsFeedbackStars = feedbackStars.map(item => item.id);
 
-        return mapOrder(response, idsFeedbackStars, "id");
+        // When any user or business has 0 feedback, it means that is unnecessary to show its information.
+        // To check this, this code only find if the ids from `idsFeedbackStars` and `response` exist.
+        const result = response.filter(({ id }) =>
+          idsFeedbackStars.includes(id)
+        );
+
+        return mapOrder(result, idsFeedbackStars, "id");
       }
 
       return null;
