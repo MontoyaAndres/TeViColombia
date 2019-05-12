@@ -58,11 +58,11 @@ export class Employ extends BaseEntity {
   })
   language: string[];
 
-  @Column("varchar", { length: 2, default: "No" })
-  travel: string;
+  @Column({ default: false })
+  travel: boolean;
 
-  @Column("varchar", { length: 2, default: "No" })
-  residence: string;
+  @Column({ default: false })
+  residence: boolean;
 
   @Column("varchar")
   country: string;
@@ -70,7 +70,7 @@ export class Employ extends BaseEntity {
   @Column("varchar")
   departament: string;
 
-  @Column("varchar")
+  @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   town: string;
 
   @Column("enum", { enum: ENUMTime })

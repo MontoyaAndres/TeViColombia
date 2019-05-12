@@ -35,8 +35,8 @@ input PreferWorkInput {
   salary: BigInt!
   currency: String!
   departament: [String!]!
-  travel: String!
-  residence: String!
+  travel: Boolean! = false
+  residence: Boolean! = false
 }
 
 input SocialNetworkInput {
@@ -64,7 +64,7 @@ input GeneralInformationInput {
   civilStatus: String!
   website: String
   gender: String!
-  disability: String
+  disability: Boolean
   optionalEmail: String
   isStudent: Boolean! = false
   universityCareer: String

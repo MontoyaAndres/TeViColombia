@@ -207,16 +207,16 @@ const employ = ({
                 </p>
                 <p className="subtitle">
                   <strong>Disponibilidad de viajar: </strong>
-                  {dataEmploy.travel}
+                  {dataEmploy.travel ? "Sí" : "No"}
                 </p>
                 <p className="subtitle">
                   <strong>Disponibilidad de cambio de residencia: </strong>
-                  {dataEmploy.residence}
+                  {dataEmploy.residence ? "Sí" : "No"}
                 </p>
                 <p className="subtitle">
                   <strong>Localización: </strong>
-                  {dataEmploy.town} - {dataEmploy.departament} -{" "}
-                  {dataEmploy.country}
+                  {dataEmploy.country} - {dataEmploy.departament}
+                  {dataEmploy.town ? ` - ${dataEmploy.town}` : null}
                 </p>
                 <p className="subtitle">
                   <strong>Jornada: </strong>

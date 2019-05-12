@@ -41,9 +41,9 @@ export class PreferWork extends BaseEntity {
   })
   departament: string[];
 
-  @Column("varchar", { length: 2, default: "No" })
-  travel: string;
+  @Column({ default: false })
+  travel: boolean;
 
-  @Column("varchar", { length: 2, default: "No" })
-  residence: string;
+  @Column({ default: false })
+  residence: boolean;
 }

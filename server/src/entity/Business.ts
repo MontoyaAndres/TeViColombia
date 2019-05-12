@@ -22,7 +22,7 @@ export class Business extends BaseEntity {
 
   @Column("varchar", {
     default:
-      "https://res.cloudinary.com/djkpgohr3/image/upload/v1554930614/default/default-home.png" // default image from cloudinary
+      "https://res.cloudinary.com/te-vi-colombia/image/upload/v1557617373/default/default-home_nngl6z.png" // default image from cloudinary
   })
   routePhoto: string;
 

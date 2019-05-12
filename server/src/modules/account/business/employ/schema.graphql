@@ -7,11 +7,11 @@ input EmployInput {
   minStudy: String!
   minExperience: Int!
   language: [String]
-  travel: String!
-  residence: String!
+  travel: Boolean! = false
+  residence: Boolean! = false
   country: String!
   departament: String!
-  town: String!
+  town: String
   time: String!
   contract: String!
   minSalary: BigInt
@@ -31,11 +31,11 @@ type Employ {
   minStudy: String!
   minExperience: Int!
   language: [String]
-  travel: String!
-  residence: String!
+  travel: Boolean!
+  residence: Boolean!
   country: String!
   departament: String!
-  town: String!
+  town: String
   time: String!
   contract: String!
   minSalary: BigInt

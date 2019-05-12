@@ -204,7 +204,7 @@ export default compose(
       civilStatus: data.information.civilStatus || "SOLTERO(A)",
       website: data.information.website || "",
       gender: data.information.gender || "HOMBRE",
-      disability: data.information.disability || "No",
+      disability: data.information.disability ? "Sí" : "No",
       optionalEmail: data.information.optionalEmail || "",
       isStudent: data.information.isStudent ? "Sí" : "No",
       universityCareer: data.information.universityCareer || "ADFU",
@@ -213,16 +213,22 @@ export default compose(
       language: data.information.language || [],
       study: data.information.study || [],
       work: data.information.work || [],
-      preferWork: data.information.preferwork || {
-        currentSituation: "No tengo empleo",
-        job: "",
-        area: ["Administración / Oficina"],
-        salary: "",
-        currency: "Modena local",
-        departament: ["Bogotá, D.C."],
-        travel: "No",
-        residence: "No"
-      },
+      preferWork: Object.keys(data.information.preferwork).length // Checking if object has values
+        ? {
+            ...data.information.preferwork,
+            travel: data.information.preferwork.travel ? "Sí" : "No",
+            residence: data.information.preferwork.residence ? "Sí" : "No"
+          }
+        : {
+            currentSituation: "No tengo empleo",
+            job: "",
+            area: ["Administración / Oficina"],
+            salary: "",
+            currency: "Modena local",
+            departament: ["Bogotá, D.C."],
+            travel: data.information.preferwork.travel ? "Sí" : "No",
+            residence: data.information.preferwork.residence ? "Sí" : "No"
+          },
       cv: data.information.cv || []
     }),
     validationSchema: GeneralInformationValidation,
@@ -242,14 +248,20 @@ export default compose(
         setFieldValue
       }
     ) => {
-      // `isStudent` is a boolean, it cannot save text.
+      // `disability`, `isStudent`, `travel` and `residence` are boolean, they cannot save text.
       // Omitting `edited` because the database does not need to save it.
       const valuesOmitted = omit(
         {
           ...values,
           telephoneCountry: Number(values.telephoneCountry),
           telephone2Country: Number(values.telephone2Country),
-          isStudent: values.isStudent === "Sí"
+          disability: values.disability === "Sí",
+          isStudent: values.isStudent === "Sí",
+          preferWork: {
+            ...values.preferWork,
+            travel: values.preferWork.travel === "Sí",
+            residence: values.preferWork.residence === "Sí"
+          }
         },
         ["edited"]
       );
