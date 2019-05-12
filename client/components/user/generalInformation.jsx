@@ -54,7 +54,8 @@ const generalInformation = ({ information }) => (
               <strong>Fecha de nacimiento:</strong> {information.birth}
             </p>
             <p className="subtitle">
-              <strong>Con discapacidad:</strong> {information.disability}
+              <strong>Con discapacidad:</strong>{" "}
+              {information.disability ? "Sí" : "No"}
             </p>
           </div>
         </div>
@@ -230,12 +231,12 @@ const generalInformation = ({ information }) => (
 
               <p className="subtitle">
                 <strong>Disponibilidad para viajar:</strong>{" "}
-                {information.preferwork.travel}
+                {information.preferwork.travel ? "Sí" : "No"}
               </p>
 
               <p className="subtitle">
                 <strong>Disponibilidad para cambiar de residencia:</strong>{" "}
-                {information.preferwork.residence}
+                {information.preferwork.residence ? "Sí" : "No"}
               </p>
             </div>
           </div>

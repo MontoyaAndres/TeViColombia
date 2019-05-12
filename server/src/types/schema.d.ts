@@ -111,11 +111,11 @@ skills: Array<string | null> | null;
 minStudy: string;
 minExperience: number;
 language: Array<string | null> | null;
-travel: string;
-residence: string;
+travel: boolean;
+residence: boolean;
 country: string;
 departament: string;
-town: string;
+town: string | null;
 time: string;
 contract: string;
 minSalary: any | null;
@@ -220,7 +220,7 @@ birth: any | null;
 civilStatus: string | null;
 website: string | null;
 gender: string | null;
-disability: string | null;
+disability: boolean | null;
 optionalEmail: string | null;
 email: string;
 isStudent: boolean;
@@ -282,8 +282,8 @@ area: Array<string | null> | null;
 salary: any | null;
 currency: string | null;
 departament: Array<string | null> | null;
-travel: string | null;
-residence: string | null;
+travel: boolean | null;
+residence: boolean | null;
 }
 
 interface ICV {
@@ -538,11 +538,19 @@ skills?: Array<string | null> | null;
 minStudy: string;
 minExperience: number;
 language?: Array<string | null> | null;
-travel: string;
-residence: string;
+
+/**
+ * @default false
+ */
+travel: boolean;
+
+/**
+ * @default false
+ */
+residence: boolean;
 country: string;
 departament: string;
-town: string;
+town?: string | null;
 time: string;
 contract: string;
 minSalary?: any | null;
@@ -607,7 +615,7 @@ birth?: any | null;
 civilStatus: string;
 website?: string | null;
 gender: string;
-disability?: string | null;
+disability?: boolean | null;
 optionalEmail?: string | null;
 
 /**
@@ -670,8 +678,16 @@ area: Array<string>;
 salary: any;
 currency: string;
 departament: Array<string>;
-travel: string;
-residence: string;
+
+/**
+ * @default false
+ */
+travel: boolean;
+
+/**
+ * @default false
+ */
+residence: boolean;
 }
 }
 

@@ -35,8 +35,8 @@ type PreferWork {
   salary: BigInt
   currency: String
   departament: [String]
-  travel: String
-  residence: String
+  travel: Boolean
+  residence: Boolean
 }
 
 type CV {
@@ -73,7 +73,7 @@ type UserInformation {
   civilStatus: String
   website: String
   gender: String
-  disability: String
+  disability: Boolean
   optionalEmail: String
   email: String!
   isStudent: Boolean!

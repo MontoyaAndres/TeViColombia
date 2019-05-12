@@ -49,7 +49,7 @@ export class User extends BaseEntity {
 
   @Column("varchar", {
     default:
-      "https://res.cloudinary.com/djkpgohr3/image/upload/v1554930614/default/default-photo.png" // default image from cloudinary
+      "https://res.cloudinary.com/te-vi-colombia/image/upload/v1557617381/default/default-photo_uza4gy.png" // default image from cloudinary
   })
   routePhoto: string;
 
@@ -143,8 +143,8 @@ export class User extends BaseEntity {
   })
   gender: string;
 
-  @Column("varchar", { length: 2, default: "No" })
-  disability: string;
+  @Column({ default: false })
+  disability: boolean;
 
   @Column("varchar", { nullable: true, transformer: new EmptyStringToNull() })
   optionalEmail: string;

@@ -300,8 +300,16 @@ export default compose(
         resetForm
       }
     ) => {
+      // `travel` and `residence` are boolean, they cannot save text.
       const { data } = await CREATE_EMPLOY_MUTATION({
-        variables: { id, employ: values },
+        variables: {
+          id,
+          employ: {
+            ...values,
+            travel: values.travel === "Sí",
+            residence: values.residence === "Sí"
+          }
+        },
         refetchQueries: [{ query: employsQuery, variables: { businessId: id } }]
       });
 

@@ -275,8 +275,8 @@ export default compose(
       minStudy: dataEmploy.minStudy || "EDUCACIÓN BÁSICA PRIMARIA",
       minExperience: dataEmploy.minExperience,
       language: dataEmploy.language,
-      travel: dataEmploy.travel || "No",
-      residence: dataEmploy.residence || "No",
+      travel: dataEmploy.travel ? "Sí" : "No",
+      residence: dataEmploy.residence ? "Sí" : "No",
       country: dataEmploy.country || "Colombia",
       departament: dataEmploy.departament || "Bogotá, D.C.",
       town: dataEmploy.town || "Bogotá, D.C.",
@@ -303,8 +303,16 @@ export default compose(
         resetForm
       }
     ) => {
+      // `travel` and `residence` are boolean, they cannot save text.
       const { data } = await UPDATE_EMPLOY_MUTATION({
-        variables: { id, employ: values },
+        variables: {
+          id,
+          employ: {
+            ...values,
+            travel: values.travel === "Sí",
+            residence: values.residence === "Sí"
+          }
+        },
         refetchQueries: [
           { query: employsQuery, variables: { businessId: id } },
           { query: employQuery, variables: { employId: dataEmploy.id } }

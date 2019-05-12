@@ -183,8 +183,8 @@ const index = ({
                           </Link>
 
                           <p className="subtitle">
-                            {employ.country} - {employ.departament} -{" "}
-                            {employ.town && employ.town}
+                            {employ.country} - {employ.departament}
+                            {employ.town ? ` - ${employ.town}` : null}
                           </p>
 
                           <p className="subtitle">
