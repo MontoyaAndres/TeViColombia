@@ -667,6 +667,10 @@ area: string;
 goals?: string | null;
 startedOn: any;
 finishIn?: any | null;
+
+/**
+ * @default false
+ */
 workingOn: boolean;
 }
 

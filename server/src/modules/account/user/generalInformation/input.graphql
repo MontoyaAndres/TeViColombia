@@ -24,7 +24,7 @@ input WorkInput {
   goals: String
   startedOn: Date!
   finishIn: Date
-  workingOn: Boolean!
+  workingOn: Boolean! = false
 }
 
 input PreferWorkInput {

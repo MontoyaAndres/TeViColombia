@@ -213,7 +213,7 @@ export default compose(
       language: data.information.language || [],
       study: data.information.study || [],
       work: data.information.work || [],
-      preferWork: Object.keys(data.information.preferwork).length // Checking if object has values
+      preferWork: data.information.preferwork
         ? {
             ...data.information.preferwork,
             travel: data.information.preferwork.travel ? "Sí" : "No",
@@ -226,8 +226,8 @@ export default compose(
             salary: "",
             currency: "Modena local",
             departament: ["Bogotá, D.C."],
-            travel: data.information.preferwork.travel ? "Sí" : "No",
-            residence: data.information.preferwork.residence ? "Sí" : "No"
+            travel: "No",
+            residence: "No"
           },
       cv: data.information.cv || []
     }),

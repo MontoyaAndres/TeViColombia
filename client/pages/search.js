@@ -156,14 +156,7 @@ const search = ({ values, loading, data }) => {
 
           {data.networkStatus === 2 || data.networkStatus === 3 ? (
             <Loading />
-          ) : !data.search ? (
-            <h2
-              className="subtitle is-3"
-              style={{ textAlign: "center", padding: 20 }}
-            >
-              No se han encontrado resultados.
-            </h2>
-          ) : (
+          ) : data.search && data.search.length > 0 ? (
             data.search.map((value, i) => (
               <div key={i} style={{ margin: "1.1rem 0" }}>
                 <SearchList
@@ -175,6 +168,13 @@ const search = ({ values, loading, data }) => {
                 />
               </div>
             ))
+          ) : (
+            <h2
+              className="subtitle is-3"
+              style={{ textAlign: "center", padding: 20 }}
+            >
+              No se han encontrado resultados.
+            </h2>
           )}
         </div>
       </div>
