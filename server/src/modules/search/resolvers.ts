@@ -46,7 +46,7 @@ export const resolvers: ResolveMap = {
       }
 
       // Getting ids from `User` or `Business`.
-      const ids = await response.map(res => res.id);
+      const ids = response.map(res => res.id);
 
       if (ids.length > 0) {
         // From `ids`, getting the stars.

@@ -13,13 +13,13 @@ export default function mapOrder(
     const B = b[key];
 
     if (
-      order.indexOf(A) > order.indexOf(B) ||
+      order.indexOf(A) < order.indexOf(B) ||
       order.indexOf(A) === -1 ||
       order.indexOf(B) === -1
     ) {
-      return 1;
-    } else {
       return -1;
+    } else {
+      return 1;
     }
   });
 

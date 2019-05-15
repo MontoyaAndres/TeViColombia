@@ -12,7 +12,7 @@ export const resolvers: ResolveMap = {
   Mutation: {
     login: async (
       _,
-      { email, password }: GQL.ILoginOnMutationArguments,
+      { email, password, signInAS }: GQL.ILoginOnMutationArguments,
       { session, redis, request }
     ) => {
       try {
@@ -24,11 +24,11 @@ export const resolvers: ResolveMap = {
         return formatYupError(err);
       }
 
-      const user = await User.findOne({ where: { email } });
-      const business = await Business.findOne({ where: { email } });
-
       // Who want to log in, an user or a business
-      const account = user ? user : business;
+      const account =
+        signInAS === "User"
+          ? await User.findOne({ where: { email } })
+          : await Business.findOne({ where: { email } });
 
       if (!account) {
         return [

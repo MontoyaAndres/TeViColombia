@@ -498,6 +498,7 @@ message: string;
 interface ILoginOnMutationArguments {
 email: string;
 password: string;
+signInAS: TypeSignIn;
 }
 
 interface IRegisterOnMutationArguments {
@@ -692,6 +693,11 @@ travel: boolean;
  * @default false
  */
 residence: boolean;
+}
+
+const enum TypeSignIn {
+User = 'User',
+Business = 'Business'
 }
 }
 

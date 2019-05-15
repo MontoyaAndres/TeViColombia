@@ -6,7 +6,7 @@ import Router from "next/router";
 import Link from "next/link";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
 
-import { TextField } from "../components/shared/globalField";
+import { TextField, RadioField } from "../components/shared/globalField";
 import { LoginValidation } from "../utils/validation";
 import normalizeErrors from "../utils/normalizeErrors";
 import checkLoggedIn from "../lib/checkLoggedIn";
@@ -14,8 +14,12 @@ import redirect from "../lib/redirect";
 import meQuery from "../graphql/queries/me";
 
 const loginMutation = gql`
-  mutation LoginMutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+  mutation LoginMutation(
+    $email: String!
+    $password: String!
+    $signInAS: TypeSignIn!
+  ) {
+    login(email: $email, password: $password, signInAS: $signInAS) {
       path
       message
     }
@@ -46,14 +50,19 @@ const login = () => {
               <Formik
                 initialValues={{
                   email: "",
-                  password: ""
+                  password: "",
+                  signInAS: "Usuario"
                 }}
                 validationSchema={LoginValidation}
                 validateOnBlur={false}
                 validateOnChange={false}
                 onSubmit={async (values, { setSubmitting, setErrors }) => {
                   const { data } = await mutate({
-                    variables: values,
+                    variables: {
+                      ...values,
+                      signInAS:
+                        values.signInAS === "Usuario" ? "User" : "Business"
+                    },
                     refetchQueries: [{ query: meQuery }]
                   });
 
@@ -100,6 +109,17 @@ const login = () => {
                       autoComplete="off"
                       isRequired
                     />
+
+                    <label htmlFor="travel" className="label">
+                      ¿Entrar como Usuario o Empresa?
+                    </label>
+                    <RadioField
+                      name="signInAS"
+                      id="signInAS"
+                      arrayRadio={["Usuario", "Empresa"]}
+                      isRequired
+                    />
+		    <br />
 
                     <button
                       type="submit"

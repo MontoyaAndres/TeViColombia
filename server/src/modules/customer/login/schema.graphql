@@ -1,3 +1,8 @@
+enum TypeSignIn {
+  User
+  Business
+}
+
 type Mutation {
-  login(email: String!, password: String!): [Error!]
+  login(email: String!, password: String!, signInAS: TypeSignIn!): [Error!]
 }
