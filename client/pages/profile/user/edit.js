@@ -73,7 +73,7 @@ const edit = ({
 }) => {
   useEffect(() => {
     // When the `departament` value changes, reseting the `town` value.
-    if (values.departament !== "Extranjero") {
+    if (values.departament !== "Extranjero" && values.town === "") {
       values.town = Object.values(TownsByDepartament[values.departament])[0];
     }
   }, [values.departament]);
