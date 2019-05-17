@@ -89,7 +89,7 @@ const trainingEmployment = ({ information }) => (
 
     {information.cv && information.cv.length > 0 ? (
       <div className="box" style={{ marginTop: "0.1em" }}>
-        <p className="title">Hoja de vida</p>
+        <p className="title">Anexos</p>
         <div className="content">
           <div className="columns is-multiline">
             {information.cv.map((cv, i) => (
