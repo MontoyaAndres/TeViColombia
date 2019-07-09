@@ -8,17 +8,9 @@ Tejidos virtuales para el emprendimiento, las prácticas profesionales y la empl
 
 ### Servidor (GraphQL A.P.I)
 
-Antes de empezar, se debe de tener instalado en su computadora las herramientas MySQL y Redis. En Linux (Ubuntu) se hace de la siguiente manera:
+Antes de empezar, se debe de tener instalado en su computadora las herramientas PosgreSQL, Redis y Node.js.
 
-```
-# Instalación de MySQL y Redis
-
-sudo apt install mysql-server redis-server
-```
-
-En el caso de Node.js, se recomienda seguir esta [guía](https://github.com/nodesource/distributions#installation-instructions).
-
-Una vez hecho, debe de crear una base de datos con el nombre de `tevi_test` en MySQL e ingresar a la carpeta [server](server) y luego instalar las dependencias de el [package.json](server/package.json) con `npm install` o `yarn install`.
+Una vez hecho, debe de crear una base de datos con el nombre de `tevi_test` en PosgreSQL e ingresar a la carpeta [server](server) y luego instalar las dependencias de el [package.json](server/package.json) con `npm install` o `yarn install`.
 
 Para finalizar, simplemente corra `npm run dev` o `yarn dev` dentro de [server](server).
 
@@ -38,12 +30,25 @@ Simplemente ejecute [Now](https://zeit.co/docs). Recuerde que la configuración 
 
 ## Tips
 
-- Si estas trabajando en desarrollo, y te sale este error: `ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server`, la solución es:
+- Configura la contraseña con tu configuración de PostgreSQL:
 
 ```
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Contraseña de root';
+ALTER USER postgres WITH PASSWORD 'Your_Awesome_Password';
 ```
 
-- El archivo [.env](server/.env) es donde se definen las variables de entorno en development (desarrollo).
+- El archivo [.env](server/.env) es donde se definen las variables de entorno en development (desarrollo), tiene que tener las siguientes:
+
+```
+SESSION_SECRET=SuperSessionsSecretPassword
+FRONTEND_HOST=http://localhost:3000
+
+EMAIL_SERVICE=Gmail
+EMAIL_USER=
+EMAIL_PASSWORD=
+
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+```
 
 - Cada vez que modifique o cree un archivo con extensión `.graphql` debe de ejecutar `npm run types` o `yarn types`.
