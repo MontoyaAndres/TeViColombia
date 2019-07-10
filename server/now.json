@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "tevicolombia-server",
+  "alias": ["api.tevicolombia.com", "www.api.tevicolombia.com"],
+  "regions": ["chs1", "iad1"],
+  "env": {
+    "NODE_ENV": "production",
+    "SESSION_SECRET": "SESSION_PASSWORD_SECRET"
+    "FRONTEND_HOST": "https://tevicolombia.com",
+    "EMAIL_SERVICE": "Gmail",
+    "EMAIL_USER": "example@gmail.com",
+    "EMAIL_PASSWORD": "EMAIL_PASSWORD_EXAMPLE",
+    "CLOUDINARY_CLOUD_NAME": "CLOUDINARY_CLOUD_NAME",
+    "CLOUDINARY_API_KEY": "CLOUDINARY_API_KEY",
+    "CLOUDINARY_API_SECRET": "CLOUDINARY_API_SECRET"
+  },
+  "routes": [{ "src": "/.*", "dest": "/dist/index.js" }],
+  "builds": [{ "src": "dist/index.js", "use": "@now/node-server" }]
+}
