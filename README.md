@@ -6,7 +6,7 @@ Te vi Colombia es una aplicación que conduce a que cada uno de sus miembros ges
 - [Leer Manual de usuario](https://drive.google.com/open?id=18Ya_uQxy3pPQ_42Se73-9eStoVdYn6-ZehBt6-xBbBE)
 - [Leer Manual técnico](https://drive.google.com/open?id=1Ej4WEnEZ7hjUe7eNk9KqP4uUHSOEW2oxsOSXtiYqdFA)
 
-![Alt text](https://localst.co "Te Vi Colombia")
+![Alt text](http://oi64.tinypic.com/e0h6s5.jpg "Te Vi Colombia")
 
 > En este documento se explica el debido uso que se hace para correr la aplicación en producción y desarrollo.
 
