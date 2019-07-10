@@ -5,7 +5,7 @@
   "regions": ["chs1", "iad1"],
   "env": {
     "NODE_ENV": "production",
-    "SESSION_SECRET": "SESSION_PASSWORD_SECRET"
+    "SESSION_SECRET": "SESSION_PASSWORD_SECRET",
     "FRONTEND_HOST": "https://tevicolombia.com",
     "EMAIL_SERVICE": "Gmail",
     "EMAIL_USER": "example@gmail.com",
@@ -17,4 +17,3 @@
   "routes": [{ "src": "/.*", "dest": "/dist/index.js" }],
   "builds": [{ "src": "dist/index.js", "use": "@now/node-server" }]
 }
-
