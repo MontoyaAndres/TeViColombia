@@ -1,4 +1,7 @@
 dist
+/server/yarn.lock
+/client/yarn.lock
+/server/.env
 
 # Logs
 logs
